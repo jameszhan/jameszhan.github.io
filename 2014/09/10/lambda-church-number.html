@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-Lambda演算之自然数</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">品码斋</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">品码斋</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+            
+            
+                
+            
+                
+                <li><a class="page-link" href="/blogs/">博客</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li><a class="page-link" href="/bookmarks/">书签</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/resoruces/">资源</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/books/">图书</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/news/">他山之石</a></li>
+                
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            
+                
+                <li><a class="page-link" href="/about/">关于我</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                <li><a class="page-link" href="https://github.com/jameszhan">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+<div class="container">
+    <div class="col-md-9">
+        <div class="post">
+
+    <header class="post-header">
+        <h1 class="post-title">Lambda演算之自然数</h1>
+        <p class="post-meta">
+            2014年09月10日 •
+            詹子知(James Zhan) •
+            版权所有，转载须声明出处
+        </p>
+    </header>
+
+    <article class="post-content">
+        <p>λ演算（英语：lambda calculus，λ-calculus）是一套用于研究函数定义、函数应用和递归的形式系统。它由阿隆佐·邱奇和他的学生斯蒂芬·科尔·克莱尼在20世纪30年代引入。这种演算可以用来清晰地定义什么是一个可计算函数。</p>
+
+<h2 id="λ演算规则">λ演算规则</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">  &lt;expression&gt; := &lt;name&gt; | &lt;function&gt; | &lt;application&gt;
+  &lt;function&gt; := λ&lt;name&gt;.&lt;expression&gt;
+  &lt;application&gt; := &lt;expression&gt;&lt;expression&gt;
+</code></pre></div>
+<h3 id="α--变换">α--变换</h3>
+
+<p>α变换规则表达的是，被绑定变量的名称是不重要的。
+α变换规则陈述的是，若v与w均为变量，E是一个lambda表达式，同时E[v/w]是指把表达式E中的所有的v的自由出现都替换成w，那么在w不是E中的一个自由出现，且如果w替换了v，w不会被E中的λ绑定的情况下，有
+  λv.E == λw.E[v/w]
+  例如：λx.(λx.x)x &lt;=&gt; λy.(λx.x)y</p>
+
+<h3 id="β--规约">β--规约</h3>
+
+<p>β规约规则表达的是函数作用的概念，它陈述了所有的E‘的自由出现在E[v/E&#39;]中仍然是自由的情况下，有 ((λv.E)E&#39;) == E[v/E&#39;] 成立。</p>
+
+<h3 id="η--变换">η--变换</h3>
+
+<p>η变换表达的是外延性的概念，在这里外延性指的是，两个函数对于所有的参数得到的结果一致，当且仅当它们是同一个函数，η变换可以令 λx.fx和f相互交换，只要x不是f中的自由出现。</p>
+
+<h2 id="λ演算的应用">λ演算的应用</h2>
+
+<p>在lambda演算系统中，一切事物都可以使用过程来描述。那么在函数式编程系统中，我们需要如何来描述一种类型呢？类型的本质在于它所定义的操作以及操作之间的关系和不变式。类型的实现关键在于满足类型规范的要求，而具体实现是可以变化的，使用者和测试用例都应该只依赖于类型规范而不依赖于具体实现。函数式的类型实现往往和类型规范是直接对应的，简单通用，但可能有性能问题，而命令式的类型实现往往会引入复杂的内部数据结构，但是其优点是高效。这两种实现并不是完全互斥的，有时候可以将二者相结合达到简单与高效的结合。</p>
+
+<h3 id="形式定义">形式定义</h3>
+
+<p>在lambda演算中有许多方式都可以定义自然数，但最常见的还是邱奇数，下面是它们的定义：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">  0 := λf.λx.x
+  1 := λf.λx.f x
+  2 := λf.λx.f (f x)
+  3 := λf.λx.f (f (f x))
+</code></pre></div>
+<p>以此类推。直观地说，lambda演算中的数字n就是一个把函数f作为参数并以f的n次幂为返回值的函数。换句话说，邱奇整数是一个高阶函数 -- 以单一参数函数f为参数，返回另一个单一参数的函数。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">  SUCC  := λn.λf.λx.f (n f x)
+  PLUS  := λm.λn.m SUCC n
+  PLUS  := λm.λn.λf.λx.m f (n f x)
+  MULT  := λm.λn.m (PLUS n) 0
+  MULT  := λm.λn.λf.m (n f)
+  PRED  := λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)
+  SUB   := λm.λn.n PRED m
+  EXP   := λa.λn.n a
+</code></pre></div>
+<h3 id="clojure描述">Clojure描述</h3>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">zero</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="nv">x</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">succ</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f</span> <span class="p">((</span><span class="nf">n</span> <span class="nv">f</span><span class="p">)</span> <span class="nv">x</span><span class="p">)))))</span>
+</code></pre></div>
+<p>其实只要定义出zero和succ两个，我们就可以定义出所有的自然数。</p>
+
+<p>你可以使用如下的方式给出zero和succ的定义。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">zero</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">x</span><span class="p">]</span> <span class="nv">x</span><span class="p">)</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">succ</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span> <span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">n</span> <span class="nv">f</span> <span class="nv">x</span><span class="p">))))</span>
+</code></pre></div>
+<p>是不是简洁了许多，但是不要被表面的简洁所迷惑，lambda演算基于的都是单参数的函数，这样函数可以很方便地得到一致性的处理。如果你使用Haskell来使用上述定义，这不会有什么问题，
+因为其底层本身就是使用currying来描述多参函数的。然而Clojure却是严格区分函数的入参个数的，一旦你使用上述定义，自然数的许多操作将无法很容易地推论得到。事实上，使用currying，
+我们可以很方便地使用单参函数模拟多参函数，但是反过来却不一定。有兴趣的朋友可以参考：<a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/church-number.clj">多参描述自然数</a>.</p>
+
+<p>我们可以根据代数变换的形式得出one, two, three的定义。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">one = (succ zero)
+    = (fn [f] (fn [x] (f (((zero) f) x))))
+    = (fn [f] (fn [x] (f ((fn [x] x) x))))
+    = (fn [f] (fn [x] (f x)))
+
+two = (succ one)
+    = (fn [f] (fn [x] (f (((one) f) x))))
+    = (fn [f] (fn [x] (f ((fn [x] (f x)) x))))
+    = (fn [f] (fn [x] (f (f x))))
+</code></pre></div>
+<p>根据以上的推导过程，我们可以很容易地发现规律，我们可以很发现数字n的定义为</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">n</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="nf">fn</span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f...</span><span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))))</span>
+</code></pre></div>
+<p>，其中(f...(f x))中有n个f。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">one</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">)))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">two</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">three</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">)))))</span>
+</code></pre></div>
+<p>根据定义，我们可以很容易地给出plus，mult，exp的定义，因为+，<em>，</em>*在自然数的操作里面是封闭的，所以其定义还是相当简洁和直观的。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">plus</span> <span class="p">[</span><span class="nv">m</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">((</span><span class="nf">m</span> <span class="nv">f</span><span class="p">)</span> <span class="p">((</span><span class="nf">n</span> <span class="nv">f</span><span class="p">)</span> <span class="nv">x</span><span class="p">))))))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">mult</span> <span class="p">[</span><span class="nv">m</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="nf">n</span> <span class="p">(</span><span class="nf">m</span> <span class="nv">f</span><span class="p">)))))</span>
+<span class="c1">;(defn mult [m n] (fn [f] (fn [x] ((n (m f)) x))))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">exp</span> <span class="p">[</span><span class="nv">a</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="nf">n</span> <span class="nv">a</span><span class="p">)))</span>
+<span class="c1">;(defn exp [a] (fn [n] (fn [f] (fn [x] (((n a) f) x)))))</span>
+</code></pre></div>
+<ol>
+<li>plus可以理解为，对于初始值x，先对于其调用n次f，再对其运算后的结果再调用m次f，总共调用了(m + n)次f。</li>
+<li>mult可以理解为，把(m f)展开n次，最终作用于x上，总共调用了(m * n)次f。</li>
+<li>exp可以理解为，把a展开n次，得到(a (a...(a)))，当给定函数f和初始值x时，可以很容易得出其总共调用了(a ** n)次f。</li>
+</ol>
+
+<p>前驱和减法的定义不是很直观，毕竟其在自然数域里面操作并不封闭。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">pred</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+      <span class="p">(((</span><span class="nf">n</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">g</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">h</span><span class="p">]</span> <span class="p">(</span><span class="nf">h</span> <span class="p">(</span><span class="nf">g</span> <span class="nv">f</span><span class="p">)))))</span>
+         <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">u</span><span class="p">]</span> <span class="nv">x</span><span class="p">))</span>
+        <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">u</span><span class="p">]</span> <span class="nv">u</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">sub</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">m</span><span class="p">]</span> <span class="p">((</span><span class="nf">m</span> <span class="nv">pred</span><span class="p">)</span> <span class="nv">n</span><span class="p">)))</span>
+</code></pre></div>
+<p>通过下面的函数，我们很容易把我们的邱奇数转换为我们熟悉的自然数表示。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">church-&gt;int</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">((</span><span class="nf">n</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">x</span><span class="p">)))</span> <span class="mi">0</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="用例演示">用例演示</h3>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="nv">zero</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="nv">one</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="nv">two</span><span class="p">)</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="nv">three</span><span class="p">)</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;SUCC&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;PLUS&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">plus</span> <span class="nv">zero</span><span class="p">)</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">plus</span> <span class="nv">one</span><span class="p">)</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">plus</span> <span class="nv">one</span><span class="p">)</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">3</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">plus</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;MUL&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">zero</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">one</span><span class="p">)</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">one</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">3</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">6</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">three</span><span class="p">)</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">two</span><span class="p">)))</span> <span class="mi">9</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;EXP&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">exp</span> <span class="nv">zero</span><span class="p">)</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">exp</span> <span class="nv">one</span><span class="p">)</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">exp</span> <span class="nv">two</span><span class="p">)</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">exp</span> <span class="nv">two</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">8</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">exp</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">9</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;PRED&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">pred</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">pred</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">pred</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">pred</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">(</span><span class="nf">pred</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">three</span><span class="p">)))</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;SUB&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">sub</span> <span class="nv">zero</span><span class="p">)</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">sub</span> <span class="nv">two</span><span class="p">)</span> <span class="nv">two</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">sub</span> <span class="nv">two</span><span class="p">)</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">sub</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;int</span> <span class="p">((</span><span class="nf">sub</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">three</span><span class="p">))</span> <span class="nv">one</span><span class="p">))</span> <span class="mi">3</span><span class="p">))</span>
+
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;\nEVEN RULES&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">church-&gt;even</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">((</span><span class="nf">n</span> <span class="o">#</span><span class="p">(</span><span class="nb">+ </span><span class="nv">%</span> <span class="mi">2</span><span class="p">))</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;even</span> <span class="nv">zero</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;even</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;even</span> <span class="p">((</span><span class="nf">plus</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))</span> <span class="p">(</span><span class="nf">succ</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))))</span> <span class="mi">6</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;even</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">18</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">println </span><span class="s">&quot;\nEGATIVE NUMBER&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">church-&gt;neg</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">((</span><span class="nf">n</span> <span class="nv">dec</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;neg</span> <span class="nv">zero</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;neg</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))</span> <span class="mi">-1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;neg</span> <span class="p">((</span><span class="nf">plus</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))</span> <span class="p">(</span><span class="nf">succ</span> <span class="p">(</span><span class="nf">succ</span> <span class="nv">zero</span><span class="p">))))</span> <span class="mi">-3</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">church-&gt;neg</span> <span class="p">((</span><span class="nf">mult</span> <span class="nv">three</span><span class="p">)</span> <span class="nv">three</span><span class="p">))</span> <span class="mi">-9</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="参考">参考</h3>
+
+<ol>
+<li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导</a></li>
+<li><a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/lambda.clj">lambda演算示例代码</a></li>
+</ol>
+
+    </article>
+
+    <div class="row-fluid">
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-folder-open"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>6</span></a></li>
+    
+
+        </ul>
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-tags"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程<span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>5</span></a></li>
+    
+
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="pagination pull-right">
+            
+            <li class="prev"><a href="/2014/09/01/ruby-metagramming.html" title="Ruby元编程技巧">&larr; 上一篇</a></li>
+            
+            <li><a href="http://jameszhan.github.io">Archive</a></li>
+            
+            <li class="next"><a href="/2014/09/16/code-styles.html" title="不同编程语言的代码风格比较">下一篇 &rarr;</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 分类</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 标签</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/c.html">C <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby <span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+    </div>
+</div>
+
+<div class="container">
+<footer>
+    <hr/>
+    <div class="row footer-content">
+
+        <div class="col-md-3">
+            <ul class="contact-list">
+                <li>詹子知</li>
+                <li>Full Stack Engineer</li>
+                <li><a href="mailto:zhiqiangzhan@gmail.com">zhiqiangzhan@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <ul class="social-media-list">
+                
+                <li>
+                    <a href="https://github.com/jameszhan">
+              <span class="icon icon--github">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282"
+                          d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+
+                
+                <li>
+                    <a href="https://twitter.com/jameszhan">
+              <span class="icon icon--twitter">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://weibo.com/zizhizhan">
+              <span class="icon icon--weibo">
+               <svg viewBox="0, 0, 300, 300">
+                   <path d="M196.802 39.964c-8.656 3.787-10.64 12.803-4.328 19.115 3.066 3.066 5.951 3.607 18.574 3.607 17.673 0 29.575 4.688 38.592 15.148 11 12.443 12.263 16.23 12.263 38.952 0 20.197 0 20.558 4.688 23.263 10.82 6.131 18.034-1.443 20.558-21.64 3.246-26.329-12.443-56.986-36.066-71.052-15.509-9.016-42.018-12.623-54.281-7.393zm-88.724 33.542c-20.198 7.213-39.674 21.099-60.592 43.46-49.592 52.658-46.346 102.791 8.295 129.48 56.805 27.771 133.267 18.574 174.924-21.099 31.198-29.575 27.411-66.724-8.115-79.347-6.312-2.164-8.296-3.787-7.394-5.771 3.246-7.934 4.328-17.131 2.525-22.541-5.591-17.132-25.968-21.099-56.264-10.82l-12.083 4.147 1.082-12.082c1.263-14.246-1.803-22.001-10.279-26.329-7.033-3.607-20.558-3.246-32.099.902zm50.133 69.789c26.869 7.394 43.28 23.624 43.28 42.919 0 21.46-19.116 40.756-50.133 51.035-16.591 5.41-47.428 6.492-62.576 2.344-28.673-8.115-44.903-23.984-44.903-44.362 0-11.181 4.869-20.919 15.509-30.837 9.918-9.377 17.492-13.886 32.099-18.755 22.001-7.393 45.625-8.295 66.724-2.344zm-56.806 17.492c-18.213 8.476-27.951 21.46-27.951 37.69 0 14.788 6.492 24.886 20.738 32.46 11 5.951 31.198 5.41 43.461-.901 15.689-8.296 25.968-23.624 25.968-38.592-.181-12.263-11.001-26.87-23.804-32.099-10.279-4.328-27.592-3.607-38.412 1.442zm13.165 33.903c1.262 1.262 2.164 4.328 2.164 7.033 0 9.017-15.148 16.411-21.28 10.279-3.426-3.426-2.524-11.902 1.443-15.869 3.967-3.968 14.246-4.869 17.673-1.443zm85.298-117.758c-8.296 8.296-2.705 18.214 10.459 18.214 11.361 0 16.41 5.771 16.41 18.755 0 8.115.722 10.459 3.968 12.623 9.738 6.853 17.673-.721 17.673-16.771 0-19.656-14.067-34.444-34.084-35.887-9.016-.721-11.18-.18-14.426 3.066z"/>
+               </svg>
+              </span>
+
+                        <span class="username">zizhizhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.zhihu.com/people/james_zhan">
+              <span class="icon icon--zhihu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M78.172 153.638s-.038-9.983-3.211-9.983h-22.119c.736-11.455.928-21.811.928-31.058h21.629s.833-9.538-3.626-9.428h-37.415c1.474-5.546 3.328-11.273 5.546-17.193 0 0-10.175 0-13.644 9.125-1.432 3.768-5.584 18.239-12.976 33.026 2.491-.267 10.725-.493 15.574-9.387.893-2.483 1.063-2.815 2.172-6.143h12.201c0 4.436.064 10.566-.3 17.956 0 7.04-.205 10.32-.41 13.102h-22.105c-4.963 0-6.578 9.983-6.578 9.983h27.73c-1.855 21.075-11.838 38.64-29.948 52.687 2.954 2.953 17.687-.107 21.562-3.999 0 0 9.715-8.828 15.042-29.277 7.019 8.138 12.936 15.348 17.747 21.629 2.219 2.962 4.992 6.101 4.992 6.101s3.423-11.642-.448-17.18c-3.204-3.773-11.944-14.058-15.635-17.76l-6.102 4.992c1.846-5.908 2.957-11.648 3.329-17.193h26.065zm5.546 39.903l9.902.002 3.173 11.08s15.187-11.08 17.848-11.08c2.662 0 10.402-.002 10.402-.002h10.538v-91.968h-51.863v91.968zm10.538-81.985h30.787v72.004h-11.81l-11.983 7.663-1.959-7.648-5.035-.015v-72.004zm149.188 25.443l8.875 6.656c9.61-11.828 16.444-20.883 20.52-27.176 0 0-7.06-6.453-12.533-1.819-2.314 3.729-9.097 13.839-16.862 22.339zm-44.369.556c-.372-.367-.922-1.11-1.663-2.219-7.028-9.609-10.173-15.126-14.325-18.931-4.153-3.804-12.295 1.183-12.295 1.183 4.436 5.546 9.613 12.756 15.529 21.63 1.47 2.219 2.58 3.882 3.327 4.992l9.427-6.655zm89.292 11.769c-9.129 0-60.451.431-60.451.431v-46.586c2.218 0 5.73-.181 10.537-.554 18.856-1.11 32.348-1.847 40.486-2.219 0 0 5.634-12.541-.274-15.426-4.26 0-4.951 1.705-10.679 2.112-2.364.168-76.205 7.606-107.177 8.322.735 4.071 3.385 6.962 7.193 9.114 7.202 1.574 10.554.688 22.755.315 11.455-.736 20.146-1.109 26.066-1.109v46.031h-61.561s2.095 10.538 10.233 10.538h51.328v32.722c0 6.446-5.16 10.144-11.291 9.743-6.492.054-12.029-.529-19.227-.832.921 1.831 2.919 6.636 8.908 10.071 4.554 2.22 7.458 3.033 12.002 3.033 13.631 0 21.062-7.969 20.701-20.907v-33.829h56.438c4.469-.001 4.013-10.97 4.013-10.97z"/>
+                </svg>
+              </span>
+                        <span class="username">james_zhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.baidu.com/p/zhiqiangzhan">
+              <span class="icon icon--baidu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M108.462 11.538c-3.385 1.231-8.616 4.924-11.847 8.462-7.846 8.769-11.23 19.385-11.077 34.769 0 10.462.77 13.846 4.924 22.616 8.769 19.077 26.153 25.077 40 13.846 17.692-14.308 20.923-48.154 6.769-68.462-3.693-5.231-16.769-13.692-20.923-13.538-.923.154-4.462 1.077-7.846 2.307zm82.769 6.462c-5.846 1.231-19.539 14.923-23.846 23.846-7.385 15.077-7.077 34.308.769 46.154 6.923 10.308 22.461 14.615 34.615 9.538 16.308-6.769 28.769-31.692 24.923-49.23-4.461-19.539-21.384-33.539-36.461-30.308zm-147.385 58.154c-8.154 2.769-17.077 13.077-20.154 22.923-6.154 20.154-3.846 36.615 6.923 48.923 7.847 8.769 13.077 11.077 24.616 10.154 12.307-.923 20.154-6.308 25.846-18 3.692-7.385 4.154-10.308 4.154-22.462 0-11.077-.616-15.077-3.385-20.154-5.077-9.846-10.461-15.384-19.077-19.692-9.077-4.615-10.461-4.615-18.923-1.692zm185.692 21.692c-11.538 5.846-17.23 18.923-17.23 39.692 0 15.385 2 22.616 7.846 29.385 6.461 7.385 16 10.615 28.154 9.692 11.23-.923 17.23-4 22.154-11.077 5.076-7.384 6.461-13.846 6.461-29.538 0-12.462-.461-15.077-4.308-22.308-6.307-12-14.461-17.384-27.692-18-7.385-.307-11.692.308-15.385 2.154zm-98.769 30c-10.154 4.616-16.154 9.692-22.923 19.539-9.077 13.23-17.538 22.307-36 38.307-28 24.154-33.846 33.231-34 52-.308 22.616 12.769 42.616 31.077 47.846 10.615 3.077 38.154 2.308 58.769-1.846 16-3.077 32-2.307 51.539 2.616 19.692 4.923 41.538 4.923 52.769 0 21.231-9.539 32.154-38.616 23.231-62.616-2.462-6.615-5.539-10.769-12.616-17.384-22.153-20.462-47.23-46.308-55.23-57.077-8.923-12-18.154-19.846-27.231-22.769-8.154-2.77-21.539-2.154-29.385 1.384zm4.616 42.923c2 1.231 2.307 8.616 2.769 47.693l.461 46.153h-18.307c-22.462 0-31.231-2.307-39.077-10.307-7.231-7.385-8.923-12.154-8.923-24.308 0-11.846 1.692-16.923 8.154-23.538 8.153-8.616 14.615-11.077 28.769-11.077h12.307v-26.154h5.847c3.077 0 6.769.769 8 1.538zm30.769 48.769c0 28 .154 28.154 16.461 28.154h11.231v-49.23h18.769l-.615 29.384c-.615 37.231.923 35.231-27.692 35.231-21.539 0-26-1.231-31.846-8.615-2.924-3.847-3.231-6-3.231-29.847 0-14.153.461-26.153 1.077-26.615.461-.615 4.307-1.077 8.461-1.077h7.385v22.615zm-67.385-7.23c-8.615 5.23-11.692 16.615-7.384 26.923 3.077 7.077 9.692 10.307 20.615 9.692l8.769-.461v-38.462l-8.461-.462c-6.308-.307-9.693.462-13.539 2.77z"/>
+                </svg>
+              </span>
+                        <span class="username">zhiqiangzhan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <p class="text">资深码农，技术兴趣广泛，好读书，求甚解</p>
+        </div>
+    </div>
+
+</footer>
+</div>
+
+<div class="analytics">
+<!-- 百度统计开始 -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4a9354184739dfe6490722e2ad838394' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 百度统计结束 -->
+</div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

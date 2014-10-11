@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-JavaScript 对象模型</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2014/08/06/javascript-object-model.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">品码斋</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">品码斋</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+            
+            
+                
+            
+                
+                <li><a class="page-link" href="/blogs/">博客</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li><a class="page-link" href="/bookmarks/">书签</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/resoruces/">资源</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/books/">图书</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/news/">他山之石</a></li>
+                
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            
+                
+                <li><a class="page-link" href="/about/">关于我</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                <li><a class="page-link" href="https://github.com/jameszhan">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+<div class="container">
+    <div class="col-md-9">
+        <div class="post">
+
+    <header class="post-header">
+        <h1 class="post-title">JavaScript 对象模型</h1>
+        <p class="post-meta">
+            2014年08月06日 •
+            詹子知(James Zhan) •
+            版权所有，转载须声明出处
+        </p>
+    </header>
+
+    <article class="post-content">
+        <h2 id="javascript中的内置对象">JavaScript中的内置对象</h2>
+
+<p><img src="http://img3.tbcdn.cn/L1/461/1/b_65692_1395717796_28954664.png" alt="js_core"></p>
+
+<p>注：同背景颜色的对象为同一个对象，白色背景或无背景不受此规则限制，后面的图片规则类似。</p>
+
+<p>从上图可以看到，我们一共列出了16个对象，包括Object，Function，Array，RegExp，String，Number，Error，Date及其所对应的原型对象。</p>
+
+<p>对于每一个对象，都含有其constructor和prototype，如果该对象原型为<strong>Function</strong>，则其constructor为<strong>Function</strong>，对于所有非Function原型的对象，其constructor和该对象原型的constructor一致(后面我们会详细讨论这个问题)。对于<strong>Function</strong>原型的对象，它都会有一个独立空间表示其prototype，每个对象prototype各不相同。而对于非<strong>Function</strong>原型的对象，则其prototype为undefined。</p>
+
+<p>其实JavaScript中的constructor概念是很蹩脚的，其实基于原型继承的语言是完全用不上这个东西的。它存在的唯一用处就是给prototype找一个宿主，从而约定一组从该原型派生出来的一组对象的行为。事实上把原型定义在对象上会更直观，也是其他原型编程语言的的普遍做法。也许有的同学就会问了，这样就没有办法区分类和对象了？确实如此，但是原型编程语言其实根本不需要有类的概念，有对象就可以了，从同一个对象原型派生出去的对象即可以把它们认为是同一个类型的对象，通过约定，我们很容易做到这一点，比如大写开头的对象我们把它当做模板或者类型来用（其实它本身依然是一个对象），小写开头的对象就是我们实际需要使用的对象。</p>
+
+<h2 id="javascript内置对象的依赖关系">JavaScript内置对象的依赖关系</h2>
+
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717796_1863294342.png" alt="js_prototypes_core"></p>
+
+<h3 id="内置对象的依赖关系">内置对象的依赖关系</h3>
+
+<p>从上图，我们很容易可以看出如下的对象原型之间的依赖关系</p>
+
+<ul>
+<li><strong>constructor</strong>
+
+<ul>
+<li>Function -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Object -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Array -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Number -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Error -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>String -&gt; Function.prototype-&gt; Object.prototype -&gt; null</li>
+<li>Date -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>RegExp -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+</ul></li>
+<li><strong>prototype</strong>
+
+<ul>
+<li>Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Object.prototype -&gt; null</li>
+<li>Array.prototype -&gt; Object.prototype -&gt; null </li>
+<li>Number.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Error.prototype -&gt; Object.prototype -&gt; null</li>
+<li>String.prototype -&gt; Object.prototype -&gt; null</li>
+<li>Date.prototype -&gt; Object.prototype -&gt; null</li>
+<li>RegExp.prototype -&gt; Object.prototype -&gt; null</li>
+</ul></li>
+</ul>
+
+<p>关联代码: <a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/system.js">system.js</a> </p>
+
+<h3 id="自定义对象原型的依赖关系">自定义对象原型的依赖关系</h3>
+
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717797_880796968.png" alt="js_prototypes_objects"></p>
+
+<h2 id="内存模型">内存模型</h2>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Hello</span><span class="p">(){}</span>
+<span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hello</span><span class="p">();</span>
+</code></pre></div>
+<p>当执行完以上这段代码，系统中会增加3个对象，一个是Hello函数对象，一个是附属于Hello的prototype对象，还一个是hello对象。它们有如下的依赖关系</p>
+
+<ul>
+<li>Hello -&gt; Function.prototype -&gt; Object.prototype -&gt; null</li>
+<li>hello -&gt; Hello.prototype -&gt; Object.prototype -&gt; null</li>
+</ul>
+
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717796_2002455296.png" alt="js_hello1"></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Hello</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">var</span> <span class="nx">hello2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hello</span><span class="p">();</span>
+</code></pre></div>
+<p>当改变constructor的prototype，对象的constructor也会相应地改变，并且对象的constructor一定等于其prototype的constructor。这里我们更新了Hello的prototype,然后派生出hello2。这个过程中，系统中增加了2个对象，{}和hello2，并且hello2的constructor就是{}的constructor，也即是Object.prototype.constructor。</p>
+
+<p>值得注意的是，之前的prototype将不再和Hello相关联，也即原来的hello对象和Hello函数没有任何关系，更新Hello.prototype将不会对hello产生任何影响，我们可以通过Object.getPrototypeOf(hello)得到其prototype，值得注意的是，该prototype的constructor依然是Hello本身。</p>
+
+<p><img src="http://img3.tbcdn.cn/L1/461/1/b_65692_1395717796_850114897.png" alt="js_hello2"></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">World</span><span class="p">(){}</span>
+<span class="nx">Hello</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">World</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">hello3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hello</span><span class="p">();</span>
+</code></pre></div>
+<p>这里，我们引入了新的函数World，并更新了Hello.prototype到其派生对象，然后创建了一个新实例hello3，这个过程中，系统中共增加了4个对象，分别是World, World.prototype，new World()，以及hello3。同hello一样，hello2将不再于Hello产生任何关联，整个系统中的对象将有如下的依赖关系。</p>
+
+<ul>
+<li>hello -&gt; prototype(最初的Hello.prototype) -&gt; Object.prototype -&gt; null</li>
+<li>hello2 -&gt; {} -&gt; Object.prototype -&gt; null</li>
+<li>hello3 -&gt; new World() -&gt; World.prototype -&gt; Object.prototype -&gt; null</li>
+</ul>
+
+<p><img src="http://img3.tbcdn.cn/L1/461/1/b_65692_1395717796_1243168041.png" alt="js_hello3"></p>
+
+<p>关联代码: <a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/constructor.js">constructor.js</a>   </p>
+
+<h2 id="更好的javascript">更好的JavaScript</h2>
+
+<h3 id="试着忘掉new关键字">试着忘掉new关键字</h3>
+
+<p>JavaScript的new关键字确实会使不少人感到困惑，当你熟悉原型编程以后，你会发现new这个关键字越来越蹩脚，但是由于历史原因，你又没有办法完全摆脱它，毕竟，普通对象上是没有prototype属性的，必须借助Function原型派生的对象作为其prototype宿主，而new恰恰充当了对象到其原型的桥梁作用。</p>
+
+<p>下面，我们将定义一个方法，把new给隐藏起来，允许从一个普通对象直接派生出其他对象。</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
+    <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>好的，我们下一步来看看如何使用它。</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">beget</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</code></pre></div>
+<p>根据前面的知识，我们可以很容易地画出下面的内存模型图</p>
+
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717796_1715783539.png" alt="js_abcdefg"></p>
+
+<p>细心的同学可能会很好奇，F函数去哪儿了呢？其实我们完全没必要关心F的存在，就拿b来说，我们很容易地知道b的构造函数等于其原型的构造函数，即a的构造函数(Object)，事实上我们已经没有办法通过JavaScript的方法去得到F的信息了，从这个层面，其实F是可以被垃圾回收掉的。</p>
+
+<p>详细示例代码可以参考：<a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/object_model.js">object_model.js</a>  </p>
+
+<h3 id="代码示例">代码示例</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">var Vehicle = {
+    start: function(){
+        console.log(&quot;Start &quot; + this);
+    },
+    stop: function(){
+        console.log(&quot;Stop &quot; + this);
+    }
+}
+
+var Car = Object.beget(Vehicle);
+Car.tweet = function(){
+    console.log(this + &quot; tweet&quot;);
+};
+
+var myCar = Object.beget(Car);
+Object.traceObj(&#39;myCar&#39;, myCar);
+myCar.start();
+myCar.tweet();
+myCar.stop();
+</code></pre></div>
+<p>详细示例代码可以参考：<a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/examples.js">examples.js</a>!</p>
+
+    </article>
+
+    <div class="row-fluid">
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-folder-open"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript<span>2</span></a></li>
+    
+
+        </ul>
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-tags"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型<span>2</span></a></li>
+    
+
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="pagination pull-right">
+            
+            <li class="prev"><a href="/2014/05/30/backtracking-clojure.html" title="回溯算法Clojure实现">&larr; 上一篇</a></li>
+            
+            <li><a href="http://jameszhan.github.io">Archive</a></li>
+            
+            <li class="next"><a href="/2014/08/08/linux-permission-skills.html" title="Linux下的权限管理技巧">下一篇 &rarr;</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 分类</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 标签</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/c.html">C <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby <span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+    </div>
+</div>
+
+<div class="container">
+<footer>
+    <hr/>
+    <div class="row footer-content">
+
+        <div class="col-md-3">
+            <ul class="contact-list">
+                <li>詹子知</li>
+                <li>Full Stack Engineer</li>
+                <li><a href="mailto:zhiqiangzhan@gmail.com">zhiqiangzhan@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <ul class="social-media-list">
+                
+                <li>
+                    <a href="https://github.com/jameszhan">
+              <span class="icon icon--github">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282"
+                          d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+
+                
+                <li>
+                    <a href="https://twitter.com/jameszhan">
+              <span class="icon icon--twitter">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://weibo.com/zizhizhan">
+              <span class="icon icon--weibo">
+               <svg viewBox="0, 0, 300, 300">
+                   <path d="M196.802 39.964c-8.656 3.787-10.64 12.803-4.328 19.115 3.066 3.066 5.951 3.607 18.574 3.607 17.673 0 29.575 4.688 38.592 15.148 11 12.443 12.263 16.23 12.263 38.952 0 20.197 0 20.558 4.688 23.263 10.82 6.131 18.034-1.443 20.558-21.64 3.246-26.329-12.443-56.986-36.066-71.052-15.509-9.016-42.018-12.623-54.281-7.393zm-88.724 33.542c-20.198 7.213-39.674 21.099-60.592 43.46-49.592 52.658-46.346 102.791 8.295 129.48 56.805 27.771 133.267 18.574 174.924-21.099 31.198-29.575 27.411-66.724-8.115-79.347-6.312-2.164-8.296-3.787-7.394-5.771 3.246-7.934 4.328-17.131 2.525-22.541-5.591-17.132-25.968-21.099-56.264-10.82l-12.083 4.147 1.082-12.082c1.263-14.246-1.803-22.001-10.279-26.329-7.033-3.607-20.558-3.246-32.099.902zm50.133 69.789c26.869 7.394 43.28 23.624 43.28 42.919 0 21.46-19.116 40.756-50.133 51.035-16.591 5.41-47.428 6.492-62.576 2.344-28.673-8.115-44.903-23.984-44.903-44.362 0-11.181 4.869-20.919 15.509-30.837 9.918-9.377 17.492-13.886 32.099-18.755 22.001-7.393 45.625-8.295 66.724-2.344zm-56.806 17.492c-18.213 8.476-27.951 21.46-27.951 37.69 0 14.788 6.492 24.886 20.738 32.46 11 5.951 31.198 5.41 43.461-.901 15.689-8.296 25.968-23.624 25.968-38.592-.181-12.263-11.001-26.87-23.804-32.099-10.279-4.328-27.592-3.607-38.412 1.442zm13.165 33.903c1.262 1.262 2.164 4.328 2.164 7.033 0 9.017-15.148 16.411-21.28 10.279-3.426-3.426-2.524-11.902 1.443-15.869 3.967-3.968 14.246-4.869 17.673-1.443zm85.298-117.758c-8.296 8.296-2.705 18.214 10.459 18.214 11.361 0 16.41 5.771 16.41 18.755 0 8.115.722 10.459 3.968 12.623 9.738 6.853 17.673-.721 17.673-16.771 0-19.656-14.067-34.444-34.084-35.887-9.016-.721-11.18-.18-14.426 3.066z"/>
+               </svg>
+              </span>
+
+                        <span class="username">zizhizhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.zhihu.com/people/james_zhan">
+              <span class="icon icon--zhihu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M78.172 153.638s-.038-9.983-3.211-9.983h-22.119c.736-11.455.928-21.811.928-31.058h21.629s.833-9.538-3.626-9.428h-37.415c1.474-5.546 3.328-11.273 5.546-17.193 0 0-10.175 0-13.644 9.125-1.432 3.768-5.584 18.239-12.976 33.026 2.491-.267 10.725-.493 15.574-9.387.893-2.483 1.063-2.815 2.172-6.143h12.201c0 4.436.064 10.566-.3 17.956 0 7.04-.205 10.32-.41 13.102h-22.105c-4.963 0-6.578 9.983-6.578 9.983h27.73c-1.855 21.075-11.838 38.64-29.948 52.687 2.954 2.953 17.687-.107 21.562-3.999 0 0 9.715-8.828 15.042-29.277 7.019 8.138 12.936 15.348 17.747 21.629 2.219 2.962 4.992 6.101 4.992 6.101s3.423-11.642-.448-17.18c-3.204-3.773-11.944-14.058-15.635-17.76l-6.102 4.992c1.846-5.908 2.957-11.648 3.329-17.193h26.065zm5.546 39.903l9.902.002 3.173 11.08s15.187-11.08 17.848-11.08c2.662 0 10.402-.002 10.402-.002h10.538v-91.968h-51.863v91.968zm10.538-81.985h30.787v72.004h-11.81l-11.983 7.663-1.959-7.648-5.035-.015v-72.004zm149.188 25.443l8.875 6.656c9.61-11.828 16.444-20.883 20.52-27.176 0 0-7.06-6.453-12.533-1.819-2.314 3.729-9.097 13.839-16.862 22.339zm-44.369.556c-.372-.367-.922-1.11-1.663-2.219-7.028-9.609-10.173-15.126-14.325-18.931-4.153-3.804-12.295 1.183-12.295 1.183 4.436 5.546 9.613 12.756 15.529 21.63 1.47 2.219 2.58 3.882 3.327 4.992l9.427-6.655zm89.292 11.769c-9.129 0-60.451.431-60.451.431v-46.586c2.218 0 5.73-.181 10.537-.554 18.856-1.11 32.348-1.847 40.486-2.219 0 0 5.634-12.541-.274-15.426-4.26 0-4.951 1.705-10.679 2.112-2.364.168-76.205 7.606-107.177 8.322.735 4.071 3.385 6.962 7.193 9.114 7.202 1.574 10.554.688 22.755.315 11.455-.736 20.146-1.109 26.066-1.109v46.031h-61.561s2.095 10.538 10.233 10.538h51.328v32.722c0 6.446-5.16 10.144-11.291 9.743-6.492.054-12.029-.529-19.227-.832.921 1.831 2.919 6.636 8.908 10.071 4.554 2.22 7.458 3.033 12.002 3.033 13.631 0 21.062-7.969 20.701-20.907v-33.829h56.438c4.469-.001 4.013-10.97 4.013-10.97z"/>
+                </svg>
+              </span>
+                        <span class="username">james_zhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.baidu.com/p/zhiqiangzhan">
+              <span class="icon icon--baidu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M108.462 11.538c-3.385 1.231-8.616 4.924-11.847 8.462-7.846 8.769-11.23 19.385-11.077 34.769 0 10.462.77 13.846 4.924 22.616 8.769 19.077 26.153 25.077 40 13.846 17.692-14.308 20.923-48.154 6.769-68.462-3.693-5.231-16.769-13.692-20.923-13.538-.923.154-4.462 1.077-7.846 2.307zm82.769 6.462c-5.846 1.231-19.539 14.923-23.846 23.846-7.385 15.077-7.077 34.308.769 46.154 6.923 10.308 22.461 14.615 34.615 9.538 16.308-6.769 28.769-31.692 24.923-49.23-4.461-19.539-21.384-33.539-36.461-30.308zm-147.385 58.154c-8.154 2.769-17.077 13.077-20.154 22.923-6.154 20.154-3.846 36.615 6.923 48.923 7.847 8.769 13.077 11.077 24.616 10.154 12.307-.923 20.154-6.308 25.846-18 3.692-7.385 4.154-10.308 4.154-22.462 0-11.077-.616-15.077-3.385-20.154-5.077-9.846-10.461-15.384-19.077-19.692-9.077-4.615-10.461-4.615-18.923-1.692zm185.692 21.692c-11.538 5.846-17.23 18.923-17.23 39.692 0 15.385 2 22.616 7.846 29.385 6.461 7.385 16 10.615 28.154 9.692 11.23-.923 17.23-4 22.154-11.077 5.076-7.384 6.461-13.846 6.461-29.538 0-12.462-.461-15.077-4.308-22.308-6.307-12-14.461-17.384-27.692-18-7.385-.307-11.692.308-15.385 2.154zm-98.769 30c-10.154 4.616-16.154 9.692-22.923 19.539-9.077 13.23-17.538 22.307-36 38.307-28 24.154-33.846 33.231-34 52-.308 22.616 12.769 42.616 31.077 47.846 10.615 3.077 38.154 2.308 58.769-1.846 16-3.077 32-2.307 51.539 2.616 19.692 4.923 41.538 4.923 52.769 0 21.231-9.539 32.154-38.616 23.231-62.616-2.462-6.615-5.539-10.769-12.616-17.384-22.153-20.462-47.23-46.308-55.23-57.077-8.923-12-18.154-19.846-27.231-22.769-8.154-2.77-21.539-2.154-29.385 1.384zm4.616 42.923c2 1.231 2.307 8.616 2.769 47.693l.461 46.153h-18.307c-22.462 0-31.231-2.307-39.077-10.307-7.231-7.385-8.923-12.154-8.923-24.308 0-11.846 1.692-16.923 8.154-23.538 8.153-8.616 14.615-11.077 28.769-11.077h12.307v-26.154h5.847c3.077 0 6.769.769 8 1.538zm30.769 48.769c0 28 .154 28.154 16.461 28.154h11.231v-49.23h18.769l-.615 29.384c-.615 37.231.923 35.231-27.692 35.231-21.539 0-26-1.231-31.846-8.615-2.924-3.847-3.231-6-3.231-29.847 0-14.153.461-26.153 1.077-26.615.461-.615 4.307-1.077 8.461-1.077h7.385v22.615zm-67.385-7.23c-8.615 5.23-11.692 16.615-7.384 26.923 3.077 7.077 9.692 10.307 20.615 9.692l8.769-.461v-38.462l-8.461-.462c-6.308-.307-9.693.462-13.539 2.77z"/>
+                </svg>
+              </span>
+                        <span class="username">zhiqiangzhan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <p class="text">资深码农，技术兴趣广泛，好读书，求甚解</p>
+        </div>
+    </div>
+
+</footer>
+</div>
+
+<div class="analytics">
+<!-- 百度统计开始 -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4a9354184739dfe6490722e2ad838394' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 百度统计结束 -->
+</div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
