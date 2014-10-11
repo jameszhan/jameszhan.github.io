@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>品码斋</title>
+    <title>品码斋-Linux下的权限管理技巧</title>
     <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
-    <link rel="canonical" href="http://jameszhan.github.io/">
+    <link rel="canonical" href="http://jameszhan.github.io/2014/08/08/linux-permission-skills.html">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -206,127 +206,263 @@
 
 
 <div class="container">
-    <div class="wrapper">
-        <div class="box container-fluid">
-  <h2 class="title">
-      <span class="icon-text"><i class="glyphicon glyphicon-home"></i>
-          文章列表
-      </span>
-    <a class="pull-right rss" href="/feed.xml"><i class="glyphicon glyphicon-rss"></i>RSS</a>
-  </h2>
-  
-  <ul class="listing">
-    
-    <li>
-        <a href="/2014/09/29/github-pages-with-comments.html">如何实现Github博客评论功能</a>
-        <span class="pull-right">2014-09-29</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/25/programming-languages-concepts.html">编程语言的一些概念</a>
-        <span class="pull-right">2014-09-25</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/20/y-combinator-implements.html">Y-Combinator不同语言实现方案</a>
-        <span class="pull-right">2014-09-20</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/19/lambda-y-combinator-javascript.html">Lambda演算之Y-Combinator的推导(JS描述)</a>
-        <span class="pull-right">2014-09-19</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导</a>
-        <span class="pull-right">2014-09-18</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/16/code-styles.html">不同编程语言的代码风格比较</a>
-        <span class="pull-right">2014-09-16</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/10/lambda-church-number.html">Lambda演算之自然数</a>
-        <span class="pull-right">2014-09-10</span>
-    </li>
-    
-    <li>
-        <a href="/2014/09/01/ruby-metagramming.html">Ruby元编程技巧</a>
-        <span class="pull-right">2014-09-01</span>
-    </li>
-    
-    <li>
-        <a href="/2014/08/18/angular-injector-analyze.html">抽丝剥茧——AngularJS Injector分析</a>
-        <span class="pull-right">2014-08-18</span>
-    </li>
-    
-    <li>
-        <a href="/2014/08/08/linux-permission-skills.html">Linux下的权限管理技巧</a>
-        <span class="pull-right">2014-08-08</span>
-    </li>
-    
-    <li>
-        <a href="/2014/08/06/javascript-object-model.html">JavaScript 对象模型</a>
-        <span class="pull-right">2014-08-06</span>
-    </li>
-    
-    <li>
-        <a href="/2014/05/30/backtracking-clojure.html">回溯算法Clojure实现</a>
-        <span class="pull-right">2014-05-30</span>
-    </li>
-    
-    <li>
-        <a href="/2011/02/14/backtracing-ruby.html">回溯算法Ruby实现</a>
-        <span class="pull-right">2011-02-14</span>
-    </li>
-    
-    <li>
-        <a href="/2010/01/02/backtracking-python.html">回溯算法Python实现</a>
-        <span class="pull-right">2010-01-02</span>
-    </li>
-    
-    <li>
-        <a href="/2009/10/11/heap-sort-c.html">堆排序(C语言描述)</a>
-        <span class="pull-right">2009-10-11</span>
-    </li>
-    
-    <li>
-        <a href="/2009/10/11/merge-sort-c.html">归并排序(C语言描述)</a>
-        <span class="pull-right">2009-10-11</span>
-    </li>
-    
-</ul>
-</div>
+    <div class="col-md-9">
+        <div class="post">
 
-        <!-- 多说评论框 start -->
-<div class="ds-thread"
-     data-thread-key="/index.html"
-     data-title="品码斋"
-     data-url="http://jameszhan.github.io/index.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:"jameszhan"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+    <header class="post-header">
+        <h1 class="post-title">Linux下的权限管理技巧</h1>
+        <p class="post-meta">
+            2014年08月08日 •
+            詹子知(James Zhan) •
+            版权所有，转载须声明出处
+        </p>
+    </header>
 
-    $(document).on('click', '#ds-thread textarea[name=message]', function(){
-        $('#ds-sync-checkbox').prop('checked', false);
-    });
-</script>
-<!-- 多说公共JS代码 end -->
+    <article class="post-content">
+        <h2 id="代码示例">代码示例</h2>
 
+<h3 id="直接在远端机器上执行代码">直接在远端机器上执行代码</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ssh ubuntu@10.211.55.13 <span class="s1">&#39;ls -l&#39;</span>
+</code></pre></div>
+<h3 id="登陆远程机器免输入密码">登陆远程机器免输入密码</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh ubuntu@10.211.55.13 <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
 
+<span class="c">#下面是Amazon EC2的例子</span>
+cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh -v -i ~/.ssh/trail.pem ubuntu@ec2-54-241-192-74.us-west-1.compute.amazonaws.com <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
+</code></pre></div>
+<p>对于自己的专属电脑来说，每次sudo输入密码确实非常啰嗦，尤其是在编写远程部署脚本时，更是遍地是坑</p>
 
+<h3 id="sudo免输入密码">sudo免输入密码</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#在/etc/sudoers中更改用户相应的条目如下即可</span>
+ubuntu <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
+james <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
+</code></pre></div>
+<h3 id="添加sudo免输密码用户">添加sudo免输密码用户</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">adduser deploy --ingroup admin
+<span class="c">#添加以下内容到/etc/sudoers</span>
+deploy <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
+</code></pre></div>
+<h2 id="关键文件详解">关键文件详解</h2>
+
+<p>用户，组及权限控制的信息主要和/etc/sudoers，/etc/passwd，/etc/shadow，/etc/group几个文件相关，可以使用id，finger查看用户信息。</p>
+
+<h4 id="/etc/sudoers">/etc/sudoers</h4>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#常见格式规范</span>
+<span class="c"># User privilege specification</span>
+root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>      ALL
+<span class="c"># Members of the admin group may gain root privileges</span>
+%admin <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>     ALL
+
+<span class="c">#第一栏，用户或组（%开头表示组用户）</span>
+<span class="c">#第二栏，主机名称</span>
+<span class="c">#第三栏（括号中的那个），表明用户以何种身份执行命令</span>
+<span class="c">#最后一栏，用户可执行的命令列表，用逗号分隔，如果不想输入密码，可以在之前加上NOPASSWD。</span>
+
+%users <span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span> /sbin/mount /cdrom,/sbin/umount /cdrom
+%users <span class="nv">localhost</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:/sbin/shutdown -h now
+</code></pre></div>
+<h4 id="/etc/passwd">/etc/passwd</h4>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash
+
+<span class="c"># ubuntu =&gt; 用户名</span>
+<span class="c"># x =&gt; 表示登陆需要密码，若此处无x，则表示该账户登陆不需要密码</span>
+<span class="c"># 1001 =&gt; 用户ID(uid)</span>
+<span class="c"># 27 =&gt; 用户组ID(gid)</span>
+<span class="c"># Ubuntu,,, =&gt; finger inform, 记录用户的相关信息，比如公司，地区等</span>
+<span class="c"># /home/ubuntu =&gt; 用户Home目录</span>
+<span class="c"># /bin/bash =&gt; 该用户使用bash shell的路径.如果是 /sbin/nologin,表示无法登陆系统,只能以FTP形式登录; 如果是 /bin/false,则表示只能发邮件.</span>
+</code></pre></div>
+<h4 id="/etc/shadow">/etc/shadow</h4>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:<span class="nv">$6$9M43z06q$w</span>/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:
+
+<span class="c">#ubuntu =&gt; 用户名</span>
+<span class="c">#$6$yIUbtdK… =&gt; 用户加密后的密码，若为!!，则表示无密码，若为!$6$yIUbtdK...表示该账户已被锁定。</span>
+<span class="c">#15758 =&gt;  该账户密码最新变更的日期,以1970年1月1日为基数开始计算,是2010年2月7日 (可用chage –l user 来查看)</span>
+<span class="c">#0 =&gt; 至少使用多久才允许变更密码,0表示没有限制;若次数为9,则表示该密码创建或变更后至少过9天才能再次变更密码.</span>
+<span class="c">#99999 =&gt; 表示该密码使用的有效周期,99999表示无限制;若此为9,则表示每过9天就需要变更密码</span>
+<span class="c">#7 =&gt; 表示密码到期前7天,提醒用户需要变更密码</span>
+<span class="c">#6 =&gt; 密码到期日起的6天后,如果该用户仍未变更密码,则该账户将被锁定 (默认留空)</span>
+<span class="c">#5 =&gt; 帐号到期日,以1970年1月1日开始计算,5天后账户锁定,此处表示的锁定日为1970便1月6日. (默认留空)</span>
+<span class="c">#最后一个(:后) =&gt; 是为了以后的新开发项做准备的</span>
+</code></pre></div>
+<h4 id="/etc/group">/etc/group</h4>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo:x:27:james
+
+<span class="c">#sudo =&gt; 用户组名</span>
+<span class="c">#x =&gt; 表示该用户组登录需要密码,若此出无x,则表示该用户组登录时不需要密码</span>
+<span class="c">#27 =&gt; 用户组ID ( gid)</span>
+<span class="c">#james =&gt; 这个用户组中的成员 ( 此处可多个,用户名之间用逗号隔开)</span>
+</code></pre></div>
+    </article>
+
+    <div class="row-fluid">
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-folder-open"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/categories/linux.html">Linux<span>1</span></a></li>
+    
+
+        </ul>
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-tags"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/tags/linux.html">Linux<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell<span>1</span></a></li>
+    
+
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="pagination pull-right">
+            
+            <li class="prev"><a href="/2014/08/06/javascript-object-model.html" title="JavaScript 对象模型">&larr; 上一篇</a></li>
+            
+            <li><a href="http://jameszhan.github.io">Archive</a></li>
+            
+            <li class="next"><a href="/2014/08/18/angular-injector-analyze.html" title="抽丝剥茧——AngularJS Injector分析">下一篇 &rarr;</a>
+            </li>
+            
+        </ul>
     </div>
 </div>
+
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 分类</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 标签</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/c.html">C <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby <span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+    </div>
+</div>
+
 <div class="container">
 <footer>
     <hr/>
@@ -428,6 +564,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         </div>
     </div>
 </div>
+
 
 </body>
 

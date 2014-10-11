@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-编程语言的一些概念</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2014/09/25/programming-languages-concepts.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">品码斋</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">品码斋</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+            
+            
+                
+            
+                
+                <li><a class="page-link" href="/blogs/">博客</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li><a class="page-link" href="/bookmarks/">书签</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/resoruces/">资源</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/books/">图书</a></li>
+                
+            
+                
+                <li><a class="page-link" href="/news/">他山之石</a></li>
+                
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            
+                
+                <li><a class="page-link" href="/about/">关于我</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                <li><a class="page-link" href="https://github.com/jameszhan">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+<div class="container">
+    <div class="col-md-9">
+        <div class="post">
+
+    <header class="post-header">
+        <h1 class="post-title">编程语言的一些概念</h1>
+        <p class="post-meta">
+            2014年09月25日 •
+            詹子知(James Zhan) •
+            版权所有，转载须声明出处
+        </p>
+    </header>
+
+    <article class="post-content">
+        <h2 id="编程语言分类">编程语言分类</h2>
+
+<h3 id="什么是类型？">什么是类型？</h3>
+
+<ul>
+<li>Latent typing是一种你不需要在源码中的明确的声明你的变量的类型的类型系统.而与之相反的是manifest typing,它需要你在源码中明确的声明你的变量的类型。</li>
+<li>Static typing(静态类型)类型系统指的是你的源码中的任何独立的表达式都必须有类型，不管它的类型是直接写在源码中，或者是通过编译器来推断.Dynamic typing(动态类型)是运行时的值才有类型的一种类型系统，因此在它里面程序的表达式能够有任意的类型.</li>
+<li>overlap 是一种类型推断系统，像haskell和ocaml用的就是overlap,他们是 statically而且还是latently,他们的编译器能够推断出你的变量的类型。 理论上，这里还有另外一种overlap,它是把变量的类型写在源代码中，可是会直到运行时才会检测类型的是否正确. python3000已经被提议使用这种系统，Common Lisp 和Dylan 使用的就是这种系统.</li>
+<li>structural subtyping(结构化子类型)意味着对象或者表达式能够基于他们的结构(比如他们的方法，变量等等)来进行比较他们的类型的兼容性.相比较而言，nominal subtyping(名义子类型)意味着对象基于通过程序员来做的显示的子类声明来进行比较他们的类型的兼容性(比如java的接口).Haskell, ML, 和大部分的动态类型的语言是 structurally-subtyped.工业语言大多数都是nominal subtyping的.</li>
+<li>这里还有一个strong vs. weak 类型，他们的区别是是否在运行时动态的转换变量的值 （也就是说要不要到不同的类型)的类型.</li>
+<li>下面是类型系统的4种不同的维度：<br>
+
+<ol>
+<li>Static (表达式有类型) vs. dynamic (值有类型)</li>
+<li>Strong (没有一个显示的强制转换，这个值的类型就不能被转换为另外的类型) vs. weak (运行时会转换值类型到合适的类型)</li>
+<li>Latent (没有类型声明) vs. manifest (有类型声明)</li>
+<li>Nominal (子类型需要被显式的声明) vs. structural (子类型是由操作可利用的的类型来进行推断的)</li>
+</ol></li>
+</ul>
+
+<p>类型的本质在于它所定义的操作以及操作之间的关系和不变式。类型的实现关键在于满足类型规范的要求，而具体实现是可以变化的，使用者和测试用例都应该只依赖于类型规范而不依赖于具体实现。函数式的类型实现往往和类型规范是直接对应的，简单通用，但可能有性能问题，而命令式的类型实现往往会引入复杂的内部数据结构，但是其优点是高效。这两种实现并不是完全互斥的，有时候可以将二者相结合达到简单与高效的结合。</p>
+
+<h3 id="强类型-vs-弱类型">强类型 vs 弱类型</h3>
+
+<p>弱/强类型指的是语言类型系统的类型检查的严格程度。大部分编程语言都属于强类型语言，弱类型语言的典型代表有C，JavaScript。</p>
+
+<h3 id="静态语言-vs-动态语言">静态语言 vs 动态语言</h3>
+
+<p>静态/动态语言指的是变量与类型的绑定方法，静态类型指的是编译器在compile time执行类型检查，动态类型指的是编译器（虚拟机）在runtime执行类型检查。简单地说，在声明了一个变量之后，不能改变它的类型的语言，是静态语言；能够随时改变它的类型的语言，是动态语言。因为动态语言的特性，一般需要运行时虚拟机支持。</p>
+
+<h3 id="脚本语言-vs-通用的编程语言">脚本语言 vs 通用的编程语言</h3>
+
+<p>什么是脚本语言？</p>
+
+<p>对于脚本语言的看法，我比较赞同王垠同学的观点，有兴趣的同学可以参考<a href="http://www.yinwang.org/blog-cn/2013/03/29/scripting-language/">什么是“脚本语言”</a></p>
+
+<h2 id="编程范型">编程范型</h2>
+
+<p><img src="http://img2.tbcdn.cn/L1/461/1/c11213395dcfa71224df4e978557790b8059856c" alt="pl_paradigm"></p>
+
+<h3 id="命令式">命令式</h3>
+
+<p>命令“机器”如何去做事情(how)，这样不管你想要的是什么(what)，它都会按照你的命令实现。</p>
+
+<h3 id="声明式">声明式</h3>
+
+<p>告诉“机器”你想要的是什么(what)，让机器想出如何去做(how)。</p>
+
+<h4 id="函数式编程语言">函数式编程语言</h4>
+
+<p><img src="http://img1.tbcdn.cn/L1/461/1/f2ff7728518730327be67cfd42302d5c5d0f1451" alt="fp_features"></p>
+
+<h5 id="偏函数应用-vs-currying">偏函数应用 vs Currying</h5>
+
+<ul>
+<li>偏函数应用是找一个函数，固定其中的几个参数值，从而得到一个新的函数。</li>
+<li>函数Currying是一种使用匿名单参数函数来实现多参数函数的方法。</li>
+<li>函数Currying能够让你轻松的实现某些偏函数应用。</li>
+<li>有些语言(例如 Haskell, OCaml)所有的多参函数都是在内部通过函数Currying实现的。</li>
+</ul>
+
+<h5 id="fisrt-class（一等公民）">Fisrt Class（一等公民）</h5>
+
+<ul>
+<li>可以用变量命名</li>
+<li>可以提供给过程作为参数</li>
+<li>可以由过程作为结果返回</li>
+<li>可以包含在数据结构中</li>
+</ul>
+
+<h3 id="lop范式">LOP范式</h3>
+
+<p>LOP范式的基本思想是从问题出发，先创建一门描述领域模型的DSL，再用DSL去解决问题，它具有高度的声明性和抽象性。SQL、make file、CSS等DSL都可以被认为是LOP的具体实例。
+LOP是一种面向领域的，高度声明式的编程方式，它的抽象维度与领域模型的维度完全一致。LOP能让程序员从复杂的实现细节中解脱出来，把关注点集中在问题的本质上，从而提高编程的效率和质量。</p>
+
+<h4 id="外部的dsl">外部的DSL</h4>
+
+<p>典型的例子有Protocol Buffer，avro。</p>
+
+<ol>
+<li>优点：可以自由设计语法</li>
+<li>缺点：需要为其单独开发编译器或解释器</li>
+</ol>
+
+<h4 id="内部的dsl">内部的DSL</h4>
+
+<p>例如：<a href="http://sqlkorma.com/">Korma</a>，<a href="https://github.com/weavejester/compojure">Compojure</a></p>
+
+<ol>
+<li>优点：不用单独开发编译器或解释器</li>
+<li>缺点：无法自由设计语法</li>
+</ol>
+
+<p>这里要重点说下Lisp，Lisp并不限制你用S表达式来表达什么语义，同样的S表达式语法可以表达各种不同领域的语义，这就是语法和语义解耦。如果说普通语言的刚性源于“语法和语义紧耦合”，那么Lisp的柔性正是源于“语法和语义解耦”！“语法和语义解耦”使得Lisp可以随意地构造各种领域的DSL，而不强制用某一种范式或是领域视角去分析和解决问题。本质上，Lisp编程是一种超越了普通编程范式的范式。
+实际上，LISP几乎可以支持任何的编程范型</p>
+
+<h3 id="编程范型本质">编程范型本质</h3>
+
+<p>归根结底，编程是寻求一种机制，将指定的输入转化为指定的输出。三种范式对此提供了截然不同的解决方案：</p>
+
+<p>命令式把程序看作一个自动机，输入是初始状态，输出是最终状态，编程就是设计一系列指令，通过自动机执行以完成状态转变；
+函数式把程序看作一个数学函数，输入是自变量，输出是因变量，编程就是设计一系列函数，通过表达式变换以完成计算；
+逻辑式把程序看作一个逻辑证明，输入是题设，输出是结论，编程就是设计一系列命题，通过逻辑推理以完成证明。
+绘成表格如下：</p>
+
+<table><thead>
+<tr>
+<th>范式</th>
+<th>程序</th>
+<th>输入</th>
+<th>输出</th>
+<th>程序设计</th>
+<th>程序运行</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>命令式</td>
+<td>自动机</td>
+<td>初始状态</td>
+<td>最终状态</td>
+<td>设计指令</td>
+<td>命令执行</td>
+</tr>
+<tr>
+<td>函数式</td>
+<td>数学函数</td>
+<td>自变量</td>
+<td>因变量</td>
+<td>设计函数</td>
+<td>表达式变换</td>
+</tr>
+<tr>
+<td>逻辑式</td>
+<td>逻辑证明</td>
+<td>题设</td>
+<td>结论</td>
+<td>设计命题</td>
+<td>逻辑推理</td>
+</tr>
+</tbody></table>
+
+<h2 id="语言与生态系统">语言与生态系统</h2>
+
+<h3 id="大公司和基金会主导">大公司和基金会主导</h3>
+
+<p>例如Java，他们会告诉你，多重继承是邪恶的，因为大家都这么说; 运算符重载是邪恶的，诸如此类。我甚至有点模糊地知道为什么是邪恶的，但实际上不知道。后来我明白了，这些都不邪恶，不是烂玩意儿，烂的是开发者。</p>
+
+<h3 id="社区主导语言的发展方向">社区主导语言的发展方向</h3>
+
+<p>语法灵活性高，开发者们共同参与，沉淀出好的实践习惯，一起推动语言和社区向前发展。</p>
+
+<h2 id="编程语言的常见特性">编程语言的常见特性</h2>
+
+<h3 id="类型推断">类型推断</h3>
+
+<p>对任何语言，具体是哪些地方有必要加上类型标记呢？其实有一个很简单的方法来判断：观察信息进出函数的“接口”，把这些接口都做上标记。直观一点说，函数就像是一个电路模块，只要我们知道输入和输出是什么，那么中间的导线里面是什么，我们其实都可以推出来。类型推导的过程，就像是模拟这个电路的运行。这里函数的输入就是参数，输出就是返回值，所以基本上把这两者加上类型标记，里面的局部变量的类型都可以推出来。另外需要注意的是，如果函数使用了全局变量，那么全局变量就是函数的一个“隐性”的输入，所以如果程序有全局变量，都需要加上类型标记。</p>
+
+<h3 id="structural-subtyping-vs-nominal-subtyping">Structural subtyping vs Nominal Subtyping</h3>
+
+<p>Go语言中，只要有Interface中定义的方法，就算实现了该接口，不声不响地把静态语言的Duck Type给做了！
+Swift尽管用的是Nominal Subtyping，但是swift中有extension，可以在类型定义后，再声明class实现protocol，虽然繁琐点，但依然不失灵活性。
+动态语言如Ruby，Python，JavaScript，一般不需要考虑这些，因为他们天然就支持duck type。</p>
+
+<h3 id="闭包">闭包</h3>
+
+<p>在计算机科学中，闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的表达式（通常是函数）。这些被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。
+词法作用域(lexical scope)等同于静态作用域(static scope)。所谓的词法作用域其实是指作用域在词法解析阶段既确定了，不会改变。</p>
+
+<p>闭包的数据结构可以定义为，包含一个函数定义 f 和它定义时所在的环境 (struct Closure (f env))</p>
+
+<ol>
+<li>全局函数是一个有名字但不会捕获任何值的闭包。</li>
+<li>嵌套函数是一个有名字并可以捕获其封闭函数域内值得闭包。</li>
+<li>Lambda(闭包表达式)是一个利用轻量级语法所写的可以捕获其上下文中变量值的匿名闭包。</li>
+</ol>
+
+<h4 id="什么是lambda-calculus？">什么是Lambda Calculus？</h4>
+
+<p>现在让我们过渡到一种更强大的语言：lambda calculus。它虽然名字看起来很吓人，但是其实非常简单。它的三个元素分别是是：变量，函数，调用。用传统的表达法，它们看起来就是：
+变量：x
+函数：λx.t
+调用：t1 t2</p>
+
+<p>每个程序语言里面都有这三个元素，只不过具体的语法不同，所以你其实每天都在使用 lambda calculus。用 Scheme 作为例子，这三个元素看起来就像：
+变量：x
+函数：(lambda (x) e)
+调用：(e1 e2)</p>
+
+<p>lambda calculus 的程序和机器有这样的一一对应关系：一个变量就是一根导线。一个函数就是某种电子器件的“样板”，有它自己的输入和输出端子，自己的逻辑。一个调用都是在设计中插入一个电子器件的“实例”，把它的输入端子连接到某些已有的导线，这些导线被叫做“参数”。所以一个 lambda calculus 的解释器实际上就是一个电子线路的模拟器。</p>
+
+<p>关于lambda演算的相关知识，可以参考我之前的2篇文章。</p>
+
+<ul>
+<li><a href="http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html">Lambda演算之自然数(Clojure描述)</a></li>
+<li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导(Clojure描述)</a></li>
+</ul>
+
+<p>闭包 vs 函数指针?</p>
+
+<h3 id="垃圾回收">垃圾回收</h3>
+
+<ol>
+<li>标记清除(根可达)</li>
+<li>复制收集(根可达并有效利用空间)</li>
+<li>引用计数</li>
+</ol>
+
+<h3 id="mixin">Mixin</h3>
+
+<p>Ruby 优雅的Mixin方案</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Foo</span>
+    <span class="k">def</span> <span class="nf">foo</span>
+        <span class="s2">&quot;foo&quot;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">module</span> <span class="nn">Bar</span>
+    <span class="k">def</span> <span class="nf">bar</span>
+        <span class="s2">&quot;bar&quot;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">class</span> <span class="nc">Demo</span>
+    <span class="kp">include</span> <span class="no">Foo</span><span class="p">,</span> <span class="no">Bar</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Python，C++允许多重继承。
+Java8 也支持接口方法有默认实现（感觉怪怪的，不过好歹也是一种进步）</p>
+
+<h3 id="open-class">Open Class</h3>
+
+<ul>
+<li>Ruby</li>
+</ul>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Numeric</span>
+    <span class="k">def</span> <span class="nf">square</span>
+        <span class="nb">self</span> <span class="o">*</span> <span class="nb">self</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="mi">3</span><span class="o">.</span><span class="n">square</span>
+</code></pre></div>
+<ul>
+<li>Python</li>
+</ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">int</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="bp">self</span>
+
+<span class="nb">int</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">square</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>Swift</li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">extension</span> <span class="n">Int</span> <span class="p">{</span>
+    <span class="k">func</span> <span class="n">square</span><span class="p">(){</span>
+        <span class="nb">self</span> <span class="o">*</span> <span class="nb">self</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="mf">3.</span><span class="n">square</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li>C#</li>
+</ul>
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">namespace</span> <span class="nn">ExtensionMethods</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">MyExtensions</span> <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">square</span><span class="p">(</span><span class="k">this</span> <span class="n">Int32</span> <span class="k">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">value</span> <span class="p">*</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">using</span> <span class="nn">ExtensionMethods</span><span class="p">;</span>
+<span class="m">3.</span><span class="n">square</span>
+</code></pre></div>
+<h3 id="多返回值函数">多返回值函数</h3>
+
+<h3 id="optional">Optional</h3>
+
+<p>optional 作为一个非常关键的特性加入到了Swift当中，经过Guava的实践，Optional也被正式引入了Java8，配合上Stream API也可以摆脱恼人的不断的判空逻辑。</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">puts</span> <span class="n">person</span><span class="p">.</span><span class="n">contact</span><span class="o">?</span><span class="p">.</span><span class="n">address</span><span class="o">?</span><span class="p">.</span><span class="n">city</span><span class="o">!</span>
+</code></pre></div>
+<p>Ruby默认也不支持Optional，但是要加入该功能也非常简单。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Optional</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="vi">@value</span> <span class="o">=</span>  <span class="n">value</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@value</span> <span class="o">!=</span> <span class="kp">nil</span>
+      <span class="vi">@value</span><span class="o">.</span><span class="n">send</span> <span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="nb">method</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=~</span> <span class="sr">/^.+!$/</span>
+        <span class="kp">nil</span>
+      <span class="k">else</span>
+        <span class="no">Optional</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">require</span> <span class="s1">&#39;./optional&#39;</span>
+
+<span class="k">class</span> <span class="nc">Module</span>
+
+  <span class="k">def</span> <span class="nf">define_attr</span><span class="p">(</span><span class="o">*</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="n">attrs</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="kp">attr</span><span class="o">|</span> <span class="n">define_attr_internal</span> <span class="kp">attr</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">define_attr_internal</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span>
+      <span class="k">if</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=~</span> <span class="sr">/^[\w_]+$/</span>
+        <span class="nb">class_eval</span> <span class="k">do</span>
+
+          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">=&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
+            <span class="nb">instance_variable_set</span><span class="p">(</span><span class="s2">&quot;@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+          <span class="k">end</span>
+
+          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
+            <span class="nb">instance_variable_get</span><span class="p">(</span><span class="s2">&quot;@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="k">end</span>
+
+          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
+            <span class="no">Optional</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">send</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+          <span class="k">end</span>
+
+          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="k">do</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">send</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_sym</span>
+            <span class="k">if</span> <span class="n">val</span>
+              <span class="n">val</span>
+            <span class="k">else</span>
+              <span class="k">raise</span> <span class="no">Error</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2"> is not found&quot;</span><span class="p">)</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+        <span class="k">end</span>
+      <span class="k">else</span>
+        <span class="nb">puts</span> <span class="s2">&quot;Invalid attr name </span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+<span class="k">end</span>
+<span class="k">class</span> <span class="nc">Person</span>
+  <span class="n">define_attr</span> <span class="ss">:contact</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Contact</span>
+  <span class="n">define_attr</span> <span class="ss">:address</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Address</span>
+  <span class="n">define_attr</span> <span class="ss">:province</span><span class="p">,</span> <span class="ss">:city</span><span class="p">,</span> <span class="ss">:street</span>
+<span class="k">end</span>
+
+<span class="n">addr</span> <span class="o">=</span> <span class="no">Address</span><span class="o">.</span><span class="n">new</span>
+<span class="n">addr</span><span class="o">.</span><span class="n">province</span> <span class="o">=</span> <span class="s1">&#39;Guangdong&#39;</span>
+<span class="n">addr</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="s1">&#39;Shenzhen&#39;</span>
+<span class="n">addr</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="s1">&#39;699&#39;</span>
+
+<span class="n">contact</span> <span class="o">=</span> <span class="no">Contact</span><span class="o">.</span><span class="n">new</span>
+<span class="n">contact</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addr</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+<span class="n">person</span><span class="o">.</span><span class="n">contact</span> <span class="o">=</span> <span class="n">contact</span>
+
+<span class="n">person2</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+
+<span class="nb">puts</span> <span class="n">person2</span><span class="o">.</span><span class="n">contact?</span><span class="o">.</span><span class="n">address?</span><span class="o">.</span><span class="n">city!</span>
+<span class="nb">puts</span> <span class="n">person</span><span class="o">.</span><span class="n">contact?</span><span class="o">.</span><span class="n">address?</span><span class="o">.</span><span class="n">city!</span>
+</code></pre></div>
+<h2 id="元编程与dsl">元编程与DSL</h2>
+
+<h3 id="元编程">元编程</h3>
+
+<p>元编程作为超级范式的一个体现是,它能提升语言的级别。
+如果说 OOP 的关键在于构造对象的概念,那么 LOP 的关键在于构造语言的语法。
+既然有重复的代码,不能从语法上提炼,不妨退一步从文字上提炼。
+元程序将程序作为数据来对待,能自我发现、自我赋权和自我升级,有着其他 程序所不具备的自觉性、自适应性和智能性,可以说是一种最高级的程序。</p>
+
+<ol>
+<li>元编程是编写、操纵程序的程序。在传统的编程中,运算是动态的,但 程序本身是静态的;在元编程中,二者都是动态的。</li>
+<li>元编程能减少手工编程,突破原语言的语法限制,提升语言的抽象级别 与灵活性,从而提高程序员的生产效率。</li>
+<li>元编程有诸多应用:许多开发工具、框架引擎之类的基础软件都有自动 生成源代码的功能;创造 DSL 以便更高效地处理专门领域的业务;自动 生成重复代码;动态改变程序的语句、函数,类,等等。</li>
+<li>IDE 下自动生成的代码通常局限性大且可读性差,小操作可能造成的源 码上的大差异,削弱了版本控制的意义。用自编的无需人机交互的元程 序来生成代码,只须将元程序的数据来源版本化,简明而直观。同时由 于元程序可以随时修改,因此局限性小,更加灵活。</li>
+<li>语言导向式编程(LOP)通过创建一套专用语言 DSL 来编写程序。相比 通用语言,DSL 更简单、更抽象、更专业、更接近自然语言和声明式语 言、开发效率更高,同时有助于专业程序员与业务分析员之间的合作。</li>
+<li>语言导向式编程一般通过元编程将专用语言转化为通用语言。</li>
+<li>产生式编程与静态元编程都能自动生成源代码。产生式编程强调代码的 生成,元编程强调生成代码的可执行性。此外,动态元编程并不生成源 代码,但能在运行期间修改程序。</li>
+<li>元程序将程序作为数据来对待,有着其他程序所不具备的自觉性、自适 应性和智能性,可以说是一种最高级的程序。</li>
+</ol>
+
+<h4 id="常见的元编程工具">常见的元编程工具</h4>
+
+<h5 id="模板元编程">模板元编程</h5>
+
+<p>C++模板是一个非常强大的元编程工具，配上预处理宏，其几乎可以伪装成任何形式的DSL，当然要稍微受一点语法的限制。</p>
+
+<h5 id="万能的eval">万能的eval</h5>
+
+<p>Python, JavaScript都只含有全局的eval，只能解析字符串，尽管也可以完成想要的功能，确是相当不便和不安全。
+Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以解析字符串，还允许执行代码块。
+上例中的Ruby Optional的例子就用到了class_eval，把eval限制在了类的内部。</p>
+
+<h5 id="强大的宏">强大的宏</h5>
+
+<p>CLOS（Common Lisp面向对象系统）就是直接用宏编写而成。</p>
+
+<p>Lisp并不真正区分读取期、编译期和运行期。你可以在读取期编译或运行代码，也可以在编译期读取或运行代码，还可以在运行期读取或者编译代码。</p>
+
+<p>S-表达式的实质是用抽象语法树(AST)表达程序，无论是编译时还是运行时，我们都可以修改，注入，加载，或者生成新的程序 — 这些无非是在AST里修改或添加节点而已。我们甚至可以改动或添加新的句法。</p>
+
+<h5 id="read-macro之殇">Read Macro之殇</h5>
+
+<p><img src="http://img1.tbcdn.cn/L1/461/1/bb9e36c175641922375d3613bf736677deaff174" alt="clojure_read_macro"></p>
+
+<p>Read Macro使得程序员可以为一些特定字符定义一些特殊的行为，当碰到该字符后，解释器会先把其展开为S-Expression，以达到简化代码量或者达到某种格式的目的。Read Macro可是编写DSL的利器啊，但正是由于其过于强大，使得LISP分裂成不同的方言，由于各人的约定不一样，代码也比较晦涩难懂，所以在Clojure中就取消了自定义Read Macro的功能，这究竟是一种进步还是倒退呢？</p>
+
+<p>Clojure宏例子
+以下两段代码是等价的，利用宏可以很轻松地把嵌套调用转换为Pipeline调用。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">prn </span><span class="p">(</span><span class="nb">filter </span><span class="nv">even?</span> <span class="p">(</span><span class="nb">reverse </span><span class="p">(</span><span class="nb">cons </span><span class="mi">1</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]))))</span>
+
+<span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="p">(</span><span class="nb">cons </span><span class="mi">1</span><span class="p">)</span> <span class="nb">reverse </span><span class="p">(</span><span class="nb">filter </span><span class="nv">even?</span><span class="p">)</span> <span class="nv">prn</span><span class="p">)</span>
+</code></pre></div>
+<h5 id="ruby类宏">Ruby类宏</h5>
+
+<p>Ruby中的宏，功能相比Lisp中宏的用法当然要弱了许多，但是依然可以满足大部分的元编程需求。熟悉ruby的同学肯定都很熟悉attr_accessor，它可以很方便地帮类成员生成set和get方法。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Module</span>
+  <span class="k">def</span> <span class="nf">attr_accessor</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+    <span class="n">syms</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span><span class="o">|</span><span class="n">sym</span><span class="o">|</span>
+      <span class="nb">class_eval</span> <span class="o">&lt;&lt;-</span><span class="no">RUBY_EVAL</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">,</span> <span class="bp">__LINE__</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="sh">        def #{sym}</span>
+<span class="sh">          @#{sym}</span>
+<span class="sh">        end</span>
+<span class="sh">        def #{sym}=(val)</span>
+<span class="sh">          @#{sym} = val</span>
+<span class="sh">        end</span>
+<span class="no">      RUBY_EVAL</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<h5 id="动态语言的-method_missing">动态语言的 method_missing</h5>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Hasie</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+    <span class="vi">@hash</span> <span class="o">=</span> <span class="nb">hash</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@hash</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">__send__</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="nb">method</span> <span class="k">do</span><span class="o">|*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="vi">@hash</span><span class="o">[</span><span class="nb">method</span><span class="o">]</span>
+      <span class="k">end</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">__send__</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">super</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:a</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:b</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">h</span> <span class="o">=</span> <span class="no">Hasie</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">h</span><span class="o">.</span><span class="n">a</span><span class="p">()</span>
+<span class="nb">puts</span> <span class="n">h</span><span class="o">.</span><span class="n">b</span><span class="p">()</span>
+</code></pre></div>
+<p>python <strong>getattr</strong>  （Python中一切对象上的一切都是属性，很灵活地添加，删除以及重定义，可以玩出各种Trick，不过在代码即数据和Ruby及Lisp还差很远。）</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Hasie</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_hash</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">_hash</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">Hasie</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">a</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">b</span><span class="p">())</span>
+</code></pre></div>
+<h3 id="dsl">DSL</h3>
+
+<h4 id="外部dsl">外部DSL</h4>
+
+<ul>
+<li>awk是一个很典型外部DSL例子，其语法为 awk &#39;pattern {action}&#39;，其做的事情非常简单，扫描所有的行，一旦发现符合pattern的行，则执行action。</li>
+</ul>
+
+<p>以下例子用于找出所有sugou.search.com所有来源链接。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">less cookie_log <span class="p">|</span> awk <span class="s1">&#39;/sugou\.search\.com/{print $13;}&#39;</span> <span class="p">|</span> sort <span class="p">|</span> uniq
+</code></pre></div>
+<ul>
+<li>make 一个更典型的外部DSL例子</li>
+</ul>
+<div class="highlight"><pre><code class="language-makefile" data-lang="makefile"><span class="nf">hello</span><span class="o">:</span><span class="n">hello</span>.<span class="n">o</span>
+    gcc -o hello hello.o
+<span class="nf">hello.o</span><span class="o">:</span><span class="n">hello</span>.<span class="n">c</span>
+    gcc -c hello.c
+<span class="nf">clean</span><span class="o">:</span>
+    rm -f *.o hello
+</code></pre></div>
+<ul>
+<li>由于Java语言的特性，Java中使用的DSL一般都用XML来描述，例如ANT和Maven，下面看下Maven Project管理例子。</li>
+</ul>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.prometheus.shared<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>kindle<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.google.guava<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>guava<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.ow2.asm<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>asm<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>4.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div>
+<h4 id="内部dsl">内部DSL</h4>
+
+<ul>
+<li>Clojure Project管理</li>
+</ul>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defproject </span><span class="nv">hello-world</span> <span class="s">&quot;0.1.0-SNAPSHOT&quot;</span>
+  <span class="ss">:description</span> <span class="s">&quot;FIXME: write description&quot;</span>
+  <span class="ss">:url</span> <span class="s">&quot;http://example.com/FIXME&quot;</span>
+  <span class="ss">:license</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Eclipse Public License&quot;</span>
+            <span class="ss">:url</span> <span class="s">&quot;http://www.eclipse.org/legal/epl-v10.html&quot;</span><span class="p">}</span>
+  <span class="ss">:dependencies</span> <span class="p">[[</span><span class="nv">org.clojure/clojure</span> <span class="s">&quot;1.6.0&quot;</span><span class="p">]</span>
+                 <span class="p">[</span><span class="nv">ring/ring-core</span> <span class="s">&quot;1.3.0&quot;</span><span class="p">]</span>
+                 <span class="p">[</span><span class="nv">ring/ring-jetty-adapter</span> <span class="s">&quot;1.3.0&quot;</span><span class="p">]])</span>
+</code></pre></div>
+<ul>
+<li>Ruby Gem file</li>
+</ul>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;https://ruby.taobao.org/&#39;</span>
+
+<span class="n">gem</span> <span class="s1">&#39;rails&#39;</span><span class="p">,</span> <span class="s1">&#39;4.1.1&#39;</span>
+
+<span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;pry&#39;</span>
+<span class="k">end</span>
+
+<span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span>
+<span class="k">end</span>
+
+<span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">&#39;faker&#39;</span>
+  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span>
+<span class="k">end</span>
+</code></pre></div>
+<ul>
+<li>RSpec例子(是不是很优雅)</li>
+</ul>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">belong_to</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">validate_presence_of</span><span class="p">(</span><span class="ss">:title</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>还是必须遵循Ruby的语法，有点小遗憾！</p>
+
+<h2 id="编程语言趋势猜想">编程语言趋势猜想</h2>
+
+<h3 id="编写新语言更加简单">编写新语言更加简单</h3>
+
+<p>程序语言设计者将不需要关注具体的目标机器，也即不需要关心编译后端及代码优化这一块，目标代码将会是某一成熟的虚拟机字节码或者其他语言源文件。</p>
+
+<ul>
+<li>ClojureScript，CoffeeScript 生成 JavaScript源码</li>
+<li>Scala，Clojure，Groovy 生成 Java字节码</li>
+<li>Swift，Object-C 生成 LLVM字节码</li>
+</ul>
+
+<h3 id="语言生态">语言生态</h3>
+
+<p>多语言协同，不要拘泥于编程语言本身，既然行业里面已经有很成熟的解决方案在那里，换一种语言又何妨。每个成熟的语言都有自己的生态，也都有自己擅长的领域。</p>
+
+<h3 id="程序员分工更明晰">程序员分工更明晰</h3>
+
+<p>以往，有经验的程序员设计库和框架，普通程序员开发上层应用，以后的趋势可能是这样的，资深的程序员设计DSL语言的实现，普通的开发人员使用该DSL构建应用。</p>
+
+<h2 id="编程语言历史">编程语言历史</h2>
+
+<p><img src="http://img1.tbcdn.cn/L1/461/1/0964c49a88040dc69666487c6cbb6159d0dfd7e0" alt="pl_history"></p>
+
+<p>从汇编语言发展到现在，编程语言层出不穷，具体数目已经无法考证，比较流行的至少超过200种以上，上图列出了比较流行编程语言或者是对编程语言产生过重大影响的编程语言。</p>
+
+<ul>
+<li>1951 – Regional Assembly Language</li>
+<li>1952 – Autocode</li>
+<li>1954 – IPL (LISP语言的祖先)</li>
+<li>1955 – FLOW-MATIC (COBOL语言的祖先)</li>
+<li>1957 – FORTRAN (第一个编译型语言)</li>
+<li>1957 – COMTRAN (COBOL语言的祖先)</li>
+<li>1958 – LISP</li>
+<li>1958 – ALGOL 58</li>
+<li>1959 – FACT (COBOL语言的祖先)</li>
+<li>1959 – COBOL</li>
+<li>1959 – RPG</li>
+<li>1962 – APL</li>
+<li>1962 – Simula</li>
+<li>1962 – SNOBOL</li>
+<li>1963 – CPL (C语言的祖先)</li>
+<li>1964 – BASIC</li>
+<li>1964 – PL/I</li>
+<li>1966 – JOSS</li>
+<li>1967 – BCPL (C语言的祖先)</li>
+<li>1968 – Logo</li>
+<li>1969 – B (C语言的祖先)</li>
+<li>1970 – Pascal</li>
+<li>1970 – Forth</li>
+<li>1972 – C</li>
+<li>1972 – Smalltalk</li>
+<li>1972 – Prolog</li>
+<li>1973 – ML</li>
+<li>1975 – Scheme</li>
+<li>1978 – SQL</li>
+<li>1980 – C++ (既有类的C语言，更名于1983年7月)</li>
+<li>1983 – Ada</li>
+<li>1984 – Common Lisp</li>
+<li>1984 – MATLAB</li>
+<li>1985 – Eiffel</li>
+<li>1986 – Objective-C</li>
+<li>1986 – Erlang</li>
+<li>1987 – Perl</li>
+<li>1988 – Tcl</li>
+<li>1988 – Mathematica</li>
+<li>1989 – FL</li>
+<li>1990 – Haskell</li>
+<li>1991 – Python</li>
+<li>1991 – Visual Basic</li>
+<li>1993 – Ruby</li>
+<li>1993 – Lua</li>
+<li>1994 – CLOS (ANSI Common Lisp的一部分)</li>
+<li>1995 – Java</li>
+<li>1995 – Delphi (Object Pascal)</li>
+<li>1995 – JavaScript</li>
+<li>1995 – PHP</li>
+<li>1996 – WebDNA</li>
+<li>1997 – Rebol</li>
+<li>1999 – D</li>
+<li>2000 – ActionScript</li>
+<li>2001 – C#</li>
+<li>2001 – Visual Basic .NET</li>
+<li>2002 – F#</li>
+<li>2003 – Groovy</li>
+<li>2003 – Scala</li>
+<li>2007 – Clojure</li>
+<li>2009 – Go</li>
+<li>2010 - CoffeeScript</li>
+<li>2011 – Dart</li>
+<li>2014 - Swift</li>
+</ul>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li><a href="http://pan.baidu.com/s/1gdHzPQj">程序设计语言概念</a> 75fh</li>
+<li><a href="http://pan.baidu.com/s/14cRJw">程序设计语言理论基础</a> 61f8</li>
+<li><a href="http://pan.baidu.com/s/1i3mRLyt">编程语言实现模式</a> riav</li>
+<li><a href="http://pan.baidu.com/s/11tl3S">七周七语言</a> l5nx</li>
+<li><a href="http://pan.baidu.com/s/1gdACzIj">C++模板元编程</a> pmcs</li>
+<li><a href="http://pan.baidu.com/s/1eQEInPg">Ruby元编程</a> o3r7</li>
+<li><a href="http://pan.baidu.com/s/1i3gNUPf">黑客与画家</a> e6bu</li>
+<li><a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese">中文版Apple官方Swift教程</a></li>
+<li><a href="http://llvm.org/">LLVM</a></li>
+</ul>
+
+    </article>
+
+    <div class="row-fluid">
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-folder-open"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>6</span></a></li>
+    
+
+        </ul>
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-tags"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程<span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby<span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL<span>2</span></a></li>
+    
+
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="pagination pull-right">
+            
+            <li class="prev"><a href="/2014/09/20/y-combinator-implements.html" title="Y-Combinator不同语言实现方案">&larr; 上一篇</a></li>
+            
+            <li><a href="http://jameszhan.github.io">Archive</a></li>
+            
+            <li class="next"><a href="/2014/09/29/github-pages-with-comments.html" title="如何实现Github博客评论功能">下一篇 &rarr;</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 分类</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i> 标签</span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/c.html">C <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby <span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+    </div>
+</div>
+
+<div class="container">
+<footer>
+    <hr/>
+    <div class="row footer-content">
+
+        <div class="col-md-3">
+            <ul class="contact-list">
+                <li>詹子知</li>
+                <li>Full Stack Engineer</li>
+                <li><a href="mailto:zhiqiangzhan@gmail.com">zhiqiangzhan@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <ul class="social-media-list">
+                
+                <li>
+                    <a href="https://github.com/jameszhan">
+              <span class="icon icon--github">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282"
+                          d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+
+                
+                <li>
+                    <a href="https://twitter.com/jameszhan">
+              <span class="icon icon--twitter">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://weibo.com/zizhizhan">
+              <span class="icon icon--weibo">
+               <svg viewBox="0, 0, 300, 300">
+                   <path d="M196.802 39.964c-8.656 3.787-10.64 12.803-4.328 19.115 3.066 3.066 5.951 3.607 18.574 3.607 17.673 0 29.575 4.688 38.592 15.148 11 12.443 12.263 16.23 12.263 38.952 0 20.197 0 20.558 4.688 23.263 10.82 6.131 18.034-1.443 20.558-21.64 3.246-26.329-12.443-56.986-36.066-71.052-15.509-9.016-42.018-12.623-54.281-7.393zm-88.724 33.542c-20.198 7.213-39.674 21.099-60.592 43.46-49.592 52.658-46.346 102.791 8.295 129.48 56.805 27.771 133.267 18.574 174.924-21.099 31.198-29.575 27.411-66.724-8.115-79.347-6.312-2.164-8.296-3.787-7.394-5.771 3.246-7.934 4.328-17.131 2.525-22.541-5.591-17.132-25.968-21.099-56.264-10.82l-12.083 4.147 1.082-12.082c1.263-14.246-1.803-22.001-10.279-26.329-7.033-3.607-20.558-3.246-32.099.902zm50.133 69.789c26.869 7.394 43.28 23.624 43.28 42.919 0 21.46-19.116 40.756-50.133 51.035-16.591 5.41-47.428 6.492-62.576 2.344-28.673-8.115-44.903-23.984-44.903-44.362 0-11.181 4.869-20.919 15.509-30.837 9.918-9.377 17.492-13.886 32.099-18.755 22.001-7.393 45.625-8.295 66.724-2.344zm-56.806 17.492c-18.213 8.476-27.951 21.46-27.951 37.69 0 14.788 6.492 24.886 20.738 32.46 11 5.951 31.198 5.41 43.461-.901 15.689-8.296 25.968-23.624 25.968-38.592-.181-12.263-11.001-26.87-23.804-32.099-10.279-4.328-27.592-3.607-38.412 1.442zm13.165 33.903c1.262 1.262 2.164 4.328 2.164 7.033 0 9.017-15.148 16.411-21.28 10.279-3.426-3.426-2.524-11.902 1.443-15.869 3.967-3.968 14.246-4.869 17.673-1.443zm85.298-117.758c-8.296 8.296-2.705 18.214 10.459 18.214 11.361 0 16.41 5.771 16.41 18.755 0 8.115.722 10.459 3.968 12.623 9.738 6.853 17.673-.721 17.673-16.771 0-19.656-14.067-34.444-34.084-35.887-9.016-.721-11.18-.18-14.426 3.066z"/>
+               </svg>
+              </span>
+
+                        <span class="username">zizhizhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.zhihu.com/people/james_zhan">
+              <span class="icon icon--zhihu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M78.172 153.638s-.038-9.983-3.211-9.983h-22.119c.736-11.455.928-21.811.928-31.058h21.629s.833-9.538-3.626-9.428h-37.415c1.474-5.546 3.328-11.273 5.546-17.193 0 0-10.175 0-13.644 9.125-1.432 3.768-5.584 18.239-12.976 33.026 2.491-.267 10.725-.493 15.574-9.387.893-2.483 1.063-2.815 2.172-6.143h12.201c0 4.436.064 10.566-.3 17.956 0 7.04-.205 10.32-.41 13.102h-22.105c-4.963 0-6.578 9.983-6.578 9.983h27.73c-1.855 21.075-11.838 38.64-29.948 52.687 2.954 2.953 17.687-.107 21.562-3.999 0 0 9.715-8.828 15.042-29.277 7.019 8.138 12.936 15.348 17.747 21.629 2.219 2.962 4.992 6.101 4.992 6.101s3.423-11.642-.448-17.18c-3.204-3.773-11.944-14.058-15.635-17.76l-6.102 4.992c1.846-5.908 2.957-11.648 3.329-17.193h26.065zm5.546 39.903l9.902.002 3.173 11.08s15.187-11.08 17.848-11.08c2.662 0 10.402-.002 10.402-.002h10.538v-91.968h-51.863v91.968zm10.538-81.985h30.787v72.004h-11.81l-11.983 7.663-1.959-7.648-5.035-.015v-72.004zm149.188 25.443l8.875 6.656c9.61-11.828 16.444-20.883 20.52-27.176 0 0-7.06-6.453-12.533-1.819-2.314 3.729-9.097 13.839-16.862 22.339zm-44.369.556c-.372-.367-.922-1.11-1.663-2.219-7.028-9.609-10.173-15.126-14.325-18.931-4.153-3.804-12.295 1.183-12.295 1.183 4.436 5.546 9.613 12.756 15.529 21.63 1.47 2.219 2.58 3.882 3.327 4.992l9.427-6.655zm89.292 11.769c-9.129 0-60.451.431-60.451.431v-46.586c2.218 0 5.73-.181 10.537-.554 18.856-1.11 32.348-1.847 40.486-2.219 0 0 5.634-12.541-.274-15.426-4.26 0-4.951 1.705-10.679 2.112-2.364.168-76.205 7.606-107.177 8.322.735 4.071 3.385 6.962 7.193 9.114 7.202 1.574 10.554.688 22.755.315 11.455-.736 20.146-1.109 26.066-1.109v46.031h-61.561s2.095 10.538 10.233 10.538h51.328v32.722c0 6.446-5.16 10.144-11.291 9.743-6.492.054-12.029-.529-19.227-.832.921 1.831 2.919 6.636 8.908 10.071 4.554 2.22 7.458 3.033 12.002 3.033 13.631 0 21.062-7.969 20.701-20.907v-33.829h56.438c4.469-.001 4.013-10.97 4.013-10.97z"/>
+                </svg>
+              </span>
+                        <span class="username">james_zhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.baidu.com/p/zhiqiangzhan">
+              <span class="icon icon--baidu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M108.462 11.538c-3.385 1.231-8.616 4.924-11.847 8.462-7.846 8.769-11.23 19.385-11.077 34.769 0 10.462.77 13.846 4.924 22.616 8.769 19.077 26.153 25.077 40 13.846 17.692-14.308 20.923-48.154 6.769-68.462-3.693-5.231-16.769-13.692-20.923-13.538-.923.154-4.462 1.077-7.846 2.307zm82.769 6.462c-5.846 1.231-19.539 14.923-23.846 23.846-7.385 15.077-7.077 34.308.769 46.154 6.923 10.308 22.461 14.615 34.615 9.538 16.308-6.769 28.769-31.692 24.923-49.23-4.461-19.539-21.384-33.539-36.461-30.308zm-147.385 58.154c-8.154 2.769-17.077 13.077-20.154 22.923-6.154 20.154-3.846 36.615 6.923 48.923 7.847 8.769 13.077 11.077 24.616 10.154 12.307-.923 20.154-6.308 25.846-18 3.692-7.385 4.154-10.308 4.154-22.462 0-11.077-.616-15.077-3.385-20.154-5.077-9.846-10.461-15.384-19.077-19.692-9.077-4.615-10.461-4.615-18.923-1.692zm185.692 21.692c-11.538 5.846-17.23 18.923-17.23 39.692 0 15.385 2 22.616 7.846 29.385 6.461 7.385 16 10.615 28.154 9.692 11.23-.923 17.23-4 22.154-11.077 5.076-7.384 6.461-13.846 6.461-29.538 0-12.462-.461-15.077-4.308-22.308-6.307-12-14.461-17.384-27.692-18-7.385-.307-11.692.308-15.385 2.154zm-98.769 30c-10.154 4.616-16.154 9.692-22.923 19.539-9.077 13.23-17.538 22.307-36 38.307-28 24.154-33.846 33.231-34 52-.308 22.616 12.769 42.616 31.077 47.846 10.615 3.077 38.154 2.308 58.769-1.846 16-3.077 32-2.307 51.539 2.616 19.692 4.923 41.538 4.923 52.769 0 21.231-9.539 32.154-38.616 23.231-62.616-2.462-6.615-5.539-10.769-12.616-17.384-22.153-20.462-47.23-46.308-55.23-57.077-8.923-12-18.154-19.846-27.231-22.769-8.154-2.77-21.539-2.154-29.385 1.384zm4.616 42.923c2 1.231 2.307 8.616 2.769 47.693l.461 46.153h-18.307c-22.462 0-31.231-2.307-39.077-10.307-7.231-7.385-8.923-12.154-8.923-24.308 0-11.846 1.692-16.923 8.154-23.538 8.153-8.616 14.615-11.077 28.769-11.077h12.307v-26.154h5.847c3.077 0 6.769.769 8 1.538zm30.769 48.769c0 28 .154 28.154 16.461 28.154h11.231v-49.23h18.769l-.615 29.384c-.615 37.231.923 35.231-27.692 35.231-21.539 0-26-1.231-31.846-8.615-2.924-3.847-3.231-6-3.231-29.847 0-14.153.461-26.153 1.077-26.615.461-.615 4.307-1.077 8.461-1.077h7.385v22.615zm-67.385-7.23c-8.615 5.23-11.692 16.615-7.384 26.923 3.077 7.077 9.692 10.307 20.615 9.692l8.769-.461v-38.462l-8.461-.462c-6.308-.307-9.693.462-13.539 2.77z"/>
+                </svg>
+              </span>
+                        <span class="username">zhiqiangzhan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <p class="text">资深码农，技术兴趣广泛，好读书，求甚解</p>
+        </div>
+    </div>
+
+</footer>
+</div>
+
+<div class="analytics">
+<!-- 百度统计开始 -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4a9354184739dfe6490722e2ad838394' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 百度统计结束 -->
+</div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
