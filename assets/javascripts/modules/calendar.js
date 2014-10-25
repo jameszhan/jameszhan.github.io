@@ -1,0 +1,87 @@
+//= require jquery-ui/jquery.ui.core
+//= require jquery-ui/jquery.ui.widget
+//= require jquery-ui/jquery.ui.mouse
+//= require jquery-ui/jquery.ui.draggable
+//= require jquery-ui/jquery.ui.resizable
+//= require fullcalendar/fullcalendar
+//= require angular-ui/calendar
+//= require modules/lunar
+
+angular.module('local.calendar', ['ui.calendar', 'local.globals'])
+    .controller('CalendarController', ['$scope', '$compile', 'Lunar', function($scope, $compile, Lunar){
+        'use strict';
+
+        // Change View
+        $scope.changeView = function(view, calendar) {
+            calendar.fullCalendar('changeView',view);
+        };
+
+        // Change View
+        $scope.renderCalender = function(calendar) {
+            if(calendar){
+                calendar.fullCalendar('render');
+            }
+        };
+
+        // config object
+        $scope.uiConfig = {
+            calendar:{
+                height: 650,
+                editable: true,
+                ignoreTimezone: false,
+                header:{
+                    left: 'month basicWeek basicDay',
+                    center: 'title',
+                    right: 'agendaWeek agendaDay, today prev,next'
+                },
+                // time formats
+                titleFormat: {
+                    month: 'MMMM yyyy',
+                    week: "MMMd - {MMMd}",
+                    day: 'dddd, MMMd, yyyy'
+                },
+                columnFormat: {
+                    month: 'ddd',
+                    week: 'ddd M/d',
+                    day: 'dddd M/d'
+                },
+                timeFormat: { // for event elements
+                    '': 'h(:mm)t' // default
+                },
+                // locale
+                isRTL: false,
+                firstDay: 0,
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+                dayNamesShort: ['日','一','二','三','四','五','六'],
+                buttonText: {
+                    prev: '&nbsp;&#9668;&nbsp;',
+                    next: '&nbsp;&#9658;&nbsp;',
+                    prevYear: '&nbsp;&lt;&lt;&nbsp;',
+                    nextYear: '&nbsp;&gt;&gt;&nbsp;',
+                    today: '今天',
+                    month: '月',
+                    week: '星期',
+                    day: '天'
+                },
+                dayClick: $scope.dayClick || angular.noop,
+                eventClick: $scope.eventOnClick || angular.noop,
+                eventDrop: $scope.eventOnDrop || angular.noop,
+                eventResize: $scope.eventOnResize || angular.noop,
+                viewRender: function(view, el){
+                    el.find(".fc-day").each(function(i, e){
+                        var $this = $(e),
+                            lunar = Lunar.t(new Date($this.data('date')));
+                        $this.prepend("<b class='lunar'>" + lunar.toString() + "</b>");
+                    });
+                    return ($scope.updateResources || angular.noop)(view);
+                },
+                eventRender: $scope.eventRender
+            }
+        };
+
+        $scope.eventSources = [$scope.events];
+    }]);
+
+

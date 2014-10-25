@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-打造你的OSX开发环境</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2014/10/02/osx-developer-environment-setup.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">品码斋</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">品码斋</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a class="page-link" href="/blogs/">博客</a></li>
+                <li><a class="page-link" href="/bookmarks/">书签</a></li>
+                <li><a class="page-link" href="/books/">图书</a></li>
+                <li><a class="page-link" href="/resoruces/">资源</a></li>
+                <li><a class="page-link" href="/news/">他山之石</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="page-link" href="/about/">关于我</a></li>
+                <li><a class="page-link" href="https://github.com/jameszhan">GitHub</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+
+<div class="container">
+    <div class="col-md-9">
+        <div class="post">
+
+    <header class="post-header">
+        <h1 class="post-title">打造你的OSX开发环境</h1>
+        <p class="post-meta">
+            2014年10月02日 •
+            詹子知(James Zhan) •
+            版权所有，转载须声明出处
+        </p>
+    </header>
+
+    <article class="post-content">
+        <h2 id="以下app-store上的软件，你值得拥有。">以下App Store上的软件，你值得拥有。</h2>
+
+<ul>
+<li><strong>Pages</strong>, <strong>Numbers</strong>, <strong>Keynote</strong> OS X三件套。</li>
+<li><strong>Alfred</strong> 和Spotlight类似，可以快速启动应用程序和打开文件，但是比Spotlight体验好很多。</li>
+<li><strong>OmniGraffle</strong> 比较实用的画图工具，和Viso类似，但是定制和扩展性更强。</li>
+<li><strong>Evernote</strong> 印象笔记，一款非常好用的笔记工具，如果想使用Markdown来写笔记，可以结合一些第三方插件来使用。</li>
+<li><strong>The Unarchiver</strong> OS X下的解压神器。</li>
+<li><strong>Skitch</strong> OS X下的截屏神器，操作简单。</li>
+</ul>
+
+<h2 id="第三方软件">第三方软件</h2>
+
+<ul>
+<li><a href="http://www.adobe.com/cn/products/photoshop.html"><strong>Adobe Photoshop CS6</strong></a> 不解释，OS X下体验更佳。<br></li>
+<li><a href="http://www.parallels.com/cn/products/desktop/"><strong>Parallels Desktop</strong></a> OS X下最好用的虚拟机软件，就是价格比较坑，升级价格和全价差不多。</li>
+<li><a href="http://www.axure.com/"><strong>Axure RP</strong></a> 比较好用的产品原型设计工具。</li>
+<li><a href="http://www.xmind.net/"><strong>XMind</strong></a> 比较好用的一款思维导图工具。</li>
+<li><a href="http://astah.net/download"><strong>astah professional</strong></a> 一款比较专业的UML画图工具。</li>
+<li><a href="http://www.mysql.com/products/workbench/"><strong>MySQL Workbench</strong></a> 官方的MySQL客户端。</li>
+</ul>
+
+<h2 id="开发者必备">开发者必备</h2>
+
+<h3 id="集成开发环境">集成开发环境</h3>
+
+<p>如果你是Java开发者（或者同时编辑Ruby，Python，PHP，JavaScript，Scala，Groovy，Clojure等程序），强烈建议你安装<a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a>。如果你只做前端开发，那么<a href="http://www.jetbrains.com/webstorm/">WebStrom</a>是不错的选择，另外，<a href="http://www.jetbrains.com/ruby/">RubyMime</a>，<a href="http://www.jetbrains.com/pycharm/">PyCharm</a>，<a href="http://www.jetbrains.com/phpstorm/">PhpStorm</a>作为Ruby，Python，PHP的单项开发环境也不错。</p>
+
+<p>如果你不想花钱，又不想实用盗版软件，那么<a href="http://www.eclipse.org/downloads/">Eclipse</a>，<a href="https://netbeans.org/">NetBeans</a>也可以凑合着用。</p>
+
+<h3 id="编辑器">编辑器</h3>
+
+<p>如果你习惯使用命令行，配合编辑器开发程序也是一个不错的选择，除了vi和emacs之外（后面会单独介绍），以下编辑器你值得拥有。</p>
+
+<ul>
+<li><strong>TextWrangler</strong> 一种免费的文本编辑器，功能和NodePad++类似，可以直接在App Store上下载。</li>
+<li><a href="https://macromates.com/download">TextMate</a>，个人用的比较顺手的一个，有各种扩展可以提高你的开发效率。
+
+<ul>
+<li><a href="https://github.com/textmate/textmate">源码地址</a></li>
+<li><a href="https://github.com/deplorableword/textmate-solarized">Solarized Theme</a></li>
+</ul></li>
+<li><a href="http://www.sublimetext.com/">Sublime Text</a>，如果你从Linux迁移过来，Sublime一定不陌生，它确实是一个非常好用的一个编辑器。</li>
+<li><a href="http://lighttable.com/">LightTable</a> 一款新出世的编辑器，完全<a href="https://github.com/LightTable/LightTable">开源</a>，使用Clojure语言编写，非常容易扩展和定制。</li>
+</ul>
+
+<h3 id="浏览器">浏览器</h3>
+
+<ul>
+<li><a href="https://www.chromedownload.org">Chrome</a> 速度快，调试方便，目前是我开发主要试用的浏览器。</li>
+<li><a href="http://www.firefox.com.cn/">Firefox</a> 有点笨重，但是作为开发调试工具还是不错的。</li>
+<li><strong>Safari</strong>，系统自带的默认浏览器，和OSX系统集成度高，可以实现在不同的Apple设备之间同步阅读进度。</li>
+<li><strong>Opera</strong>，App Store上提供直接下载，小巧，快速。</li>
+</ul>
+
+<h3 id="开发环境准备">开发环境准备</h3>
+
+<h4 id="选择合适的terminal">选择合适的Terminal</h4>
+
+<p>相比原生的Terminal，我更喜欢使用 <a href="http://iterm2.com/">iTerm2</a>，它提供了很多现代的特性，比如主题定制，分屏，自动完成等多种功能。</p>
+
+<h4 id="安装xcode">安装XCode</h4>
+
+<p>XCode可以直接从App Store上下载和更新，安装完以后，我们需要启动它一次，这个时候它会提示你去接受它的协议。 接下来，我们需要安装Command Line Tool。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">xcode-select --install
+</code></pre></div>
+<h4 id="安装oh-my-zsh">安装oh-my-zsh</h4>
+
+<p><a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>是一套开源，社区驱动的用于管理zsh配置的框架，可以使用如下的方式安装。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+
+<span class="c"># Optionally, backup your existing ~/.zshrc file</span>
+cp ~/.zshrc ~/.zshrc.orig
+
+cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+
+<span class="c"># Set Zsh as your default shell:</span>
+chsh -s /bin/zsh
+</code></pre></div>
+<p>接下来，重启你的命令行就可以发现oh-my-zsh已经配置好了。</p>
+
+<p>如果你想更改zsh的配置，可以编辑~/.zshrc个性化你的配置。
+比如我本地的配置为：</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">ZSH_THEME</span><span class="o">=</span><span class="s2">&quot;jameszhan&quot;</span>
+<span class="nv">plugins</span><span class="o">=(</span>git svn mvn brew gem go lein npm node rails ruby rvm<span class="o">)</span>
+</code></pre></div>
+<h4 id="安装homebrew">安装Homebrew</h4>
+
+<p><a href="http://brew.sh/">Homebrew</a>是OSX下非常好用的包管理工具，类似于Ubuntu下的apt-get，用于替换OSX下的老牌包管理工具port。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ruby -e <span class="s2">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span>
+</code></pre></div>
+<h5 id="通过homebrew安装一些实用工具">通过Homebrew安装一些实用工具</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew update
+brew install curl wget tree gnu-sed gawk rename
+</code></pre></div>
+<h5 id="通过homebrew安装一些常用服务">通过Homebrew安装一些常用服务</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew update
+brew install redis mysql postgresql mongodb sqlite nginx
+</code></pre></div>
+<h4 id="vim-vs.-emacs">Vim vs. Emacs</h4>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># Install MacVim</span>
+brew install macvim --with-cscope --with-lua --override-system-vim
+<span class="c"># Install Emacs</span>
+brew install emacs --cocoa --srgb
+</code></pre></div>
+<ol>
+<li>喜欢Vim的看<a href="http://coolshell.cn/articles/11312.html">这里</a>。</li>
+<li>喜欢Emacs的看<a href="http://www.masteringemacs.org/">这里</a>，给个现成的<a href="https://github.com/purcell/emacs.d">.emacs.d</a>。</li>
+</ol>
+
+<h4 id="准备ruby开发环境">准备Ruby开发环境</h4>
+
+<h5 id="安装ruby">安装Ruby</h5>
+
+<ol>
+<li><p>通过<a href="https://github.com/sstephenson/rbenv">rbenv</a>安装ruby</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew update
+brew install rbenv ruby-build
+rbenv versions
+rbenv install 2.0.0-p247
+</code></pre></div></li>
+<li><p>通过<a href="https://rvm.io/">RVM</a>安装ruby</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># install rvm on /usr/local/rvm</span>
+curl -sSL https://get.rvm.io <span class="p">|</span> sudo bash -s stable
+sudo chown -R YOURNAME:rvm /usr/local/rvm
+rvm reload
+rvm list known
+<span class="c"># Install latest stable ruby version</span>
+rvm install 2.1.2
+rvm use 2.1.2 —default
+
+<span class="c"># update RVM</span>
+rvmsudo rvm get stable
+sudo chown -R YOURNAME:rvm /usr/local/rvm
+</code></pre></div></li>
+</ol>
+
+<h5 id="安装常用的gem">安装常用的gem</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">gem install pry rails bundler --no-ri --no-rdoc
+gem install jekyll
+gem install sinatra
+</code></pre></div>
+<h5 id="开发工具选择">开发工具选择</h5>
+
+<ol>
+<li>EDITOR (TextMate, MacVim, Sublime) + iTerm</li>
+<li>RubyMime</li>
+</ol>
+
+<h4 id="准备java的开发环境">准备Java的开发环境</h4>
+
+<h5 id="安装jdk">安装JDK</h5>
+
+<p>我们可以从Oracle官网上去<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载</a>JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_26.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
+</code></pre></div>
+<p>注意：具体Java版本以你本地安装的版本为准。</p>
+
+<h5 id="安装maven">安装Maven</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew install maven
+</code></pre></div>
+<h5 id="jvm语言">JVM语言</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># Groovy</span>
+brew install groovy
+brew install grails
+<span class="c"># Scala</span>
+brew install scala
+brew install typesafe-activator
+<span class="c"># Clojure</span>
+brew install leiningen
+</code></pre></div>
+<h5 id="开发工具选择">开发工具选择</h5>
+
+<ol>
+<li>IDE (IntelliJ IDEA, Eclipse, Netbeans)</li>
+<li><a href="http://www.braveclojure.com/using-emacs-with-clojure/">Emacs</a>(Clojure语言开发推荐)</li>
+</ol>
+
+<h4 id="准备node开发环境">准备Node开发环境</h4>
+
+<h5 id="安装node和npm">安装node和npm</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew install node --enable-debug
+</code></pre></div>
+<h5 id="在~/.zshrc配置全局node_path">在~/.zshrc配置全局NODE_PATH</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">export </span><span class="nv">NODE_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/lib/node_modules/&quot;</span>
+</code></pre></div>
+<h5 id="安装常用的组件">安装常用的组件</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">npm install express
+npm install jquery
+</code></pre></div>
+<h5 id="开发工具的选择">开发工具的选择</h5>
+
+<ol>
+<li>WebStorm</li>
+<li>EDITOR (MacVim, Sublime, Textmate) + iTerm</li>
+</ol>
+
+<h4 id="搭建php开发环境">搭建PHP开发环境</h4>
+
+<h5 id="安装php和启动fcgi">安装PHP和启动fcgi</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew tap homebrew/homebrew-php
+<span class="c"># Install php-cgi</span>
+brew reinstall php56 --with-mysql --with-cgi --with-pgsql --with-homebrew-curl --without-pear
+
+<span class="c"># Install fcgi</span>
+brew install spawn-fcgi
+
+<span class="c"># Start fcgi</span>
+spawn-fcgi -a 127.0.0.1 -p <span class="m">6666</span> -C <span class="m">6</span> -f /usr/local/bin/php-cgi -u james -d /u/var/run/fcgi -P /u/var/run/fcgi/spawn_fcgi.pid &gt; /dev/null
+</code></pre></div>
+<p>更多安装选项可以试用<code>brew options php56</code>查看。</p>
+
+<h5 id="测试php环境">测试PHP环境</h5>
+
+<h6 id="nginx-配置"><code>Nginx</code> 配置</h6>
+<div class="highlight"><pre><code class="language-text" data-lang="text">http {
+    upstream fastcgi_server {
+        server  127.0.0.1:6666;
+    }
+    server {
+        listen              80;
+        server_name         localhost;
+        index               index.html index.htm index.php;
+
+        location / {
+            root            /u/var/www;
+            index           index.php index.html index.htm;
+        }
+        location ~ \.php$ {
+            root            /u/var/www;
+            fastcgi_pass    fastcgi_server;
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+            include         conf/fastcgi_params;
+        }
+    }
+}
+</code></pre></div>
+<h6 id="测试页面(index.php)">测试页面(<code>index.php</code>)</h6>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+    <span class="nb">phpinfo</span><span class="p">();</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+<p>访问http://localhost/index.php页面即可以查看PHP环境是否搭建成功。</p>
+
+<h5 id="开发工具的选择">开发工具的选择</h5>
+
+<ol>
+<li>IDE (PhpStorm, Eclipse, Zend Studio, Komodo, Netbeans) </li>
+<li>EDITOR (MacVim, Emacs, Sublime) + iTerm</li>
+</ol>
+
+<h4 id="其他编程语言">其他编程语言</h4>
+
+<p>如果你是编程语言控，在OS X下你可以很方便地试用各种编程语言。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># install python 2.7</span>
+brew install python
+<span class="c"># install python 3</span>
+brew install python3
+
+<span class="c"># ANSI Common Lisp</span>
+brew install clisp
+<span class="c"># Scheme</span>
+brew install mit-scheme
+<span class="c"># newLISP</span>
+brew install newlisp
+
+<span class="c"># Smalltalk</span>
+brew install gnu-smalltalk --tcltk
+
+<span class="c"># Go语言</span>
+brew install go
+
+<span class="c"># Prolog</span>
+brew install swi-prolog --with-jpl --with-xpce 
+<span class="c"># Erlang</span>
+brew install erlang
+
+<span class="c"># Lua</span>
+brew install lua
+<span class="c"># Io语言</span>
+brew install io
+</code></pre></div>
+<h2 id="一些实用技巧">一些实用技巧</h2>
+
+<h3 id="挂载硬盘到指定目录">挂载硬盘到指定目录</h3>
+
+<p>这里，我们演示如何把第二块硬盘挂载到/opt目录。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 列出当前所有硬盘信息</span>
+diskutil list
+<span class="c"># diskN 一般代表第N个硬盘，diskNS1一般表示EFI分区信息，diskNS2一般表示我们的目标分区卷。</span>
+<span class="c"># 列出指定硬盘的详细信息，这里面我们可以得到它的UUID信息</span>
+diskutil info /Volumes/HHD
+
+<span class="c">#如果挂载点目录不存在，需要先创建它</span>
+<span class="c"># sudo mkdir /opt</span>
+<span class="c"># 把第二块硬盘加载到/opt目录</span>
+diskutil mount -mountPoint /opt/  /dev/disk2s2
+
+<span class="c"># 注意，如果你的硬盘已经挂载到了具体目录，比如/Volumes/HDD，在挂载前，你必须先卸载它。</span>
+diskutil unmount  /dev/disk2s2
+</code></pre></div>
+<p>通过以上的命令，我们确实可以做到把硬盘挂载到具体目录，然后当我们机器重启后，通过刚刚命令修改的配置就会失效。如果我们想固定把硬盘加载到某个目录（尤其当我们第二块硬盘也是内置硬盘）时，又当如何处理呢？事实上，非常简单，执行如下命令，在<code>fstab</code>中加入一条记录即可。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo vifs
+</code></pre></div>
+<p>我的电脑配置记录如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UUID=DE74EC97-3EFC-3197-AC0E-AC596773D738 /opt hfs rw 1 0
+</code></pre></div>
+<p>注意：UUID即为命令<code>diskutil</code>查看该卷详情得到的<code>Volume UUID</code>，在挂载前，必须保证挂载的目录已经存在.</p>
+
+<h3 id="finder显示默认隐藏的文件">Finder显示默认隐藏的文件</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 显示所有隐藏文件</span>
+defaults write com.apple.finder AppleShowAllFiles -bool YES
+killall Finder
+
+<span class="c"># 取消显示所有隐藏文件</span>
+defaults write com.apple.finder AppleShowAllFiles -bool NO
+killall Finder
+</code></pre></div>
+<h3 id="timemachine中命令行操作权限问题">TimeMachine中命令行操作权限问题</h3>
+
+<h5 id="删除指定的目录">删除指定的目录</h5>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># Before OSX 10.9</span>
+sudo /System/Library/Extensions/TMSafetyNet.kext/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh<span class="se">\ </span>HD/opt/ 
+<span class="c"># After OSX 10.10</span>
+sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh<span class="se">\ </span>HD/opt/ 
+<span class="c"># DELETE All .DS_Store</span>
+sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass find . -name <span class="s1">&#39;.DS_Store&#39;</span> -print -delete
+</code></pre></div>
+<p>重装完系统，特别是在有第二块硬盘的情况下，在使用TimeMachine的时候，会发现整个硬盘很有可能要重新备份，而不是在原来的基础上增量备份，这无疑是对备份空间的巨大浪费，如果你之前已经备份了该磁盘的话，可以强制把TimeMachine中的对应备份强制恢复到该分区即可解决这个问题。</p>
+
+<h3 id="视频格式转换">视频格式转换</h3>
+
+<h3 id="extended-attributes-(eas)">Extended Attributes (EAs)</h3>
+
+<p>当我们使用<code>ls -l</code>查看文件目录时，细心的同学会发现有些文件的ACL后面都多一个@，这个就是我们这节要讨论的扩展属性。  </p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">-rw-r--r--@ <span class="m">1</span> james  admin     <span class="m">3409417</span> Oct <span class="m">21</span> 22:54 CoRD.zip
+-rw-r--r--@ <span class="m">1</span> james  admin      <span class="m">755402</span> Oct <span class="m">21</span> 22:54 HexFiend.zip
+</code></pre></div>
+<p>在UNIX/Linux当中，文件可以拥有rwx之外的扩展属性，在本例中，测试的几个文件打上了颜色的tag，要查看扩展属性的详情，可以使用命令<code>ls -l@</code>查看。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">-rw-r--r--@ <span class="m">1</span> james  admin     <span class="m">3409417</span> Oct <span class="m">21</span> 22:54 CoRD.zip
+    com.apple.FinderInfo            32
+    com.apple.metadata:_kMDItemUserTags         53
+-rw-r--r--@ <span class="m">1</span> james  admin      <span class="m">755402</span> Oct <span class="m">21</span> 22:54 HexFiend.zip
+    com.apple.FinderInfo            32
+    com.apple.metadata:_kMDItemUserTags         53
+</code></pre></div>
+<p>可以使用<code>xattr</code>命令来操作扩展属性。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">xattr -d com.apple.metadata:_kMDItemUserTags CoRD.zip
+xattr -w hello world CoRD.zip
+</code></pre></div>
+<p><code>ls -l@ CoRD.zip</code>结果如下：</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">-rw-r--r--@ <span class="m">1</span> james  admin   3.3M Oct <span class="m">21</span> 22:54 CoRD.zip
+    hello      5B
+</code></pre></div>
+<p>使用<code>xattr -cr TARGET</code>可以清空目标文件所有的扩展属性信息，这个对于从TimeMachine拷贝出来的文件批量清除扩展属性特别有效。</p>
+
+<p>另外，在复制文件的过程中，<code>cp</code>指定<code>-X</code>可以取消复制EAs。</p>
+
+<h3 id="常用的命令">常用的命令</h3>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 删除所有.DS_Store文件</span>
+sudo find / -name <span class="s1">&#39;.DS_Store&#39;</span> -print -delete
+<span class="c"># 删除当前目录下所有空子目录 </span>
+find . -type d -empty -delete -print
+
+<span class="c"># 找出目录下大于100M的文件</span>
+find . -type f -size +100000k 
+find . -type f -size +100000k -exec ls -lh <span class="o">{}</span> <span class="se">\;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $5 &quot; =&gt; &quot; $9 &quot; &quot; $10 }&#39;</span> 
+
+<span class="c"># 试用tail实时监控日志</span>
+tail -fn <span class="m">500</span> /var/log/messages <span class="c">#参数-f使tail不停地去读最新的内容，这样有实时监视的效果</span>
+
+<span class="c"># 分割和合并文件</span>
+split -b 300m BIGFILE PREFIX
+cat PREFIX* &gt; BIGFILE
+
+<span class="c"># 查看目录大小</span>
+du -sh /opt
+<span class="c"># 查看本地磁盘使用信息</span>
+df -h
+
+<span class="c"># 查看当前使用的SHELL名称</span>
+<span class="nb">echo</span> <span class="nv">$SHELL</span>
+<span class="nb">echo</span> <span class="nv">$0</span>
+env <span class="p">|</span> grep SHELL
+cat /etc/passwd <span class="p">|</span> grep USERNAME
+
+<span class="c"># SCP常用操作</span>
+<span class="c"># 获取远程服务器上的文件</span>
+scp -P <span class="m">22</span> admin@192.168.1.96:/home/admin/test.tar.gz ~/test.tar.gz
+<span class="c"># 获取远程服务器上的目录</span>
+scp -P <span class="m">22</span> -r admin@192.168.1.96:/home/admin/test/ ~/test
+<span class="c"># 将本地文件上传到服务器上</span>
+scp -P <span class="m">22</span> /home/james/test.tar.gz admin@192.168.1.96:/home/admin/test.tar.gz
+<span class="c"># 将本地目录上传到服务器上</span>
+scp -P <span class="m">22</span> -r /home/james/test/ admin@192.168.1.96:/home/admin/test
+
+
+<span class="c"># 批量重命名文件</span>
+<span class="c"># 本例演示了把当前目录下的所有MP3文件的名称去除多余的字符，只保留序号。</span>
+rename <span class="s1">&#39;s/.+(\d+).mp3/$1.mp3/&#39;</span> *.mp3
+
+<span class="c"># 批量下载整个网站</span>
+wget -r -np http://www.sandpile.org/
+
+<span class="c"># 批量Unlock文件</span>
+chflags -R nouchg /PATH/TO/DIRECTORY/WITH/LOCKED/FILES/
+
+<span class="c"># 一些查看用户和系统信息的命令</span>
+id
+finger
+uname -a
+<span class="nb">ulimit</span> -a
+</code></pre></div>
+<h2 id="一些小工具">一些小工具</h2>
+
+<ul>
+<li><a href="http://pan.baidu.com/s/1gd7rq4V">CoRD</a> 一款远程桌面工具，连远程Windows桌面效果还不错。</li>
+<li><a href="http://pan.baidu.com/s/1i3wxLTb">HexFriend</a>, <a href="http://pan.baidu.com/s/1qWHOpUs">0xED</a> 比较实用的二进制编辑工具。</li>
+<li><a href="http://pan.baidu.com/s/1qW0ntj2">MacDjView</a> 如果你有djvu格式的图书，这个工具可以帮到你。</li>
+</ul>
+
+    </article>
+
+    <div class="row-fluid">
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-folder-open"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/categories/system.html">系统<span>1</span></a></li>
+    
+
+        </ul>
+        <ul class="list-inline">
+            <li><i class="glyphicon glyphicon-tags"></i></li>
+            
+            
+    
+    <li class="tag"><a href="/tags/osx.html">Osx<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/php.html">Php<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java<span>2</span></a></li>
+    
+
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="pagination pull-right">
+            
+            <li class="prev"><a href="/2014/09/29/github-pages-with-comments.html" title="如何实现Github博客评论功能">&larr; 上一篇</a></li>
+            
+            <li><a href="http://jameszhan.github.io">Archive</a></li>
+            
+            <li class="next disabled"><a>没有了</a>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i>
+            <a href="/categories/index.html">分类</a></span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/github.html">GitHub <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/categories/system.html">系统 <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="title">
+        <span class="icon-text"><i class="glyphicon glyphicon-tags"></i>
+            <a href="/tags/index.html">标签</a>
+        </span>
+    </h2>
+    <ul class="list-inline">
+        
+        
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/c.html">C <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/java.html">Java <span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/osx.html">Osx <span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/php.html">Php <span>1</span></a></li>
+    
+
+    </ul>
+</div>
+    </div>
+</div>
+
+<div class="container">
+<footer>
+    <hr/>
+    <div class="row footer-content">
+
+        <div class="col-md-3">
+            <ul class="contact-list">
+                <li>詹子知</li>
+                <li>Full Stack Engineer</li>
+                <li><a href="mailto:zhiqiangzhan@gmail.com">zhiqiangzhan@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <ul class="social-media-list">
+                
+                <li>
+                    <a href="https://github.com/jameszhan">
+              <span class="icon icon--github">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282"
+                          d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+
+                
+                <li>
+                    <a href="https://twitter.com/jameszhan">
+              <span class="icon icon--twitter">
+                <svg viewBox="0 0 16 16">
+                    <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+                        <span class="username">jameszhan</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://weibo.com/zizhizhan">
+              <span class="icon icon--weibo">
+               <svg viewBox="0, 0, 300, 300">
+                   <path d="M196.802 39.964c-8.656 3.787-10.64 12.803-4.328 19.115 3.066 3.066 5.951 3.607 18.574 3.607 17.673 0 29.575 4.688 38.592 15.148 11 12.443 12.263 16.23 12.263 38.952 0 20.197 0 20.558 4.688 23.263 10.82 6.131 18.034-1.443 20.558-21.64 3.246-26.329-12.443-56.986-36.066-71.052-15.509-9.016-42.018-12.623-54.281-7.393zm-88.724 33.542c-20.198 7.213-39.674 21.099-60.592 43.46-49.592 52.658-46.346 102.791 8.295 129.48 56.805 27.771 133.267 18.574 174.924-21.099 31.198-29.575 27.411-66.724-8.115-79.347-6.312-2.164-8.296-3.787-7.394-5.771 3.246-7.934 4.328-17.131 2.525-22.541-5.591-17.132-25.968-21.099-56.264-10.82l-12.083 4.147 1.082-12.082c1.263-14.246-1.803-22.001-10.279-26.329-7.033-3.607-20.558-3.246-32.099.902zm50.133 69.789c26.869 7.394 43.28 23.624 43.28 42.919 0 21.46-19.116 40.756-50.133 51.035-16.591 5.41-47.428 6.492-62.576 2.344-28.673-8.115-44.903-23.984-44.903-44.362 0-11.181 4.869-20.919 15.509-30.837 9.918-9.377 17.492-13.886 32.099-18.755 22.001-7.393 45.625-8.295 66.724-2.344zm-56.806 17.492c-18.213 8.476-27.951 21.46-27.951 37.69 0 14.788 6.492 24.886 20.738 32.46 11 5.951 31.198 5.41 43.461-.901 15.689-8.296 25.968-23.624 25.968-38.592-.181-12.263-11.001-26.87-23.804-32.099-10.279-4.328-27.592-3.607-38.412 1.442zm13.165 33.903c1.262 1.262 2.164 4.328 2.164 7.033 0 9.017-15.148 16.411-21.28 10.279-3.426-3.426-2.524-11.902 1.443-15.869 3.967-3.968 14.246-4.869 17.673-1.443zm85.298-117.758c-8.296 8.296-2.705 18.214 10.459 18.214 11.361 0 16.41 5.771 16.41 18.755 0 8.115.722 10.459 3.968 12.623 9.738 6.853 17.673-.721 17.673-16.771 0-19.656-14.067-34.444-34.084-35.887-9.016-.721-11.18-.18-14.426 3.066z"/>
+               </svg>
+              </span>
+
+                        <span class="username">zizhizhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.zhihu.com/people/james_zhan">
+              <span class="icon icon--zhihu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M78.172 153.638s-.038-9.983-3.211-9.983h-22.119c.736-11.455.928-21.811.928-31.058h21.629s.833-9.538-3.626-9.428h-37.415c1.474-5.546 3.328-11.273 5.546-17.193 0 0-10.175 0-13.644 9.125-1.432 3.768-5.584 18.239-12.976 33.026 2.491-.267 10.725-.493 15.574-9.387.893-2.483 1.063-2.815 2.172-6.143h12.201c0 4.436.064 10.566-.3 17.956 0 7.04-.205 10.32-.41 13.102h-22.105c-4.963 0-6.578 9.983-6.578 9.983h27.73c-1.855 21.075-11.838 38.64-29.948 52.687 2.954 2.953 17.687-.107 21.562-3.999 0 0 9.715-8.828 15.042-29.277 7.019 8.138 12.936 15.348 17.747 21.629 2.219 2.962 4.992 6.101 4.992 6.101s3.423-11.642-.448-17.18c-3.204-3.773-11.944-14.058-15.635-17.76l-6.102 4.992c1.846-5.908 2.957-11.648 3.329-17.193h26.065zm5.546 39.903l9.902.002 3.173 11.08s15.187-11.08 17.848-11.08c2.662 0 10.402-.002 10.402-.002h10.538v-91.968h-51.863v91.968zm10.538-81.985h30.787v72.004h-11.81l-11.983 7.663-1.959-7.648-5.035-.015v-72.004zm149.188 25.443l8.875 6.656c9.61-11.828 16.444-20.883 20.52-27.176 0 0-7.06-6.453-12.533-1.819-2.314 3.729-9.097 13.839-16.862 22.339zm-44.369.556c-.372-.367-.922-1.11-1.663-2.219-7.028-9.609-10.173-15.126-14.325-18.931-4.153-3.804-12.295 1.183-12.295 1.183 4.436 5.546 9.613 12.756 15.529 21.63 1.47 2.219 2.58 3.882 3.327 4.992l9.427-6.655zm89.292 11.769c-9.129 0-60.451.431-60.451.431v-46.586c2.218 0 5.73-.181 10.537-.554 18.856-1.11 32.348-1.847 40.486-2.219 0 0 5.634-12.541-.274-15.426-4.26 0-4.951 1.705-10.679 2.112-2.364.168-76.205 7.606-107.177 8.322.735 4.071 3.385 6.962 7.193 9.114 7.202 1.574 10.554.688 22.755.315 11.455-.736 20.146-1.109 26.066-1.109v46.031h-61.561s2.095 10.538 10.233 10.538h51.328v32.722c0 6.446-5.16 10.144-11.291 9.743-6.492.054-12.029-.529-19.227-.832.921 1.831 2.919 6.636 8.908 10.071 4.554 2.22 7.458 3.033 12.002 3.033 13.631 0 21.062-7.969 20.701-20.907v-33.829h56.438c4.469-.001 4.013-10.97 4.013-10.97z"/>
+                </svg>
+              </span>
+                        <span class="username">james_zhan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.baidu.com/p/zhiqiangzhan">
+              <span class="icon icon--baidu">
+                <svg viewBox="0, 0, 300, 300">
+                    <path d="M108.462 11.538c-3.385 1.231-8.616 4.924-11.847 8.462-7.846 8.769-11.23 19.385-11.077 34.769 0 10.462.77 13.846 4.924 22.616 8.769 19.077 26.153 25.077 40 13.846 17.692-14.308 20.923-48.154 6.769-68.462-3.693-5.231-16.769-13.692-20.923-13.538-.923.154-4.462 1.077-7.846 2.307zm82.769 6.462c-5.846 1.231-19.539 14.923-23.846 23.846-7.385 15.077-7.077 34.308.769 46.154 6.923 10.308 22.461 14.615 34.615 9.538 16.308-6.769 28.769-31.692 24.923-49.23-4.461-19.539-21.384-33.539-36.461-30.308zm-147.385 58.154c-8.154 2.769-17.077 13.077-20.154 22.923-6.154 20.154-3.846 36.615 6.923 48.923 7.847 8.769 13.077 11.077 24.616 10.154 12.307-.923 20.154-6.308 25.846-18 3.692-7.385 4.154-10.308 4.154-22.462 0-11.077-.616-15.077-3.385-20.154-5.077-9.846-10.461-15.384-19.077-19.692-9.077-4.615-10.461-4.615-18.923-1.692zm185.692 21.692c-11.538 5.846-17.23 18.923-17.23 39.692 0 15.385 2 22.616 7.846 29.385 6.461 7.385 16 10.615 28.154 9.692 11.23-.923 17.23-4 22.154-11.077 5.076-7.384 6.461-13.846 6.461-29.538 0-12.462-.461-15.077-4.308-22.308-6.307-12-14.461-17.384-27.692-18-7.385-.307-11.692.308-15.385 2.154zm-98.769 30c-10.154 4.616-16.154 9.692-22.923 19.539-9.077 13.23-17.538 22.307-36 38.307-28 24.154-33.846 33.231-34 52-.308 22.616 12.769 42.616 31.077 47.846 10.615 3.077 38.154 2.308 58.769-1.846 16-3.077 32-2.307 51.539 2.616 19.692 4.923 41.538 4.923 52.769 0 21.231-9.539 32.154-38.616 23.231-62.616-2.462-6.615-5.539-10.769-12.616-17.384-22.153-20.462-47.23-46.308-55.23-57.077-8.923-12-18.154-19.846-27.231-22.769-8.154-2.77-21.539-2.154-29.385 1.384zm4.616 42.923c2 1.231 2.307 8.616 2.769 47.693l.461 46.153h-18.307c-22.462 0-31.231-2.307-39.077-10.307-7.231-7.385-8.923-12.154-8.923-24.308 0-11.846 1.692-16.923 8.154-23.538 8.153-8.616 14.615-11.077 28.769-11.077h12.307v-26.154h5.847c3.077 0 6.769.769 8 1.538zm30.769 48.769c0 28 .154 28.154 16.461 28.154h11.231v-49.23h18.769l-.615 29.384c-.615 37.231.923 35.231-27.692 35.231-21.539 0-26-1.231-31.846-8.615-2.924-3.847-3.231-6-3.231-29.847 0-14.153.461-26.153 1.077-26.615.461-.615 4.307-1.077 8.461-1.077h7.385v22.615zm-67.385-7.23c-8.615 5.23-11.692 16.615-7.384 26.923 3.077 7.077 9.692 10.307 20.615 9.692l8.769-.461v-38.462l-8.461-.462c-6.308-.307-9.693.462-13.539 2.77z"/>
+                </svg>
+              </span>
+                        <span class="username">zhiqiangzhan</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <p class="text">资深码农，技术兴趣广泛，好读书，求甚解</p>
+        </div>
+    </div>
+
+</footer>
+</div>
+
+<div class="analytics">
+<!-- 百度统计开始 -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4a9354184739dfe6490722e2ad838394' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 百度统计结束 -->
+</div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

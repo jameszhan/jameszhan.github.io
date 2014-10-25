@@ -396,6 +396,21 @@ a.rss {
     width: 16px;
     background-image: url("/assets/images/icons/rss-icon.png"); }
 
+.lunar {
+  color: #dfdfdf;
+  font-size: 12px;
+  position: absolute;
+  font-family: 'Kai'; }
+
+/*
+.calendar-container {
+  margin: 5px 20px 20px 20px;
+}
+
+.table-list {
+  margin: 20px 0;
+}
+*/
 /**
  * Syntax highlighting styles
  */
