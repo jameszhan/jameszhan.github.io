@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 25 Oct 2014 01:22:22 +0800</pubDate>
-    <lastBuildDate>Sat, 25 Oct 2014 01:22:22 +0800</lastBuildDate>
+    <pubDate>Sat, 25 Oct 2014 13:04:40 +0800</pubDate>
+    <lastBuildDate>Sat, 25 Oct 2014 13:04:40 +0800</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
@@ -449,7 +449,7 @@ uname -a
         <category>java</category>
         
         
-        <category>system</category>
+        <category>osx</category>
         
       </item>
     
