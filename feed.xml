@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 02 Mar 2015 01:34:51 +0800</pubDate>
-    <lastBuildDate>Mon, 02 Mar 2015 01:34:51 +0800</lastBuildDate>
+    <pubDate>Mon, 02 Mar 2015 01:45:02 +0800</pubDate>
+    <lastBuildDate>Mon, 02 Mar 2015 01:45:02 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -495,25 +495,25 @@ cat .git/refs/heads/master  &lt;span class=&quot;c&quot;&gt;# 2d1d4a124abb2c8283
 &lt;h4 id=&quot;分支合并&quot;&gt;分支合并&lt;/h4&gt;
 
 &lt;h5 id=&quot;merge&quot;&gt;merge&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;git merge master
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;git merge master
 
-git log --pretty=oneline
-# b55d52d81d9a659b0951a5a40d96c92128a64b4e Merge branch &amp;#39;master&amp;#39; into dev
-# 69d53d698802439dab1d82cc0e646987b0fab347 add yet another more contents to new.txt from dev.
-# 8e084ff2ac87fe1169f3ed751712c96fd73d410e add more contents to new.txt from dev.
-# 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152 add more contents to test.txt from master.
-# c8d216df37ffa30f963a0c757661526e35014978 third commit
-# 73a7f40207cd99c99e737456e1c94ad2d8632126 second commit
-# 104778189118bbf75587062dc6fb61bbc9685a47 first commit
+git log --pretty&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;oneline
+&lt;span class=&quot;c&quot;&gt;# b55d52d81d9a659b0951a5a40d96c92128a64b4e Merge branch &amp;#39;master&amp;#39; into dev&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 69d53d698802439dab1d82cc0e646987b0fab347 add yet another more contents to new.txt from dev.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 8e084ff2ac87fe1169f3ed751712c96fd73d410e add more contents to new.txt from dev.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152 add more contents to test.txt from master.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# c8d216df37ffa30f963a0c757661526e35014978 third commit&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 73a7f40207cd99c99e737456e1c94ad2d8632126 second commit&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 104778189118bbf75587062dc6fb61bbc9685a47 first commit&lt;/span&gt;
 
 git cat-file -p b55d52d8
-# tree 4e8c7e178ff1d8fa549a293ea6812cc1e48e1436
-# parent 69d53d698802439dab1d82cc0e646987b0fab347
-# parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152
-# author James Zhan &amp;lt;zhiqiangzhan@gmail.com&amp;gt; 1425031476 +0800
-# committer James Zhan &amp;lt;zhiqiangzhan@gmail.com&amp;gt; 1425031476 +0800
-# 
-# Merge branch &amp;#39;master&amp;#39; into dev
+&lt;span class=&quot;c&quot;&gt;# tree 4e8c7e178ff1d8fa549a293ea6812cc1e48e1436&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# parent 69d53d698802439dab1d82cc0e646987b0fab347&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# author James Zhan &amp;lt;zhiqiangzhan@gmail.com&amp;gt; 1425031476 +0800&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# committer James Zhan &amp;lt;zhiqiangzhan@gmail.com&amp;gt; 1425031476 +0800&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Merge branch &amp;#39;master&amp;#39; into dev&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;blockquote&gt;
 &lt;p&gt;注意，通过merge的合并后的commit，它会有2个parent，整个提交历史会形成一个菱形。&lt;/p&gt;

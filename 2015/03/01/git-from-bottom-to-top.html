@@ -519,25 +519,25 @@ cat .git/refs/heads/master  <span class="c"># 2d1d4a124abb2c8283f1bb2d3a361c70cb
 <h4 id="分支合并">分支合并</h4>
 
 <h5 id="merge">merge</h5>
-<div class="highlight"><pre><code class="language-text" data-lang="text">git merge master
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">git merge master
 
-git log --pretty=oneline
-# b55d52d81d9a659b0951a5a40d96c92128a64b4e Merge branch &#39;master&#39; into dev
-# 69d53d698802439dab1d82cc0e646987b0fab347 add yet another more contents to new.txt from dev.
-# 8e084ff2ac87fe1169f3ed751712c96fd73d410e add more contents to new.txt from dev.
-# 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152 add more contents to test.txt from master.
-# c8d216df37ffa30f963a0c757661526e35014978 third commit
-# 73a7f40207cd99c99e737456e1c94ad2d8632126 second commit
-# 104778189118bbf75587062dc6fb61bbc9685a47 first commit
+git log --pretty<span class="o">=</span>oneline
+<span class="c"># b55d52d81d9a659b0951a5a40d96c92128a64b4e Merge branch &#39;master&#39; into dev</span>
+<span class="c"># 69d53d698802439dab1d82cc0e646987b0fab347 add yet another more contents to new.txt from dev.</span>
+<span class="c"># 8e084ff2ac87fe1169f3ed751712c96fd73d410e add more contents to new.txt from dev.</span>
+<span class="c"># 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152 add more contents to test.txt from master.</span>
+<span class="c"># c8d216df37ffa30f963a0c757661526e35014978 third commit</span>
+<span class="c"># 73a7f40207cd99c99e737456e1c94ad2d8632126 second commit</span>
+<span class="c"># 104778189118bbf75587062dc6fb61bbc9685a47 first commit</span>
 
 git cat-file -p b55d52d8
-# tree 4e8c7e178ff1d8fa549a293ea6812cc1e48e1436
-# parent 69d53d698802439dab1d82cc0e646987b0fab347
-# parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152
-# author James Zhan &lt;zhiqiangzhan@gmail.com&gt; 1425031476 +0800
-# committer James Zhan &lt;zhiqiangzhan@gmail.com&gt; 1425031476 +0800
-# 
-# Merge branch &#39;master&#39; into dev
+<span class="c"># tree 4e8c7e178ff1d8fa549a293ea6812cc1e48e1436</span>
+<span class="c"># parent 69d53d698802439dab1d82cc0e646987b0fab347</span>
+<span class="c"># parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152</span>
+<span class="c"># author James Zhan &lt;zhiqiangzhan@gmail.com&gt; 1425031476 +0800</span>
+<span class="c"># committer James Zhan &lt;zhiqiangzhan@gmail.com&gt; 1425031476 +0800</span>
+<span class="c"># </span>
+<span class="c"># Merge branch &#39;master&#39; into dev</span>
 </code></pre></div>
 <blockquote>
 <p>注意，通过merge的合并后的commit，它会有2个parent，整个提交历史会形成一个菱形。</p>
