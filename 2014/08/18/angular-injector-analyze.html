@@ -23,19 +23,19 @@
 
 <div class="container">
     <div class="col-md-9">
-        <div class="post">
+    <div class="post">
 
-    <header class="post-header">
-        <h1 class="post-title">抽丝剥茧——AngularJS Injector分析</h1>
-        <p class="post-meta">
-            2014年08月18日 •
-            詹子知(James Zhan) •
-            版权所有，转载须声明出处
-        </p>
-    </header>
+        <header class="post-header">
+            <h1 class="post-title">抽丝剥茧——AngularJS Injector分析</h1>
+            <p class="post-meta">
+                2014年08月18日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
 
-    <article class="post-content">
-        <h2 id="常用函数说明">常用函数说明</h2>
+        <article class="post-content">
+            <h2 id="常用函数说明">常用函数说明</h2>
 
 <p>在开始分析之前我们需要了解下一些基本扩展，详细定义查看<a href="https://github.com/jameszhan/simplifyjs/blob/master/global.js">global.js</a>，有兴趣的朋友可以细看他们的实现，这里简单说明下我们分析中需要用到的函数。</p>
 
@@ -329,22 +329,22 @@
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">));</span> <span class="c1">//Output: true</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">));</span> <span class="c1">//Output: false</span>
 </code></pre></div>
-    </article>
+        </article>
 
-    <div class="row-fluid">
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-folder-open"></i></li>
-            
-            
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
     
     <li class="tag"><a href="/categories/javascript.html">JavaScript<span>2</span></a></li>
     
 
-        </ul>
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-tags"></i></li>
-            
-            
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
     
     <li class="tag"><a href="/tags/javascript.html">JavaScript<span>8</span></a></li>
     
@@ -353,31 +353,33 @@
     <li class="tag"><a href="/tags/angular_js.html">AngularJ<span>1</span></a></li>
     
 
-        </ul>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2014/08/08/linux-permission-skills.html" title="Linux下的权限管理技巧">&larr; 上一篇</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next"><a href="/2014/09/01/ruby-metagramming.html" title="Ruby元编程技巧">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
     </div>
 
-    <div class="row-fluid">
-        <ul class="pagination pull-right">
-            
-            <li class="prev"><a href="/2014/08/08/linux-permission-skills.html" title="Linux下的权限管理技巧">&larr; 上一篇</a></li>
-            
-            <li><a href="http://jameszhan.github.io">Archive</a></li>
-            
-            <li class="next"><a href="/2014/09/01/ruby-metagramming.html" title="Ruby元编程技巧">下一篇 &rarr;</a>
-            </li>
-            
-        </ul>
-    </div>
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
 </div>
 
-        <div data-include="/assets/tpls/widgets/comments.tpl"></div>
-    </div>
-
-    <div class="col-md-3">
-        <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
 <div data-include="/assets/tpls/widgets/categories.tpl"></div>
 
-    </div>
+</div>
+
+
 </div>
 
 <div class="container" data-include="/assets/tpls/footer.tpl"></div>

@@ -23,19 +23,19 @@
 
 <div class="container">
     <div class="col-md-9">
-        <div class="post">
+    <div class="post">
 
-    <header class="post-header">
-        <h1 class="post-title">Lambda演算之Y-Combinator的推导</h1>
-        <p class="post-meta">
-            2014年09月18日 •
-            詹子知(James Zhan) •
-            版权所有，转载须声明出处
-        </p>
-    </header>
+        <header class="post-header">
+            <h1 class="post-title">Lambda演算之Y-Combinator的推导</h1>
+            <p class="post-meta">
+                2014年09月18日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
 
-    <article class="post-content">
-        <p>上一节中，我们讲到了如何使用λ演算来描述自然数，可以看出λ演算的表现力确实非常强大，然而遗憾的是，由于lambda演算中使用的都是匿名函数，所以它无法很直观地表述递归。
+        <article class="post-content">
+            <p>上一节中，我们讲到了如何使用λ演算来描述自然数，可以看出λ演算的表现力确实非常强大，然而遗憾的是，由于lambda演算中使用的都是匿名函数，所以它无法很直观地表述递归。
 如果缺少了递归，λ演算的能力无疑会大打折扣。</p>
 
 <p>所有基于λ演算的语言中，其实都是支持对过程进行命名的，那为什么这里我们还需要探讨匿名函数的递归呢？</p>
@@ -213,22 +213,22 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
 <li><a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/deriving_y_combinator.clj">y-combinator演算示例代码</a></li>
 </ol>
 
-    </article>
+        </article>
 
-    <div class="row-fluid">
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-folder-open"></i></li>
-            
-            
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
     
     <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>6</span></a></li>
     
 
-        </ul>
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-tags"></i></li>
-            
-            
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
     
     <li class="tag"><a href="/tags/lambda.html">Lambda<span>5</span></a></li>
     
@@ -245,31 +245,33 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
     <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>5</span></a></li>
     
 
-        </ul>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2014/09/16/code-styles.html" title="不同编程语言的代码风格比较">&larr; 上一篇</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next"><a href="/2014/09/19/lambda-y-combinator-javascript.html" title="Lambda演算之Y-Combinator的推导(JS描述)">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
     </div>
 
-    <div class="row-fluid">
-        <ul class="pagination pull-right">
-            
-            <li class="prev"><a href="/2014/09/16/code-styles.html" title="不同编程语言的代码风格比较">&larr; 上一篇</a></li>
-            
-            <li><a href="http://jameszhan.github.io">Archive</a></li>
-            
-            <li class="next"><a href="/2014/09/19/lambda-y-combinator-javascript.html" title="Lambda演算之Y-Combinator的推导(JS描述)">下一篇 &rarr;</a>
-            </li>
-            
-        </ul>
-    </div>
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
 </div>
 
-        <div data-include="/assets/tpls/widgets/comments.tpl"></div>
-    </div>
-
-    <div class="col-md-3">
-        <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
 <div data-include="/assets/tpls/widgets/categories.tpl"></div>
 
-    </div>
+</div>
+
+
 </div>
 
 <div class="container" data-include="/assets/tpls/footer.tpl"></div>

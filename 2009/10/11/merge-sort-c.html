@@ -23,19 +23,19 @@
 
 <div class="container">
     <div class="col-md-9">
-        <div class="post">
+    <div class="post">
 
-    <header class="post-header">
-        <h1 class="post-title">归并排序(C语言描述)</h1>
-        <p class="post-meta">
-            2009年10月11日 •
-            詹子知(James Zhan) •
-            版权所有，转载须声明出处
-        </p>
-    </header>
+        <header class="post-header">
+            <h1 class="post-title">归并排序(C语言描述)</h1>
+            <p class="post-meta">
+                2009年10月11日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
 
-    <article class="post-content">
-        <p>归并排序是建立在归并操作上的一种有效的排序算法。
+        <article class="post-content">
+            <p>归并排序是建立在归并操作上的一种有效的排序算法。
 该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。归并排序算法以O（nlogn）最坏情形运行时间运行，而所使用的比较次数几乎是最优的。但它的一个显著问题就是需要额外的存储空间来辅助排序，空间复杂度是O(n)的，与quicksort和heapsort相比就逊色了不少，不过也可以实现空间复杂度为O（1）的归并排序，这将增加比较操作和交换操作的次数。归并排序可以使用在外部排序上：一般两路的外部排序是从源文件里读出内存大小的一块，然后在内存中排序，在放回文件里，这样生成若干文件。然后在从其中两个文件中读数据，按照merge的方式写到另一个文件中去。这一步根本用不到辅助空间。唯一可能用到辅助空间的地方是前面的一步，即将一块数据在内存中排序。</p>
 
 <h3 id="归并操作">归并操作</h3>
@@ -186,22 +186,22 @@
        <span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-    </article>
+        </article>
 
-    <div class="row-fluid">
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-folder-open"></i></li>
-            
-            
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
     
     <li class="tag"><a href="/categories/algorithm.html">Algorithm<span>5</span></a></li>
     
 
-        </ul>
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-tags"></i></li>
-            
-            
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
     
     <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>5</span></a></li>
     
@@ -210,31 +210,33 @@
     <li class="tag"><a href="/tags/c.html">C<span>2</span></a></li>
     
 
-        </ul>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev disabled"><a>没有了</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next"><a href="/2009/10/11/heap-sort-c.html" title="堆排序(C语言描述)">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
     </div>
 
-    <div class="row-fluid">
-        <ul class="pagination pull-right">
-            
-            <li class="prev disabled"><a>没有了</a></li>
-            
-            <li><a href="http://jameszhan.github.io">Archive</a></li>
-            
-            <li class="next"><a href="/2009/10/11/heap-sort-c.html" title="堆排序(C语言描述)">下一篇 &rarr;</a>
-            </li>
-            
-        </ul>
-    </div>
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
 </div>
 
-        <div data-include="/assets/tpls/widgets/comments.tpl"></div>
-    </div>
-
-    <div class="col-md-3">
-        <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
 <div data-include="/assets/tpls/widgets/categories.tpl"></div>
 
-    </div>
+</div>
+
+
 </div>
 
 <div class="container" data-include="/assets/tpls/footer.tpl"></div>

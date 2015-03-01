@@ -23,19 +23,19 @@
 
 <div class="container">
     <div class="col-md-9">
-        <div class="post">
+    <div class="post">
 
-    <header class="post-header">
-        <h1 class="post-title">当执行Git命令时，Git做了什么</h1>
-        <p class="post-meta">
-            2015年03月01日 •
-            詹子知(James Zhan) •
-            版权所有，转载须声明出处
-        </p>
-    </header>
+        <header class="post-header">
+            <h1 class="post-title">当执行Git命令时，Git做了什么</h1>
+            <p class="post-meta">
+                2015年03月01日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
 
-    <article class="post-content">
-        <h2 id="认识git的存储类型">认识GIT的存储类型</h2>
+        <article class="post-content">
+            <h2 id="认识git的存储类型">认识GIT的存储类型</h2>
 
 <p>Git存储类型主要有4种，blob，tree，commit，tag，他们以压缩的形式存储在.git/objects目录当中。其中blob和tree构成其完整的文件存储系统，类似于操作系统的文件系统。commit和tag则维护提交和标记等信息。</p>
 
@@ -604,22 +604,22 @@ git cat-file -p d9e7958
 
 <p>尽管 git 命令行功能强大，但是对于阅读某个项目的小部分代码，尤其是要频繁回到历史版本时不是太方便，如果能在浏览器上直接查看，将会方便许多，还好我们已经有了 GitHub 和 Gitlab 这样的利器，可以帮我们快速定位代码，但是如果你不想把代码分享出去，又没有私有库可以用，不妨可以使用<a href="https://github.com/jameszhan/webgit">webgit</a>来查看本地代码。webgit是一个ruby工具，依赖于ruby环境，目前功能还不是很完善，感兴趣的同学可以来一起完善。</p>
 
-    </article>
+        </article>
 
-    <div class="row-fluid">
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-folder-open"></i></li>
-            
-            
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
     
     <li class="tag"><a href="/categories/github.html">GitHub<span>2</span></a></li>
     
 
-        </ul>
-        <ul class="list-inline">
-            <li><i class="glyphicon glyphicon-tags"></i></li>
-            
-            
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
     
     <li class="tag"><a href="/tags/git.html">Git<span>1</span></a></li>
     
@@ -632,30 +632,32 @@ git cat-file -p d9e7958
     <li class="tag"><a href="/tags/github.html">GitHub<span>2</span></a></li>
     
 
-        </ul>
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2014/10/02/osx-developer-environment-setup.html" title="打造你的OSX开发环境">&larr; 上一篇</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a>
+                    
+            </ul>
+        </div>
     </div>
 
-    <div class="row-fluid">
-        <ul class="pagination pull-right">
-            
-            <li class="prev"><a href="/2014/10/02/osx-developer-environment-setup.html" title="打造你的OSX开发环境">&larr; 上一篇</a></li>
-            
-            <li><a href="http://jameszhan.github.io">Archive</a></li>
-            
-            <li class="next disabled"><a>没有了</a>
-            
-        </ul>
-    </div>
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
 </div>
 
-        <div data-include="/assets/tpls/widgets/comments.tpl"></div>
-    </div>
-
-    <div class="col-md-3">
-        <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
 <div data-include="/assets/tpls/widgets/categories.tpl"></div>
 
-    </div>
+</div>
+
+
 </div>
 
 <div class="container" data-include="/assets/tpls/footer.tpl"></div>
