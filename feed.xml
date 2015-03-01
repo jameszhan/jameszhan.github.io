@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 02 Mar 2015 01:45:02 +0800</pubDate>
-    <lastBuildDate>Mon, 02 Mar 2015 01:45:02 +0800</lastBuildDate>
+    <pubDate>Mon, 02 Mar 2015 01:46:58 +0800</pubDate>
+    <lastBuildDate>Mon, 02 Mar 2015 01:46:58 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -578,7 +578,7 @@ git cat-file -p d9e7958
 
 &lt;p&gt;Git 有超过100多个子命令，每个子命令又有不同的参数，而且很多时候，不同参数下的子命令操作的语义相差甚远，要完全记下来基本上是不可能完成的任务。我的建议是，先把基本命令掌握好，然后把高级命令过一遍，只需要达到将来碰到相应问题的时候，可以快速的寻找解决方案即可。学习的过程中有不明白的地方可以随时Google和参考Stackoverflow。&lt;/p&gt;
 
-&lt;p&gt;尽管 git 命令行功能强大，但是对于阅读某个项目的小部分代码，尤其是要频繁回到历史版本时不是太方便，如果能在浏览器上直接查看，将会方便许多，还好我们已经有了 GitHub 和 Gitlab 这样的利器，可以帮我们快速定位代码，但是如果你不想把代码分享出去，又没有私有库可以用，不妨可以使用&lt;a href=&quot;https://github.com/jameszhan/webgit&quot;&gt;webgit&lt;/a&gt;来查看本地代码。webgit是一个ruby工具，依赖于ruby环境，目前功能还不是很完善，感兴趣的同学可以来一起完善。&lt;/p&gt;
+&lt;p&gt;尽管 git 命令行功能强大，但是对于阅读某个项目的小部分代码，尤其是要频繁回到历史版本时不是太方便，如果能在浏览器上直接查看，将会方便许多，还好我们已经有了 GitHub 这样的利器，可以帮我们快速定位代码，但是如果你不想把代码分享出去，又没有私有库可以用，不妨可以使用 &lt;a href=&quot;https://github.com/jameszhan/webgit&quot;&gt;webgit&lt;/a&gt; 来查看本地代码。webgit是一个ruby工具，依赖于 ruby 环境，目前功能还不是很完善，感兴趣的同学可以来一起完善。&lt;/p&gt;
 </description>
         <pubDate>Sun, 01 Mar 2015 02:00:00 +0800</pubDate>
         <link>http://jameszhan.github.io/2015/03/01/git-from-bottom-to-top.html</link>
