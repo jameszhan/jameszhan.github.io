@@ -5,9 +5,9 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 25 Oct 2014 13:04:40 +0800</pubDate>
-    <lastBuildDate>Sat, 25 Oct 2014 13:04:40 +0800</lastBuildDate>
-    <generator>Jekyll v2.3.0</generator>
+    <pubDate>Mon, 02 Mar 2015 00:53:40 +0800</pubDate>
+    <lastBuildDate>Mon, 02 Mar 2015 00:53:40 +0800</lastBuildDate>
+    <generator>Jekyll v2.4.0</generator>
     
       <item>
         <title>打造你的OSX开发环境</title>
@@ -60,7 +60,7 @@
 &lt;h3 id=&quot;浏览器&quot;&gt;浏览器&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.chromedownload.org&quot;&gt;Chrome&lt;/a&gt; 速度快，调试方便，目前是我开发主要试用的浏览器。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chromedownload.org&quot;&gt;Chrome&lt;/a&gt; 速度快，调试方便，目前是我开发主要使用的浏览器。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.firefox.com.cn/&quot;&gt;Firefox&lt;/a&gt; 有点笨重，但是作为开发调试工具还是不错的。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Safari&lt;/strong&gt;，系统自带的默认浏览器，和OSX系统集成度高，可以实现在不同的Apple设备之间同步阅读进度。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Opera&lt;/strong&gt;，App Store上提供直接下载，小巧，快速。&lt;/li&gt;
@@ -165,7 +165,7 @@ gem install sinatra
 &lt;h5 id=&quot;安装jdk&quot;&gt;安装JDK&lt;/h5&gt;
 
 &lt;p&gt;我们可以从Oracle官网上去&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;下载&lt;/a&gt;JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_26.jdk/Contents/Home
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意：具体Java版本以你本地安装的版本为准。&lt;/p&gt;
@@ -179,6 +179,8 @@ brew install groovy
 brew install grails
 &lt;span class=&quot;c&quot;&gt;# Scala&lt;/span&gt;
 brew install scala
+brew install sbt 
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;SBT_OPTS=&amp;quot;-XX:+CMSClassUnloadingEnabled -XX:PermSize=256M -XX:MaxPermSize=512M -Xmx2G&amp;quot;&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.sbtconfig
 brew install typesafe-activator
 &lt;span class=&quot;c&quot;&gt;# Clojure&lt;/span&gt;
 brew install leiningen
@@ -198,8 +200,22 @@ brew install leiningen
 &lt;h5 id=&quot;在~/.zshrc配置全局node_path&quot;&gt;在~/.zshrc配置全局NODE_PATH&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NODE_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/usr/local/lib/node_modules/&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;常用命令介绍&quot;&gt;常用命令介绍&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 查看 npm 安装的内容&lt;/span&gt;
+npm list     &lt;span class=&quot;c&quot;&gt;# 本地&lt;/span&gt;
+npm list -g  &lt;span class=&quot;c&quot;&gt;# 全局&lt;/span&gt;
+
+npm outdated &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-g&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 查看过期的包（本地或全局）&lt;/span&gt;
+npm update &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&amp;lt;package&amp;gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 更新全部或特别指定一个包&lt;/span&gt;
+npm uninstall &amp;lt;package&amp;gt; &lt;span class=&quot;c&quot;&gt;# 卸载包&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;安装常用的组件&quot;&gt;安装常用的组件&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;npm install express
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;npm install -g coffee-script
+npm install -g less
+npm install -g grunt-cli
+npm install -g gulp
+
+npm install -g express
 npm install jquery
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;开发工具的选择&quot;&gt;开发工具的选择&lt;/h5&gt;
@@ -222,7 +238,7 @@ brew install spawn-fcgi
 &lt;span class=&quot;c&quot;&gt;# Start fcgi&lt;/span&gt;
 spawn-fcgi -a 127.0.0.1 -p &lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt; -C &lt;span class=&quot;m&quot;&gt;6&lt;/span&gt; -f /usr/local/bin/php-cgi -u james -d /u/var/run/fcgi -P /u/var/run/fcgi/spawn_fcgi.pid &amp;gt; /dev/null
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;更多安装选项可以试用&lt;code&gt;brew options php56&lt;/code&gt;查看。&lt;/p&gt;
+&lt;p&gt;更多安装选项可以使用&lt;code&gt;brew options php56&lt;/code&gt;查看。&lt;/p&gt;
 
 &lt;h5 id=&quot;测试php环境&quot;&gt;测试PHP环境&lt;/h5&gt;
 
@@ -266,8 +282,11 @@ spawn-fcgi -a 127.0.0.1 -p &lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt; -C 
 
 &lt;h4 id=&quot;其他编程语言&quot;&gt;其他编程语言&lt;/h4&gt;
 
-&lt;p&gt;如果你是编程语言控，在OS X下你可以很方便地试用各种编程语言。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# install python 2.7&lt;/span&gt;
+&lt;p&gt;如果你是编程语言控，在OS X下你可以很方便地使用各种编程语言。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# C++&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;cppcompile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;c++ -std=c++11 -stdlib=libc++&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# install python 2.7&lt;/span&gt;
 brew install python
 &lt;span class=&quot;c&quot;&gt;# install python 3&lt;/span&gt;
 brew install python3
@@ -345,6 +364,33 @@ sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass find . 
 
 &lt;h3 id=&quot;视频格式转换&quot;&gt;视频格式转换&lt;/h3&gt;
 
+&lt;p&gt;在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 查看ffmpeg的安装选项，可以按照你自己的要求选装&lt;/span&gt;
+brew info ffmpeg
+
+&lt;span class=&quot;c&quot;&gt;# 安装FFmpeg&lt;/span&gt;
+brew install ffmpeg --with-fdk-aac --without-faac
+
+&lt;span class=&quot;c&quot;&gt;#列出支持的编解码器&lt;/span&gt;
+ffmpeg -codecs
+
+&lt;span class=&quot;c&quot;&gt;#列出支持的滤镜&lt;/span&gt;
+ffmpeg -filters
+
+&lt;span class=&quot;c&quot;&gt;#列出支持的格式&lt;/span&gt;
+ffmpeg -formats
+
+&lt;span class=&quot;c&quot;&gt;# 把光驱DVD格式文件转成MP4格式&lt;/span&gt;
+cat VIDEO_TS.VOB VTS_01_0.VOB VTS_01_1.VOB VTS_01_2.VOB &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; ffmpeg -i - ~/mika_01.mp4
+
+&lt;span class=&quot;c&quot;&gt;# 抽取flv视频中的音频&lt;/span&gt;
+ffmpeg -i INPUT.flv -acodec libmp3lame -ab 128k OUTPUT.mp3
+
+&lt;span class=&quot;c&quot;&gt;# 把AVI格式转换成MP4格式&lt;/span&gt;
+ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt; -b &lt;span class=&quot;m&quot;&gt;700&lt;/span&gt; -qmin &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt; -qmax &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt; -bufsize &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt; -g &lt;span class=&quot;m&quot;&gt;300&lt;/span&gt; -acodec aac -ab &lt;span class=&quot;m&quot;&gt;192&lt;/span&gt; -s 320x240 -aspect 4:3 OUTPUT.mp4 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;注：FFmpeg是一个开源免费跨平台的视频和音频流方案，属于自由软件，采用LGPL或GPL许可证（依据你选择的组件）。它提供了录制、转换以及流化音视频的完整解决方案。&lt;/p&gt;
+
 &lt;h3 id=&quot;extended-attributes-(eas)&quot;&gt;Extended Attributes (EAs)&lt;/h3&gt;
 
 &lt;p&gt;当我们使用&lt;code&gt;ls -l&lt;/code&gt;查看文件目录时，细心的同学会发现有些文件的ACL后面都多一个@，这个就是我们这节要讨论的扩展属性。  &lt;/p&gt;
@@ -381,7 +427,7 @@ find . -type d -empty -delete -print
 find . -type f -size +100000k 
 find . -type f -size +100000k -exec ls -lh &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{ print $5 &amp;quot; =&amp;gt; &amp;quot; $9 &amp;quot; &amp;quot; $10 }&amp;#39;&lt;/span&gt; 
 
-&lt;span class=&quot;c&quot;&gt;# 试用tail实时监控日志&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 使用tail实时监控日志&lt;/span&gt;
 tail -fn &lt;span class=&quot;m&quot;&gt;500&lt;/span&gt; /var/log/messages &lt;span class=&quot;c&quot;&gt;#参数-f使tail不停地去读最新的内容，这样有实时监视的效果&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# 分割和合并文件&lt;/span&gt;
