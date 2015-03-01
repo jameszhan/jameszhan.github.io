@@ -16,7 +16,7 @@
     <li class="tag"><a href="/tags/javascript.html">JavaScript <span>8</span></a></li>
     <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
     <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
-    <li class="tag"><a href="/tags/shell.html">Shell <span>1</span></a></li>
+    <li class="tag"><a href="/tags/shell.html">Shell <span>2</span></a></li>
     <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
     <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
@@ -25,8 +25,9 @@
     <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
     <li class="tag"><a href="/tags/java.html">Java <span>2</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
-    <li class="tag"><a href="/tags/github.html">GitHub <span>1</span></a></li>
+    <li class="tag"><a href="/tags/github.html">GitHub <span>2</span></a></li>
     <li class="tag"><a href="/tags/osx.html">OS X <span>1</span></a></li>
     <li class="tag"><a href="/tags/php.html">Php <span>1</span></a></li>
+    <li class="tag"><a href="/tags/git.html">Git <span>1</span></a></li>
     </ul>
 </div>
