@@ -12,5 +12,6 @@
     <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>6</span></a></li>
     <li class="tag"><a href="/categories/github.html">GitHub <span>2</span></a></li>
     <li class="tag"><a href="/categories/osx.html">OS X <span>1</span></a></li>
+    <li class="tag"><a href="/categories/raspberry.html">树莓派 <span>2</span></a></li>
     </ul>
 </div>
