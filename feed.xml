@@ -5,22 +5,129 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 07 Mar 2015 19:02:52 +0800</pubDate>
-    <lastBuildDate>Sat, 07 Mar 2015 19:02:52 +0800</lastBuildDate>
+    <pubDate>Sat, 07 Mar 2015 20:22:04 +0800</pubDate>
+    <lastBuildDate>Sat, 07 Mar 2015 20:22:04 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
-        <title>树莓派配置无线网络</title>
-        <description></description>
-        <pubDate>Sun, 01 Mar 2015 18:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2015/03/01/raspberry-with-wifi.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/01/raspberry-with-wifi.html</guid>
+        <title>树莓派连接无线网络</title>
+        <description>&lt;p&gt;尽管树莓派非常小，但是如果不能连接无线网络，那么它的移动性将大打折扣，因为它必须需要一根网线直接连接路由器。下面本文就介绍一下如何让树莓派连接无线网络。&lt;/p&gt;
+
+&lt;h3 id=&quot;准备工作&quot;&gt;准备工作&lt;/h3&gt;
+
+&lt;p&gt;首先，你需要有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;树莓派一台&lt;/li&gt;
+&lt;li&gt;无线路由器一台&lt;/li&gt;
+&lt;li&gt;USB WiFi网卡一枚（&lt;a href=&quot;http://elinux.org/RPi_USB_Wi-Fi_Adapters&quot;&gt;这里&lt;/a&gt;可以查看raspbian支持的无线网卡型号列表）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;先把USB WiFi网卡插入树莓派USB接口，启动树莓派（如果树莓派已经在移动状态，则直接插入无线网卡即可）。&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;code&gt;sudo lsusb&lt;/code&gt; 命令查看无线网卡是否已经被正确识别，例如我本地显示为：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Bus 001 Device 004: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最新的raspbian已经有了wifi必要的包，一般直接插上就可以使用了，可以使用&lt;code&gt;iwconfig&lt;/code&gt;再次确认网卡是否正常工作。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;wlan0     unassociated  Nickname:&amp;quot;&amp;lt;WIFI@REALTEK&amp;gt;&amp;quot;
+          Mode:Managed  Frequency=2.412 GHz  Access Point: Not-Associated
+          Sensitivity:0/0
+          Retry:off   RTS thr:off   Fragment thr:off
+          Power Management:off
+          Link Quality:0  Signal level:0  Noise level:0
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果出现了类似如上例所示的&lt;code&gt;wlan0&lt;/code&gt;，说明无线网卡已经可以正常工作了。&lt;/p&gt;
+
+&lt;h3 id=&quot;配置无线网卡&quot;&gt;配置无线网卡&lt;/h3&gt;
+
+&lt;p&gt;使用 &lt;code&gt;sudo ifconfig&lt;/code&gt; 可以查看网卡的工作状态。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;eth0      Link encap:Ethernet  HWaddr b8:27:eb:db:e8:f6
+          inet addr:192.168.1.242  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:79683 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:58163 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:109145561 (104.0 MiB)  TX bytes:5489567 (5.2 MiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr e8:4e:06:26:ab:45
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:6 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这里的&lt;code&gt;wlan0&lt;/code&gt;就是USB无线网卡，不过它还没有被分配IP。&lt;/p&gt;
+
+&lt;p&gt;搜索可用的无线网络。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo iwlist wlan0 scan &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep ESSID
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;编辑 &lt;code&gt;/etc/network/interfaces&lt;/code&gt;文件，可以自行选择emacs，vim，nano编辑器，记得使用&lt;code&gt;sudo&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo cp interfaces interfaces_bak   &lt;span class=&quot;c&quot;&gt;# 先备份&lt;/span&gt;
+sudo emacs /etc/network/interfaces
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;修改内容如下：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;allow-hotplug wlan0
+iface wlan0 inet dhcp
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;除非manual，否则请一定要把&lt;code&gt;wpa-roam&lt;/code&gt;改为&lt;code&gt;wpa-conf&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;配置WiFi连接&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo emacs /etc/wpa_supplicant/wpa_supplicant.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;添加如下内容：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;network={
+    ssid=&amp;quot;YOUR_NETWORK_NAME&amp;quot;
+    psk=&amp;quot;YOUR_NETWORK_PASSWORD&amp;quot;
+    proto=RSN
+    key_mgmt=WPA-PSK
+    pairwise=CCMP
+    auth_alg=OPEN
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;proto 可以是 RSN (WPA2) 或者 WPA (WPA1)。&lt;/li&gt;
+&lt;li&gt;key_mgmt 可以是 WPA-PSK (绝大部分) or WPA-EAP (企业无线网络)。&lt;/li&gt;
+&lt;li&gt;pairwise 可以是 CCMP (WPA2) 或者 TKIP (WPA1)。&lt;/li&gt;
+&lt;li&gt;auth_alg 绝大部分都是OPEN, 其它的选项有 LEAP 和 SHARED。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果想固定IP，不使用DHCP分配IP的方式，可以修改&lt;code&gt;/etc/network/interfaces&lt;/code&gt;文件，如下例所示：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;iface wlan0 inet static # dhcp to static
+address 192.168.1.155 # Static IP you want 
+netmask 255.255.255.0 
+gateway 192.168.1.1   # IP of your router
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;配置完成后，重启树莓派，如果不想重启，也可以执行&lt;code&gt;sudo ifdown wlan0 &amp;amp;&amp;amp; sudo ifup wlan0&lt;/code&gt;来激活你的无线网卡。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Mar 2015 23:00:00 +0800</pubDate>
+        <link>http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</guid>
         
         <category>raspberry</category>
         
         <category>linux</category>
         
         <category>hardware</category>
+        
+        <category>wifi</category>
         
         
         <category>raspberry</category>

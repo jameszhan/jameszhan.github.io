@@ -31,5 +31,6 @@
     <li class="tag"><a href="/tags/git.html">Git <span>1</span></a></li>
     <li class="tag"><a href="/tags/raspberry.html">树莓派 <span>2</span></a></li>
     <li class="tag"><a href="/tags/hardware.html">Hardware <span>2</span></a></li>
+    <li class="tag"><a href="/tags/wifi.html">WiFi <span>1</span></a></li>
     </ul>
 </div>
