@@ -17,7 +17,7 @@
     <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
     <li class="tag"><a href="/tags/linux.html">Linux <span>1</span></a></li>
     <li class="tag"><a href="/tags/shell.html">Shell <span>2</span></a></li>
-    <li class="tag"><a href="/tags/angular_js.html">AngularJ <span>1</span></a></li>
+    <li class="tag"><a href="/tags/angular_js.html">AngularJS <span>1</span></a></li>
     <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
     <li class="tag"><a href="/tags/lambda.html">Lambda <span>5</span></a></li>
