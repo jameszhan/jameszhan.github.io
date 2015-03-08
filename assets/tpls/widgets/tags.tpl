@@ -15,8 +15,8 @@
     <li class="tag"><a href="/tags/fp.html">函数式编程 <span>6</span></a></li>
     <li class="tag"><a href="/tags/javascript.html">JavaScript <span>8</span></a></li>
     <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
-    <li class="tag"><a href="/tags/linux.html">Linux <span>3</span></a></li>
-    <li class="tag"><a href="/tags/shell.html">Shell <span>2</span></a></li>
+    <li class="tag"><a href="/tags/linux.html">Linux <span>4</span></a></li>
+    <li class="tag"><a href="/tags/shell.html">Shell <span>3</span></a></li>
     <li class="tag"><a href="/tags/angular_js.html">AngularJS <span>1</span></a></li>
     <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
@@ -26,11 +26,12 @@
     <li class="tag"><a href="/tags/java.html">Java <span>2</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
     <li class="tag"><a href="/tags/github.html">GitHub <span>2</span></a></li>
-    <li class="tag"><a href="/tags/osx.html">OS X <span>1</span></a></li>
+    <li class="tag"><a href="/tags/osx.html">OS X <span>2</span></a></li>
     <li class="tag"><a href="/tags/php.html">Php <span>1</span></a></li>
     <li class="tag"><a href="/tags/git.html">Git <span>1</span></a></li>
-    <li class="tag"><a href="/tags/raspberry.html">树莓派 <span>2</span></a></li>
+    <li class="tag"><a href="/tags/raspberrypi.html">树莓派 <span>3</span></a></li>
     <li class="tag"><a href="/tags/hardware.html">Hardware <span>2</span></a></li>
-    <li class="tag"><a href="/tags/wifi.html">WiFi <span>1</span></a></li>
+    <li class="tag"><a href="/tags/wifi.html">WiFi <span>2</span></a></li>
+    <li class="tag"><a href="/tags/time_capsule.html">Time Capsule <span>1</span></a></li>
     </ul>
 </div>
