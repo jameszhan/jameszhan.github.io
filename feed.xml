@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 08 Mar 2015 19:16:41 +0800</pubDate>
-    <lastBuildDate>Sun, 08 Mar 2015 19:16:41 +0800</lastBuildDate>
+    <pubDate>Sun, 08 Mar 2015 21:53:01 +0800</pubDate>
+    <lastBuildDate>Sun, 08 Mar 2015 21:53:01 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -406,7 +406,7 @@ sudo apt-get -y dist-upgrade
 &lt;p&gt;解决问题的办法主要有以下2个：&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;翻墙，或者使用可翻墙的代理。&lt;/li&gt;
+&lt;li&gt;翻墙，或者把树莓派连到可翻墙的笔记本。&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;第二种方法就比较折腾了。&lt;/p&gt;
 
 &lt;ul&gt;
