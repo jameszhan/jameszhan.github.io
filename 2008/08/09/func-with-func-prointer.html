@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-定义返回函数指针的函数</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2008/08/09/func-with-func-prointer.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">定义返回函数指针的函数</h1>
+            <p class="post-meta">
+                2008年08月09日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h3 id="基础知识：">基础知识：</h3>
+
+<h5 id="定义函数指针：">定义函数指针：</h5>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">return_type</span> <span class="p">(</span><span class="o">*</span><span class="n">func_pointer</span><span class="p">)(</span><span class="n">parameter_list</span><span class="p">)</span>
+</code></pre></div>
+<h5 id="定义返回函数指针的函数：">定义返回函数指针的函数：</h5>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">return_type</span><span class="p">(</span><span class="o">*</span><span class="n">function</span><span class="p">(</span><span class="n">func_parameter_list</span><span class="p">))(</span><span class="n">parameter_list</span><span class="p">)</span>
+</code></pre></div>
+<p>定义了一个函数<code>function</code>，该函数的参数列表是<code>(function_patameter_list)</code>，返回类型是一个函数指针，这个函数指针的原型是<code>return_type(*)(parameter_list)</code>。</p>
+
+<h3 id="经典例子">经典例子</h3>
+
+<h4 id="signal函数原型">signal函数原型</h4>
+
+<p>Linux 2.0之前版本</p>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span> <span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</code></pre></div>
+<p>Linux 2.6 版本</p>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="kt">__sighandler_t</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">__sighandler_t</span> <span class="n">signal</span> <span class="p">(</span><span class="kt">int</span> <span class="n">__sig</span><span class="p">,</span> <span class="kt">__sighandler_t</span> <span class="n">__handler</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="示例">示例</h3>
+
+<p>可以用以下两种方式定义返回函数指针的函数。第二种方式是第一种方式的替换， 也更易理解。</p>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">OP</span><span class="p">(</span><span class="kt">char</span><span class="p">))(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="kt">int</span> <span class="nf">OP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+<span class="n">OP</span><span class="o">*</span> <span class="nf">fun</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">);</span> 
+</code></pre></div><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">opp</span><span class="p">(</span><span class="kt">char</span><span class="p">))(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="nf">OP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+<span class="n">OP</span><span class="o">*</span> <span class="nf">fun</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">product</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World:%d, %d/n&quot;</span><span class="p">,</span> <span class="n">opp</span><span class="p">(</span><span class="sc">&#39;+&#39;</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">opp</span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World:%d, %d/n&quot;</span><span class="p">,</span> <span class="n">fun</span><span class="p">(</span><span class="sc">&#39;+&#39;</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">fun</span><span class="p">(</span><span class="sc">&#39;*&#39;</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> 
+
+<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">opp</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">))(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">add</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">OP</span><span class="o">*</span> <span class="n">fun</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">add</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>7</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
+    
+    <li class="tag"><a href="/tags/c.html">C<span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>6</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev disabled"><a>没有了</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next"><a href="/2009/09/10/heap-sort-c.html" title="堆排序(C语言描述)">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 09 Mar 2015 00:39:34 +0800</pubDate>
-    <lastBuildDate>Mon, 09 Mar 2015 00:39:34 +0800</lastBuildDate>
+    <pubDate>Tue, 10 Mar 2015 22:41:40 +0800</pubDate>
+    <lastBuildDate>Tue, 10 Mar 2015 22:41:40 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -162,8 +162,8 @@ sudo service netatalk restart
       </item>
     
       <item>
-        <title>树莓派连接无线网络</title>
-        <description>&lt;p&gt;尽管树莓派非常小，但是如果不能连接无线网络，那么它的移动性将大打折扣，因为它必须需要一根网线直接连接路由器。下面本文就介绍一下如何让树莓派连接无线网络。&lt;/p&gt;
+        <title>树莓派连接WiFi</title>
+        <description>&lt;p&gt;尽管树莓派非常小，但是如果不能连接WiFi，那么它的移动性将大打折扣，因为它必须需要一根网线直接连接路由器。下面本文就介绍一下如何让树莓派连接无线网络。&lt;/p&gt;
 
 &lt;h3 id=&quot;准备工作&quot;&gt;准备工作&lt;/h3&gt;
 
