@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 10 Mar 2015 22:41:40 +0800</pubDate>
-    <lastBuildDate>Tue, 10 Mar 2015 22:41:40 +0800</lastBuildDate>
+    <pubDate>Tue, 10 Mar 2015 14:48:17 +0000</pubDate>
+    <lastBuildDate>Tue, 10 Mar 2015 14:48:17 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -140,9 +140,9 @@ sudo service netatalk restart
 
 &lt;p&gt;如果没有在Finder的侧边栏发现TimeCapsule，也可以尝试快捷键&lt;code&gt;Command + k&lt;/code&gt;，输入地址 &lt;code&gt;afp://192.168.x.x&lt;/code&gt; 来主动访问。&lt;/p&gt;
 </description>
-        <pubDate>Sat, 07 Mar 2015 03:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2015/03/07/raspberry-time-capsule.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/07/raspberry-time-capsule.html</guid>
+        <pubDate>Fri, 06 Mar 2015 19:00:00 +0000</pubDate>
+        <link>http://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</guid>
         
         <category>raspberrypi</category>
         
@@ -269,7 +269,7 @@ gateway 192.168.1.1   # IP of your router
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;配置完成后，重启树莓派，如果不想重启，也可以执行&lt;code&gt;sudo ifdown wlan0 &amp;amp;&amp;amp; sudo ifup wlan0&lt;/code&gt;来激活你的无线网卡。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 02 Mar 2015 23:00:00 +0800</pubDate>
+        <pubDate>Mon, 02 Mar 2015 15:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</link>
         <guid isPermaLink="true">http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</guid>
         
@@ -430,7 +430,7 @@ sudo apt-get update --fix-missing
 
 &lt;p&gt;到这里，树莓派的基础配置基本完成，&lt;strong&gt;Take your time and enjoy it！&lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>Sun, 01 Mar 2015 18:00:00 +0800</pubDate>
+        <pubDate>Sun, 01 Mar 2015 10:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</link>
         <guid isPermaLink="true">http://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</guid>
         
@@ -1016,7 +1016,7 @@ git cat-file -p d9e7958
 
 &lt;p&gt;尽管 git 命令行功能强大，但是对于阅读某个项目的小部分代码，尤其是要频繁回到历史版本时不是太方便，如果能在浏览器上直接查看，将会方便许多，还好我们已经有了 GitHub 这样的利器，可以帮我们快速定位代码，但是如果你不想把代码分享出去，又没有私有库可以用，不妨可以使用 &lt;a href=&quot;https://github.com/jameszhan/webgit&quot;&gt;webgit&lt;/a&gt; 来查看本地代码。webgit是一个ruby工具，依赖于 ruby 环境，目前功能还不是很完善，感兴趣的同学可以来一起完善。&lt;/p&gt;
 </description>
-        <pubDate>Sat, 28 Feb 2015 20:00:00 +0800</pubDate>
+        <pubDate>Sat, 28 Feb 2015 12:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</link>
         <guid isPermaLink="true">http://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</guid>
         
@@ -1502,9 +1502,9 @@ uname -a
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1qW0ntj2&quot;&gt;MacDjView&lt;/a&gt; 如果你有djvu格式的图书，这个工具可以帮到你。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 02 Oct 2014 02:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2014/10/02/osx-developer-environment-setup.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2014/10/02/osx-developer-environment-setup.html</guid>
+        <pubDate>Wed, 01 Oct 2014 18:00:00 +0000</pubDate>
+        <link>http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</guid>
         
         <category>osx</category>
         
@@ -1590,9 +1590,9 @@ uname -a
 &lt;p&gt;其中，data-title和data-url的值比较简单，填写文章的标题和真实网址就可以了。
 关键是data-thread-key的设置，原则上要求对于每一个页面，它的值应该是唯一的，这里我推荐使用相对路径的URL就可以，下面是我本地的例子。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ds-thread&amp;quot;&lt;/span&gt;
-     &lt;span class=&quot;na&quot;&gt;data-thread-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/2014/09/29/github-pages-with-comments.html&amp;quot;&lt;/span&gt;
+     &lt;span class=&quot;na&quot;&gt;data-thread-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/2014/09/28/github-pages-with-comments.html&amp;quot;&lt;/span&gt;
      &lt;span class=&quot;na&quot;&gt;data-title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;如何实现Github博客评论功能&amp;quot;&lt;/span&gt;
-     &lt;span class=&quot;na&quot;&gt;data-url=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jameszhan.github.io/2014/09/29/github-pages-with-comments.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+     &lt;span class=&quot;na&quot;&gt;data-url=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://jameszhan.github.io/2014/09/28/github-pages-with-comments.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;去除多说广告内容。&lt;/p&gt;
 
@@ -1625,9 +1625,9 @@ uname -a
 
 &lt;p&gt;到此，我们的文章评论功能就添加完毕，赶快来尝试一下吧！&lt;/p&gt;
 </description>
-        <pubDate>Mon, 29 Sep 2014 02:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2014/09/29/github-pages-with-comments.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/29/github-pages-with-comments.html</guid>
+        <pubDate>Sun, 28 Sep 2014 18:00:00 +0000</pubDate>
+        <link>http://jameszhan.github.io/2014/09/28/github-pages-with-comments.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/28/github-pages-with-comments.html</guid>
         
         <category>github</category>
         
@@ -2318,7 +2318,7 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
 &lt;li&gt;&lt;a href=&quot;http://llvm.org/&quot;&gt;LLVM&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 25 Sep 2014 19:00:00 +0800</pubDate>
+        <pubDate>Thu, 25 Sep 2014 11:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2014/09/25/programming-languages-concepts.html</link>
         <guid isPermaLink="true">http://jameszhan.github.io/2014/09/25/programming-languages-concepts.html</guid>
         
@@ -2420,9 +2420,9 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/jameszhan/simplifyjs/master/fp/y_combinator_deriving.js&quot;&gt;Y-Combinator相关代码&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-        <pubDate>Sat, 20 Sep 2014 03:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2014/09/20/y-combinator-implements.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/20/y-combinator-implements.html</guid>
+        <pubDate>Fri, 19 Sep 2014 19:00:00 +0000</pubDate>
+        <link>http://jameszhan.github.io/2014/09/19/y-combinator-implements.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/19/y-combinator-implements.html</guid>
         
         <category>lambda</category>
         
@@ -2559,9 +2559,9 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/jameszhan/simplifyjs/master/fp/y_combinator_deriving.js&quot;&gt;Y-Combinator相关代码&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-        <pubDate>Fri, 19 Sep 2014 03:00:00 +0800</pubDate>
-        <link>http://jameszhan.github.io/2014/09/19/lambda-y-combinator-javascript.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/19/lambda-y-combinator-javascript.html</guid>
+        <pubDate>Thu, 18 Sep 2014 19:00:00 +0000</pubDate>
+        <link>http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html</link>
+        <guid isPermaLink="true">http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html</guid>
         
         <category>lambda</category>
         
@@ -2756,7 +2756,7 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
 &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/deriving_y_combinator.clj&quot;&gt;y-combinator演算示例代码&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-        <pubDate>Thu, 18 Sep 2014 20:00:00 +0800</pubDate>
+        <pubDate>Thu, 18 Sep 2014 12:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html</link>
         <guid isPermaLink="true">http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html</guid>
         
