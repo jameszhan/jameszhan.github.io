@@ -49,7 +49,7 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 </code></pre></div>
 <p>这表明递归声明涉及找出定点。
 函数G的定点是指满足f=G(f)的f的值。在λ演算中，定点由定点操作符Y来定义。
-具体的推导过程可以参考我的上一篇文章<a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html">Y-Combinator的推导</a>。</p>
+具体的推导过程可以参考我的上一篇文章<a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Y-Combinator的推导</a>。</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">Y = λf.(λx.f(x x))(λx.f(x x))
 </code></pre></div>
 <h3 id="ruby-版本">Ruby 版本</h3>
@@ -101,9 +101,9 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 <h3 id="参考">参考</h3>
 
 <ol>
-<li><a href="http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html">Lambda演算之自然数</a></li>
-<li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导(Clojure描述)</a></li>
-<li><a href="https://raw.githubusercontent.com/jameszhan/simplifyjs/master/fp/y_combinator_deriving.js">Y-Combinator相关代码</a></li>
+<li><a href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">Lambda演算之自然数</a></li>
+<li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Y-Combinator的推导(Clojure描述)</a></li>
+<li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html" title="Y-Combinator的推导(JavaScript版)">Y-Combinator的推导(JavaScript描述)</a></li>
 </ol>
 
         </article>

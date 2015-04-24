@@ -22,6 +22,7 @@
     <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
     <li class="tag"><a href="/tags/lambda.html">Lambda <span>6</span></a></li>
+    <li class="tag"><a href="/tags/lisp.html">Lisp <span>4</span></a></li>
     <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
     <li class="tag"><a href="/tags/java.html">Java <span>2</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
@@ -33,6 +34,5 @@
     <li class="tag"><a href="/tags/hardware.html">Hardware <span>2</span></a></li>
     <li class="tag"><a href="/tags/wifi.html">WiFi <span>2</span></a></li>
     <li class="tag"><a href="/tags/time_capsule.html">Time Capsule <span>1</span></a></li>
-    <li class="tag"><a href="/tags/lisp.html">Lisp <span>1</span></a></li>
     </ul>
 </div>

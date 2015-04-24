@@ -91,7 +91,7 @@
 </code></pre></div>
 <p>是不是简洁了许多，但是不要被表面的简洁所迷惑，lambda演算基于的都是单参数的函数，这样函数可以很方便地得到一致性的处理。如果你使用Haskell来使用上述定义，这不会有什么问题，
 因为其底层本身就是使用currying来描述多参函数的。然而Clojure却是严格区分函数的入参个数的，一旦你使用上述定义，自然数的许多操作将无法很容易地推论得到。事实上，使用currying，
-我们可以很方便地使用单参函数模拟多参函数，但是反过来却不一定。有兴趣的朋友可以参考：<a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/church-number.clj">多参描述自然数</a>.</p>
+我们可以很方便地使用单参函数模拟多参函数，但是反过来却不一定。有兴趣的朋友可以参考：<a href="https://github.com/jameszhan/prototypes/blob/master/lambda/church-number.clj" title="多参实现源代码">多参描述自然数</a>.</p>
 
 <p>我们可以根据代数变换的形式得出one, two, three的定义。</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">one = (succ zero)
@@ -201,8 +201,9 @@ two = (succ one)
 <h3 id="参考">参考</h3>
 
 <ol>
-<li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导</a></li>
-<li><a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/lambda.clj">lambda演算示例代码</a></li>
+<li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Lambda演算之Y-Combinator的推导</a></li>
+<li><a href="https://github.com/jameszhan/prototypes/blob/master/lambda/church-number.clj" title="多参实现源代码">相关源代码(多参数版本)</a></li>
+<li><a href="https://github.com/jameszhan/prototypes/blob/master/lambda/lambda.clj" title="单参实现源代码">相关源代码(单参数版本)</a></li>
 </ol>
 
         </article>
@@ -231,6 +232,10 @@ two = (succ one)
 
     
     <li class="tag"><a href="/tags/clojure.html">Clojure<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/lisp.html">Lisp<span>4</span></a></li>
     
 
     

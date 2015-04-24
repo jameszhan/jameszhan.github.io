@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 24 Apr 2015 17:00:37 +0000</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2015 17:00:37 +0000</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2015 17:45:33 +0000</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2015 17:45:33 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -1956,7 +1956,7 @@ uname -a
 
 &lt;p&gt;什么是脚本语言？&lt;/p&gt;
 
-&lt;p&gt;对于脚本语言和通用语言的看法，我比较赞同王垠同学的观点，有兴趣的同学可以参考&lt;a href=&quot;http://www.yinwang.org/blog-cn/2013/03/29/scripting-language/&quot;&gt;什么是“脚本语言”&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;对于脚本语言和通用语言的看法，我比较赞同王垠同学的观点，有兴趣的同学可以参考&lt;a href=&quot;http://www.yinwang.org/blog-cn/2013/03/29/scripting-language/&quot; title=&quot;什么是“脚本语言”&quot;&gt;什么是“脚本语言”&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;编程范型&quot;&gt;编程范型&lt;/h2&gt;
 
@@ -2008,7 +2008,7 @@ LOP是一种面向领域的，高度声明式的编程方式，它的抽象维�
 
 &lt;h4 id=&quot;内部的dsl&quot;&gt;内部的DSL&lt;/h4&gt;
 
-&lt;p&gt;例如：&lt;a href=&quot;http://sqlkorma.com/&quot;&gt;Korma&lt;/a&gt;，&lt;a href=&quot;https://github.com/weavejester/compojure&quot;&gt;Compojure&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;例如：&lt;a href=&quot;http://sqlkorma.com/&quot; title=&quot;Korma&quot;&gt;Korma&lt;/a&gt;，&lt;a href=&quot;http://sqlkorma.com/&quot; title=&quot;Korma&quot;&gt;Compojure&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;优点：不用单独开发编译器或解释器&lt;/li&gt;
@@ -2115,8 +2115,8 @@ Swift尽管用的是Nominal Subtyping，但是swift中有extension，可以在�
 &lt;p&gt;关于lambda演算的相关知识，可以参考我之前的2篇文章。&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html&quot;&gt;Lambda演算之自然数(Clojure描述)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html&quot;&gt;Lambda演算之Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html&quot; title=&quot;Lambda演算之自然数&quot;&gt;Lambda演算之自然数(Clojure描述)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html&quot; title=&quot;Lambda演算之Y-Combinator的推导&quot;&gt;Lambda演算之Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;闭包 vs 函数指针?&lt;/p&gt;
@@ -2594,8 +2594,8 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1gdACzIj&quot;&gt;C++模板元编程&lt;/a&gt; pmcs&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1eQEInPg&quot;&gt;Ruby元编程&lt;/a&gt; o3r7&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1i3gNUPf&quot;&gt;黑客与画家&lt;/a&gt; e6bu&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/numbbbbb/the-swift-programming-language-in-chinese&quot;&gt;中文版Apple官方Swift教程&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://llvm.org/&quot;&gt;LLVM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://llvm.org/&quot; title=&quot;LLVM&quot;&gt;LLVM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/numbbbbb/the-swift-programming-language-in-chinese&quot; title=&quot;中文版Apple官方Swift教程&quot;&gt;中文版Apple官方Swift教程&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 25 Sep 2014 11:00:00 +0000</pubDate>
@@ -2611,6 +2611,8 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
         <category>java</category>
         
         <category>ruby</category>
+        
+        <category>lisp</category>
         
         <category>clojure</category>
         
@@ -2643,7 +2645,7 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这表明递归声明涉及找出定点。
 函数G的定点是指满足f=G(f)的f的值。在λ演算中，定点由定点操作符Y来定义。
-具体的推导过程可以参考我的上一篇文章&lt;a href=&quot;http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html&quot;&gt;Y-Combinator的推导&lt;/a&gt;。&lt;/p&gt;
+具体的推导过程可以参考我的上一篇文章&lt;a href=&quot;http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html&quot; title=&quot;Lambda演算之Y-Combinator的推导&quot;&gt;Y-Combinator的推导&lt;/a&gt;。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Y = λf.(λx.f(x x))(λx.f(x x))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;ruby-版本&quot;&gt;Ruby 版本&lt;/h3&gt;
@@ -2695,9 +2697,9 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 &lt;h3 id=&quot;参考&quot;&gt;参考&lt;/h3&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html&quot;&gt;Lambda演算之自然数&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html&quot;&gt;Lambda演算之Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/jameszhan/simplifyjs/master/fp/y_combinator_deriving.js&quot;&gt;Y-Combinator相关代码&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/2014/09/10/lambda-church-number.html&quot; title=&quot;Lambda演算之自然数&quot;&gt;Lambda演算之自然数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html&quot; title=&quot;Lambda演算之Y-Combinator的推导&quot;&gt;Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html&quot; title=&quot;Y-Combinator的推导(JavaScript版)&quot;&gt;Y-Combinator的推导(JavaScript描述)&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
         <pubDate>Fri, 19 Sep 2014 19:00:00 +0000</pubDate>
@@ -2834,8 +2836,8 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 &lt;h3 id=&quot;参考&quot;&gt;参考&lt;/h3&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html&quot;&gt;Lambda演算之自然数&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html&quot;&gt;Lambda演算之Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/2014/09/10/lambda-church-number.html&quot;&gt;Lambda演算之自然数&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html&quot;&gt;Lambda演算之Y-Combinator的推导(Clojure描述)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/jameszhan/simplifyjs/master/fp/y_combinator_deriving.js&quot;&gt;Y-Combinator相关代码&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
