@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>品码斋-通过实例看解释器和编译器的区别</title>
+    <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
+    <link rel="canonical" href="http://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">通过实例看解释器和编译器的区别</h1>
+            <p class="post-meta">
+                2015年04月25日 •
+                詹子知(James Zhan) •
+                版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <p>本文将通过一个简单例子来对比一下解释器和编译器的区别。</p>
+
+<p>在实现Compiler（编译器）和Interpreter（解释器）之前，我们需要先选择一种目标语言，这里我们选用计算器语言，它的文法非常简单，而且可以很方便地扩展，除了四则运算之外，如果有需要，我们可以很方便地加入负数，平方，开方，幂，括号及变量等。</p>
+
+<p>本例，为了演示简单，我们的计算器仅支持四则运算，负数和括号。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">expression : term | expression &#39;+&#39; term | expression &#39;-&#39; term
+term : primary_expression | term &#39;*&#39; primary_expression | term &#39;/&#39; primary_expression
+primary_expression : DOUBLE_LITERAL | &#39;(&#39; expression &#39;)&#39; | &#39;-&#39; primary_expression
+</code></pre></div>
+<p>在实现Interpreter和Compiler之前，我们都需要先实现语法解析器（Parser），它的主要工作就是把输入的代码字符串转换为AST（抽象语法树），Interpreter和Compiler都是以AST作为输入。</p>
+
+<h3 id="parser的实现">Parser的实现</h3>
+
+<p>Parser的工作主要有两步：</p>
+
+<ol>
+<li>扫描整个代码文本，识别出每个单词，并把它们划分成不同类型的token（其实这个类型可以不需要非常准确，毕竟有些token的类型需要等到Parser真正分析到的时候才可以最终确定）。</li>
+<li>按照文法规则把token序列转换为AST。</li>
+</ol>
+
+<blockquote>
+<p>真实情况下的解析器的实现都是边读入代码文本边解析，不会一次性把所有代码文本都读入，它一般都会依赖于Lexer（词法解析器），Parser控制整个解析过程，Lexer按需返回Parser需要的token。
+Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些token的类型需要到了语法解析过程中才可以最终确定。下文要演示的到负号和减号就是这种情况。</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tokens</span> <span class="o">=</span> <span class="nx">code</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">i</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span> <span class="c1">// not in string</span>
+            <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([-+*/()])/g</span><span class="p">,</span> <span class="s2">&quot; $1 &quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// in string</span>
+            <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\s/g</span><span class="p">,</span> <span class="s2">&quot;#whitespace#&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}).</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">).</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/#whitespace#/g</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">);</span>
+    <span class="p">}).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;(&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;(&#39;</span><span class="p">};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="nx">vaue</span><span class="o">:</span> <span class="s1">&#39;)&#39;</span><span class="p">};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;+&#39;</span> <span class="o">||</span> <span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;plus&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">input</span><span class="p">};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;*&#39;</span> <span class="o">||</span> <span class="nx">input</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">input</span><span class="p">};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">input</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">input</span><span class="p">)};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">SyntaxError</span><span class="p">(</span><span class="s2">&quot;Unknow token: &quot;</span> <span class="o">+</span> <span class="nx">input</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">,</span> <span class="nx">token</span><span class="p">;</span>
+    <span class="nx">v1</span> <span class="o">=</span> <span class="nx">parseTerm</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+    <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">token</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">v1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;plus&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">v2</span> <span class="o">=</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;op&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">token</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">v1</span><span class="o">:</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="o">:</span> <span class="nx">v2</span><span class="p">};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">tokens</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">v1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">parseTerm</span><span class="p">(</span><span class="nx">tokens</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">,</span> <span class="nx">token</span><span class="p">;</span>
+    <span class="nx">v1</span> <span class="o">=</span> <span class="nx">parsePrimary</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+    <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">token</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">v1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;mul&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">v2</span> <span class="o">=</span> <span class="nx">parseTerm</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;op&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">token</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">v1</span><span class="o">:</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="o">:</span> <span class="nx">v2</span><span class="p">};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">tokens</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="nx">token</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">v1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">parsePrimary</span><span class="p">(</span><span class="nx">tokens</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">token</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">SyntaxError</span><span class="p">(</span><span class="s2">&quot;Primary can&#39;t be null.&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;number&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">token</span><span class="p">.</span><span class="nx">value</span><span class="p">};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;(&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">value</span> <span class="o">=</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+        <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">token</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">||</span> <span class="nx">token</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">SyntaxError</span><span class="p">(</span><span class="s2">&quot;unclosed delimeter till end of file: &quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">token</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">value</span> <span class="o">===</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">value</span> <span class="o">=</span> <span class="nx">parsePrimary</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;negative&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">value</span><span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">SyntaxError</span><span class="p">(</span><span class="s2">&quot;Unknown token &quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; in Primary.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>细心的同学一定注意到，这个代码的实现和前面的文法规则非常神似，其实，在现实中，很少有人直接手写Parser（语法规则简单的语言除外，比如LISP），语法解析的工作我们通常都可以借助工具来做，比较常用的有yacc，AntLR，JavaCC等。</p>
+
+<h3 id="interpreter">Interpreter</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;number&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;negative&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;op&#39;</span><span class="o">:</span>
+            <span class="k">switch</span> <span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="s1">&#39;+&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
+                <span class="k">case</span> <span class="s1">&#39;-&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">-</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
+                <span class="k">case</span> <span class="s1">&#39;*&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
+                <span class="k">case</span> <span class="s1">&#39;/&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">/</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
+                <span class="k">default</span> <span class="o">:</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">&quot;Unknown operator: &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="k">default</span> <span class="o">:</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">&quot;Unknown ast node: &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Interpreter直接解释执行AST，并返回最终结果。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">interpret</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">&quot;3 * -(8 + -2)&quot;</span><span class="p">)));</span> <span class="c1">// =&gt; -18</span>
+</code></pre></div>
+<h3 id="compiler">Compiler</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;number&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="s2">&quot;ds.push(&quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot;)\n&quot;</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;negative&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="s2">&quot;ds.push(-ds.pop())\n&quot;</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;op&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;ds.push(ds.pop() &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot; ds.pop())\n&quot;</span><span class="p">;</span>
+        <span class="k">default</span> <span class="o">:</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">&quot;Unknown ast node: &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Compiler不直接执行AST，而是把AST翻译成目标语言，比如汇编语言或者Java字节码，本例，我们假定我们的目标机器是一个栈式虚拟机，且使用JavaScript兼容的语法。</p>
+
+<blockquote>
+<p>真实的编译器要比本例复杂的多，生成目标代码往往不是一步到位的，一般都会包括中间代码生成，代码优化等相关内容。</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">assemblyCode</span> <span class="o">=</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">&quot;3 * -(8 + -2)&quot;</span><span class="p">));</span> 
+<span class="c1">// ds.push(3)</span>
+<span class="c1">// ds.push(8)</span>
+<span class="c1">// ds.push(2)</span>
+<span class="c1">// ds.push(-ds.pop())</span>
+<span class="c1">// ds.push(ds.pop() + ds.pop())</span>
+<span class="c1">// ds.push(-ds.pop())</span>
+<span class="c1">// ds.push(ds.pop() * ds.pop())</span>
+</code></pre></div>
+<p>执行目标语言代码。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">vm</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">initDs</span> <span class="o">=</span> <span class="s2">&quot;var ds = []\n&quot;</span><span class="p">,</span>
+        <span class="nx">popDs</span> <span class="o">=</span> <span class="s2">&quot;\nds.pop()\n&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">exec</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">initDs</span> <span class="o">+</span> <span class="nx">code</span> <span class="o">+</span> <span class="nx">popDs</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">})();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">assemblyCode</span><span class="p">));</span> <span class="c1">// =&gt; -18</span>
+</code></pre></div>
+<p>Compiler vs. Interpreter</p>
+
+<p>从上面的过程中，我们可以看出其实Compiler和Interpreter有很多的相似之处，只不过是目标不一样罢了。其实除了它们都接受AST作为输入之外，它们在AST的遍历方式上一般也是一致的，下面我们就重构一下上面的代码。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;number&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitNumber</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s1">&#39;negative&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitNegative</span><span class="p">(</span><span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">));</span>
+        <span class="k">case</span> <span class="s1">&#39;op&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitOp</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">),</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">));</span>
+        <span class="k">default</span> <span class="o">:</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">&quot;Unknown ast node: &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">visitor</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">visitNumber</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">visitNegative</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">-</span><span class="nx">value</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">visitOp</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">switch</span> <span class="p">(</span><span class="nx">op</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="s1">&#39;+&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">v1</span> <span class="o">+</span> <span class="nx">v2</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">&#39;-&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">v1</span> <span class="o">-</span> <span class="nx">v2</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">&#39;*&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">v1</span> <span class="o">*</span> <span class="nx">v2</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">&#39;/&#39;</span><span class="o">:</span>
+                    <span class="k">return</span> <span class="nx">v1</span> <span class="o">/</span> <span class="nx">v2</span><span class="p">;</span>
+                <span class="k">default</span> <span class="o">:</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">&quot;Unknown operator: &quot;</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="nx">visitor</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">visitNumber</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">code</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;ds.push(&quot;</span> <span class="o">+</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+            <span class="p">},</span>
+            <span class="nx">visitNegative</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">code</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;ds.push(-ds.pop())&quot;</span><span class="p">);</span>
+            <span class="p">},</span>
+            <span class="nx">visitOp</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">){</span>
+                <span class="nx">code</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;ds.push(ds.pop() &quot;</span> <span class="o">+</span> <span class="nx">op</span> <span class="o">+</span> <span class="s2">&quot; ds.pop())&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+    <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">code</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>重构后的代码好像比之前没有什么简化的地方，但是它却把AST的遍历和AST的操作给分离了开来，这样做的好处在于，一旦我们要为AST定义新的行为，只需要实现Visitor即可。比如，下例演示了打印AST的功能。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">printAST</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">visitor</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">visitNumber</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">number</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="nx">visitNegative</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="p">];</span>
+        <span class="p">},</span>
+        <span class="nx">visitOp</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">op</span><span class="p">,</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">){</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nx">op</span><span class="p">,</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">},</span> <span class="nx">graph</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">indent</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">indent</span> <span class="o">+=</span> <span class="s2">&quot;\t&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">forEach</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">map</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">reduce</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//isArray</span>
+            <span class="kd">var</span> <span class="nx">op</span> <span class="o">=</span> <span class="nx">node</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">indent</span><span class="p">,</span> <span class="nx">op</span><span class="p">);</span>
+            <span class="nx">node</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+                <span class="nx">graph</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">indent</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">graph</span><span class="p">(</span><span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">printAST</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">&quot;(2 + 3) * (5 + 6)&quot;</span><span class="p">));</span>
+<span class="c1">//   *</span>
+<span class="c1">//       +</span>
+<span class="c1">//           2</span>
+<span class="c1">//           3</span>
+<span class="c1">//       +</span>
+<span class="c1">//           5</span>
+<span class="c1">//           6</span>
+</code></pre></div>
+<p>从这个例子中我们可以看出，Compiler和Interpreter其实并没有很大的不同，它们最大的区别不过是对AST遍历过程中所进行的操作不同罢了。</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+<li><a href="https://github.com/jameszhan/prototypes/blob/master/lang/compiler_vs_interpreter.js" title="详细源码">完整源代码</a></li>
+<li><a href="https://github.com/jameszhan/lispscript" title="lispscript">lispscript</a></li>
+</ol>
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                
+                
+    
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>9</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                
+                
+    
+    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>10</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/compiler.html">Compiler<span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/interpreter.html">Interpreter<span>2</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2015/04/01/build-interpret-from-zero.html" title="零基础构建语言解释器">&larr; 上一篇</a></li>
+                
+                <li><a href="http://jameszhan.github.io">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a>
+                
+            </ul>
+        </div>
+    </div>
+
+    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

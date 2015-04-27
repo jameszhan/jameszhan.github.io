@@ -14,7 +14,7 @@
     <li class="tag"><a href="/tags/ruby.html">Ruby <span>5</span></a></li>
     <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
     <li class="tag"><a href="/tags/fp.html">函数式编程 <span>7</span></a></li>
-    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>9</span></a></li>
+    <li class="tag"><a href="/tags/javascript.html">JavaScript <span>10</span></a></li>
     <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
     <li class="tag"><a href="/tags/linux.html">Linux <span>4</span></a></li>
     <li class="tag"><a href="/tags/shell.html">Shell <span>3</span></a></li>
@@ -34,5 +34,7 @@
     <li class="tag"><a href="/tags/hardware.html">Hardware <span>2</span></a></li>
     <li class="tag"><a href="/tags/wifi.html">WiFi <span>2</span></a></li>
     <li class="tag"><a href="/tags/time_capsule.html">Time Capsule <span>1</span></a></li>
+    <li class="tag"><a href="/tags/compiler.html">Compiler <span>2</span></a></li>
+    <li class="tag"><a href="/tags/interpreter.html">Interpreter <span>2</span></a></li>
     </ul>
 </div>

@@ -5,7 +5,7 @@
             <a href="/categories/index.html">分类</a></span>
     </h2>
     <ul class="list-inline">
-    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>8</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>9</span></a></li>
     <li class="tag"><a href="/categories/algorithm.html">Algorithm <span>5</span></a></li>
     <li class="tag"><a href="/categories/javascript.html">JavaScript <span>2</span></a></li>
     <li class="tag"><a href="/categories/linux.html">Linux <span>1</span></a></li>
