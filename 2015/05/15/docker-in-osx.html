@@ -97,9 +97,18 @@ docker info
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">docker run -it ubuntu bash
 </code></pre></div>
 <p>启动Nginx容器</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">docker run -d -P --name web nginx
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">docker run -d -p 80:80 --name web nginx
+
+<span class="c">#可以使用如下命令来测试当前的Nginx容器</span>
+curl -I <span class="sb">`</span>boot2docker ip<span class="sb">`</span>
 </code></pre></div>
 <p>可以使用 <code>docker ps</code> 来查看当前活跃的进程，可以使用 <code>docker stop web</code> 来结束指定容器，或者使用 <code>docker rm web</code> 来删除指定容器。</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+<li><a href="http://dockerpool.com/static/books/docker_practice/index.html" title="Docker从入门到实践">Docker从入门到实践</a></li>
+</ol>
 
         </article>
 

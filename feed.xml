@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 15 May 2015 17:38:28 +0000</pubDate>
-    <lastBuildDate>Fri, 15 May 2015 17:38:28 +0000</lastBuildDate>
+    <pubDate>Sun, 17 May 2015 03:32:35 +0000</pubDate>
+    <lastBuildDate>Sun, 17 May 2015 03:32:35 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -73,9 +73,18 @@ docker info
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;docker run -it ubuntu bash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;启动Nginx容器&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;docker run -d -P --name web nginx
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;docker run -d -p 80:80 --name web nginx
+
+&lt;span class=&quot;c&quot;&gt;#可以使用如下命令来测试当前的Nginx容器&lt;/span&gt;
+curl -I &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;boot2docker ip&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;可以使用 &lt;code&gt;docker ps&lt;/code&gt; 来查看当前活跃的进程，可以使用 &lt;code&gt;docker stop web&lt;/code&gt; 来结束指定容器，或者使用 &lt;code&gt;docker rm web&lt;/code&gt; 来删除指定容器。&lt;/p&gt;
+
+&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://dockerpool.com/static/books/docker_practice/index.html&quot; title=&quot;Docker从入门到实践&quot;&gt;Docker从入门到实践&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         <pubDate>Fri, 15 May 2015 23:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2015/05/15/docker-in-osx.html</link>
