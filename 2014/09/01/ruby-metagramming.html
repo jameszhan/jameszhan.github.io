@@ -38,7 +38,7 @@
 
 <h2 id="常见惯用法">常见惯用法</h2>
 
-<h3 id="a.1-拟态方法（mimic-methods）">A.1 拟态方法（Mimic Methods）</h3>
+<h3 id="a-1-拟态方法（mimic-methods）">A.1 拟态方法（Mimic Methods）</h3>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">puts</span> <span class="s2">&quot;Hello,world!&quot;</span>
 </code></pre></div>
 <p>这里的 puts 实际上是个方法，完整写法</p>
@@ -68,7 +68,7 @@
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
-<h3 id="a.2-空指针保护（nil-guards）">A.2 空指针保护（Nil Guards）</h3>
+<h3 id="a-2-空指针保护（nil-guards）">A.2 空指针保护（Nil Guards）</h3>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">a</span> <span class="o">||=</span> <span class="o">[]</span>
 </code></pre></div>
 <p>以上代码等价于</p>
@@ -93,9 +93,9 @@
 </code></pre></div>
 <p>上面的代码会在最后它要被访问的时候才进行初始化，这种惯用法被称为<strong>惰性实例变量(Lazy Instance Variable)</strong>。</p>
 
-<h3 id="a.3-关于方法参数的技巧（tricks-with-method-arguments）">A.3 关于方法参数的技巧（Tricks with Method Arguments）</h3>
+<h3 id="a-3-关于方法参数的技巧（tricks-with-method-arguments）">A.3 关于方法参数的技巧（Tricks with Method Arguments）</h3>
 
-<h4 id="具名参数(named-arguments)">具名参数(Named Arguments)</h4>
+<h4 id="具名参数-named-arguments">具名参数(Named Arguments)</h4>
 
 <p>当在Ruby中调用方法时，你不得不按照特定的顺序输入参数。如果顺序错误，则会引入一个bug：</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
@@ -107,7 +107,7 @@
 Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数来解决这个问题。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">login</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;bill&#39;</span><span class="p">,</span> <span class="ss">message</span><span class="p">:</span> <span class="s1">&#39;just doing some administration&#39;</span><span class="p">,</span> <span class="ss">password</span><span class="p">:</span> <span class="s1">&#39;123456&#39;</span><span class="p">)</span>
 </code></pre></div>
-<h4 id="参数数组和默认值(argument-arrays-and-default-values)">参数数组和默认值(Argument Arrays and Default Values)</h4>
+<h4 id="参数数组和默认值-argument-arrays-and-default-values">参数数组和默认值(Argument Arrays and Default Values)</h4>
 
 <p>*操作符可以把多个参数收集到一个数组中；</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -122,7 +122,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">my_method</span><span class="p">(</span><span class="s2">&quot;a value&quot;</span> <span class="p">)</span> <span class="c1"># =&gt; &quot;a value and a default value&quot;</span>
 </code></pre></div>
-<h4 id="混合使用参数的惯用法(mixing-arguments-idioms)">混合使用参数的惯用法(Mixing Arguments Idioms)</h4>
+<h4 id="混合使用参数的惯用法-mixing-arguments-idioms">混合使用参数的惯用法(Mixing Arguments Idioms)</h4>
 
 <p>Ruby 2.0以前</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
@@ -142,7 +142,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">my_method</span> <span class="s2">&quot;with&quot;</span><span class="p">,</span> <span class="ss">lots</span><span class="p">:</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="ss">args</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="ss">by_hand</span><span class="p">:</span> <span class="s2">&quot;form&quot;</span>
 </code></pre></div>
-<h3 id="a.4-self-yield">A.4 Self Yield</h3>
+<h3 id="a-4-self-yield">A.4 Self Yield</h3>
 
 <p>当给方法传入一个块时，你会期望这个方法通过yield对块进行回调。这种回调有一种有用的变形，就是对象可以把自身传给这个块。下面的例子来自于RubyGems包管理器。</p>
 
@@ -159,7 +159,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre></div>
-<h4 id="gem::specification-源代码">Gem::Specification 源代码</h4>
+<h4 id="gem-specification-源代码">Gem::Specification 源代码</h4>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Gem</span>
     <span class="k">class</span> <span class="nc">Specification</span>
         <span class="k">def</span> <span class="nf">initialize</span>
@@ -170,7 +170,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
-<h4 id="来自-tap()-的例子">来自 tap() 的例子</h4>
+<h4 id="来自-tap-的例子">来自 tap() 的例子</h4>
 
 <p>在Ruby中，长长的方法调用链很普遍</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="o">].</span><span class="n">push</span><span class="p">(</span><span class="s1">&#39;d&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="o">.</span><span class="n">upcase</span><span class="o">.</span><span class="n">next</span> <span class="c1"># =&gt; &quot;B&quot;</span>
@@ -191,7 +191,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
-<h3 id="a.5-symbol#to_proc()-方法">A.5 Symbol#to_proc() 方法</h3>
+<h3 id="a-5-symbol-to_proc-方法">A.5 Symbol#to_proc() 方法</h3>
 
 <p>这种有点诡异的法术在Ruby程序员中很流行，请看下面的代码</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">names</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;bob&#39;</span> <span class="p">,</span> <span class="s1">&#39;bill&#39;</span> <span class="p">,</span> <span class="s1">&#39;heather&#39;</span> <span class="o">]</span>
@@ -210,9 +210,9 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 </code></pre></div>
 <h2 id="法术手册">法术手册</h2>
 
-<h3 id="法术集-(the-spells)">法术集 (The Spells)</h3>
+<h3 id="法术集-the-spells">法术集 (The Spells)</h3>
 
-<h4 id="数组参数(argument-array)">数组参数(Argument Array)</h4>
+<h4 id="数组参数-argument-array">数组参数(Argument Array)</h4>
 
 <p>把一组参数压入到一个数组中。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -220,7 +220,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">my_method</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span> <span class="p">,</span> <span class="s1">&#39;xyz&#39;</span> <span class="p">,</span> <span class="s1">&#39;123&#39;</span> <span class="p">)</span> <span class="c1"># =]]&gt; [&quot;cba&quot;, &quot;zyx&quot;, &quot;321&quot;]</span>
 </code></pre></div>
-<h4 id="环绕别名(around-alias)">环绕别名(Around Alias)</h4>
+<h4 id="环绕别名-around-alias">环绕别名(Around Alias)</h4>
 
 <p>从一个重新定义的方法中调用原始的、被重命名的版本。
 三个基本步骤：
@@ -237,7 +237,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 
 <span class="s2">&quot;abc&quot;</span><span class="o">.</span><span class="n">reverse</span> <span class="c1"># =&gt; &quot;xcbax&quot;</span>
 </code></pre></div>
-<h4 id="白板(blank-slate)">白板(Blank Slate)</h4>
+<h4 id="白板-blank-slate">白板(Blank Slate)</h4>
 
 <p>移除一个对象中的所有方法，以便通过method<u>missing添加幽灵方法。主要目的避免原有类中的方法同新增方法产生冲突。注意以</u><u>开头的方法不能移除，比如</u><u>send</u>_等。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
@@ -257,7 +257,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 
 <span class="n">obj</span><span class="o">.</span><span class="n">to_s</span> <span class="c1"># =&gt; &quot;a Ghost Method&quot;</span>
 </code></pre></div>
-<h4 id="类扩展(class-extension)">类扩展(Class Extension)</h4>
+<h4 id="类扩展-class-extension">类扩展(Class Extension)</h4>
 
 <p>通过向eigenclass中混入模块来定义类方法（是对象扩展的一个特例）。
 扩展的方法存在于eigenclass类中，对类来说就是类方法，对对象实例来说就是单件方法。
@@ -277,7 +277,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 
 <span class="n">C</span><span class="o">.</span><span class="n">my_method</span> <span class="c1"># =&gt; &quot;a class method&quot;</span>
 </code></pre></div>
-<h4 id="类扩展混入(class-extension-mixin)">类扩展混入(Class Extension Mixin)</h4>
+<h4 id="类扩展混入-class-extension-mixin">类扩展混入(Class Extension Mixin)</h4>
 
 <p>使一个模块可以通过钩子方法扩展它的包含者。
 同上面基本类似，差别主要有：
@@ -306,7 +306,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">C</span><span class="o">.</span><span class="n">my_method</span> <span class="c1"># =&gt; &quot;a class method&quot;</span>
 </code></pre></div>
-<h4 id="类实例变量(class-instance-variable)">类实例变量(Class Instance Variable)</h4>
+<h4 id="类实例变量-class-instance-variable">类实例变量(Class Instance Variable)</h4>
 
 <p>在一个 Class 对象的实例变量中存储类级别的状态。
 核心提示：
@@ -323,7 +323,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">C</span><span class="o">.</span><span class="n">class_attribute</span> <span class="c1"># =&gt; &quot;some value&quot;</span>
 </code></pre></div>
-<h4 id="类宏(class-macro)">类宏(Class Macro)</h4>
+<h4 id="类宏-class-macro">类宏(Class Macro)</h4>
 
 <p>在类定义中使用一个类方法。
 就是一个伪装成关键字的类方法。如attr_accessor :a, :b，类宏一般结合类扩展混入技术进行。</p>
@@ -337,7 +337,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     <span class="n">my_macro</span> <span class="ss">:x</span> <span class="c1"># =&gt; &quot;my_macro(x) called&quot;</span>
 <span class="k">end</span>
 </code></pre></div>
-<h4 id="洁净室(clean-room)">洁净室(Clean Room)</h4>
+<h4 id="洁净室-clean-room">洁净室(Clean Room)</h4>
 
 <p>使用对象作为执行块的上下文环境
 实际上就是通过 instance_eval 限定执行块的作用域。</p>
@@ -347,7 +347,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 
 <span class="no">CleanRoom</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">instance_eval</span> <span class="p">{</span> <span class="n">a_useful_method</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">}</span> <span class="c1"># =&gt; 6</span>
 </code></pre></div>
-<h4 id="代码处理器(code-processor)">代码处理器(Code Processor)</h4>
+<h4 id="代码处理器-code-processor">代码处理器(Code Processor)</h4>
 
 <p>处理从外部获得的字符串代码</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">File</span><span class="o">.</span><span class="n">readlines</span><span class="p">(</span><span class="s2">&quot;a_file_containing_lines_of_ruby.txt&quot;</span> <span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
@@ -358,7 +358,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="c1">#&gt;&gt; 3 * 2 ==&gt; 6</span>
 <span class="c1">#&gt;&gt; Math.log10(100) ==&gt; 2.0</span>
 </code></pre></div>
-<h4 id="上下文探针(context-probe)">上下文探针(Context Probe)</h4>
+<h4 id="上下文探针-context-probe">上下文探针(Context Probe)</h4>
 
 <p>执行块来获取对象上下文中的信息。
 其实就是通过 instance_eval 将对象内部的作用域暴露出来。</p>
@@ -370,7 +370,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">instance_eval</span> <span class="p">{</span> <span class="vi">@x</span> <span class="p">}</span> <span class="c1"># =&gt; &quot;a private instance variable&quot;</span>
 </code></pre></div>
-<h4 id="延迟执行(deferred-evaluation)">延迟执行(Deferred Evaluation)</h4>
+<h4 id="延迟执行-deferred-evaluation">延迟执行(Deferred Evaluation)</h4>
 
 <p>在proc或lambda中存储一段代码及其上下文，用于以后执行。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
@@ -388,7 +388,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="n">obj</span><span class="o">.</span><span class="n">execute</span>
 <span class="vg">$X</span> <span class="c1"># =&gt; 1</span>
 </code></pre></div>
-<h4 id="动态派发(dynamic-dispatcher)">动态派发(Dynamic Dispatcher)</h4>
+<h4 id="动态派发-dynamic-dispatcher">动态派发(Dynamic Dispatcher)</h4>
 
 <p>在运行时决定调用哪个方法
 通过send发送消息，等价于方法调用。但通过send可以发送符号或字符串，灵活性大为增强。</p>
@@ -396,7 +396,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="n">obj</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">method_to_call</span><span class="p">)</span> <span class="c1"># =&gt; &quot;cba&quot;</span>
 </code></pre></div>
-<h4 id="动态方法(dynamic-method)">动态方法(Dynamic Method)</h4>
+<h4 id="动态方法-dynamic-method">动态方法(Dynamic Method)</h4>
 
 <p>在运行时才决定如何定义一个方法
 动态方法还有一个特性：不会开启一个新的作用域。
@@ -412,7 +412,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">my_method</span> <span class="c1"># =&gt; &quot;a dynamic method&quot;</span>
 </code></pre></div>
-<h4 id="动态代理(dynamic-proxy)">动态代理(Dynamic Proxy)</h4>
+<h4 id="动态代理-dynamic-proxy">动态代理(Dynamic Proxy)</h4>
 
 <p>把不能对应某个方法名的消息转发给另外一个对象。
 method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
@@ -427,7 +427,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">MyDynamicProxy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;a string&quot;</span><span class="p">)</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">reverse</span> <span class="c1"># =&gt; &quot;result: gnirts a&quot;</span>
 </code></pre></div>
-<h4 id="扁平作用域(flat-scope)">扁平作用域(Flat Scope)</h4>
+<h4 id="扁平作用域-flat-scope">扁平作用域(Flat Scope)</h4>
 
 <p>使用闭包在两个作用域之间共享变量(以下用例不典型)</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
@@ -445,7 +445,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 
 <span class="n">obj</span><span class="o">.</span><span class="n">an_attribute</span> <span class="c1"># =&gt; 100</span>
 </code></pre></div>
-<h4 id="幽灵方法(ghost-method)">幽灵方法(Ghost Method)</h4>
+<h4 id="幽灵方法-ghost-method">幽灵方法(Ghost Method)</h4>
 
 <p>响应一个没有关联方法的消息</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
@@ -456,7 +456,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">my_ghost_method</span> <span class="c1"># =&gt; &quot;dohtem_tsohg_ym&quot;</span>
 </code></pre></div>
-<h4 id="钩子方法(hook-method)">钩子方法(Hook Method)</h4>
+<h4 id="钩子方法-hook-method">钩子方法(Hook Method)</h4>
 
 <p>通过覆写某个特殊方法来截获对象模型事件。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vg">$INHERITORS</span> <span class="o">=</span> <span class="o">[]</span>
@@ -476,7 +476,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 
 <span class="vg">$INHERITORS</span> <span class="c1"># =&gt; [D, E, F]</span>
 </code></pre></div>
-<h4 id="内核方法(kernal-method)">内核方法(Kernal Method)</h4>
+<h4 id="内核方法-kernal-method">内核方法(Kernal Method)</h4>
 
 <p>在 Kernel 模块中定义一个方法，使之对所有对象都可用。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Kernel</span>
@@ -486,7 +486,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="n">a_method</span> <span class="c1"># =&gt; &quot;a kernel method&quot;</span>
 </code></pre></div>
-<h4 id="惰性实例变量(lazy-instance-variable)">惰性实例变量(Lazy Instance Variable)</h4>
+<h4 id="惰性实例变量-lazy-instance-variable">惰性实例变量(Lazy Instance Variable)</h4>
 
 <p>当第一次访问一个实例变量时才对之进行初始化。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
@@ -497,7 +497,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">attribute</span> <span class="c1"># =&gt; &quot;some value&quot;</span>
 </code></pre></div>
-<h4 id="拟态方法(mimic-method)">拟态方法(Mimic Method)</h4>
+<h4 id="拟态方法-mimic-method">拟态方法(Mimic Method)</h4>
 
 <p>把一个方法伪装成另外一种语言构件。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">BaseClass</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
@@ -510,7 +510,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="n">obj</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">an_attribute</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 伪装成属性的方法</span>
 </code></pre></div>
-<h4 id="猴子打补丁(monkeypatch)">猴子打补丁(Monkeypatch)</h4>
+<h4 id="猴子打补丁-monkeypatch">猴子打补丁(Monkeypatch)</h4>
 
 <p>修改已有类的特性。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="s2">&quot;abc&quot;</span><span class="o">.</span><span class="n">reverse</span> <span class="c1"># =&gt; &quot;cba&quot;</span>
@@ -521,7 +521,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="s2">&quot;abc&quot;</span><span class="o">.</span><span class="n">reverse</span> <span class="c1"># =&gt; &quot;override&quot;</span>
 </code></pre></div>
-<h4 id="有名参数(named-arguments)">有名参数(Named Arguments)</h4>
+<h4 id="有名参数-named-arguments">有名参数(Named Arguments)</h4>
 
 <p>把方法参数收集到一个哈希表中，以便通过名字访问（Ruby2.0+直接支持）。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
@@ -530,7 +530,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 
 <span class="n">my_method</span><span class="p">(</span><span class="ss">:arg1</span> <span class="o">=&gt;</span> <span class="s2">&quot;A&quot;</span> <span class="p">,</span> <span class="ss">:arg2</span> <span class="o">=&gt;</span> <span class="s2">&quot;B&quot;</span> <span class="p">,</span> <span class="ss">:arg3</span> <span class="o">=&gt;</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;B&quot;</span>
 </code></pre></div>
-<h4 id="命名空间(namespace)">命名空间(Namespace)</h4>
+<h4 id="命名空间-namespace">命名空间(Namespace)</h4>
 
 <p>在一个模块中定义常量，以防止命名冲突。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">MyNamespace</span>
@@ -543,13 +543,13 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="nb">Array</span><span class="o">.</span><span class="n">new</span> <span class="c1"># =&gt; []</span>
 <span class="no">MyNamespace</span><span class="o">::</span><span class="nb">Array</span><span class="o">.</span><span class="n">new</span> <span class="c1"># =&gt; my class</span>
 </code></pre></div>
-<h4 id="空指针保护(nil-guard)">空指针保护(Nil Guard)</h4>
+<h4 id="空指针保护-nil-guard">空指针保护(Nil Guard)</h4>
 
 <p>用“或”操作符覆写一个空应用。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">x</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">||</span> <span class="s2">&quot;a value&quot;</span> <span class="c1"># =&gt; &quot;a value&quot;</span>
 </code></pre></div>
-<h4 id="对象扩展(object-extension)">对象扩展(Object Extension)</h4>
+<h4 id="对象扩展-object-extension">对象扩展(Object Extension)</h4>
 
 <p>通过给一个对象 eigenclass 混入模块来定义单件方法。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">obj</span> <span class="o">=</span> <span class="no">Object</span><span class="o">.</span><span class="n">new</span>
@@ -565,7 +565,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">my_method</span> <span class="c1"># =&gt; &quot;a singleton method&quot;</span>
 </code></pre></div>
-<h4 id="打开类(open-class)">打开类(Open Class)</h4>
+<h4 id="打开类-open-class">打开类(Open Class)</h4>
 
 <p>修改已有的类</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">String</span>
@@ -575,7 +575,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="s2">&quot;abc&quot;</span><span class="o">.</span><span class="n">my_string_method</span> <span class="c1"># =&gt; &quot;my method&quot;</span>
 </code></pre></div>
-<h4 id="模式派发(pattern-dispatch)">模式派发(Pattern Dispatch)</h4>
+<h4 id="模式派发-pattern-dispatch">模式派发(Pattern Dispatch)</h4>
 
 <p>根据名字来选择需要调用的方法。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vg">$x</span> <span class="o">=</span> <span class="mi">0</span>
@@ -594,7 +594,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="vg">$x</span> <span class="c1"># =&gt; 3</span>
 </code></pre></div>
-<h4 id="沙盒(sandbox)">沙盒(Sandbox)</h4>
+<h4 id="沙盒-sandbox">沙盒(Sandbox)</h4>
 
 <p>在一个安全的环境中执行为授信的代码</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">sandbox</span><span class="p">(</span><span class="o">&amp;</span><span class="n">code</span><span class="p">)</span>
@@ -610,7 +610,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
     <span class="n">ex</span> <span class="c1"># =&gt; #&lt;SecurityError: Insecure operation `delete&#39; at level 2&gt;</span>
 <span class="k">end</span>
 </code></pre></div>
-<h4 id="作用域门(scope-gate)">作用域门(Scope Gate)</h4>
+<h4 id="作用域门-scope-gate">作用域门(Scope Gate)</h4>
 
 <p>用class，module或def关键字来隔离作用域</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
@@ -640,7 +640,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
     <span class="nb">p</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="s1">&#39;Smith&#39;</span>
 <span class="k">end</span>
 </code></pre></div>
-<h4 id="共享作用域(shared-scope)">共享作用域(Shared Scope)</h4>
+<h4 id="共享作用域-shared-scope">共享作用域(Shared Scope)</h4>
 
 <p>在同一个扁平作用域的多个上下文中共享变量。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">lambda</span> <span class="p">{</span>
@@ -659,7 +659,7 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">down</span> <span class="p">}</span>
 <span class="n">counter</span> <span class="c1"># =&gt; 7</span>
 </code></pre></div>
-<h4 id="单件方法(singleton-method)">单件方法(Singleton Method)</h4>
+<h4 id="单件方法-singleton-method">单件方法(Singleton Method)</h4>
 
 <p>在一个对象上定义一个方法，其实是在该对象eigenclass中定义了一个实例方法。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">obj</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
@@ -671,13 +671,13 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 <span class="k">end</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">my_singleton_method</span> <span class="c1"># =&gt; &quot;x&quot;</span>
 </code></pre></div>
-<h4 id="代码字符串(string-of-code)">代码字符串(String of Code)</h4>
+<h4 id="代码字符串-string-of-code">代码字符串(String of Code)</h4>
 
 <p>执行一段表示 Ruby 代码的字符串。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_string_of_code</span> <span class="o">=</span> <span class="s2">&quot;1 + 1&quot;</span>
 <span class="nb">eval</span><span class="p">(</span><span class="n">my_string_of_code</span><span class="p">)</span> <span class="c1"># =&gt; 2</span>
 </code></pre></div>
-<h4 id="符号到proc(symbol-to-proc)">符号到Proc(Symbol To Proc)</h4>
+<h4 id="符号到proc-symbol-to-proc">符号到Proc(Symbol To Proc)</h4>
 
 <p>把一个符号转换为调用单个方法的代码块。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:even?</span><span class="p">)</span> <span class="c1"># =&gt; [false, true, false, true]</span>
@@ -708,6 +708,10 @@ method<u>missing结合send技术，另外可以辅助respond</u>to?谓词。</p>
 
     
     <li class="tag"><a href="/tags/dsl.html">DSL<span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>2</span></a></li>
     
 
             </ul>

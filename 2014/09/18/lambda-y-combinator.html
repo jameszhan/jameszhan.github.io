@@ -145,7 +145,7 @@
 <div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">((</span><span class="nf">fac-gen</span> <span class="p">(</span><span class="nf">Y</span> <span class="nv">fac-gen</span><span class="p">))</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">120</span><span class="p">))</span>
 <span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">((</span><span class="nf">fac-gen</span> <span class="p">(</span><span class="nf">fac-gen</span> <span class="p">(</span><span class="nf">Y</span> <span class="nv">fac-gen</span><span class="p">)))</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">120</span><span class="p">))</span>
 </code></pre></div>
-<h3 id="不动点组合子(y-combinator)">不动点组合子(Y Combinator)</h3>
+<h3 id="不动点组合子-y-combinator">不动点组合子(Y Combinator)</h3>
 
 <p>函数f的不动点是一个值x使得f(x) = x。例如，0和1是函数f(x) = x**2的不动点，因为0**2 = 0而1**2 = 1。鉴于一阶函数（在简单值比如整数上的函数）的不动点
 是个一阶值，高阶函数f的不动点是另一个函数g使得f(g) = g。那么，不动点算子是任何函数fix使得对于任何函数f都有 f(fix(f)) = fix(f).</p>
@@ -221,7 +221,7 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
                 
                 
     
-    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
+    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>
@@ -246,7 +246,7 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
     
 
     
-    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>6</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>

@@ -7,7 +7,7 @@
     </h2>
     <ul class="list-inline">
     <li class="tag"><a href="/tags/c.html">C <span>3</span></a></li>
-    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>6</span></a></li>
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>2</span></a></li>
     <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>5</span></a></li>
     <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
     <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
@@ -23,6 +23,7 @@
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
     <li class="tag"><a href="/tags/lambda.html">Lambda <span>6</span></a></li>
     <li class="tag"><a href="/tags/lisp.html">Lisp <span>4</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论 <span>7</span></a></li>
     <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
     <li class="tag"><a href="/tags/java.html">Java <span>3</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>

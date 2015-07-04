@@ -62,7 +62,7 @@ deploy <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)<
 
 <p>用户，组及权限控制的信息主要和/etc/sudoers，/etc/passwd，/etc/shadow，/etc/group几个文件相关，可以使用id，finger查看用户信息。</p>
 
-<h4 id="/etc/sudoers">/etc/sudoers</h4>
+<h4 id="etc-sudoers">/etc/sudoers</h4>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#常见格式规范</span>
 <span class="c"># User privilege specification</span>
 root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>      ALL
@@ -77,7 +77,7 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 %users <span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span> /sbin/mount /cdrom,/sbin/umount /cdrom
 %users <span class="nv">localhost</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:/sbin/shutdown -h now
 </code></pre></div>
-<h4 id="/etc/passwd">/etc/passwd</h4>
+<h4 id="etc-passwd">/etc/passwd</h4>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash
 
 <span class="c"># ubuntu =&gt; 用户名</span>
@@ -88,7 +88,7 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 <span class="c"># /home/ubuntu =&gt; 用户Home目录</span>
 <span class="c"># /bin/bash =&gt; 该用户使用bash shell的路径.如果是 /sbin/nologin,表示无法登陆系统,只能以FTP形式登录; 如果是 /bin/false,则表示只能发邮件.</span>
 </code></pre></div>
-<h4 id="/etc/shadow">/etc/shadow</h4>
+<h4 id="etc-shadow">/etc/shadow</h4>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:<span class="nv">$6$9M43z06q$w</span>/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:
 
 <span class="c">#ubuntu =&gt; 用户名</span>
@@ -101,7 +101,7 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 <span class="c">#5 =&gt; 帐号到期日,以1970年1月1日开始计算,5天后账户锁定,此处表示的锁定日为1970便1月6日. (默认留空)</span>
 <span class="c">#最后一个(:后) =&gt; 是为了以后的新开发项做准备的</span>
 </code></pre></div>
-<h4 id="/etc/group">/etc/group</h4>
+<h4 id="etc-group">/etc/group</h4>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo:x:27:james
 
 <span class="c">#sudo =&gt; 用户组名</span>

@@ -42,18 +42,18 @@
   &lt;function&gt; := λ&lt;name&gt;.&lt;expression&gt;
   &lt;application&gt; := &lt;expression&gt;&lt;expression&gt;
 </code></pre></div>
-<h3 id="α--变换">α--变换</h3>
+<h3 id="α-变换">α--变换</h3>
 
 <p>α变换规则表达的是，被绑定变量的名称是不重要的。
 α变换规则陈述的是，若v与w均为变量，E是一个lambda表达式，同时E[v/w]是指把表达式E中的所有的v的自由出现都替换成w，那么在w不是E中的一个自由出现，且如果w替换了v，w不会被E中的λ绑定的情况下，有
   λv.E == λw.E[v/w]
   例如：λx.(λx.x)x &lt;=&gt; λy.(λx.x)y</p>
 
-<h3 id="β--规约">β--规约</h3>
+<h3 id="β-规约">β--规约</h3>
 
 <p>β规约规则表达的是函数作用的概念，它陈述了所有的E‘的自由出现在E[v/E&#39;]中仍然是自由的情况下，有 ((λv.E)E&#39;) == E[v/E&#39;] 成立。</p>
 
-<h3 id="η--变换">η--变换</h3>
+<h3 id="η-变换">η--变换</h3>
 
 <p>η变换表达的是外延性的概念，在这里外延性指的是，两个函数对于所有的参数得到的结果一致，当且仅当它们是同一个函数，η变换可以令 λx.fx和f相互交换，只要x不是f中的自由出现。</p>
 
@@ -214,7 +214,7 @@ two = (succ one)
                 
                 
     
-    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
+    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>
@@ -239,7 +239,7 @@ two = (succ one)
     
 
     
-    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>6</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>

@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 17 May 2015 03:32:35 +0000</pubDate>
-    <lastBuildDate>Sun, 17 May 2015 03:32:35 +0000</lastBuildDate>
+    <pubDate>Sat, 04 Jul 2015 17:21:01 +0000</pubDate>
+    <lastBuildDate>Sat, 04 Jul 2015 17:21:01 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -469,8 +469,10 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
         
         <category>interpreter</category>
         
+        <category>pdt</category>
         
-        <category>pdl</category>
+        
+        <category>pdt</category>
         
       </item>
     
@@ -613,7 +615,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;程序设计语言中的一些概念&quot;&gt;程序设计语言中的一些概念&lt;/h3&gt;
 
-&lt;h4 id=&quot;closure(闭包)&quot;&gt;Closure(闭包)&lt;/h4&gt;
+&lt;h4 id=&quot;closure-闭包&quot;&gt;Closure(闭包)&lt;/h4&gt;
 
 &lt;p&gt;在计算机科学中，闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的表达式（通常是函数）。这些被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。
 词法作用域(lexical scope)等同于静态作用域(static scope)。所谓的词法作用域其实是指作用域在词法解析阶段既确定了，不会改变。&lt;/p&gt;
@@ -623,7 +625,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;add5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;;; add5是一个全局函数，它是有捕获自由变量的闭包。&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;add5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;;; Output: 15&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id=&quot;动态作用域-vs.-词法作用域&quot;&gt;动态作用域 vs. 词法作用域&lt;/h4&gt;
+&lt;h4 id=&quot;动态作用域-vs-词法作用域&quot;&gt;动态作用域 vs. 词法作用域&lt;/h4&gt;
 
 &lt;p&gt;本例中，以下代码决定语言程序语言使用的是词法作用域还是动态作用域。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;newScope&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;closure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;param&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -753,8 +755,10 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
         
         <category>interpreter</category>
         
+        <category>pdt</category>
         
-        <category>pdl</category>
+        
+        <category>pdt</category>
         
       </item>
     
@@ -795,7 +799,7 @@ sudo blkid
 &lt;span class=&quot;c&quot;&gt;# /dev/sda1: LABEL=&amp;quot;EFI&amp;quot; UUID=&amp;quot;70D6-1701&amp;quot; TYPE=&amp;quot;vfat&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# /dev/sda2: UUID=&amp;quot;7070f919-7738-309f-9a49-e3d643f33346&amp;quot; LABEL=&amp;quot;TM&amp;quot; TYPE=&amp;quot;hfsplus&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;挂载hfs+分区&quot;&gt;挂载hfs+分区&lt;/h3&gt;
+&lt;h3 id=&quot;挂载hfs-分区&quot;&gt;挂载hfs+分区&lt;/h3&gt;
 
 &lt;p&gt;执行如下命令，使得raspbian支持hfs+分区。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo apt-get install hfsplus hfsutils hfsprogs
@@ -1311,11 +1315,11 @@ parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152
 100644 fa49b077972391ad58037050f2a75f74e3671e92 0   new.txt
 100644 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a 0   test.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;暂存区-vs.-git库&quot;&gt;暂存区 vs. git库&lt;/h3&gt;
+&lt;h3 id=&quot;暂存区-vs-git库&quot;&gt;暂存区 vs. git库&lt;/h3&gt;
 
 &lt;p&gt;放到暂存区的文件都已经添加到.git/objects中，执行commit时，就是把暂存区中的变化提交到git库中。对比暂存区和库中的文件，可以很容易区分哪些文件有了变化。暂存区中有，而库中没有，则表示下次commit需要新增文件。暂存区中没有，而库中有，则表示下次commit需要删除某些文件。如果暂存区中有，库中也有，但是其HASH不一样，则表示下次commit需要修改文件。暂存区中有，库中也有，名称和HASH值都相同，则表示当前提交中没有任何更新。&lt;/p&gt;
 
-&lt;h3 id=&quot;暂存区-vs.-工作目录&quot;&gt;暂存区 vs. 工作目录&lt;/h3&gt;
+&lt;h3 id=&quot;暂存区-vs-工作目录&quot;&gt;暂存区 vs. 工作目录&lt;/h3&gt;
 
 &lt;p&gt;一般我们执行 &lt;code&gt;git add —all&lt;/code&gt; 命令，可以批量把工作目录的所有更新都添加到暂存区当中，执行 &lt;code&gt;git status&lt;/code&gt; 可以很容易查看暂存区中和工作目录中的文件变化。同和git库比较一样，无论是文件内容变化了，还是文件名或者文件路径变化了，都会被视作更新。&lt;/p&gt;
 
@@ -1736,7 +1740,7 @@ git cat-file -p d9e7958
 &lt;p&gt;原来的提交5，6并没有丢失，只不过换做7，8重做了一次，由于是重做，时间变了，即便消息内容一样，commit的散列值也变化了。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;merge-vs.-rebase&quot;&gt;merge vs. rebase&lt;/h5&gt;
+&lt;h5 id=&quot;merge-vs-rebase&quot;&gt;merge vs. rebase&lt;/h5&gt;
 
 &lt;p&gt;合并分支时，merge和rebase究竟选哪一个一直都存有争论，在这里并不像展开这些争论，只在此列出它们各自的优点(对方的劣势)，供大家参考。&lt;/p&gt;
 
@@ -1785,32 +1789,46 @@ git cat-file -p d9e7958
         <description>&lt;h2 id=&quot;以下app-store上的软件，你值得拥有。&quot;&gt;以下App Store上的软件，你值得拥有。&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Pages&lt;/strong&gt;, &lt;strong&gt;Numbers&lt;/strong&gt;, &lt;strong&gt;Keynote&lt;/strong&gt; OS X三件套。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Alfred&lt;/strong&gt; 和Spotlight类似，可以快速启动应用程序和打开文件，但是比Spotlight体验好很多。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;OmniGraffle&lt;/strong&gt; 比较实用的画图工具，和Viso类似，但是定制和扩展性更强。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Evernote&lt;/strong&gt; 印象笔记，一款非常好用的笔记工具，如果想使用Markdown来写笔记，可以结合一些第三方插件来使用。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;The Unarchiver&lt;/strong&gt; OS X下的解压神器。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Skitch&lt;/strong&gt; OS X下的截屏神器，操作简单。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Pages&lt;/strong&gt;, &lt;strong&gt;Numbers&lt;/strong&gt;, &lt;strong&gt;Keynote&lt;/strong&gt; &lt;em&gt;OS X&lt;/em&gt; 三件套。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Alfred&lt;/strong&gt; 和 &lt;em&gt;Spotlight&lt;/em&gt; 类似，可以快速启动应用程序和打开文件，但是比 &lt;em&gt;Spotlight&lt;/em&gt; 体验好很多。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;最好直接去 &lt;a href=&quot;http://www.alfredapp.com/&quot; title=&quot;Alfred&quot;&gt;官网&lt;/a&gt; 下载 Alfred 2，并且购买 Powerpack，这样才能发挥 Alfred Workflow 的功能，如果不想花钱，最近有一个 &lt;a href=&quot;https://github.com/nate-parrott/Flashlight&quot; title=&quot;Flashlight&quot;&gt;Flashlight&lt;/a&gt; 也不错，大有赶超 Alfred 之势。&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;OmniGraffle&lt;/strong&gt; 比较实用的画图工具，和 &lt;em&gt;Viso&lt;/em&gt; 类似，但是定制和扩展性更强。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;OmniGroup出品的几款软件都不错，比如 OmniFocus（GTD神器），OmniOutliner（类似于 &lt;a href=&quot;http://orgmode.org/&quot; title=&quot;Org mode&quot;&gt;Org mode&lt;/a&gt;, 笔记，大纲，文档管理，知识库可以各种玩），OmniPlan（项目管理软件）。&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Evernote&lt;/strong&gt; 印象笔记，一款非常好用的笔记工具，如果想使用 &lt;em&gt;Markdown&lt;/em&gt; 来写笔记，可以结合一些第三方插件来使用。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;OneNote&lt;/strong&gt; &lt;em&gt;Windows&lt;/em&gt;迁移过来的用户可以继续使用该笔记软件，表现能力强于 &lt;em&gt;Evernote&lt;/em&gt; ，但是同步速度就不敢恭维了。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;The Unarchiver&lt;/strong&gt; &lt;em&gt;OS X&lt;/em&gt; 下的解压神器。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Skitch&lt;/strong&gt; &lt;em&gt;OS X&lt;/em&gt; 下的截屏神器，操作简单。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Pocket&lt;/strong&gt; 配合 &lt;em&gt;Chrome&lt;/em&gt; 的插件，可以随时随地收集你正在查看的网页。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Doit.im&lt;/strong&gt; GTD 软件，可以多个设备之间同步任务列表。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Kindle&lt;/strong&gt; &lt;em&gt;Kindle&lt;/em&gt; 阅读器 &lt;em&gt;OS X&lt;/em&gt; 版，尽管体验没有 &lt;em&gt;Kindle Paperwhite&lt;/em&gt; 好，不过还可以凑合用。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Pomodoro Time&lt;/strong&gt; 番茄钟软件，一个不错的小工具。&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;第三方软件&quot;&gt;第三方软件&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.adobe.com/cn/products/photoshop.html&quot;&gt;&lt;strong&gt;Adobe Photoshop CS6&lt;/strong&gt;&lt;/a&gt; 不解释，OS X下体验更佳。&lt;br&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.parallels.com/cn/products/desktop/&quot;&gt;&lt;strong&gt;Parallels Desktop&lt;/strong&gt;&lt;/a&gt; OS X下最好用的虚拟机软件，就是价格比较坑，升级价格和全价差不多。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.axure.com/&quot;&gt;&lt;strong&gt;Axure RP&lt;/strong&gt;&lt;/a&gt; 比较好用的产品原型设计工具。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.xmind.net/&quot;&gt;&lt;strong&gt;XMind&lt;/strong&gt;&lt;/a&gt; 比较好用的一款思维导图工具。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://astah.net/download&quot;&gt;&lt;strong&gt;astah professional&lt;/strong&gt;&lt;/a&gt; 一款比较专业的UML画图工具。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.mysql.com/products/workbench/&quot;&gt;&lt;strong&gt;MySQL Workbench&lt;/strong&gt;&lt;/a&gt; 官方的MySQL客户端。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.adobe.com/cn/products/photoshop.html&quot; title=&quot;Adobe Photoshop CS6&quot;&gt;&lt;strong&gt;Adobe Photoshop CS6&lt;/strong&gt;&lt;/a&gt; 不解释，&lt;em&gt;OS X&lt;/em&gt; 下体验更佳。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.parallels.com/cn/products/desktop/&quot; title=&quot;Parallels Desktop&quot;&gt;&lt;strong&gt;Parallels Desktop&lt;/strong&gt;&lt;/a&gt; &lt;em&gt;OS X&lt;/em&gt; 下最好用的虚拟机软件，就是价格比较坑，升级价格和全价差不多，一般 &lt;em&gt;OS X&lt;/em&gt; 升级，它也会跟着升级。&lt;/li&gt;
+&lt;li&gt;[&lt;strong&gt;VirtualBox&lt;/strong&gt;][VritualBox] 虚拟机软件，&lt;em&gt;Sun&lt;/em&gt; 的遗产，尽管性能一般，不过在 &lt;em&gt;OS X&lt;/em&gt; 上玩 &lt;em&gt;Docker&lt;/em&gt; 用的上。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.axure.com/&quot; title=&quot;Axure RP&quot;&gt;&lt;strong&gt;Axure RP&lt;/strong&gt;&lt;/a&gt; 比较好用的产品原型设计工具。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.xmind.net/&quot; title=&quot;XMind&quot;&gt;&lt;strong&gt;XMind&lt;/strong&gt;&lt;/a&gt; 还可以的一款思维导图工具，完全免费。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://astah.net/download&quot; title=&quot;astah&quot;&gt;&lt;strong&gt;astah professional&lt;/strong&gt;&lt;/a&gt; 一款比较专业的UML画图工具。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.mysql.com/products/workbench/&quot; title=&quot;MySQL Workbench&quot;&gt;&lt;strong&gt;MySQL Workbench&lt;/strong&gt;&lt;/a&gt; 官方的MySQL客户端。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;开发者必备&quot;&gt;开发者必备&lt;/h2&gt;
 
 &lt;h3 id=&quot;集成开发环境&quot;&gt;集成开发环境&lt;/h3&gt;
 
-&lt;p&gt;如果你是Java开发者（或者同时编辑Ruby，Python，PHP，JavaScript，Scala，Groovy，Clojure等程序），强烈建议你安装&lt;a href=&quot;http://www.jetbrains.com/idea/download/&quot;&gt;IntelliJ IDEA&lt;/a&gt;。如果你只做前端开发，那么&lt;a href=&quot;http://www.jetbrains.com/webstorm/&quot;&gt;WebStrom&lt;/a&gt;是不错的选择，另外，&lt;a href=&quot;http://www.jetbrains.com/ruby/&quot;&gt;RubyMime&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/pycharm/&quot;&gt;PyCharm&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/phpstorm/&quot;&gt;PhpStorm&lt;/a&gt;作为Ruby，Python，PHP的单项开发环境也不错。&lt;/p&gt;
+&lt;p&gt;如果你是Java开发者（或者同时编辑Ruby，Python，PHP，JavaScript，Scala，Groovy，Clojure等程序），强烈建议你安装&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;IntelliJ IDEA&lt;/a&gt;。如果你只做前端开发，那么&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;WebStrom&lt;/a&gt;是不错的选择，另外，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;RubyMime&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;PyCharm&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;PhpStorm&lt;/a&gt;作为Ruby，Python，PHP的单项开发环境也不错。&lt;/p&gt;
 
-&lt;p&gt;如果你不想花钱，又不想实用盗版软件，那么&lt;a href=&quot;http://www.eclipse.org/downloads/&quot;&gt;Eclipse&lt;/a&gt;，&lt;a href=&quot;https://netbeans.org/&quot;&gt;NetBeans&lt;/a&gt;也可以凑合着用。&lt;/p&gt;
+&lt;p&gt;如果你不想花钱，又不想实用盗版软件，那么&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; title=&quot;Eclipse&quot;&gt;Eclipse&lt;/a&gt;，[NetBeans][netbeans]也可以凑合着用。&lt;/p&gt;
 
 &lt;h3 id=&quot;编辑器&quot;&gt;编辑器&lt;/h3&gt;
 
@@ -1818,30 +1836,40 @@ git cat-file -p d9e7958
 
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;TextWrangler&lt;/strong&gt; 一种免费的文本编辑器，功能和NodePad++类似，可以直接在App Store上下载。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://macromates.com/download&quot;&gt;TextMate&lt;/a&gt;，个人用的比较顺手的一个，有各种扩展可以提高你的开发效率。
+&lt;li&gt;&lt;a href=&quot;http://www.sublimetext.com/&quot; title=&quot;Sublime Text&quot;&gt;Sublime Text&lt;/a&gt;，如果你从Linux迁移过来，Sublime一定不陌生，它确实是一个非常好用的一个编辑器。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://macromates.com/&quot; title=&quot;TextMate&quot;&gt;TextMate&lt;/a&gt;，个人用的比较顺手的一个，有各种扩展可以提高你的开发效率。
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/textmate/textmate&quot;&gt;源码地址&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/deplorableword/textmate-solarized&quot;&gt;Solarized Theme&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/textmate/textmate&quot; title=&quot;TextMate Source&quot;&gt;源码地址&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/deplorableword/textmate-solarized&quot; title=&quot;TextMate Solarized Theme&quot;&gt;Solarized Theme&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text&lt;/a&gt;，如果你从Linux迁移过来，Sublime一定不陌生，它确实是一个非常好用的一个编辑器。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://lighttable.com/&quot;&gt;LightTable&lt;/a&gt; 一款新出世的编辑器，完全&lt;a href=&quot;https://github.com/LightTable/LightTable&quot;&gt;开源&lt;/a&gt;，使用Clojure语言编写，非常容易扩展和定制。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lighttable.com/&quot; title=&quot;LightTable&quot;&gt;LightTable&lt;/a&gt; 一款新出世的编辑器，完全&lt;a href=&quot;https://github.com/LightTable/LightTable&quot; title=&quot;LightTable Source&quot;&gt;开源&lt;/a&gt;，使用Clojure语言编写，非常容易扩展和定制。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;浏览器&quot;&gt;浏览器&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.chromedownload.org&quot;&gt;Chrome&lt;/a&gt; 速度快，调试方便，目前是我开发主要使用的浏览器。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.firefox.com.cn/&quot;&gt;Firefox&lt;/a&gt; 有点笨重，但是作为开发调试工具还是不错的。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chromedownload.org/&quot; title=&quot;Google Chrome&quot;&gt;Google Chrome&lt;/a&gt; 速度快，调试方便，目前是我开发主要使用的浏览器。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.firefox.com.cn/&quot; title=&quot;Firefox&quot;&gt;Firefox&lt;/a&gt; 有点笨重，但是作为开发调试工具还是不错的。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Safari&lt;/strong&gt;，系统自带的默认浏览器，和OSX系统集成度高，可以实现在不同的Apple设备之间同步阅读进度。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Opera&lt;/strong&gt;，App Store上提供直接下载，小巧，快速。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;其他&quot;&gt;其他&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Dash&lt;/strong&gt; 程序员必备，各种编程语言的参考文档，App Store上可以直接下载。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;尽管看起来没什么技术含量，无非是把各个网站的文档或者语言的帮助文档集中到了一起而已，但是良好的搜索功能及和Alfred的结合能力确实可以大大提高开发人员的效率。&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;开发环境准备&quot;&gt;开发环境准备&lt;/h3&gt;
 
 &lt;h4 id=&quot;选择合适的terminal&quot;&gt;选择合适的Terminal&lt;/h4&gt;
 
-&lt;p&gt;相比原生的Terminal，我更喜欢使用 &lt;a href=&quot;http://iterm2.com/&quot;&gt;iTerm2&lt;/a&gt;，它提供了很多现代的特性，比如主题定制，分屏，自动完成等多种功能。&lt;/p&gt;
+&lt;p&gt;相比原生的Terminal，我更喜欢使用 &lt;a href=&quot;http://iterm2.com/&quot; title=&quot;iTerm2&quot;&gt;iTerm2&lt;/a&gt;，它提供了很多现代的特性，比如主题定制，分屏，自动完成等多种功能。&lt;/p&gt;
 
 &lt;h4 id=&quot;安装xcode&quot;&gt;安装XCode&lt;/h4&gt;
 
@@ -1850,7 +1878,7 @@ git cat-file -p d9e7958
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;安装oh-my-zsh&quot;&gt;安装oh-my-zsh&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt;是一套开源，社区驱动的用于管理zsh配置的框架，可以使用如下的方式安装。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot; title=&quot;Oh My Zsh&quot;&gt;oh-my-zsh&lt;/a&gt;是一套开源，社区驱动的用于管理zsh配置的框架，可以使用如下的方式安装。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
 &lt;span class=&quot;c&quot;&gt;# Optionally, backup your existing ~/.zshrc file&lt;/span&gt;
@@ -1870,7 +1898,7 @@ chsh -s /bin/zsh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;安装homebrew&quot;&gt;安装Homebrew&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://brew.sh/&quot;&gt;Homebrew&lt;/a&gt;是OSX下非常好用的包管理工具，类似于Ubuntu下的apt-get，用于替换OSX下的老牌包管理工具port。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://brew.sh/&quot; title=&quot;Homebrew&quot;&gt;Homebrew&lt;/a&gt;是OSX下非常好用的包管理工具，类似于Ubuntu下的apt-get，用于替换OSX下的老牌包管理工具port。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ruby -e &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;通过homebrew安装一些实用工具&quot;&gt;通过Homebrew安装一些实用工具&lt;/h5&gt;
@@ -1881,7 +1909,23 @@ brew install curl wget tree gnu-sed gawk rename
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew update
 brew install redis mysql postgresql mongodb sqlite nginx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id=&quot;vim-vs.-emacs&quot;&gt;Vim vs. Emacs&lt;/h4&gt;
+&lt;h4 id=&quot;linux内核调试环境&quot;&gt;Linux内核调试环境&lt;/h4&gt;
+
+&lt;h5 id=&quot;qemu&quot;&gt;QEMU&lt;/h5&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://wiki.qemu.org/Main_Page&quot; title=&quot;QEMU&quot;&gt;QEMU&lt;/a&gt;是一套由Fabrice Bellard所编写的以GPL许可证分发源码的模拟处理器，在GNU/Linux平台上使用广泛。。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew install qemu --with-libssh2 --with-sdl --with-vde
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;bochs&quot;&gt;Bochs&lt;/h5&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://bochs.sourceforge.net/&quot; title=&quot;Bochs&quot;&gt;Bochs&lt;/a&gt;是一个基于LGPL的开源x86 虚拟机软件（类似于QEMU）。Bochs的CPU指令是完全自己模拟出来的，这种方式的缺点是速度比较慢；优点是具有无以伦比的可移植性：有Gcc的地方就可以有Bochs。甚至已经有了跑在PocketPC上的Bochs。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;vim-vs-emacs&quot;&gt;Vim vs. Emacs&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Install MacVim&lt;/span&gt;
 brew install macvim --with-cscope --with-lua --override-system-vim
 &lt;span class=&quot;c&quot;&gt;# Install Emacs&lt;/span&gt;
@@ -1897,13 +1941,13 @@ brew install emacs --cocoa --srgb
 &lt;h5 id=&quot;安装ruby&quot;&gt;安装Ruby&lt;/h5&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot;&gt;rbenv&lt;/a&gt;安装ruby&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot; title=&quot;rbenv&quot;&gt;rbenv&lt;/a&gt;安装ruby&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew update
 brew install rbenv ruby-build
 rbenv versions
 rbenv install 2.0.0-p247
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;https://rvm.io/&quot;&gt;RVM&lt;/a&gt;安装ruby&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;a href=&quot;https://rvm.io/&quot; title=&quot;RVM&quot;&gt;RVM&lt;/a&gt;安装ruby&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# install rvm on /usr/local/rvm&lt;/span&gt;
 curl -sSL https://get.rvm.io &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sudo bash -s stable
 sudo chown -R YOURNAME:rvm /usr/local/rvm
@@ -1935,9 +1979,10 @@ gem install sinatra
 
 &lt;h5 id=&quot;安装jdk&quot;&gt;安装JDK&lt;/h5&gt;
 
-&lt;p&gt;我们可以从Oracle官网上去&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;下载&lt;/a&gt;JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
+&lt;p&gt;我们可以从Oracle官网上去&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot; title=&quot;JDK&quot;&gt;下载&lt;/a&gt;JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#export JAVA_HOME=$(/usr/libexec/java_home -version 1.6)
+export JAVA_HOME=$(/usr/libexec/java_home -version 1.7)
+#export JAVA_HOME=$(/usr/libexec/java_home -version 1.8)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意：具体Java版本以你本地安装的版本为准。&lt;/p&gt;
 
@@ -1968,7 +2013,7 @@ brew install leiningen
 &lt;h5 id=&quot;安装node和npm&quot;&gt;安装node和npm&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew install node --enable-debug
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5 id=&quot;在~/.zshrc配置全局node_path&quot;&gt;在~/.zshrc配置全局NODE_PATH&lt;/h5&gt;
+&lt;h5 id=&quot;在-zshrc配置全局node_path&quot;&gt;在~/.zshrc配置全局NODE_PATH&lt;/h5&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NODE_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/usr/local/lib/node_modules/&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;常用命令介绍&quot;&gt;常用命令介绍&lt;/h5&gt;
@@ -2013,7 +2058,7 @@ spawn-fcgi -a 127.0.0.1 -p &lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt; -C 
 
 &lt;h5 id=&quot;测试php环境&quot;&gt;测试PHP环境&lt;/h5&gt;
 
-&lt;h6 id=&quot;nginx-配置&quot;&gt;&lt;code&gt;Nginx&lt;/code&gt; 配置&lt;/h6&gt;
+&lt;h6 id=&quot;code-code&quot;&gt;&lt;code&gt;Nginx&lt;/code&gt; 配置&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;http {
     upstream fastcgi_server {
         server  127.0.0.1:6666;
@@ -2037,7 +2082,7 @@ spawn-fcgi -a 127.0.0.1 -p &lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt; -C 
     }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6 id=&quot;测试页面(index.php)&quot;&gt;测试页面(&lt;code&gt;index.php&lt;/code&gt;)&lt;/h6&gt;
+&lt;h6 id=&quot;测试页面-index-php&quot;&gt;测试页面(&lt;code&gt;index.php&lt;/code&gt;)&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;phpinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
@@ -2133,7 +2178,16 @@ sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass find . 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;重装完系统，特别是在有第二块硬盘的情况下，在使用TimeMachine的时候，会发现整个硬盘很有可能要重新备份，而不是在原来的基础上增量备份，这无疑是对备份空间的巨大浪费，如果你之前已经备份了该磁盘的话，可以强制把TimeMachine中的对应备份强制恢复到该分区即可解决这个问题。&lt;/p&gt;
 
-&lt;h3 id=&quot;视频格式转换&quot;&gt;视频格式转换&lt;/h3&gt;
+&lt;h3 id=&quot;多媒体相关&quot;&gt;多媒体相关&lt;/h3&gt;
+
+&lt;h4 id=&quot;视频播放&quot;&gt;视频播放&lt;/h4&gt;
+
+&lt;p&gt;OS X下免费又好用的视频播放器当属VLC，可以支持几乎所有常用的视频格式。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew install Caskroom/cask/vlc
+&lt;span class=&quot;c&quot;&gt;# 或者&lt;/span&gt;
+brew cask install vlc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;视频格式转换&quot;&gt;视频格式转换&lt;/h4&gt;
 
 &lt;p&gt;在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 查看ffmpeg的安装选项，可以按照你自己的要求选装&lt;/span&gt;
@@ -2162,7 +2216,7 @@ ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate &lt;span class=&quot;m&quot;&g
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注：FFmpeg是一个开源免费跨平台的视频和音频流方案，属于自由软件，采用LGPL或GPL许可证（依据你选择的组件）。它提供了录制、转换以及流化音视频的完整解决方案。&lt;/p&gt;
 
-&lt;h3 id=&quot;extended-attributes-(eas)&quot;&gt;Extended Attributes (EAs)&lt;/h3&gt;
+&lt;h3 id=&quot;extended-attributes-eas&quot;&gt;Extended Attributes (EAs)&lt;/h3&gt;
 
 &lt;p&gt;当我们使用&lt;code&gt;ls -l&lt;/code&gt;查看文件目录时，细心的同学会发现有些文件的ACL后面都多一个@，这个就是我们这节要讨论的扩展属性。  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;-rw-r--r--@ &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; james  admin     &lt;span class=&quot;m&quot;&gt;3409417&lt;/span&gt; Oct &lt;span class=&quot;m&quot;&gt;21&lt;/span&gt; 22:54 CoRD.zip
@@ -2250,6 +2304,8 @@ uname -a
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1i3wxLTb&quot;&gt;HexFriend&lt;/a&gt;, &lt;a href=&quot;http://pan.baidu.com/s/1qWHOpUs&quot;&gt;0xED&lt;/a&gt; 比较实用的二进制编辑工具。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1qW0ntj2&quot;&gt;MacDjView&lt;/a&gt; 如果你有djvu格式的图书，这个工具可以帮到你。&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;[netbeans: https://netbeans.org/ &amp;quot;NetBeans&amp;quot;&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Oct 2014 18:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</link>

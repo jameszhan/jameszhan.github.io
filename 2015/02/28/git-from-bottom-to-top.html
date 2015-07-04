@@ -150,11 +150,11 @@ parent 2d1d4a124abb2c8283f1bb2d3a361c70cb4b3152
 100644 fa49b077972391ad58037050f2a75f74e3671e92 0   new.txt
 100644 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a 0   test.txt
 </code></pre></div>
-<h3 id="暂存区-vs.-git库">暂存区 vs. git库</h3>
+<h3 id="暂存区-vs-git库">暂存区 vs. git库</h3>
 
 <p>放到暂存区的文件都已经添加到.git/objects中，执行commit时，就是把暂存区中的变化提交到git库中。对比暂存区和库中的文件，可以很容易区分哪些文件有了变化。暂存区中有，而库中没有，则表示下次commit需要新增文件。暂存区中没有，而库中有，则表示下次commit需要删除某些文件。如果暂存区中有，库中也有，但是其HASH不一样，则表示下次commit需要修改文件。暂存区中有，库中也有，名称和HASH值都相同，则表示当前提交中没有任何更新。</p>
 
-<h3 id="暂存区-vs.-工作目录">暂存区 vs. 工作目录</h3>
+<h3 id="暂存区-vs-工作目录">暂存区 vs. 工作目录</h3>
 
 <p>一般我们执行 <code>git add —all</code> 命令，可以批量把工作目录的所有更新都添加到暂存区当中，执行 <code>git status</code> 可以很容易查看暂存区中和工作目录中的文件变化。同和git库比较一样，无论是文件内容变化了，还是文件名或者文件路径变化了，都会被视作更新。</p>
 
@@ -575,7 +575,7 @@ git cat-file -p d9e7958
 <p>原来的提交5，6并没有丢失，只不过换做7，8重做了一次，由于是重做，时间变了，即便消息内容一样，commit的散列值也变化了。</p>
 </blockquote>
 
-<h5 id="merge-vs.-rebase">merge vs. rebase</h5>
+<h5 id="merge-vs-rebase">merge vs. rebase</h5>
 
 <p>合并分支时，merge和rebase究竟选哪一个一直都存有争论，在这里并不像展开这些争论，只在此列出它们各自的优点(对方的劣势)，供大家参考。</p>
 
