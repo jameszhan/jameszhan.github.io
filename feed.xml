@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 04 Jul 2015 17:21:01 +0000</pubDate>
-    <lastBuildDate>Sat, 04 Jul 2015 17:21:01 +0000</lastBuildDate>
+    <pubDate>Sat, 04 Jul 2015 17:29:39 +0000</pubDate>
+    <lastBuildDate>Sat, 04 Jul 2015 17:29:39 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -1815,7 +1815,7 @@ git cat-file -p d9e7958
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.adobe.com/cn/products/photoshop.html&quot; title=&quot;Adobe Photoshop CS6&quot;&gt;&lt;strong&gt;Adobe Photoshop CS6&lt;/strong&gt;&lt;/a&gt; 不解释，&lt;em&gt;OS X&lt;/em&gt; 下体验更佳。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.parallels.com/cn/products/desktop/&quot; title=&quot;Parallels Desktop&quot;&gt;&lt;strong&gt;Parallels Desktop&lt;/strong&gt;&lt;/a&gt; &lt;em&gt;OS X&lt;/em&gt; 下最好用的虚拟机软件，就是价格比较坑，升级价格和全价差不多，一般 &lt;em&gt;OS X&lt;/em&gt; 升级，它也会跟着升级。&lt;/li&gt;
-&lt;li&gt;[&lt;strong&gt;VirtualBox&lt;/strong&gt;][VritualBox] 虚拟机软件，&lt;em&gt;Sun&lt;/em&gt; 的遗产，尽管性能一般，不过在 &lt;em&gt;OS X&lt;/em&gt; 上玩 &lt;em&gt;Docker&lt;/em&gt; 用的上。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.virtualbox.org/wiki/Downloads&quot; title=&quot;VirtualBox&quot;&gt;&lt;strong&gt;VirtualBox&lt;/strong&gt;&lt;/a&gt; 虚拟机软件，&lt;em&gt;Sun&lt;/em&gt; 的遗产，尽管性能一般，不过在 &lt;em&gt;OS X&lt;/em&gt; 上玩 &lt;em&gt;Docker&lt;/em&gt; 用的上。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.axure.com/&quot; title=&quot;Axure RP&quot;&gt;&lt;strong&gt;Axure RP&lt;/strong&gt;&lt;/a&gt; 比较好用的产品原型设计工具。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.xmind.net/&quot; title=&quot;XMind&quot;&gt;&lt;strong&gt;XMind&lt;/strong&gt;&lt;/a&gt; 还可以的一款思维导图工具，完全免费。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://astah.net/download&quot; title=&quot;astah&quot;&gt;&lt;strong&gt;astah professional&lt;/strong&gt;&lt;/a&gt; 一款比较专业的UML画图工具。&lt;/li&gt;
@@ -1863,6 +1863,7 @@ git cat-file -p d9e7958
 &lt;blockquote&gt;
 &lt;p&gt;尽管看起来没什么技术含量，无非是把各个网站的文档或者语言的帮助文档集中到了一起而已，但是良好的搜索功能及和Alfred的结合能力确实可以大大提高开发人员的效率。&lt;/p&gt;
 &lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;SourceTree&lt;/strong&gt; 免费的 Git 和 Hg 客户端，App Store上可以直接下载。&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;开发环境准备&quot;&gt;开发环境准备&lt;/h3&gt;
