@@ -28,8 +28,10 @@
     <li class="tag"><a href="/tags/java.html">Java <span>3</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
     <li class="tag"><a href="/tags/github.html">GitHub <span>2</span></a></li>
-    <li class="tag"><a href="/tags/osx.html">OS X <span>3</span></a></li>
+    <li class="tag"><a href="/tags/osx.html">OS X <span>4</span></a></li>
     <li class="tag"><a href="/tags/php.html">PHP <span>1</span></a></li>
+    <li class="tag"><a href="/tags/webdav.html">WebDAV <span>1</span></a></li>
+    <li class="tag"><a href="/tags/nginx.html">Nginx <span>1</span></a></li>
     <li class="tag"><a href="/tags/git.html">Git <span>1</span></a></li>
     <li class="tag"><a href="/tags/raspberrypi.html">树莓派 <span>3</span></a></li>
     <li class="tag"><a href="/tags/hardware.html">Hardware <span>2</span></a></li>

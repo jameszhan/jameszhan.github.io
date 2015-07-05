@@ -12,7 +12,7 @@
     <li class="tag"><a href="/categories/ruby.html">Ruby <span>1</span></a></li>
     <li class="tag"><a href="/categories/pdt.html">程序设计语言理论 <span>7</span></a></li>
     <li class="tag"><a href="/categories/github.html">GitHub <span>2</span></a></li>
-    <li class="tag"><a href="/categories/osx.html">OS X <span>1</span></a></li>
+    <li class="tag"><a href="/categories/osx.html">OS X <span>2</span></a></li>
     <li class="tag"><a href="/categories/raspberrypi.html">树莓派 <span>3</span></a></li>
     <li class="tag"><a href="/categories/docker.html">Docker <span>1</span></a></li>
     </ul>
