@@ -12,12 +12,13 @@
     <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
     <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
     <li class="tag"><a href="/tags/ruby.html">Ruby <span>5</span></a></li>
+    <li class="tag"><a href="/tags/linux.html">Linux <span>6</span></a></li>
+    <li class="tag"><a href="/tags/ubuntu.html">Ubuntu <span>1</span></a></li>
+    <li class="tag"><a href="/tags/shell.html">Shell <span>4</span></a></li>
     <li class="tag"><a href="/tags/clojure.html">Clojure <span>5</span></a></li>
     <li class="tag"><a href="/tags/fp.html">函数式编程 <span>7</span></a></li>
     <li class="tag"><a href="/tags/javascript.html">JavaScript <span>10</span></a></li>
     <li class="tag"><a href="/tags/object_model.html">对象模型 <span>2</span></a></li>
-    <li class="tag"><a href="/tags/linux.html">Linux <span>5</span></a></li>
-    <li class="tag"><a href="/tags/shell.html">Shell <span>3</span></a></li>
     <li class="tag"><a href="/tags/angular_js.html">AngularJS <span>1</span></a></li>
     <li class="tag"><a href="/tags/metaprogramming.html">元编程 <span>2</span></a></li>
     <li class="tag"><a href="/tags/dsl.html">DSL <span>2</span></a></li>
