@@ -90,8 +90,9 @@ gem sources -a https://ruby.taobao.org/
 <p>为了安全起见，在设置好root用户本机登陆Ubuntu免输入密码后，可以把<code>PermitRootLogin</code>改回原值。</p>
 
 <h3 id="自动创建新用户并设置新apt源">自动创建新用户并设置新apt源</h3>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;deploy&#39;</span>
-<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;10.211.55.5&#39;</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">host</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+<span class="n">user</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+<span class="n">password</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
 
 <span class="n">on</span> <span class="s2">&quot;root@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">in</span><span class="p">:</span> <span class="ss">:sequence</span><span class="p">,</span> <span class="ss">wait</span><span class="p">:</span> <span class="mi">5</span> <span class="k">do</span>
   <span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;[ -d /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> ]&quot;</span>
@@ -332,7 +333,7 @@ apt-get -y install nginx
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 下载完整的部署脚本</span>
 wget https://raw.githubusercontent.com/jameszhan/prototypes/master/ruby/ubuntu_setup.rb
 
-ruby ubuntu_setup.rb PASSWORD
+ruby ubuntu_setup.rb HOST_IP USERNAME PASSWORD
 </code></pre></div>
         </article>
 
