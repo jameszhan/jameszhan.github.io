@@ -2,12 +2,12 @@
 <div class="container">
     <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-            <span class="sr-only">品码斋</span>
+            <span class="sr-only">尽管扯淡</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="/" class="navbar-brand">品码斋</a>
+        <a href="/" class="navbar-brand">尽管扯淡</a>
     </div>
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul class="nav navbar-nav">

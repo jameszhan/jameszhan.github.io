@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>品码斋-自动配置Ubuntu开发环境</title>
+    <title>尽管扯淡-自动配置Ubuntu开发环境</title>
     <meta name="description" content="资深码农，技术兴趣广泛，好读书，求甚解">
     <link rel="canonical" href="http://jameszhan.github.io/2013/03/13/setup-ubuntu-automatically.html">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
 </head>
 
@@ -85,7 +85,7 @@ gem sources -a https://ruby.taobao.org/
 <div class="highlight"><pre><code class="language-text" data-lang="text">PermitRootLogin yes
 </code></pre></div>
 <p>执行如下代码就可以使得本机root用户登陆Ubuntu不用输入密码。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh root@10.211.55.5 <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>                                                                                      14:59:46
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh root@10.211.55.5 <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
 </code></pre></div>
 <p>为了安全起见，在设置好root用户本机登陆Ubuntu免输入密码后，可以把<code>PermitRootLogin</code>改回原值。</p>
 
