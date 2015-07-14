@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 11 Jul 2015 17:54:23 +0000</pubDate>
-    <lastBuildDate>Sat, 11 Jul 2015 17:54:23 +0000</lastBuildDate>
+    <pubDate>Tue, 14 Jul 2015 08:52:03 +0000</pubDate>
+    <lastBuildDate>Tue, 14 Jul 2015 08:52:03 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -1927,7 +1927,7 @@ server {
 
 &lt;p&gt;如果你是Java开发者（或者同时编辑Ruby，Python，PHP，JavaScript，Scala，Groovy，Clojure等程序），强烈建议你安装&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;IntelliJ IDEA&lt;/a&gt;。如果你只做前端开发，那么&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;WebStrom&lt;/a&gt;是不错的选择，另外，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;RubyMime&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;PyCharm&lt;/a&gt;，&lt;a href=&quot;http://www.jetbrains.com/&quot; title=&quot;JetBrains&quot;&gt;PhpStorm&lt;/a&gt;作为Ruby，Python，PHP的单项开发环境也不错。&lt;/p&gt;
 
-&lt;p&gt;如果你不想花钱，又不想实用盗版软件，那么&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; title=&quot;Eclipse&quot;&gt;Eclipse&lt;/a&gt;，[NetBeans][netbeans]也可以凑合着用。&lt;/p&gt;
+&lt;p&gt;如果你不想花钱，又不想实用盗版软件，那么&lt;a href=&quot;http://www.eclipse.org/downloads/&quot; title=&quot;Eclipse&quot;&gt;Eclipse&lt;/a&gt;，&lt;a href=&quot;https://netbeans.org/&quot; title=&quot;NetBeans&quot;&gt;NetBeans&lt;/a&gt;也可以凑合着用。&lt;/p&gt;
 
 &lt;h3 id=&quot;编辑器&quot;&gt;编辑器&lt;/h3&gt;
 
@@ -2404,8 +2404,6 @@ uname -a
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1i3wxLTb&quot;&gt;HexFriend&lt;/a&gt;, &lt;a href=&quot;http://pan.baidu.com/s/1qWHOpUs&quot;&gt;0xED&lt;/a&gt; 比较实用的二进制编辑工具。&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://pan.baidu.com/s/1qW0ntj2&quot;&gt;MacDjView&lt;/a&gt; 如果你有djvu格式的图书，这个工具可以帮到你。&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;[netbeans: https://netbeans.org/ &amp;quot;NetBeans&amp;quot;&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Oct 2014 18:00:00 +0000</pubDate>
         <link>http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</link>
