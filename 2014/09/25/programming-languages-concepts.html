@@ -790,7 +790,32 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
         </div>
     </div>
 
-    <div data-include="/assets/tpls/widgets/comments.tpl"></div>
+    <!-- 多说评论框 start -->
+<div class="ds-thread"
+     data-thread-key="/2014/09/25/programming-languages-concepts.html"
+     data-title="编程语言的一些概念"
+     data-url="http://jameszhan.github.io/2014/09/25/programming-languages-concepts.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"jameszhan"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+
+    $(document).on('click', '#ds-thread textarea[name=message]', function(){
+        $('#ds-sync-checkbox').prop('checked', false);
+    });
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+    <!--<div data-include="/assets/tpls/widgets/comments.tpl"></div>-->
 </div>
 
 <div class="col-md-3">
