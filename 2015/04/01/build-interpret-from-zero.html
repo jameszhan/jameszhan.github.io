@@ -67,7 +67,7 @@
 </code></pre></div>
 <h3 id="parser的实现">Parser的实现</h3>
 
-<p>在parse处理token序列之前，我们先对tokens序列做一下预处理，其转换规则如下例所示，<a href="https://github.com/jameszhan/prototypes/blob/master/lang/lambda.js" title="详细源码">详细源码可以在此查看</a>。</p>
+<p>在parse处理token序列之前，我们先对tokens序列做一下预处理，其转换规则如下例所示，<a href="https://github.com/jameszhan/prototypes/blob/master/javascript/lambda/lambda.js" title="详细源码">详细源码可以在此查看</a>。</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">&quot;(((lambda (x) (lambda (y) (+ x y))) 2) 3)&quot; =&gt; [[[lambda [x] [lambda [y] [+ x y]]] 2] 3]     
 </code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">doParse</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">head</span><span class="p">;</span>
@@ -290,7 +290,7 @@
 <h3 id="参考资料">参考资料</h3>
 
 <ol>
-<li><a href="https://github.com/jameszhan/prototypes/blob/master/lang/lambda.js" title="详细源码">完整源代码</a></li>
+<li><a href="https://github.com/jameszhan/prototypes/blob/master/javascript/lambda/lambda.js" title="详细源码">完整源代码</a></li>
 <li><a href="http://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97" title="Lambda演算百科">λ演算百科</a></li>
 <li><a href="http://www.atatech.org/articles/21845" title="Lambda演算之自然数">Lambda演算之自然数</a></li>
 <li><a href="https://github.com/jameszhan/lispscript" title="lispscript">lispscript</a></li>
@@ -403,6 +403,7 @@
     </div>
 </div>
 
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
 <script type="text/javascript" src="/assets/javascripts/firing.js"></script>
 <div class="analytics">
     <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>

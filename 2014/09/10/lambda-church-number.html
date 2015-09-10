@@ -37,27 +37,27 @@
         <article class="post-content">
             <p>λ演算（英语：lambda calculus，λ-calculus）是一套用于研究函数定义、函数应用和递归的形式系统。它由阿隆佐·邱奇和他的学生斯蒂芬·科尔·克莱尼在20世纪30年代引入。这种演算可以用来清晰地定义什么是一个可计算函数。</p>
 
-<h2 id="λ演算规则">λ演算规则</h2>
+<h2 id="�演算规则">λ演算规则</h2>
 <div class="highlight"><pre><code class="language-text" data-lang="text">  &lt;expression&gt; := &lt;name&gt; | &lt;function&gt; | &lt;application&gt;
   &lt;function&gt; := λ&lt;name&gt;.&lt;expression&gt;
   &lt;application&gt; := &lt;expression&gt;&lt;expression&gt;
 </code></pre></div>
-<h3 id="α-变换">α--变换</h3>
+<h3 id="�-变换">α--变换</h3>
 
 <p>α变换规则表达的是，被绑定变量的名称是不重要的。
 α变换规则陈述的是，若v与w均为变量，E是一个lambda表达式，同时E[v/w]是指把表达式E中的所有的v的自由出现都替换成w，那么在w不是E中的一个自由出现，且如果w替换了v，w不会被E中的λ绑定的情况下，有
   λv.E == λw.E[v/w]
   例如：λx.(λx.x)x &lt;=&gt; λy.(λx.x)y</p>
 
-<h3 id="β-规约">β--规约</h3>
+<h3 id="�-规约">β--规约</h3>
 
 <p>β规约规则表达的是函数作用的概念，它陈述了所有的E‘的自由出现在E[v/E&#39;]中仍然是自由的情况下，有 ((λv.E)E&#39;) == E[v/E&#39;] 成立。</p>
 
-<h3 id="η-变换">η--变换</h3>
+<h3 id="�-变换">η--变换</h3>
 
 <p>η变换表达的是外延性的概念，在这里外延性指的是，两个函数对于所有的参数得到的结果一致，当且仅当它们是同一个函数，η变换可以令 λx.fx和f相互交换，只要x不是f中的自由出现。</p>
 
-<h2 id="λ演算的应用">λ演算的应用</h2>
+<h2 id="�演算的应用">λ演算的应用</h2>
 
 <p>在lambda演算系统中，一切事物都可以使用过程来描述。那么在函数式编程系统中，我们需要如何来描述一种类型呢？类型的本质在于它所定义的操作以及操作之间的关系和不变式。类型的实现关键在于满足类型规范的要求，而具体实现是可以变化的，使用者和测试用例都应该只依赖于类型规范而不依赖于具体实现。函数式的类型实现往往和类型规范是直接对应的，简单通用，但可能有性能问题，而命令式的类型实现往往会引入复杂的内部数据结构，但是其优点是高效。这两种实现并不是完全互斥的，有时候可以将二者相结合达到简单与高效的结合。</p>
 
@@ -305,6 +305,7 @@ two = (succ one)
     </div>
 </div>
 
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
 <script type="text/javascript" src="/assets/javascripts/firing.js"></script>
 <div class="analytics">
     <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>

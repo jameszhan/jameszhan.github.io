@@ -5,8 +5,8 @@
     <description>资深码农，技术兴趣广泛，好读书，求甚解</description>
     <link>http://jameszhan.github.io/</link>
     <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 14 Jul 2015 09:26:00 +0000</pubDate>
-    <lastBuildDate>Tue, 14 Jul 2015 09:26:00 +0000</lastBuildDate>
+    <pubDate>Thu, 10 Sep 2015 13:09:27 +0000</pubDate>
+    <lastBuildDate>Thu, 10 Sep 2015 13:09:27 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -455,7 +455,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 &lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/lang/compiler_vs_interpreter.js&quot; title=&quot;详细源码&quot;&gt;完整源代码&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/javascript/lang/compiler_vs_interpreter.js&quot; title=&quot;详细源码&quot;&gt;完整源代码&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/lispscript&quot; title=&quot;lispscript&quot;&gt;lispscript&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
@@ -510,7 +510,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;parser的实现&quot;&gt;Parser的实现&lt;/h3&gt;
 
-&lt;p&gt;在parse处理token序列之前，我们先对tokens序列做一下预处理，其转换规则如下例所示，&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/lang/lambda.js&quot; title=&quot;详细源码&quot;&gt;详细源码可以在此查看&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;在parse处理token序列之前，我们先对tokens序列做一下预处理，其转换规则如下例所示，&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/javascript/lambda/lambda.js&quot; title=&quot;详细源码&quot;&gt;详细源码可以在此查看&lt;/a&gt;。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;quot;(((lambda (x) (lambda (y) (+ x y))) 2) 3)&amp;quot; =&amp;gt; [[[lambda [x] [lambda [y] [+ x y]]] 2] 3]     
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;doParse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -733,7 +733,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 &lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/lang/lambda.js&quot; title=&quot;详细源码&quot;&gt;完整源代码&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/prototypes/blob/master/javascript/lambda/lambda.js&quot; title=&quot;详细源码&quot;&gt;完整源代码&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97&quot; title=&quot;Lambda演算百科&quot;&gt;λ演算百科&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.atatech.org/articles/21845&quot; title=&quot;Lambda演算之自然数&quot;&gt;Lambda演算之自然数&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/jameszhan/lispscript&quot; title=&quot;lispscript&quot;&gt;lispscript&lt;/a&gt;&lt;/li&gt;
@@ -2158,7 +2158,7 @@ spawn-fcgi -a 127.0.0.1 -p &lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt; -C 
 
 &lt;h5 id=&quot;测试php环境&quot;&gt;测试PHP环境&lt;/h5&gt;
 
-&lt;h6 id=&quot;code-code&quot;&gt;&lt;code&gt;Nginx&lt;/code&gt; 配置&lt;/h6&gt;
+&lt;h6 id=&quot;nginx-配置&quot;&gt;&lt;code&gt;Nginx&lt;/code&gt; 配置&lt;/h6&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;http {
     upstream fastcgi_server {
         server  127.0.0.1:6666;
