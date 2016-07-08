@@ -1,7 +1,7 @@
 <!-- 多说评论框 start -->
 <div class="ds-thread"
      data-thread-key="/assets/tpls/widgets/comments.tpl"
-     data-title="尽管扯淡"
+     data-title="Comments"
      data-url="http://jameszhan.github.io/assets/tpls/widgets/comments.tpl"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->

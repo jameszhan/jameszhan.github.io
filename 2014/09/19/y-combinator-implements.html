@@ -35,44 +35,59 @@
         </header>
 
         <article class="post-content">
-            <h2 id="递归和定点">递归和定点</h2>
-
+            <h2 id="section">递归和定点</h2>
 <p>纯λ演算的一大特色是可以通过使用一种自应用技巧来书写递归函数。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">f(n) = if n = 0 then 1 else n*f(n-1) 
+
+<div class="highlighter-rouge"><pre class="highlight"><code>f(n) = if n = 0 then 1 else n*f(n-1) 
 f = λn.if n = 0 then 1 else n*f(n-1)
-</code></pre></div>
+</code></pre>
+</div>
 <p>把f移到等式的后面，得到函数G</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">G = λf.λn.if n = 0 then 1 else n*f(n-1)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>G = λf.λn.if n = 0 then 1 else n*f(n-1)
+</code></pre>
+</div>
 <p>很显然有：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">f = G(f)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>f = G(f)
+</code></pre>
+</div>
 <p>这表明递归声明涉及找出定点。
 函数G的定点是指满足f=G(f)的f的值。在λ演算中，定点由定点操作符Y来定义。
 具体的推导过程可以参考我的上一篇文章<a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Y-Combinator的推导</a>。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Y = λf.(λx.f(x x))(λx.f(x x))
-</code></pre></div>
-<h3 id="ruby-版本">Ruby 版本</h3>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gen</span><span class="p">)</span>
-    <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="n">g</span><span class="o">[</span><span class="n">g</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">gen</span><span class="o">[</span><span class="n">f</span><span class="o">[</span><span class="n">f</span><span class="o">]][*</span><span class="n">args</span><span class="o">]</span> <span class="p">}})</span>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Y = λf.(λx.f(x x))(λx.f(x x))
+</code></pre>
+</div>
+
+<h3 id="ruby-">Ruby 版本</h3>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gen</span><span class="p">)</span>
+    <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="n">g</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="p">}.</span><span class="nf">call</span><span class="p">(</span><span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">gen</span><span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="n">f</span><span class="p">]][</span><span class="o">*</span><span class="n">args</span><span class="p">]</span> <span class="p">}})</span>
 <span class="k">end</span>
 
 <span class="n">factorial</span> <span class="o">=</span> <span class="n">y</span> <span class="k">do</span> <span class="o">|</span><span class="n">recurse</span><span class="o">|</span>
     <span class="nb">lambda</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-        <span class="n">x</span><span class="o">.</span><span class="n">zero?</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">recurse</span><span class="o">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span>
+        <span class="n">x</span><span class="p">.</span><span class="nf">zero?</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">recurse</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">end</span>
 <span class="k">end</span>
-<span class="nb">puts</span> <span class="n">factorial</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="python-版本">Python 版本</h3>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">y_combinator</span><span class="p">(</span><span class="n">gen</span><span class="p">):</span>    
+<span class="nb">puts</span> <span class="n">factorial</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="python-">Python 版本</h3>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">y_combinator</span><span class="p">(</span><span class="n">gen</span><span class="p">):</span>    
     <span class="k">return</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="p">(</span><span class="n">g</span><span class="p">))(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="p">(</span><span class="n">gen</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">f</span><span class="p">)))(</span><span class="o">*</span><span class="n">args</span><span class="p">)))</span>
 
 <span class="n">ret</span> <span class="o">=</span> <span class="n">y_combinator</span><span class="p">(</span><span class="k">lambda</span> <span class="n">fab</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fab</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))(</span><span class="mi">10</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="javascript-版本">JavaScript 版本</h3>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">y</span><span class="p">(</span><span class="nx">gen</span><span class="p">)</span> <span class="p">{</span>
+</code></pre>
+</div>
+
+<h3 id="javascript-">JavaScript 版本</h3>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">y</span><span class="p">(</span><span class="nx">gen</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">g</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
     <span class="p">})(</span><span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
@@ -84,27 +99,33 @@ f = λn.if n = 0 then 1 else n*f(n-1)
 
 <span class="kd">var</span> <span class="nx">fact</span> <span class="o">=</span> <span class="nx">y</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">fac</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">?</span> <span class="nx">n</span> <span class="o">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">fac</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="p">?</span> <span class="nx">n</span> <span class="p">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">fac</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">});</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fac</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
-</code></pre></div>
-<h3 id="clojure-版本">Clojure 版本</h3>
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">Y</span> <span class="p">[</span><span class="nv">gen</span><span class="p">]</span>
-  <span class="p">((</span><span class="k">fn </span><span class="p">[</span><span class="nv">g</span><span class="p">]</span> <span class="p">(</span><span class="nf">g</span> <span class="nv">g</span><span class="p">))</span>
-    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span><span class="p">]</span>
-      <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">((</span><span class="nf">gen</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">f</span><span class="p">))</span> <span class="nv">n</span><span class="p">)))))</span>
+</code></pre>
+</div>
 
-<span class="p">(</span><span class="kd">defn </span><span class="nv">fac-gen</span> <span class="p">[</span><span class="nv">f</span><span class="p">]</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt;= </span><span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">* </span><span class="nv">n</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))))))</span>
-<span class="p">(</span><span class="nb">assert </span><span class="p">(</span><span class="nb">= </span><span class="p">((</span><span class="nf">Y</span> <span class="nv">fac-gen</span><span class="p">)</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">120</span><span class="p">))</span>
-</code></pre></div>
-<h3 id="参考">参考</h3>
+<h3 id="clojure-">Clojure 版本</h3>
+
+<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
+  </span><span class="p">((</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nf">g</span><span class="w"> </span><span class="n">g</span><span class="p">))</span><span class="w">
+    </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
+      </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">gen</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="n">f</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+      
+</span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
+</span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="section-1">参考</h3>
 
 <ol>
-<li><a href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">Lambda演算之自然数</a></li>
-<li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Y-Combinator的推导(Clojure描述)</a></li>
-<li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html" title="Y-Combinator的推导(JavaScript版)">Y-Combinator的推导(JavaScript描述)</a></li>
+  <li><a href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">Lambda演算之自然数</a></li>
+  <li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Y-Combinator的推导(Clojure描述)</a></li>
+  <li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator-javascript.html" title="Y-Combinator的推导(JavaScript版)">Y-Combinator的推导(JavaScript描述)</a></li>
 </ol>
+
 
         </article>
 
@@ -114,7 +135,7 @@ f = λn.if n = 0 then 1 else n*f(n-1)
                 
                 
     
-    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdt.html">Pdt<span>7</span></a></li>
     
 
             </ul>
@@ -127,15 +148,15 @@ f = λn.if n = 0 then 1 else n*f(n-1)
     
 
     
-    <li class="tag"><a href="/tags/fp.html">函数式编程<span>7</span></a></li>
+    <li class="tag"><a href="/tags/fp.html">Fp<span>7</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>10</span></a></li>
+    <li class="tag"><a href="/tags/javascript.html">Javascript<span>10</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">Pdt<span>7</span></a></li>
     
 
             </ul>

@@ -35,15 +35,15 @@
         </header>
 
         <article class="post-content">
-            <h2 id="准备工作">准备工作</h2>
+            <h2 id="section">准备工作</h2>
 
-<h3 id="安装ubuntu">安装Ubuntu</h3>
+<h3 id="ubuntu">安装Ubuntu</h3>
 
 <p>如果是机器安装，首先你需要准备Ubuntu的安装光盘，按照引导一步一步安装即可。</p>
 
 <p>如果只是用于个人学习，我建议使用虚拟机来安装Ubuntu，可以从<a href="http://mirrors.kernel.org/" title="Linux Kernel Archives">Linux镜像</a>去下载对应版本的镜像，国内我推荐从<a href="http://mirrors.163.com/ubuntu/" title="网易开源镜像">网易开源镜像</a>上去下载对应的镜像。接下来就可以在虚拟机上安装Ubuntu了。</p>
 
-<h3 id="安装ruby">安装Ruby</h3>
+<h3 id="ruby">安装Ruby</h3>
 
 <p>既然是自动配置，就一定会用到脚本，这里选择的脚本语言是Ruby，因此我们需要首先安装Ruby。</p>
 
@@ -51,103 +51,129 @@
 
 <p>下载<a href="http://rubyinstaller.org/" title="RubyIntaller">RubyIntaller</a>，双击直接安装即可。</p>
 
-<h4 id="ubuntu">Ubuntu</h4>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo apt-get install ruby
-</code></pre></div>
+<h4 id="ubuntu-1">Ubuntu</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get install ruby
+</code></pre>
+</div>
+
 <h4 id="os-x">OS X</h4>
 
 <p>默认OS X已经自带了Ruby程序，如果没有特别的版本需求，一般不需要单独安装。</p>
 
-<h3 id="检查环境并安装相关依赖">检查环境并安装相关依赖</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">gem update
-</code></pre></div>
+<h3 id="section-1">检查环境并安装相关依赖</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>gem update
+</code></pre>
+</div>
+
 <p>如果无法更新，可能是GFW的问题，建议更换RubyGem源。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">gem sources --remove https://rubygems.org/
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>gem sources --remove https://rubygems.org/
 gem sources -a https://ruby.taobao.org/
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>安装<a href="https://github.com/capistrano/sshkit" title="SSHKit">SSHKit</a>，sshkit是<a href="https://github.com/capistrano/capistrano" title="SSHKit">Capistrano</a>的一个子项目，它对<a href="https://github.com/net-ssh/net-ssh" title="Net::SSH">Net::SSH</a>进行了封装。</p>
 
 <blockquote>
-<p>Capistrano是Ruby领域最热门的自动化部署工具。</p>
+  <p>Capistrano是Ruby领域最热门的自动化部署工具。</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">gem install sshkit
-</code></pre></div>
-<h2 id="自动化部署">自动化部署</h2>
 
-<h3 id="设置root用户ssh登陆免输入密码">设置root用户SSH登陆免输入密码</h3>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>gem install sshkit
+</code></pre>
+</div>
+
+<h2 id="section-2">自动化部署</h2>
+
+<h3 id="rootssh">设置root用户SSH登陆免输入密码</h3>
 
 <p>如果是第一次使用，需要先启用root用户，并配置密码。</p>
 
 <p>登入到Ubuntu，为root用户新增一个密码。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo passwd root
-</code></pre></div>
-<p>默认Ubuntu是不允许root用户使用密码SSH登陆，这个时候我们可以修改<code>/etc/ssh/sshd_config</code>，找到<code>PermitRootLogin</code>，把这一行改为如下代码即可。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">PermitRootLogin yes
-</code></pre></div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo passwd root
+</code></pre>
+</div>
+
+<p>默认Ubuntu是不允许root用户使用密码SSH登陆，这个时候我们可以修改<code class="highlighter-rouge">/etc/ssh/sshd_config</code>，找到<code class="highlighter-rouge">PermitRootLogin</code>，把这一行改为如下代码即可。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>PermitRootLogin yes
+</code></pre>
+</div>
+
 <p>执行如下代码就可以使得本机root用户登陆Ubuntu不用输入密码。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh root@10.211.55.5 <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
-</code></pre></div>
-<p>为了安全起见，在设置好root用户本机登陆Ubuntu免输入密码后，可以把<code>PermitRootLogin</code>改回原值。</p>
 
-<h3 id="自动创建新用户并设置新apt源">自动创建新用户并设置新apt源</h3>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">host</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
-<span class="n">user</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
-<span class="n">password</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>cat ~/.ssh/id_rsa.pub | ssh root@10.211.55.5 <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
+</code></pre>
+</div>
 
-<span class="n">on</span> <span class="s2">&quot;root@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">in</span><span class="p">:</span> <span class="ss">:sequence</span><span class="p">,</span> <span class="ss">wait</span><span class="p">:</span> <span class="mi">5</span> <span class="k">do</span>
-  <span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;[ -d /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> ]&quot;</span>
-    <span class="nb">puts</span> <span class="s2">&quot;User </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> is ready!&quot;</span>
+<p>为了安全起见，在设置好root用户本机登陆Ubuntu免输入密码后，可以把<code class="highlighter-rouge">PermitRootLogin</code>改回原值。</p>
+
+<h3 id="apt">自动创建新用户并设置新apt源</h3>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="n">host</span> <span class="o">=</span> <span class="no">ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">user</span> <span class="o">=</span> <span class="no">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">password</span> <span class="o">=</span> <span class="no">ARGV</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">on</span> <span class="s2">"root@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="ss">in: :sequence</span><span class="p">,</span> <span class="ss">wait: </span><span class="mi">5</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="nb">test</span> <span class="s2">"[ -d /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> ]"</span>
+    <span class="nb">puts</span> <span class="s2">"User </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> is ready!"</span>
   <span class="k">else</span>
-    <span class="n">execute</span> <span class="s2">&quot;deluser </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> --remove-all-files&quot;</span>
-    <span class="nb">puts</span> <span class="s2">&quot;Not Found User </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">, start setup user </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">execute</span> <span class="s2">&quot;adduser --ingroup sudo --shell /bin/bash --disabled-password --gecos &#39;User for managing of deployment&#39; --quiet --home /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">execute</span> <span class="s2">&quot;echo &#39;</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> ALL = (ALL) NOPASSWD: ALL&#39; &gt; /tmp/sudoer_</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">execute</span> <span class="s2">&quot;mv /tmp/sudoer_</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> /etc/sudoers.d/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">execute</span> <span class="s2">&quot;chown -R root:root /etc/sudoers.d/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">execute</span> <span class="s2">"deluser </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> --remove-all-files"</span>
+    <span class="nb">puts</span> <span class="s2">"Not Found User </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">, start setup user </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">execute</span> <span class="s2">"adduser --ingroup sudo --shell /bin/bash --disabled-password --gecos 'User for managing of deployment' --quiet --home /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">execute</span> <span class="s2">"echo '</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> ALL = (ALL) NOPASSWD: ALL' &gt; /tmp/sudoer_</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">execute</span> <span class="s2">"mv /tmp/sudoer_</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2"> /etc/sudoers.d/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">execute</span> <span class="s2">"chown -R root:root /etc/sudoers.d/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span>
 
-    <span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;[ -d /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh ]&quot;</span>
-      <span class="nb">puts</span> <span class="s2">&quot;/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh have already exists.&quot;</span>
+    <span class="k">if</span> <span class="nb">test</span> <span class="s2">"[ -d /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh ]"</span>
+      <span class="nb">puts</span> <span class="s2">"/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh have already exists."</span>
     <span class="k">else</span>
-      <span class="nb">puts</span> <span class="s2">&quot;/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh not exists, create one.&quot;</span>
-      <span class="n">execute</span> <span class="s2">&quot;mkdir /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh&quot;</span>
-      <span class="n">execute</span> <span class="s2">&quot;chown -R </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">:sudo /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh&quot;</span>
+      <span class="nb">puts</span> <span class="s2">"/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh not exists, create one."</span>
+      <span class="n">execute</span> <span class="s2">"mkdir /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh"</span>
+      <span class="n">execute</span> <span class="s2">"chown -R </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">:sudo /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh"</span>
     <span class="k">end</span>
 
-    <span class="n">upload!</span> <span class="s1">&#39;/Users/james/.ssh/id_rsa.pub&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp/id_rsa.pub&#39;</span>
-    <span class="n">execute</span> <span class="s2">&quot;cat /tmp/id_rsa.pub &gt;&gt; /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh/authorized_keys&quot;</span>
+    <span class="n">upload!</span> <span class="s1">'/Users/james/.ssh/id_rsa.pub'</span><span class="p">,</span> <span class="s1">'/tmp/id_rsa.pub'</span>
+    <span class="n">execute</span> <span class="s2">"cat /tmp/id_rsa.pub &gt;&gt; /home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.ssh/authorized_keys"</span>
 
     <span class="n">with_ssh</span> <span class="k">do</span> <span class="o">|</span><span class="n">ssh</span><span class="o">|</span>
-      <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;passwd </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
-      <span class="n">ch</span><span class="o">.</span><span class="n">wait</span>
+      <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">.</span><span class="nf">exec</span><span class="p">(</span><span class="s2">"passwd </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
+      <span class="n">ch</span><span class="p">.</span><span class="nf">wait</span>
     <span class="k">end</span>
   <span class="k">end</span>
-  <span class="k">if</span> <span class="nb">test</span> <span class="s1">&#39;[ -f /etc/apt/sources.list_bak ]&#39;</span>
-    <span class="nb">puts</span> <span class="s1">&#39;The mirrors sources list have already setup!&#39;</span>
+  <span class="k">if</span> <span class="nb">test</span> <span class="s1">'[ -f /etc/apt/sources.list_bak ]'</span>
+    <span class="nb">puts</span> <span class="s1">'The mirrors sources list have already setup!'</span>
   <span class="k">else</span>
-    <span class="n">capture</span> <span class="ss">:mv</span><span class="p">,</span> <span class="s1">&#39;/etc/apt/sources.list /etc/apt/sources.list_bak&#39;</span>
-    <span class="n">contents</span> <span class="o">=</span> <span class="no">StringIO</span><span class="o">.</span><span class="n">new</span> <span class="o">&lt;&lt;-</span><span class="no">SOURCE_CONTENT</span>
-<span class="sh">deb http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse</span>
-<span class="sh">deb http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted universe multiverse</span>
-<span class="sh">deb http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse</span>
-<span class="sh">deb http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse</span>
-<span class="sh">deb http://mirrors.aliyun.com/ubuntu/ utopic-backports main restricted universe multiverse</span>
-<span class="sh">deb-src http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse</span>
-<span class="sh">deb-src http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted universe multiverse</span>
-<span class="sh">deb-src http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse</span>
-<span class="sh">deb-src http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse</span>
-<span class="sh">deb-src http://mirrors.aliyun.com/ubuntu/ utopic-backports main restricted universe multiverse</span>
-<span class="no">    SOURCE_CONTENT</span>
-    <span class="n">upload!</span> <span class="n">contents</span><span class="p">,</span> <span class="s1">&#39;/etc/apt/sources.list&#39;</span>
+    <span class="n">capture</span> <span class="ss">:mv</span><span class="p">,</span> <span class="s1">'/etc/apt/sources.list /etc/apt/sources.list_bak'</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="no">StringIO</span><span class="p">.</span><span class="nf">new</span> <span class="o">&lt;&lt;-</span><span class="no">SOURCE_CONTENT</span><span class="sh">
+deb http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ utopic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ utopic-backports main restricted universe multiverse
+</span><span class="no">    SOURCE_CONTENT</span>
+    <span class="n">upload!</span> <span class="n">contents</span><span class="p">,</span> <span class="s1">'/etc/apt/sources.list'</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>如果是第一次设置deploy(用户名可以自己定义)用户，上面的代码等价于在Ubuntu使用root用户直接执行如下代码：</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 新增用户</span>
-adduser --ingroup sudo --shell /bin/bash --disabled-password --gecos <span class="s1">&#39;User for managing of deployment&#39;</span> --quiet --home /home/deploy deploy
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 新增用户</span>
+adduser --ingroup sudo --shell /bin/bash --disabled-password --gecos <span class="s1">'User for managing of deployment'</span> --quiet --home /home/deploy deploy
 
 
 <span class="c"># 设置sudo免输入密码</span>
-<span class="nb">echo</span> <span class="s1">&#39;deploy ALL = (ALL) NOPASSWD: ALL&#39;</span> &gt; /tmp/sudoer_deploy
+<span class="nb">echo</span> <span class="s1">'deploy ALL = (ALL) NOPASSWD: ALL'</span> &gt; /tmp/sudoer_deploy
 mv /tmp/sudoer_deploy /etc/sudoers.d/deploy
 chown -R root:root /etc/sudoers.d/deploy
 
@@ -158,9 +184,12 @@ chown -R deploy:sudo /home/deploy/.ssh
 <span class="c"># 上传本地~/.ssh/id_rsa.pub文件到Ubuntu的临时目录</span>
 
 cat /tmp/id_rsa.pub &gt;&gt; /home/deploy/.ssh/authorized_keys
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>为了加快国内用户有必要更换apt源，这里推荐aliyun的源，把如下代码加到/etc/apt/sources.list即可。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">deb http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse
+
+<div class="highlighter-rouge"><pre class="highlight"><code>deb http://mirrors.aliyun.com/ubuntu/ utopic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse
@@ -170,171 +199,210 @@ deb-src http://mirrors.aliyun.com/ubuntu/ utopic-security main restricted univer
 deb-src http://mirrors.aliyun.com/ubuntu/ utopic-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ utopic-proposed main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ utopic-backports main restricted universe multiverse
-</code></pre></div>
-<h3 id="配置oh-my-zsh">配置Oh-My-Zsh</h3>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Setup Oh-My-Zsh</span>
-<span class="n">on</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">in</span><span class="p">:</span> <span class="ss">:sequence</span><span class="p">,</span> <span class="ss">wait</span><span class="p">:</span> <span class="mi">5</span> <span class="k">do</span>
-  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y update&#39;</span>
-  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y install python-software-properties&#39;</span>
-  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y upgrade&#39;</span>
-  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y dist-upgrade&#39;</span>
+</code></pre>
+</div>
 
-  <span class="n">oh_my_zsh_dir</span> <span class="o">=</span> <span class="s2">&quot;/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.oh-my-zsh&quot;</span>
-  <span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;[ -d </span><span class="si">#{</span><span class="n">oh_my_zsh_dir</span><span class="si">}</span><span class="s2"> ]&quot;</span>
+<h3 id="oh-my-zsh">配置Oh-My-Zsh</h3>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1"># Setup Oh-My-Zsh</span>
+<span class="n">on</span> <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="ss">in: :sequence</span><span class="p">,</span> <span class="ss">wait: </span><span class="mi">5</span> <span class="k">do</span>
+  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y update'</span>
+  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y install python-software-properties'</span>
+  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y upgrade'</span>
+  <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y dist-upgrade'</span>
+
+  <span class="n">oh_my_zsh_dir</span> <span class="o">=</span> <span class="s2">"/home/</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">/.oh-my-zsh"</span>
+  <span class="k">if</span> <span class="nb">test</span> <span class="s2">"[ -d </span><span class="si">#{</span><span class="n">oh_my_zsh_dir</span><span class="si">}</span><span class="s2"> ]"</span>
     <span class="n">within</span> <span class="n">oh_my_zsh_dir</span> <span class="k">do</span>
       <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:pull</span>
       <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:fetch</span><span class="p">,</span> <span class="ss">:upstream</span>
       <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:checkout</span><span class="p">,</span> <span class="ss">:master</span>
-      <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:rebase</span><span class="p">,</span> <span class="s1">&#39;upstream/master&#39;</span>
+      <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:rebase</span><span class="p">,</span> <span class="s1">'upstream/master'</span>
     <span class="k">end</span>
   <span class="k">else</span>
-    <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y install git&#39;</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">&#39;command -v git&#39;</span><span class="p">)</span>
-    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:config</span><span class="p">,</span> <span class="s1">&#39;--global user.name &quot;James Zhan&quot;&#39;</span>
-    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:config</span><span class="p">,</span> <span class="s1">&#39;--global user.email &quot;zhiqiangzhan@gmail.com&quot;&#39;</span>
-    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:clone</span><span class="p">,</span> <span class="s1">&#39;https://github.com/jameszhan/oh-my-zsh.git&#39;</span><span class="p">,</span> <span class="n">oh_my_zsh_dir</span>
+    <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y install git'</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">'command -v git'</span><span class="p">)</span>
+    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:config</span><span class="p">,</span> <span class="s1">'--global user.name "James Zhan"'</span>
+    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:config</span><span class="p">,</span> <span class="s1">'--global user.email "zhiqiangzhan@gmail.com"'</span>
+    <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:clone</span><span class="p">,</span> <span class="s1">'https://github.com/jameszhan/oh-my-zsh.git'</span><span class="p">,</span> <span class="n">oh_my_zsh_dir</span>
 
     <span class="n">within</span> <span class="n">oh_my_zsh_dir</span> <span class="k">do</span>
-      <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:remote</span><span class="p">,</span> <span class="ss">:add</span><span class="p">,</span> <span class="ss">:upstream</span><span class="p">,</span> <span class="s1">&#39;https://github.com/robbyrussell/oh-my-zsh.git&#39;</span>
+      <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:remote</span><span class="p">,</span> <span class="ss">:add</span><span class="p">,</span> <span class="ss">:upstream</span><span class="p">,</span> <span class="s1">'https://github.com/robbyrussell/oh-my-zsh.git'</span>
       <span class="n">execute</span> <span class="ss">:git</span><span class="p">,</span> <span class="ss">:pull</span><span class="p">,</span> <span class="ss">:origin</span><span class="p">,</span> <span class="ss">:master</span>
-      <span class="n">capture</span> <span class="ss">:cp</span><span class="p">,</span> <span class="s1">&#39;templates/zshrc.zsh-template&#39;</span><span class="p">,</span> <span class="s1">&#39;../.zshrc&#39;</span>
+      <span class="n">capture</span> <span class="ss">:cp</span><span class="p">,</span> <span class="s1">'templates/zshrc.zsh-template'</span><span class="p">,</span> <span class="s1">'../.zshrc'</span>
     <span class="k">end</span>
 
-    <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y install zsh&#39;</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">&#39;command -v zsh&#39;</span><span class="p">)</span>
+    <span class="n">capture</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y install zsh'</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">'command -v zsh'</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="n">with_ssh</span> <span class="k">do</span> <span class="o">|</span><span class="n">ssh</span><span class="o">|</span>
-    <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;chsh -s `which zsh`&#39;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">wait</span>
-  <span class="k">end</span> <span class="k">unless</span> <span class="n">capture</span><span class="p">(</span><span class="s1">&#39;echo $SHELL&#39;</span><span class="p">)</span> <span class="o">=~</span> <span class="sr">/zsh$/</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">.</span><span class="nf">exec</span><span class="p">(</span><span class="s1">'chsh -s `which zsh`'</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
+    <span class="n">ch</span><span class="p">.</span><span class="nf">wait</span>
+  <span class="k">end</span> <span class="k">unless</span> <span class="n">capture</span><span class="p">(</span><span class="s1">'echo $SHELL'</span><span class="p">)</span> <span class="o">=~</span> <span class="sr">/zsh$/</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>以上代码等价于以下几个过程。</p>
 
 <p>首先，我们先更新下apt环境。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo apt-get -y update
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get -y update
 sudo apt-get -y install python-software-properties
-sudo apt-get -y upgrade<span class="s1">&#39;</span>
-<span class="s1">sudo apt-get -y dist-upgrade&#39;</span>
-</code></pre></div>
+sudo apt-get -y upgrade<span class="s1">'
+sudo apt-get -y dist-upgrade'</span>
+</code></pre>
+</div>
+
 <p>安装Git和zsh</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo apt-get -y install git zsh
-git config --global user.name <span class="s2">&quot;James Zhan&quot;</span>
-git config --global user.email <span class="s2">&quot;zhiqiangzhan@gmail.com&quot;</span>
-</code></pre></div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get -y install git zsh
+git config --global user.name <span class="s2">"James Zhan"</span>
+git config --global user.email <span class="s2">"zhiqiangzhan@gmail.com"</span>
+</code></pre>
+</div>
+
 <p>配置Oh-My-Zsh</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">git clone https://github.com/jameszhan/oh-my-zsh.git /home/deploy/.oh-my-zsh
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/jameszhan/oh-my-zsh.git /home/deploy/.oh-my-zsh
 git remote add upstream https://github.com/robbyrussell/oh-my-zsh.git
 git pull origin master
 cp /home/deploy/.oh-my-zsh/templates/zshrc.zsh-template /home/deploy/.zshrc
 
 chsh -s <span class="sb">`</span>which zsh<span class="sb">`</span>
-</code></pre></div>
-<h3 id="安装rbenv">安装rbenv</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">on <span class="s2">&quot;#{user}@#{host}&quot;</span>, in: :sequence, <span class="nb">wait</span>: <span class="m">5</span> <span class="k">do</span>
+</code></pre>
+</div>
+
+<h3 id="rbenv">安装rbenv</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>on <span class="s2">"#{user}@#{host}"</span>, <span class="k">in</span>: :sequence, <span class="nb">wait</span>: 5 <span class="k">do</span>
   <span class="c">#Install rbenv</span>
-  within <span class="s1">&#39;/usr/local&#39;</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="nb">test</span> <span class="s1">&#39;[ -d /usr/local/rbenv ]&#39;</span>
-      within <span class="s1">&#39;rbenv&#39;</span> <span class="k">do</span>
-        execute :git, :pull
+  within <span class="s1">'/usr/local'</span> <span class="k">do
+    if </span><span class="nb">test</span> <span class="s1">'[ -d /usr/local/rbenv ]'</span>
+      within <span class="s1">'rbenv'</span> <span class="k">do
+        </span>execute :git, :pull
       end
-    <span class="k">else</span>
-      execute :sudo, :git, :clone, <span class="s1">&#39;https://github.com/sstephenson/rbenv.git rbenv&#39;</span>
-      execute :sudo, <span class="s1">&#39;chown -R deploy:sudo rbenv&#39;</span>
+    <span class="k">else
+      </span>execute :sudo, :git, :clone, <span class="s1">'https://github.com/sstephenson/rbenv.git rbenv'</span>
+      execute :sudo, <span class="s1">'chown -R deploy:sudo rbenv'</span>
     end
 
-    within <span class="s1">&#39;rbenv&#39;</span> <span class="k">do</span>
-      <span class="k">if</span> <span class="nb">test</span> <span class="s1">&#39;[ -d /usr/local/rbenv/plugins/ruby-build ]&#39;</span>
-        within <span class="s1">&#39;plugins/ruby-build&#39;</span> <span class="k">do</span>
-          execute :git, :pull
+    within <span class="s1">'rbenv'</span> <span class="k">do
+      if </span><span class="nb">test</span> <span class="s1">'[ -d /usr/local/rbenv/plugins/ruby-build ]'</span>
+        within <span class="s1">'plugins/ruby-build'</span> <span class="k">do
+          </span>execute :git, :pull
         end
-      <span class="k">else</span>
-        execute :git, :clone, <span class="s1">&#39;https://github.com/sstephenson/ruby-build.git plugins/ruby-build&#39;</span>
+      <span class="k">else
+        </span>execute :git, :clone, <span class="s1">'https://github.com/sstephenson/ruby-build.git plugins/ruby-build'</span>
       end
     end
 
-    <span class="k">if</span> <span class="nb">test</span> <span class="s1">&#39;[ -f /etc/profile.d/rbenv.sh ]&#39;</span>
-      puts <span class="s1">&#39;rbenv.sh have already setup!&#39;</span>
-    <span class="k">else</span>
-      <span class="nv">rbenv_scripts</span> <span class="o">=</span> StringIO.new <span class="s">&lt;&lt;-SOURCE_CONTENT</span>
-<span class="s"># rbenv setup</span>
-<span class="s">export RBENV_ROOT=/usr/local/rbenv</span>
-<span class="s">export PATH=&quot;$RBENV_ROOT/bin:$PATH&quot;</span>
-<span class="s">eval &quot;$(rbenv init -)&quot;</span>
-<span class="s">      SOURCE_CONTENT</span>
-      upload! rbenv_scripts, <span class="s1">&#39;/tmp/rbenv_scripts&#39;</span>
-      execute <span class="s1">&#39;chmod +x /tmp/rbenv_scripts&#39;</span>
-      execute :sudo, :mv, <span class="s1">&#39;/tmp/rbenv_scripts&#39;</span>, <span class="s1">&#39;/etc/profile.d/rbenv.sh&#39;</span> <span class="k">if</span> <span class="nb">test</span><span class="o">(</span><span class="s1">&#39;[ -f /tmp/rbenv_scripts ]&#39;</span><span class="o">)</span>
-      execute <span class="s1">&#39;echo &quot;source /etc/profile.d/rbenv.sh&quot; &gt;&gt; ~/.zshrc&#39;</span>
+    <span class="k">if </span><span class="nb">test</span> <span class="s1">'[ -f /etc/profile.d/rbenv.sh ]'</span>
+      puts <span class="s1">'rbenv.sh have already setup!'</span>
+    <span class="k">else
+      </span>rbenv_scripts <span class="o">=</span> StringIO.new <span class="sh">&lt;&lt;-SOURCE_CONTENT
+# rbenv setup
+export RBENV_ROOT=/usr/local/rbenv
+export PATH="$RBENV_ROOT/bin:$PATH"
+eval "$(rbenv init -)"
+      SOURCE_CONTENT
+</span>      upload! rbenv_scripts, <span class="s1">'/tmp/rbenv_scripts'</span>
+      execute <span class="s1">'chmod +x /tmp/rbenv_scripts'</span>
+      execute :sudo, :mv, <span class="s1">'/tmp/rbenv_scripts'</span>, <span class="s1">'/etc/profile.d/rbenv.sh'</span> <span class="k">if </span><span class="nb">test</span><span class="o">(</span><span class="s1">'[ -f /tmp/rbenv_scripts ]'</span><span class="o">)</span>
+      execute <span class="s1">'echo "source /etc/profile.d/rbenv.sh" &gt;&gt; ~/.zshrc'</span>
     end
   end
 
-  unless <span class="nb">test</span><span class="o">(</span><span class="s1">&#39;source /etc/profile.d/rbenv.sh &amp;&amp; ruby --version&#39;</span><span class="o">)</span>
-    execute :sudo, <span class="s1">&#39;apt-get -y install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev&#39;</span>
-    execute <span class="s">&lt;&lt;-ZSHRC</span>
-<span class="s">        source /etc/profile.d/rbenv.sh</span>
-<span class="s">        rbenv install --verbose 2.2.2</span>
-<span class="s">        rbenv global 2.2.2</span>
-<span class="s">        rbenv rehash</span>
-<span class="s">        gem install bundler</span>
-<span class="s">    ZSHRC</span>
-  end
+  unless <span class="nb">test</span><span class="o">(</span><span class="s1">'source /etc/profile.d/rbenv.sh &amp;&amp; ruby --version'</span><span class="o">)</span>
+    execute :sudo, <span class="s1">'apt-get -y install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev'</span>
+    execute <span class="sh">&lt;&lt;-ZSHRC
+        source /etc/profile.d/rbenv.sh
+        rbenv install --verbose 2.2.2
+        rbenv global 2.2.2
+        rbenv rehash
+        gem install bundler
+    ZSHRC
+</span>  end
 end
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>以上自动化脚本描述了使用rbenv安装Ruby，等价于如下代码。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
 sudo chown -R deploy:sudo /usr/local/rbenv
 
 git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>把以下的配置加入了/etc/profile.d/rbenv.sh中</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"># rbenv setup
+
+<div class="highlighter-rouge"><pre class="highlight"><code># rbenv setup
 export RBENV_ROOT=/usr/local/rbenv
-export PATH=&quot;$RBENV_ROOT/bin:$PATH&quot;
-eval &quot;$(rbenv init -)&quot;
-</code></pre></div>
+export PATH="$RBENV_ROOT/bin:$PATH"
+eval "$(rbenv init -)"
+</code></pre>
+</div>
+
 <p>随后执行</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">echo</span> <span class="s2">&quot;source /etc/profile.d/rbenv.sh&quot;</span> &gt;&gt; ~/.zshrc
-</code></pre></div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"source /etc/profile.d/rbenv.sh"</span> &gt;&gt; ~/.zshrc
+</code></pre>
+</div>
+
 <p>安装Ruby</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo apt-get -y install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get -y install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
 rbenv install --verbose 1.9.3
 rbenv global 1.9.3
 rbenv rehash
 
 gem install bundler
-</code></pre></div>
-<h3 id="安装其他软件">安装其他软件</h3>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">on</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">in</span><span class="p">:</span> <span class="ss">:sequence</span><span class="p">,</span> <span class="ss">wait</span><span class="p">:</span> <span class="mi">5</span> <span class="k">do</span>
+</code></pre>
+</div>
+
+<h3 id="section-3">安装其他软件</h3>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">on</span> <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">host</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="ss">in: :sequence</span><span class="p">,</span> <span class="ss">wait: </span><span class="mi">5</span> <span class="k">do</span>
   <span class="c1"># nginx</span>
-  <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">&#39;type nginx&#39;</span><span class="p">)</span>
-    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;add-apt-repository ppa:nginx/stable&#39;</span>
-    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y update&#39;</span>
-    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y install nginx&#39;</span>
+  <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">'type nginx'</span><span class="p">)</span>
+    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'add-apt-repository ppa:nginx/stable'</span>
+    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y update'</span>
+    <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y install nginx'</span>
   <span class="k">end</span>
 
   <span class="c1">#docker</span>
-  <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y update&#39;</span>
-  <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">&#39;apt-get -y install wget&#39;</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">&#39;type wget&#39;</span><span class="p">)</span>
+  <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y update'</span>
+  <span class="n">execute</span> <span class="ss">:sudo</span><span class="p">,</span> <span class="s1">'apt-get -y install wget'</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">'type wget'</span><span class="p">)</span>
   <span class="n">with_ssh</span> <span class="k">do</span> <span class="o">|</span><span class="n">ssh</span><span class="o">|</span>
-    <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;wget -qO- https://get.docker.com/ | sh&#39;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">wait</span>
-  <span class="k">end</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">&#39;type docker&#39;</span><span class="p">)</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">.</span><span class="nf">exec</span><span class="p">(</span><span class="s1">'wget -qO- https://get.docker.com/ | sh'</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">passwd_handler</span><span class="p">)</span>
+    <span class="n">ch</span><span class="p">.</span><span class="nf">wait</span>
+  <span class="k">end</span> <span class="k">unless</span> <span class="nb">test</span><span class="p">(</span><span class="s1">'type docker'</span><span class="p">)</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>安装其他的软件</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo apt-get -y install wget rename
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get -y install wget rename
 
 <span class="c"># Nginx</span>
 sudo add-apt-repository ppa:nginx/stable
 apt-get -y update
 apt-get -y install nginx
-</code></pre></div>
-<h2 id="使用脚本自动部署">使用脚本自动部署</h2>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># 下载完整的部署脚本</span>
+</code></pre>
+</div>
+
+<h2 id="section-4">使用脚本自动部署</h2>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 下载完整的部署脚本</span>
 wget https://raw.githubusercontent.com/jameszhan/prototypes/master/ruby/ubuntu_setup.rb
 
 ruby ubuntu_setup.rb HOST_IP USERNAME PASSWORD
-</code></pre></div>
+</code></pre>
+</div>
+
+
         </article>
 
         <div class="row-fluid">

@@ -2,3 +2,7 @@ Gemfile
 Gemfile.lock
 LICENSE
 _site
+
+*.iml
+*.iws
+*.ipr

@@ -37,23 +37,27 @@
         <article class="post-content">
             <p>尽管树莓派非常小，但是如果不能连接WiFi，那么它的移动性将大打折扣，因为它必须需要一根网线直接连接路由器。下面本文就介绍一下如何让树莓派连接无线网络。</p>
 
-<h3 id="准备工作">准备工作</h3>
+<h3 id="section">准备工作</h3>
 
 <p>首先，你需要有：</p>
 
 <ul>
-<li>树莓派一台</li>
-<li>无线路由器一台</li>
-<li>USB WiFi网卡一枚（<a href="http://elinux.org/RPi_USB_Wi-Fi_Adapters">这里</a>可以查看raspbian支持的无线网卡型号列表）</li>
+  <li>树莓派一台</li>
+  <li>无线路由器一台</li>
+  <li>USB WiFi网卡一枚（<a href="http://elinux.org/RPi_USB_Wi-Fi_Adapters">这里</a>可以查看raspbian支持的无线网卡型号列表）</li>
 </ul>
 
 <p>先把USB WiFi网卡插入树莓派USB接口，启动树莓派（如果树莓派已经在移动状态，则直接插入无线网卡即可）。</p>
 
-<p>使用 <code>sudo lsusb</code> 命令查看无线网卡是否已经被正确识别，例如我本地显示为：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Bus 001 Device 004: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
-</code></pre></div>
-<p>最新的raspbian已经有了wifi必要的包，一般直接插上就可以使用了，可以使用<code>iwconfig</code>再次确认网卡是否正常工作。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">wlan0     unassociated  Nickname:&quot;&lt;WIFI@REALTEK&gt;&quot;
+<p>使用 <code class="highlighter-rouge">sudo lsusb</code> 命令查看无线网卡是否已经被正确识别，例如我本地显示为：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Bus 001 Device 004: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
+</code></pre>
+</div>
+
+<p>最新的raspbian已经有了wifi必要的包，一般直接插上就可以使用了，可以使用<code class="highlighter-rouge">iwconfig</code>再次确认网卡是否正常工作。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wlan0     unassociated  Nickname:"&lt;WIFI@REALTEK&gt;"
           Mode:Managed  Frequency=2.412 GHz  Access Point: Not-Associated
           Sensitivity:0/0
           Retry:off   RTS thr:off   Fragment thr:off
@@ -65,13 +69,16 @@
 lo        no wireless extensions.
 
 eth0      no wireless extensions.
-</code></pre></div>
-<p>如果出现了类似如上例所示的<code>wlan0</code>，说明无线网卡已经可以正常工作了。</p>
+</code></pre>
+</div>
 
-<h3 id="配置无线网卡">配置无线网卡</h3>
+<p>如果出现了类似如上例所示的<code class="highlighter-rouge">wlan0</code>，说明无线网卡已经可以正常工作了。</p>
 
-<p>使用 <code>sudo ifconfig</code> 可以查看网卡的工作状态。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">eth0      Link encap:Ethernet  HWaddr b8:27:eb:db:e8:f6
+<h3 id="section-1">配置无线网卡</h3>
+
+<p>使用 <code class="highlighter-rouge">sudo ifconfig</code> 可以查看网卡的工作状态。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>eth0      Link encap:Ethernet  HWaddr b8:27:eb:db:e8:f6
           inet addr:192.168.1.242  Bcast:192.168.1.255  Mask:255.255.255.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           RX packets:79683 errors:0 dropped:0 overruns:0 frame:0
@@ -93,53 +100,73 @@ wlan0     Link encap:Ethernet  HWaddr e8:4e:06:26:ab:45
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-</code></pre></div>
-<p>这里的<code>wlan0</code>就是USB无线网卡，不过它还没有被分配IP。</p>
+</code></pre>
+</div>
+
+<p>这里的<code class="highlighter-rouge">wlan0</code>就是USB无线网卡，不过它还没有被分配IP。</p>
 
 <p>搜索可用的无线网络。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo iwlist wlan0 scan <span class="p">|</span> grep ESSID
-</code></pre></div>
-<p>编辑 <code>/etc/network/interfaces</code>文件，可以自行选择emacs，vim，nano编辑器，记得使用<code>sudo</code>。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo cp interfaces interfaces_bak   <span class="c"># 先备份</span>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo iwlist wlan0 scan | grep ESSID
+</code></pre>
+</div>
+
+<p>编辑 <code class="highlighter-rouge">/etc/network/interfaces</code>文件，可以自行选择emacs，vim，nano编辑器，记得使用<code class="highlighter-rouge">sudo</code>。</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo cp interfaces interfaces_bak   <span class="c"># 先备份</span>
 sudo emacs /etc/network/interfaces
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>修改内容如下：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">allow-hotplug wlan0
+
+<div class="highlighter-rouge"><pre class="highlight"><code>allow-hotplug wlan0
 iface wlan0 inet dhcp
 wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
 iface default inet dhcp
-</code></pre></div>
+</code></pre>
+</div>
+
 <blockquote>
-<p>除非manual，否则请一定要把<code>wpa-roam</code>改为<code>wpa-conf</code>。</p>
+  <p>除非manual，否则请一定要把<code class="highlighter-rouge">wpa-roam</code>改为<code class="highlighter-rouge">wpa-conf</code>。</p>
 </blockquote>
 
 <p>配置WiFi连接</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo emacs /etc/wpa_supplicant/wpa_supplicant.conf
-</code></pre></div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo emacs /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre>
+</div>
 <p>添加如下内容：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">network={
-    ssid=&quot;YOUR_NETWORK_NAME&quot;
-    psk=&quot;YOUR_NETWORK_PASSWORD&quot;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>network={
+    ssid="YOUR_NETWORK_NAME"
+    psk="YOUR_NETWORK_PASSWORD"
     proto=RSN
     key_mgmt=WPA-PSK
     pairwise=CCMP
     auth_alg=OPEN
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <ul>
-<li>proto 可以是 RSN (WPA2) 或者 WPA (WPA1)。</li>
-<li>key_mgmt 可以是 WPA-PSK (绝大部分) or WPA-EAP (企业无线网络)。</li>
-<li>pairwise 可以是 CCMP (WPA2) 或者 TKIP (WPA1)。</li>
-<li>auth_alg 绝大部分都是OPEN, 其它的选项有 LEAP 和 SHARED。</li>
+  <li>proto 可以是 RSN (WPA2) 或者 WPA (WPA1)。</li>
+  <li>key_mgmt 可以是 WPA-PSK (绝大部分) or WPA-EAP (企业无线网络)。</li>
+  <li>pairwise 可以是 CCMP (WPA2) 或者 TKIP (WPA1)。</li>
+  <li>auth_alg 绝大部分都是OPEN, 其它的选项有 LEAP 和 SHARED。</li>
 </ul>
 
-<p>如果想固定IP，不使用DHCP分配IP的方式，可以修改<code>/etc/network/interfaces</code>文件，如下例所示：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">iface wlan0 inet static # dhcp to static
+<p>如果想固定IP，不使用DHCP分配IP的方式，可以修改<code class="highlighter-rouge">/etc/network/interfaces</code>文件，如下例所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iface wlan0 inet static # dhcp to static
 address 192.168.1.155 # Static IP you want 
 netmask 255.255.255.0 
 gateway 192.168.1.1   # IP of your router
-</code></pre></div>
-<p>配置完成后，重启树莓派，如果不想重启，也可以执行<code>sudo ifdown wlan0 &amp;&amp; sudo ifup wlan0</code>来激活你的无线网卡。</p>
+</code></pre>
+</div>
+
+<p>配置完成后，重启树莓派，如果不想重启，也可以执行<code class="highlighter-rouge">sudo ifdown wlan0 &amp;&amp; sudo ifup wlan0</code>来激活你的无线网卡。</p>
+
 
         </article>
 
@@ -149,7 +176,7 @@ gateway 192.168.1.1   # IP of your router
                 
                 
     
-    <li class="tag"><a href="/categories/raspberrypi.html">树莓派<span>3</span></a></li>
+    <li class="tag"><a href="/categories/raspberrypi.html">Raspberrypi<span>3</span></a></li>
     
 
             </ul>
@@ -158,7 +185,7 @@ gateway 192.168.1.1   # IP of your router
                 
                 
     
-    <li class="tag"><a href="/tags/raspberrypi.html">树莓派<span>3</span></a></li>
+    <li class="tag"><a href="/tags/raspberrypi.html">Raspberrypi<span>3</span></a></li>
     
 
     
@@ -170,7 +197,7 @@ gateway 192.168.1.1   # IP of your router
     
 
     
-    <li class="tag"><a href="/tags/wifi.html">WiFi<span>2</span></a></li>
+    <li class="tag"><a href="/tags/wifi.html">Wifi<span>2</span></a></li>
     
 
             </ul>

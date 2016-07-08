@@ -35,105 +35,93 @@
         </header>
 
         <article class="post-content">
-            <h2 id="编程语言分类">编程语言分类</h2>
+            <h2 id="section">编程语言分类</h2>
 
 <p>编程语言的常见分类是按照类型来分的，比如强类型语言，弱类型语言，静态类型语言，动态类型语言等，要理清编程语言的分类，必须首先弄清楚什么是类型。</p>
 
-<h3 id="和类型相关的一些概念">和类型相关的一些概念</h3>
-
+<h3 id="section-1">和类型相关的一些概念</h3>
 <ul>
-<li>Latent typing是一种你不需要在源码中的明确的声明你的变量的类型的类型系统.而与之相反的是manifest typing,它需要你在源码中明确的声明你的变量的类型。</li>
-<li>Static typing(静态类型)类型系统指的是你的源码中的任何独立的表达式都必须有类型，不管它的类型是直接写在源码中，或者是通过编译器来推断.Dynamic typing(动态类型)是运行时的值才有类型的一种类型系统，因此在它里面程序的表达式能够有任意的类型.</li>
-<li>overlap 是一种类型推断系统，像haskell和ocaml用的就是overlap,他们是 statically而且还是latently,他们的编译器能够推断出你的变量的类型。 理论上，这里还有另外一种overlap,它是把变量的类型写在源代码中，可是会直到运行时才会检测类型的是否正确. python3000已经被提议使用这种系统，Common Lisp 和Dylan 使用的就是这种系统.</li>
-<li>structural subtyping(结构化子类型)意味着对象或者表达式能够基于他们的结构(比如他们的方法，变量等等)来进行比较他们的类型的兼容性.相比较而言，nominal subtyping(名义子类型)意味着对象基于通过程序员来做的显示的子类声明来进行比较他们的类型的兼容性(比如java的接口).Haskell, ML, 和大部分的动态类型的语言是 structurally-subtyped.工业语言大多数都是nominal subtyping的.</li>
-<li>这里还有一个strong vs. weak 类型，他们的区别是是否在运行时动态的转换变量的值 （也就是说要不要到不同的类型)的类型.</li>
-<li>下面是类型系统的4种不同的维度：<br>
-
-<ol>
-<li>Static (表达式有类型) vs. dynamic (值有类型)</li>
-<li>Strong (没有一个显示的强制转换，这个值的类型就不能被转换为另外的类型) vs. weak (运行时会转换值类型到合适的类型)</li>
-<li>Latent (没有类型声明) vs. manifest (有类型声明)</li>
-<li>Nominal (子类型需要被显式的声明) vs. structural (子类型是由操作可利用的的类型来进行推断的)</li>
-</ol></li>
+  <li>Latent typing是一种你不需要在源码中的明确的声明你的变量的类型的类型系统.而与之相反的是manifest typing,它需要你在源码中明确的声明你的变量的类型。</li>
+  <li>Static typing(静态类型)类型系统指的是你的源码中的任何独立的表达式都必须有类型，不管它的类型是直接写在源码中，或者是通过编译器来推断.Dynamic typing(动态类型)是运行时的值才有类型的一种类型系统，因此在它里面程序的表达式能够有任意的类型.</li>
+  <li>overlap 是一种类型推断系统，像haskell和ocaml用的就是overlap,他们是 statically而且还是latently,他们的编译器能够推断出你的变量的类型。 理论上，这里还有另外一种overlap,它是把变量的类型写在源代码中，可是会直到运行时才会检测类型的是否正确. python3000已经被提议使用这种系统，Common Lisp 和Dylan 使用的就是这种系统.</li>
+  <li>structural subtyping(结构化子类型)意味着对象或者表达式能够基于他们的结构(比如他们的方法，变量等等)来进行比较他们的类型的兼容性.相比较而言，nominal subtyping(名义子类型)意味着对象基于通过程序员来做的显示的子类声明来进行比较他们的类型的兼容性(比如java的接口).Haskell, ML, 和大部分的动态类型的语言是 structurally-subtyped.工业语言大多数都是nominal subtyping的.</li>
+  <li>这里还有一个strong vs. weak 类型，他们的区别是是否在运行时动态的转换变量的值 （也就是说要不要到不同的类型)的类型.</li>
+  <li>下面是类型系统的4种不同的维度：
+    <ol>
+      <li>Static (表达式有类型) vs. dynamic (值有类型)</li>
+      <li>Strong (没有一个显示的强制转换，这个值的类型就不能被转换为另外的类型) vs. weak (运行时会转换值类型到合适的类型)</li>
+      <li>Latent (没有类型声明) vs. manifest (有类型声明)</li>
+      <li>Nominal (子类型需要被显式的声明) vs. structural (子类型是由操作可利用的的类型来进行推断的)</li>
+    </ol>
+  </li>
 </ul>
 
 <p>类型的本质在于它所定义的操作以及操作之间的关系和不变式。类型的实现关键在于满足类型规范的要求，而具体实现是可以变化的，使用者和测试用例都应该只依赖于类型规范而不依赖于具体实现。函数式的类型实现往往和类型规范是直接对应的，简单通用，但可能有性能问题，而命令式的类型实现往往会引入复杂的内部数据结构，但是其优点是高效。这两种实现并不是完全互斥的，有时候可以将二者相结合达到简单与高效的结合。</p>
 
-<h3 id="强类型-vs-弱类型">强类型 vs 弱类型</h3>
-
+<h3 id="vs-">强类型 vs 弱类型</h3>
 <p>弱/强类型指的是语言类型系统的类型检查的严格程度。大部分编程语言都属于强类型语言，弱类型语言的典型代表有C，JavaScript。</p>
 
-<h3 id="静态语言-vs-动态语言">静态语言 vs 动态语言</h3>
-
+<h3 id="vs--1">静态语言 vs 动态语言</h3>
 <p>静态/动态语言指的是变量与类型的绑定方法，静态类型指的是编译器在compile time执行类型检查，动态类型指的是编译器（虚拟机）在runtime执行类型检查。简单地说，在声明了一个变量之后，不能改变它的类型的语言，是静态语言；能够随时改变它的类型的语言，是动态语言。因为动态语言的特性，一般需要运行时虚拟机支持。</p>
 
-<h3 id="脚本语言-vs-通用的编程语言">脚本语言 vs 通用的编程语言</h3>
+<h3 id="vs--2">脚本语言 vs 通用的编程语言</h3>
 
 <p>什么是脚本语言？</p>
 
 <p>对于脚本语言和通用语言的看法，我比较赞同王垠同学的观点，有兴趣的同学可以参考<a href="http://www.yinwang.org/blog-cn/2013/03/29/scripting-language/" title="什么是“脚本语言”">什么是“脚本语言”</a></p>
 
-<h2 id="编程范型">编程范型</h2>
+<h2 id="section-2">编程范型</h2>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/c11213395dcfa71224df4e978557790b8059856c" alt="pl_paradigm" /></p>
 
-<p><img src="http://img2.tbcdn.cn/L1/461/1/c11213395dcfa71224df4e978557790b8059856c" alt="pl_paradigm"></p>
-
-<h3 id="命令式">命令式</h3>
-
+<h3 id="section-3">命令式</h3>
 <p>命令“机器”如何去做事情(how)，这样不管你想要的是什么(what)，它都会按照你的命令实现。</p>
 
-<h3 id="声明式">声明式</h3>
-
+<h3 id="section-4">声明式</h3>
 <p>告诉“机器”你想要的是什么(what)，让机器想出如何去做(how)。</p>
 
-<h4 id="函数式编程语言">函数式编程语言</h4>
+<h4 id="section-5">函数式编程语言</h4>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/f2ff7728518730327be67cfd42302d5c5d0f1451" alt="fp_features" /></p>
 
-<p><img src="http://img1.tbcdn.cn/L1/461/1/f2ff7728518730327be67cfd42302d5c5d0f1451" alt="fp_features"></p>
-
-<h5 id="偏函数应用-vs-currying">偏函数应用 vs Currying</h5>
-
+<h5 id="vs-currying">偏函数应用 vs Currying</h5>
 <ul>
-<li>偏函数应用是找一个函数，固定其中的几个参数值，从而得到一个新的函数。</li>
-<li>函数Currying是一种使用匿名单参数函数来实现多参数函数的方法。</li>
-<li>函数Currying能够让你轻松的实现某些偏函数应用。</li>
-<li>有些语言(例如 Haskell, OCaml)所有的多参函数都是在内部通过函数Currying实现的。</li>
+  <li>偏函数应用是找一个函数，固定其中的几个参数值，从而得到一个新的函数。</li>
+  <li>函数Currying是一种使用匿名单参数函数来实现多参数函数的方法。</li>
+  <li>函数Currying能够让你轻松的实现某些偏函数应用。</li>
+  <li>有些语言(例如 Haskell, OCaml)所有的多参函数都是在内部通过函数Currying实现的。</li>
 </ul>
 
-<h5 id="fisrt-class（一等公民）">Fisrt Class（一等公民）</h5>
-
+<h5 id="fisrt-class">Fisrt Class（一等公民）</h5>
 <ul>
-<li>可以用变量命名</li>
-<li>可以提供给过程作为参数</li>
-<li>可以由过程作为结果返回</li>
-<li>可以包含在数据结构中</li>
+  <li>可以用变量命名</li>
+  <li>可以提供给过程作为参数</li>
+  <li>可以由过程作为结果返回</li>
+  <li>可以包含在数据结构中</li>
 </ul>
 
-<h3 id="lop范式">LOP范式</h3>
-
+<h3 id="lop">LOP范式</h3>
 <p>LOP范式的基本思想是从问题出发，先创建一门描述领域模型的DSL，再用DSL去解决问题，它具有高度的声明性和抽象性。SQL、make file、CSS等DSL都可以被认为是LOP的具体实例。
 LOP是一种面向领域的，高度声明式的编程方式，它的抽象维度与领域模型的维度完全一致。LOP能让程序员从复杂的实现细节中解脱出来，把关注点集中在问题的本质上，从而提高编程的效率和质量。</p>
 
-<h4 id="外部的dsl">外部的DSL</h4>
-
+<h4 id="dsl">外部的DSL</h4>
 <p>典型的例子有Protocol Buffer，avro。</p>
 
 <ol>
-<li>优点：可以自由设计语法</li>
-<li>缺点：需要为其单独开发编译器或解释器</li>
+  <li>优点：可以自由设计语法</li>
+  <li>缺点：需要为其单独开发编译器或解释器</li>
 </ol>
 
-<h4 id="内部的dsl">内部的DSL</h4>
-
+<h4 id="dsl-1">内部的DSL</h4>
 <p>例如：<a href="http://sqlkorma.com/" title="Korma">Korma</a>，<a href="http://sqlkorma.com/" title="Korma">Compojure</a></p>
 
 <ol>
-<li>优点：不用单独开发编译器或解释器</li>
-<li>缺点：无法自由设计语法</li>
+  <li>优点：不用单独开发编译器或解释器</li>
+  <li>缺点：无法自由设计语法</li>
 </ol>
 
 <p>这里要重点说下Lisp，Lisp并不限制你用S表达式来表达什么语义，同样的S表达式语法可以表达各种不同领域的语义，这就是语法和语义解耦。如果说普通语言的刚性源于“语法和语义紧耦合”，那么Lisp的柔性正是源于“语法和语义解耦”！“语法和语义解耦”使得Lisp可以随意地构造各种领域的DSL，而不强制用某一种范式或是领域视角去分析和解决问题。本质上，Lisp编程是一种超越了普通编程范式的范式。
 实际上，LISP几乎可以支持任何的编程范型</p>
 
-<h3 id="编程范型本质">编程范型本质</h3>
+<h3 id="section-6">编程范型本质</h3>
 
 <p>归根结底，编程是寻求一种机制，将指定的输入转化为指定的输出。三种范式对此提供了截然不同的解决方案：</p>
 
@@ -142,79 +130,76 @@ LOP是一种面向领域的，高度声明式的编程方式，它的抽象维�
 逻辑式把程序看作一个逻辑证明，输入是题设，输出是结论，编程就是设计一系列命题，通过逻辑推理以完成证明。
 绘成表格如下：</p>
 
-<table><thead>
-<tr>
-<th>范式</th>
-<th>程序</th>
-<th>输入</th>
-<th>输出</th>
-<th>程序设计</th>
-<th>程序运行</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>命令式</td>
-<td>自动机</td>
-<td>初始状态</td>
-<td>最终状态</td>
-<td>设计指令</td>
-<td>命令执行</td>
-</tr>
-<tr>
-<td>函数式</td>
-<td>数学函数</td>
-<td>自变量</td>
-<td>因变量</td>
-<td>设计函数</td>
-<td>表达式变换</td>
-</tr>
-<tr>
-<td>逻辑式</td>
-<td>逻辑证明</td>
-<td>题设</td>
-<td>结论</td>
-<td>设计命题</td>
-<td>逻辑推理</td>
-</tr>
-</tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th>范式</th>
+      <th>程序</th>
+      <th>输入</th>
+      <th>输出</th>
+      <th>程序设计</th>
+      <th>程序运行</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>命令式</td>
+      <td>自动机</td>
+      <td>初始状态</td>
+      <td>最终状态</td>
+      <td>设计指令</td>
+      <td>命令执行</td>
+    </tr>
+    <tr>
+      <td>函数式</td>
+      <td>数学函数</td>
+      <td>自变量</td>
+      <td>因变量</td>
+      <td>设计函数</td>
+      <td>表达式变换</td>
+    </tr>
+    <tr>
+      <td>逻辑式</td>
+      <td>逻辑证明</td>
+      <td>题设</td>
+      <td>结论</td>
+      <td>设计命题</td>
+      <td>逻辑推理</td>
+    </tr>
+  </tbody>
+</table>
 
-<h2 id="语言与生态系统">语言与生态系统</h2>
+<h2 id="section-7">语言与生态系统</h2>
 
-<h3 id="大公司和基金会主导">大公司和基金会主导</h3>
-
+<h3 id="section-8">大公司和基金会主导</h3>
 <p>例如Java，他们会告诉你，多重继承是邪恶的，因为大家都这么说; 运算符重载是邪恶的，诸如此类。我甚至有点模糊地知道为什么是邪恶的，但实际上不知道。后来我明白了，这些都不邪恶，不是烂玩意儿，烂的是开发者。</p>
 
-<h3 id="社区主导语言的发展方向">社区主导语言的发展方向</h3>
-
+<h3 id="section-9">社区主导语言的发展方向</h3>
 <p>语法灵活性高，开发者们共同参与，沉淀出好的实践习惯，一起推动语言和社区向前发展。</p>
 
-<h2 id="编程语言的常见特性">编程语言的常见特性</h2>
+<h2 id="section-10">编程语言的常见特性</h2>
 
-<h3 id="类型推断">类型推断</h3>
-
+<h3 id="section-11">类型推断</h3>
 <p>对任何语言，具体是哪些地方有必要加上类型标记呢？其实有一个很简单的方法来判断：观察信息进出函数的“接口”，把这些接口都做上标记。直观一点说，函数就像是一个电路模块，只要我们知道输入和输出是什么，那么中间的导线里面是什么，我们其实都可以推出来。类型推导的过程，就像是模拟这个电路的运行。这里函数的输入就是参数，输出就是返回值，所以基本上把这两者加上类型标记，里面的局部变量的类型都可以推出来。另外需要注意的是，如果函数使用了全局变量，那么全局变量就是函数的一个“隐性”的输入，所以如果程序有全局变量，都需要加上类型标记。</p>
 
 <h3 id="structural-subtyping-vs-nominal-subtyping">Structural subtyping vs Nominal Subtyping</h3>
-
 <p>Go语言中，只要有Interface中定义的方法，就算实现了该接口，不声不响地把静态语言的Duck Type给做了！
 Swift尽管用的是Nominal Subtyping，但是swift中有extension，可以在类型定义后，再声明class实现protocol，虽然繁琐点，但依然不失灵活性。
 动态语言如Ruby，Python，JavaScript，一般不需要考虑这些，因为他们天然就支持duck type。</p>
 
-<h3 id="闭包">闭包</h3>
-
+<h3 id="section-12">闭包</h3>
 <p>在计算机科学中，闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的表达式（通常是函数）。这些被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。
 词法作用域(lexical scope)等同于静态作用域(static scope)。所谓的词法作用域其实是指作用域在词法解析阶段既确定了，不会改变。</p>
 
 <p>闭包的数据结构可以定义为，包含一个函数定义 f 和它定义时所在的环境 (struct Closure (f env))</p>
 
 <ol>
-<li>全局函数是一个有名字但不会捕获任何值的闭包。</li>
-<li>嵌套函数是一个有名字并可以捕获其封闭函数域内值得闭包。</li>
-<li>Lambda(闭包表达式)是一个利用轻量级语法所写的可以捕获其上下文中变量值的匿名闭包。</li>
+  <li>全局函数是一个有名字但不会捕获任何值的闭包。</li>
+  <li>嵌套函数是一个有名字并可以捕获其封闭函数域内值得闭包。</li>
+  <li>Lambda(闭包表达式)是一个利用轻量级语法所写的可以捕获其上下文中变量值的匿名闭包。</li>
 </ol>
 
-<h4 id="什么是lambda-calculus？">什么是Lambda Calculus？</h4>
-
+<h4 id="lambda-calculus">什么是Lambda Calculus？</h4>
 <p>现在让我们过渡到一种更强大的语言：lambda calculus。它虽然名字看起来很吓人，但是其实非常简单。它的三个元素分别是是：变量，函数，调用。用传统的表达法，它们看起来就是：
 变量：x
 函数：λx.t
@@ -230,75 +215,86 @@ Swift尽管用的是Nominal Subtyping，但是swift中有extension，可以在�
 <p>关于lambda演算的相关知识，可以参考我之前的2篇文章。</p>
 
 <ul>
-<li><a href="http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">Lambda演算之自然数(Clojure描述)</a></li>
-<li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Lambda演算之Y-Combinator的推导(Clojure描述)</a></li>
+  <li><a href="http://jameszhan.github.io/pdl/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">Lambda演算之自然数(Clojure描述)</a></li>
+  <li><a href="http://jameszhan.github.io/pdl/2014/09/18/lambda-y-combinator.html" title="Lambda演算之Y-Combinator的推导">Lambda演算之Y-Combinator的推导(Clojure描述)</a></li>
 </ul>
 
 <p>闭包 vs 函数指针?</p>
 
-<h3 id="垃圾回收">垃圾回收</h3>
-
+<h3 id="section-13">垃圾回收</h3>
 <ol>
-<li>标记清除(根可达)</li>
-<li>复制收集(根可达并有效利用空间)</li>
-<li>引用计数</li>
+  <li>标记清除(根可达)</li>
+  <li>复制收集(根可达并有效利用空间)</li>
+  <li>引用计数</li>
 </ol>
 
 <h3 id="mixin">Mixin</h3>
-
 <p>Ruby 优雅的Mixin方案</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Foo</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Foo</span>
     <span class="k">def</span> <span class="nf">foo</span>
-        <span class="s2">&quot;foo&quot;</span>
+        <span class="s2">"foo"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="k">module</span> <span class="nn">Bar</span>
     <span class="k">def</span> <span class="nf">bar</span>
-        <span class="s2">&quot;bar&quot;</span>
+        <span class="s2">"bar"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="k">class</span> <span class="nc">Demo</span>
     <span class="kp">include</span> <span class="no">Foo</span><span class="p">,</span> <span class="no">Bar</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Python，C++允许多重继承。
 Java8 也支持接口方法有默认实现（感觉怪怪的，不过好歹也是一种进步）</p>
 
 <h3 id="open-class">Open Class</h3>
 
 <ul>
-<li>Ruby</li>
+  <li>Ruby</li>
 </ul>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Numeric</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Numeric</span>
     <span class="k">def</span> <span class="nf">square</span>
         <span class="nb">self</span> <span class="o">*</span> <span class="nb">self</span>
     <span class="k">end</span>
 <span class="k">end</span>
-<span class="mi">3</span><span class="o">.</span><span class="n">square</span>
-</code></pre></div>
+<span class="mi">3</span><span class="p">.</span><span class="nf">square</span>
+</code></pre>
+</div>
+
 <ul>
-<li>Python</li>
+  <li>Python</li>
 </ul>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">int</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">int</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="bp">self</span>
 
 <span class="nb">int</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">square</span><span class="p">()</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <ul>
-<li>Swift</li>
+  <li>Swift</li>
 </ul>
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">extension</span> <span class="n">Int</span> <span class="p">{</span>
-    <span class="k">func</span> <span class="n">square</span><span class="p">(){</span>
-        <span class="nb">self</span> <span class="o">*</span> <span class="nb">self</span>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">square</span><span class="p">(){</span>
+        <span class="k">self</span> <span class="o">*</span> <span class="k">self</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="mf">3.</span><span class="n">square</span><span class="p">()</span>
-</code></pre></div>
+<span class="mi">3</span><span class="o">.</span><span class="nf">square</span><span class="p">()</span>
+</code></pre>
+</div>
+
 <ul>
-<li>C#</li>
+  <li>C#</li>
 </ul>
-<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">namespace</span> <span class="nn">ExtensionMethods</span> <span class="p">{</span>
+
+<div class="language-c# highlighter-rouge"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ExtensionMethods</span> <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">MyExtensions</span> <span class="p">{</span>
         <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">square</span><span class="p">(</span><span class="k">this</span> <span class="n">Int32</span> <span class="k">value</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="k">value</span> <span class="p">*</span> <span class="k">value</span><span class="p">;</span>
@@ -307,70 +303,74 @@ Java8 也支持接口方法有默认实现（感觉怪怪的，不过好歹也�
 <span class="p">}</span>
 <span class="k">using</span> <span class="nn">ExtensionMethods</span><span class="p">;</span>
 <span class="m">3.</span><span class="n">square</span>
-</code></pre></div>
-<h3 id="多返回值函数">多返回值函数</h3>
+</code></pre>
+</div>
+
+<h3 id="section-14">多返回值函数</h3>
 
 <h3 id="optional">Optional</h3>
-
 <p>optional 作为一个非常关键的特性加入到了Swift当中，经过Guava的实践，Optional也被正式引入了Java8，配合上Stream API也可以摆脱恼人的不断的判空逻辑。</p>
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">puts</span> <span class="n">person</span><span class="p">.</span><span class="n">contact</span><span class="o">?</span><span class="p">.</span><span class="n">address</span><span class="o">?</span><span class="p">.</span><span class="n">city</span><span class="o">!</span>
-</code></pre></div>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">puts</span> <span class="n">person</span><span class="o">.</span><span class="n">contact</span><span class="p">?</span><span class="o">.</span><span class="n">address</span><span class="p">?</span><span class="o">.</span><span class="n">city</span><span class="o">!</span>
+</code></pre>
+</div>
 <p>Ruby默认也不支持Optional，但是要加入该功能也非常简单。</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Optional</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Optional</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="vi">@value</span> <span class="o">=</span>  <span class="n">value</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
     <span class="k">if</span> <span class="vi">@value</span> <span class="o">!=</span> <span class="kp">nil</span>
-      <span class="vi">@value</span><span class="o">.</span><span class="n">send</span> <span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
+      <span class="vi">@value</span><span class="p">.</span><span class="nf">send</span> <span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
     <span class="k">else</span>
-      <span class="k">if</span> <span class="nb">method</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=~</span> <span class="sr">/^.+!$/</span>
+      <span class="k">if</span> <span class="nb">method</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">=~</span> <span class="sr">/^.+!$/</span>
         <span class="kp">nil</span>
       <span class="k">else</span>
-        <span class="no">Optional</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+        <span class="no">Optional</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
       <span class="k">end</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="nb">require</span> <span class="s1">&#39;./optional&#39;</span>
+<span class="nb">require</span> <span class="s1">'./optional'</span>
 
 <span class="k">class</span> <span class="nc">Module</span>
 
   <span class="k">def</span> <span class="nf">define_attr</span><span class="p">(</span><span class="o">*</span><span class="n">attrs</span><span class="p">)</span>
-    <span class="n">attrs</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="kp">attr</span><span class="o">|</span> <span class="n">define_attr_internal</span> <span class="kp">attr</span> <span class="p">}</span>
+    <span class="n">attrs</span><span class="p">.</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="kp">attr</span><span class="o">|</span> <span class="n">define_attr_internal</span> <span class="kp">attr</span> <span class="p">}</span>
   <span class="k">end</span>
 
   <span class="kp">private</span>
     <span class="k">def</span> <span class="nf">define_attr_internal</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span>
-      <span class="k">if</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=~</span> <span class="sr">/^[\w_]+$/</span>
+      <span class="k">if</span> <span class="kp">attr</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">=~</span> <span class="sr">/^[\w_]+$/</span>
         <span class="nb">class_eval</span> <span class="k">do</span>
 
-          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">=&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
-            <span class="nb">instance_variable_set</span><span class="p">(</span><span class="s2">&quot;@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+          <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">="</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
+            <span class="nb">instance_variable_set</span><span class="p">(</span><span class="s2">"@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
           <span class="k">end</span>
 
-          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
-            <span class="nb">instance_variable_get</span><span class="p">(</span><span class="s2">&quot;@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+          <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">"</span> <span class="k">do</span>
+            <span class="nb">instance_variable_get</span><span class="p">(</span><span class="s2">"@</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
           <span class="k">end</span>
 
-          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">?&quot;</span> <span class="k">do</span>
-            <span class="no">Optional</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">send</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+          <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">?"</span> <span class="k">do</span>
+            <span class="no">Optional</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">send</span> <span class="kp">attr</span><span class="p">.</span><span class="nf">to_sym</span><span class="p">)</span>
           <span class="k">end</span>
 
-          <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">!&quot;</span> <span class="k">do</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">send</span> <span class="kp">attr</span><span class="o">.</span><span class="n">to_sym</span>
+          <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">!"</span> <span class="k">do</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">send</span> <span class="kp">attr</span><span class="p">.</span><span class="nf">to_sym</span>
             <span class="k">if</span> <span class="n">val</span>
               <span class="n">val</span>
             <span class="k">else</span>
-              <span class="k">raise</span> <span class="no">Error</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2"> is not found&quot;</span><span class="p">)</span>
+              <span class="k">raise</span> <span class="no">Error</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2"> is not found"</span><span class="p">)</span>
             <span class="k">end</span>
           <span class="k">end</span>
 
         <span class="k">end</span>
       <span class="k">else</span>
-        <span class="nb">puts</span> <span class="s2">&quot;Invalid attr name </span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">puts</span> <span class="s2">"Invalid attr name </span><span class="si">#{</span><span class="kp">attr</span><span class="si">}</span><span class="s2">"</span>
       <span class="k">end</span>
     <span class="k">end</span>
 
@@ -387,25 +387,27 @@ Java8 也支持接口方法有默认实现（感觉怪怪的，不过好歹也�
   <span class="n">define_attr</span> <span class="ss">:province</span><span class="p">,</span> <span class="ss">:city</span><span class="p">,</span> <span class="ss">:street</span>
 <span class="k">end</span>
 
-<span class="n">addr</span> <span class="o">=</span> <span class="no">Address</span><span class="o">.</span><span class="n">new</span>
-<span class="n">addr</span><span class="o">.</span><span class="n">province</span> <span class="o">=</span> <span class="s1">&#39;Guangdong&#39;</span>
-<span class="n">addr</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="s1">&#39;Shenzhen&#39;</span>
-<span class="n">addr</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="s1">&#39;699&#39;</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="no">Address</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">addr</span><span class="p">.</span><span class="nf">province</span> <span class="o">=</span> <span class="s1">'Guangdong'</span>
+<span class="n">addr</span><span class="p">.</span><span class="nf">city</span> <span class="o">=</span> <span class="s1">'Shenzhen'</span>
+<span class="n">addr</span><span class="p">.</span><span class="nf">street</span> <span class="o">=</span> <span class="s1">'699'</span>
 
-<span class="n">contact</span> <span class="o">=</span> <span class="no">Contact</span><span class="o">.</span><span class="n">new</span>
-<span class="n">contact</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addr</span>
+<span class="n">contact</span> <span class="o">=</span> <span class="no">Contact</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">contact</span><span class="p">.</span><span class="nf">address</span> <span class="o">=</span> <span class="n">addr</span>
 
-<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
-<span class="n">person</span><span class="o">.</span><span class="n">contact</span> <span class="o">=</span> <span class="n">contact</span>
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">contact</span> <span class="o">=</span> <span class="n">contact</span>
 
-<span class="n">person2</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+<span class="n">person2</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
 
-<span class="nb">puts</span> <span class="n">person2</span><span class="o">.</span><span class="n">contact?</span><span class="o">.</span><span class="n">address?</span><span class="o">.</span><span class="n">city!</span>
-<span class="nb">puts</span> <span class="n">person</span><span class="o">.</span><span class="n">contact?</span><span class="o">.</span><span class="n">address?</span><span class="o">.</span><span class="n">city!</span>
-</code></pre></div>
-<h2 id="元编程与dsl">元编程与DSL</h2>
+<span class="nb">puts</span> <span class="n">person2</span><span class="p">.</span><span class="nf">contact?</span><span class="p">.</span><span class="nf">address?</span><span class="p">.</span><span class="nf">city!</span>
+<span class="nb">puts</span> <span class="n">person</span><span class="p">.</span><span class="nf">contact?</span><span class="p">.</span><span class="nf">address?</span><span class="p">.</span><span class="nf">city!</span>
+</code></pre>
+</div>
 
-<h3 id="元编程">元编程</h3>
+<h2 id="dsl-2">元编程与DSL</h2>
+
+<h3 id="section-15">元编程</h3>
 
 <p>元编程作为超级范式的一个体现是,它能提升语言的级别。
 如果说 OOP 的关键在于构造对象的概念,那么 LOP 的关键在于构造语言的语法。
@@ -413,29 +415,29 @@ Java8 也支持接口方法有默认实现（感觉怪怪的，不过好歹也�
 元程序将程序作为数据来对待,能自我发现、自我赋权和自我升级,有着其他 程序所不具备的自觉性、自适应性和智能性,可以说是一种最高级的程序。</p>
 
 <ol>
-<li>元编程是编写、操纵程序的程序。在传统的编程中,运算是动态的,但 程序本身是静态的;在元编程中,二者都是动态的。</li>
-<li>元编程能减少手工编程,突破原语言的语法限制,提升语言的抽象级别 与灵活性,从而提高程序员的生产效率。</li>
-<li>元编程有诸多应用:许多开发工具、框架引擎之类的基础软件都有自动 生成源代码的功能;创造 DSL 以便更高效地处理专门领域的业务;自动 生成重复代码;动态改变程序的语句、函数,类,等等。</li>
-<li>IDE 下自动生成的代码通常局限性大且可读性差,小操作可能造成的源 码上的大差异,削弱了版本控制的意义。用自编的无需人机交互的元程 序来生成代码,只须将元程序的数据来源版本化,简明而直观。同时由 于元程序可以随时修改,因此局限性小,更加灵活。</li>
-<li>语言导向式编程(LOP)通过创建一套专用语言 DSL 来编写程序。相比 通用语言,DSL 更简单、更抽象、更专业、更接近自然语言和声明式语 言、开发效率更高,同时有助于专业程序员与业务分析员之间的合作。</li>
-<li>语言导向式编程一般通过元编程将专用语言转化为通用语言。</li>
-<li>产生式编程与静态元编程都能自动生成源代码。产生式编程强调代码的 生成,元编程强调生成代码的可执行性。此外,动态元编程并不生成源 代码,但能在运行期间修改程序。</li>
-<li>元程序将程序作为数据来对待,有着其他程序所不具备的自觉性、自适 应性和智能性,可以说是一种最高级的程序。</li>
+  <li>元编程是编写、操纵程序的程序。在传统的编程中,运算是动态的,但 程序本身是静态的;在元编程中,二者都是动态的。</li>
+  <li>元编程能减少手工编程,突破原语言的语法限制,提升语言的抽象级别 与灵活性,从而提高程序员的生产效率。</li>
+  <li>元编程有诸多应用:许多开发工具、框架引擎之类的基础软件都有自动 生成源代码的功能;创造 DSL 以便更高效地处理专门领域的业务;自动 生成重复代码;动态改变程序的语句、函数,类,等等。</li>
+  <li>IDE 下自动生成的代码通常局限性大且可读性差,小操作可能造成的源 码上的大差异,削弱了版本控制的意义。用自编的无需人机交互的元程 序来生成代码,只须将元程序的数据来源版本化,简明而直观。同时由 于元程序可以随时修改,因此局限性小,更加灵活。</li>
+  <li>语言导向式编程(LOP)通过创建一套专用语言 DSL 来编写程序。相比 通用语言,DSL 更简单、更抽象、更专业、更接近自然语言和声明式语 言、开发效率更高,同时有助于专业程序员与业务分析员之间的合作。</li>
+  <li>语言导向式编程一般通过元编程将专用语言转化为通用语言。</li>
+  <li>产生式编程与静态元编程都能自动生成源代码。产生式编程强调代码的 生成,元编程强调生成代码的可执行性。此外,动态元编程并不生成源 代码,但能在运行期间修改程序。</li>
+  <li>元程序将程序作为数据来对待,有着其他程序所不具备的自觉性、自适 应性和智能性,可以说是一种最高级的程序。</li>
 </ol>
 
-<h4 id="常见的元编程工具">常见的元编程工具</h4>
+<h4 id="section-16">常见的元编程工具</h4>
 
-<h5 id="模板元编程">模板元编程</h5>
+<h5 id="section-17">模板元编程</h5>
 
 <p>C++模板是一个非常强大的元编程工具，配上预处理宏，其几乎可以伪装成任何形式的DSL，当然要稍微受一点语法的限制。</p>
 
-<h5 id="万能的eval">万能的eval</h5>
+<h5 id="eval">万能的eval</h5>
 
 <p>Python, JavaScript都只含有全局的eval，只能解析字符串，尽管也可以完成想要的功能，确是相当不便和不安全。
 Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以解析字符串，还允许执行代码块。
 上例中的Ruby Optional的例子就用到了class_eval，把eval限制在了类的内部。</p>
 
-<h5 id="强大的宏">强大的宏</h5>
+<h5 id="section-18">强大的宏</h5>
 
 <p>CLOS（Common Lisp面向对象系统）就是直接用宏编写而成。</p>
 
@@ -443,48 +445,55 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
 
 <p>S-表达式的实质是用抽象语法树(AST)表达程序，无论是编译时还是运行时，我们都可以修改，注入，加载，或者生成新的程序 — 这些无非是在AST里修改或添加节点而已。我们甚至可以改动或添加新的句法。</p>
 
-<h5 id="read-macro之殇">Read Macro之殇</h5>
+<h5 id="read-macro">Read Macro之殇</h5>
 
-<p><img src="http://img1.tbcdn.cn/L1/461/1/bb9e36c175641922375d3613bf736677deaff174" alt="clojure_read_macro"></p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/bb9e36c175641922375d3613bf736677deaff174" alt="clojure_read_macro" /></p>
 
 <p>Read Macro使得程序员可以为一些特定字符定义一些特殊的行为，当碰到该字符后，解释器会先把其展开为S-Expression，以达到简化代码量或者达到某种格式的目的。Read Macro可是编写DSL的利器啊，但正是由于其过于强大，使得LISP分裂成不同的方言，由于各人的约定不一样，代码也比较晦涩难懂，所以在Clojure中就取消了自定义Read Macro的功能，这究竟是一种进步还是倒退呢？</p>
 
 <p>Clojure宏例子
 以下两段代码是等价的，利用宏可以很轻松地把嵌套调用转换为Pipeline调用。</p>
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">prn </span><span class="p">(</span><span class="nb">filter </span><span class="nv">even?</span> <span class="p">(</span><span class="nb">reverse </span><span class="p">(</span><span class="nb">cons </span><span class="mi">1</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]))))</span>
 
-<span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="p">(</span><span class="nb">cons </span><span class="mi">1</span><span class="p">)</span> <span class="nb">reverse </span><span class="p">(</span><span class="nb">filter </span><span class="nv">even?</span><span class="p">)</span> <span class="nv">prn</span><span class="p">)</span>
-</code></pre></div>
-<h5 id="ruby类宏">Ruby类宏</h5>
+<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="n">even?</span><span class="w"> </span><span class="p">(</span><span class="nb">reverse</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]))))</span><span class="w">
+
+</span><span class="p">(</span><span class="nf">-&gt;&gt;</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="nb">reverse</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="n">even?</span><span class="p">)</span><span class="w"> </span><span class="nb">prn</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<h5 id="ruby">Ruby类宏</h5>
 
 <p>Ruby中的宏，功能相比Lisp中宏的用法当然要弱了许多，但是依然可以满足大部分的元编程需求。熟悉ruby的同学肯定都很熟悉attr_accessor，它可以很方便地帮类成员生成set和get方法。</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Module</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Module</span>
   <span class="k">def</span> <span class="nf">attr_accessor</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
-    <span class="n">syms</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span><span class="o">|</span><span class="n">sym</span><span class="o">|</span>
-      <span class="nb">class_eval</span> <span class="o">&lt;&lt;-</span><span class="no">RUBY_EVAL</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">,</span> <span class="bp">__LINE__</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="sh">        def #{sym}</span>
-<span class="sh">          @#{sym}</span>
-<span class="sh">        end</span>
-<span class="sh">        def #{sym}=(val)</span>
-<span class="sh">          @#{sym} = val</span>
-<span class="sh">        end</span>
-<span class="no">      RUBY_EVAL</span>
+    <span class="n">syms</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span><span class="o">|</span><span class="n">sym</span><span class="o">|</span>
+      <span class="nb">class_eval</span> <span class="o">&lt;&lt;-</span><span class="no">RUBY_EVAL</span><span class="p">,</span> <span class="kp">__FILE__</span><span class="p">,</span> <span class="kp">__LINE__</span> <span class="o">+</span> <span class="mi">1</span><span class="sh">
+        def </span><span class="si">#{</span><span class="n">sym</span><span class="si">}</span><span class="sh">
+          @</span><span class="si">#{</span><span class="n">sym</span><span class="si">}</span><span class="sh">
+        end
+        def </span><span class="si">#{</span><span class="n">sym</span><span class="si">}</span><span class="sh">=(val)
+          @</span><span class="si">#{</span><span class="n">sym</span><span class="si">}</span><span class="sh"> = val
+        end
+</span><span class="no">      RUBY_EVAL</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
-<h5 id="动态语言的-method_missing">动态语言的 method_missing</h5>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Hasie</span>
+</code></pre>
+</div>
+
+<h5 id="methodmissing">动态语言的 method_missing</h5>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Hasie</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
     <span class="vi">@hash</span> <span class="o">=</span> <span class="nb">hash</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-    <span class="k">if</span> <span class="vi">@hash</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span>
-      <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">__send__</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="nb">method</span> <span class="k">do</span><span class="o">|*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
-        <span class="vi">@hash</span><span class="o">[</span><span class="nb">method</span><span class="o">]</span>
+    <span class="k">if</span> <span class="vi">@hash</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span>
+      <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">__send__</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="nb">method</span> <span class="k">do</span><span class="o">|*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="vi">@hash</span><span class="p">[</span><span class="nb">method</span><span class="p">]</span>
       <span class="k">end</span>
-      <span class="nb">self</span><span class="o">.</span><span class="n">__send__</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="nb">self</span><span class="p">.</span><span class="nf">__send__</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
     <span class="k">else</span>
       <span class="k">super</span>
     <span class="k">end</span>
@@ -493,56 +502,68 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
 <span class="k">end</span>
 
 <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:a</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:b</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">}</span>
-<span class="n">h</span> <span class="o">=</span> <span class="no">Hasie</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
-<span class="nb">puts</span> <span class="n">h</span><span class="o">.</span><span class="n">a</span><span class="p">()</span>
-<span class="nb">puts</span> <span class="n">h</span><span class="o">.</span><span class="n">b</span><span class="p">()</span>
-</code></pre></div>
+<span class="n">h</span> <span class="o">=</span> <span class="no">Hasie</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">h</span><span class="p">.</span><span class="nf">a</span><span class="p">()</span>
+<span class="nb">puts</span> <span class="n">h</span><span class="p">.</span><span class="nf">b</span><span class="p">()</span>
+</code></pre>
+</div>
+
 <p>python <strong>getattr</strong>  （Python中一切对象上的一切都是属性，很灵活地添加，删除以及重定义，可以玩出各种Trick，不过在代码即数据和Ruby及Lisp还差很远。）</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Hasie</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Hasie</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_hash</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="n">_hash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">hash</span> <span class="o">=</span> <span class="n">_hash</span>
 
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">:</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="nb">hash</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="nb">hash</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="nb">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-<span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 <span class="n">h</span> <span class="o">=</span> <span class="n">Hasie</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">a</span><span class="p">())</span>
 <span class="k">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">b</span><span class="p">())</span>
-</code></pre></div>
-<h3 id="dsl">DSL</h3>
+</code></pre>
+</div>
 
-<h4 id="外部dsl">外部DSL</h4>
+<h3 id="dsl-3">DSL</h3>
+
+<h4 id="dsl-4">外部DSL</h4>
 
 <ul>
-<li>awk是一个很典型外部DSL例子，其语法为 awk &#39;pattern {action}&#39;，其做的事情非常简单，扫描所有的行，一旦发现符合pattern的行，则执行action。</li>
+  <li>awk是一个很典型外部DSL例子，其语法为 awk ‘pattern {action}’，其做的事情非常简单，扫描所有的行，一旦发现符合pattern的行，则执行action。</li>
 </ul>
 
 <p>以下例子用于找出所有sugou.search.com所有来源链接。</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">less cookie_log <span class="p">|</span> awk <span class="s1">&#39;/sugou\.search\.com/{print $13;}&#39;</span> <span class="p">|</span> sort <span class="p">|</span> uniq
-</code></pre></div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>less cookie_log | awk <span class="s1">'/sugou\.search\.com/{print $13;}'</span> | sort | uniq
+</code></pre>
+</div>
+
 <ul>
-<li>make 一个更典型的外部DSL例子</li>
+  <li>make 一个更典型的外部DSL例子</li>
 </ul>
-<div class="highlight"><pre><code class="language-makefile" data-lang="makefile"><span class="nf">hello</span><span class="o">:</span><span class="n">hello</span>.<span class="n">o</span>
-    gcc -o hello hello.o
-<span class="nf">hello.o</span><span class="o">:</span><span class="n">hello</span>.<span class="n">c</span>
-    gcc -c hello.c
-<span class="nf">clean</span><span class="o">:</span>
-    rm -f *.o hello
-</code></pre></div>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">hello</span><span class="o">:</span><span class="nf">hello.o</span>
+    <span class="err">gcc</span> <span class="err">-o</span> <span class="err">hello</span> <span class="err">hello.o</span>
+<span class="nl">hello.o</span><span class="o">:</span><span class="nf">hello.c</span>
+    <span class="err">gcc</span> <span class="err">-c</span> <span class="err">hello.c</span>
+<span class="nl">clean</span><span class="o">:</span>
+    <span class="err">rm</span> <span class="err">-f</span> <span class="err">*.o</span> <span class="err">hello</span>
+</code></pre>
+</div>
+
 <ul>
-<li>由于Java语言的特性，Java中使用的DSL一般都用XML来描述，例如ANT和Maven，下面看下Maven Project管理例子。</li>
+  <li>由于Java语言的特性，Java中使用的DSL一般都用XML来描述，例如ANT和Maven，下面看下Maven Project管理例子。</li>
 </ul>
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
-         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
+         <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.prometheus.shared<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>kindle<span class="nt">&lt;/artifactId&gt;</span>
@@ -561,157 +582,163 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
         <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;/dependencies&gt;</span>
 <span class="nt">&lt;/project&gt;</span>
-</code></pre></div>
-<h4 id="内部dsl">内部DSL</h4>
+</code></pre>
+</div>
+
+<h4 id="dsl-5">内部DSL</h4>
+<ul>
+  <li>Clojure Project管理</li>
+</ul>
+
+<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">defproject</span><span class="w"> </span><span class="n">hello-world</span><span class="w"> </span><span class="s">"0.1.0-SNAPSHOT"</span><span class="w">
+  </span><span class="no">:description</span><span class="w"> </span><span class="s">"FIXME: write description"</span><span class="w">
+  </span><span class="no">:url</span><span class="w"> </span><span class="s">"http://example.com/FIXME"</span><span class="w">
+  </span><span class="no">:license</span><span class="w"> </span><span class="p">{</span><span class="no">:name</span><span class="w"> </span><span class="s">"Eclipse Public License"</span><span class="w">
+            </span><span class="no">:url</span><span class="w"> </span><span class="s">"http://www.eclipse.org/legal/epl-v10.html"</span><span class="p">}</span><span class="w">
+  </span><span class="no">:dependencies</span><span class="w"> </span><span class="p">[[</span><span class="n">org.clojure/clojure</span><span class="w"> </span><span class="s">"1.6.0"</span><span class="p">]</span><span class="w">
+                 </span><span class="p">[</span><span class="n">ring/ring-core</span><span class="w"> </span><span class="s">"1.3.0"</span><span class="p">]</span><span class="w">
+                 </span><span class="p">[</span><span class="n">ring/ring-jetty-adapter</span><span class="w"> </span><span class="s">"1.3.0"</span><span class="p">]])</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
-<li>Clojure Project管理</li>
+  <li>Ruby Gem file</li>
 </ul>
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defproject </span><span class="nv">hello-world</span> <span class="s">&quot;0.1.0-SNAPSHOT&quot;</span>
-  <span class="ss">:description</span> <span class="s">&quot;FIXME: write description&quot;</span>
-  <span class="ss">:url</span> <span class="s">&quot;http://example.com/FIXME&quot;</span>
-  <span class="ss">:license</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Eclipse Public License&quot;</span>
-            <span class="ss">:url</span> <span class="s">&quot;http://www.eclipse.org/legal/epl-v10.html&quot;</span><span class="p">}</span>
-  <span class="ss">:dependencies</span> <span class="p">[[</span><span class="nv">org.clojure/clojure</span> <span class="s">&quot;1.6.0&quot;</span><span class="p">]</span>
-                 <span class="p">[</span><span class="nv">ring/ring-core</span> <span class="s">&quot;1.3.0&quot;</span><span class="p">]</span>
-                 <span class="p">[</span><span class="nv">ring/ring-jetty-adapter</span> <span class="s">&quot;1.3.0&quot;</span><span class="p">]])</span>
-</code></pre></div>
-<ul>
-<li>Ruby Gem file</li>
-</ul>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s1">&#39;https://ruby.taobao.org/&#39;</span>
 
-<span class="n">gem</span> <span class="s1">&#39;rails&#39;</span><span class="p">,</span> <span class="s1">&#39;4.1.1&#39;</span>
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">source</span> <span class="s1">'https://ruby.taobao.org/'</span>
+
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'4.1.1'</span>
 
 <span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
-  <span class="n">gem</span> <span class="s1">&#39;pry&#39;</span>
+  <span class="n">gem</span> <span class="s1">'pry'</span>
 <span class="k">end</span>
 
 <span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
-  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span>
+  <span class="n">gem</span> <span class="s1">'rspec-rails'</span>
 <span class="k">end</span>
 
 <span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
-  <span class="n">gem</span> <span class="s1">&#39;faker&#39;</span>
-  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span>
+  <span class="n">gem</span> <span class="s1">'faker'</span>
+  <span class="n">gem</span> <span class="s1">'capybara'</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <ul>
-<li>RSpec例子(是不是很优雅)</li>
+  <li>RSpec例子(是不是很优雅)</li>
 </ul>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
   <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">belong_to</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span> <span class="p">}</span>
   <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">validate_presence_of</span><span class="p">(</span><span class="ss">:title</span><span class="p">)</span> <span class="p">}</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
 <p>还是必须遵循Ruby的语法，有点小遗憾！</p>
 
-<h2 id="编程语言趋势猜想">编程语言趋势猜想</h2>
+<h2 id="section-19">编程语言趋势猜想</h2>
 
-<h3 id="编写新语言更加简单">编写新语言更加简单</h3>
+<h3 id="section-20">编写新语言更加简单</h3>
 
 <p>程序语言设计者将不需要关注具体的目标机器，也即不需要关心编译后端及代码优化这一块，目标代码将会是某一成熟的虚拟机字节码或者其他语言源文件。</p>
 
 <ul>
-<li>ClojureScript，CoffeeScript 生成 JavaScript源码</li>
-<li>Scala，Clojure，Groovy 生成 Java字节码</li>
-<li>Swift，Object-C 生成 LLVM字节码</li>
+  <li>ClojureScript，CoffeeScript 生成 JavaScript源码</li>
+  <li>Scala，Clojure，Groovy 生成 Java字节码</li>
+  <li>Swift，Object-C 生成 LLVM字节码</li>
 </ul>
 
-<h3 id="语言生态">语言生态</h3>
-
+<h3 id="section-21">语言生态</h3>
 <p>多语言协同，不要拘泥于编程语言本身，既然行业里面已经有很成熟的解决方案在那里，换一种语言又何妨。每个成熟的语言都有自己的生态，也都有自己擅长的领域。</p>
 
-<h3 id="程序员分工更明晰">程序员分工更明晰</h3>
-
+<h3 id="section-22">程序员分工更明晰</h3>
 <p>以往，有经验的程序员设计库和框架，普通程序员开发上层应用，以后的趋势可能是这样的，资深的程序员设计DSL语言的实现，普通的开发人员使用该DSL构建应用。</p>
 
-<h2 id="编程语言历史">编程语言历史</h2>
-
-<p><img src="http://img1.tbcdn.cn/L1/461/1/0964c49a88040dc69666487c6cbb6159d0dfd7e0" alt="pl_history"></p>
+<h2 id="section-23">编程语言历史</h2>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/0964c49a88040dc69666487c6cbb6159d0dfd7e0" alt="pl_history" /></p>
 
 <p>从汇编语言发展到现在，编程语言层出不穷，具体数目已经无法考证，比较流行的至少超过200种以上，上图列出了比较流行编程语言或者是对编程语言产生过重大影响的编程语言。</p>
 
 <ul>
-<li>1951 – Regional Assembly Language</li>
-<li>1952 – Autocode</li>
-<li>1954 – IPL (LISP语言的祖先)</li>
-<li>1955 – FLOW-MATIC (COBOL语言的祖先)</li>
-<li>1957 – FORTRAN (第一个编译型语言)</li>
-<li>1957 – COMTRAN (COBOL语言的祖先)</li>
-<li>1958 – LISP</li>
-<li>1958 – ALGOL 58</li>
-<li>1959 – FACT (COBOL语言的祖先)</li>
-<li>1959 – COBOL</li>
-<li>1959 – RPG</li>
-<li>1962 – APL</li>
-<li>1962 – Simula</li>
-<li>1962 – SNOBOL</li>
-<li>1963 – CPL (C语言的祖先)</li>
-<li>1964 – BASIC</li>
-<li>1964 – PL/I</li>
-<li>1966 – JOSS</li>
-<li>1967 – BCPL (C语言的祖先)</li>
-<li>1968 – Logo</li>
-<li>1969 – B (C语言的祖先)</li>
-<li>1970 – Pascal</li>
-<li>1970 – Forth</li>
-<li>1972 – C</li>
-<li>1972 – Smalltalk</li>
-<li>1972 – Prolog</li>
-<li>1973 – ML</li>
-<li>1975 – Scheme</li>
-<li>1978 – SQL</li>
-<li>1980 – C++ (既有类的C语言，更名于1983年7月)</li>
-<li>1983 – Ada</li>
-<li>1984 – Common Lisp</li>
-<li>1984 – MATLAB</li>
-<li>1985 – Eiffel</li>
-<li>1986 – Objective-C</li>
-<li>1986 – Erlang</li>
-<li>1987 – Perl</li>
-<li>1988 – Tcl</li>
-<li>1988 – Mathematica</li>
-<li>1989 – FL</li>
-<li>1990 – Haskell</li>
-<li>1991 – Python</li>
-<li>1991 – Visual Basic</li>
-<li>1993 – Ruby</li>
-<li>1993 – Lua</li>
-<li>1994 – CLOS (ANSI Common Lisp的一部分)</li>
-<li>1995 – Java</li>
-<li>1995 – Delphi (Object Pascal)</li>
-<li>1995 – JavaScript</li>
-<li>1995 – PHP</li>
-<li>1996 – WebDNA</li>
-<li>1997 – Rebol</li>
-<li>1999 – D</li>
-<li>2000 – ActionScript</li>
-<li>2001 – C#</li>
-<li>2001 – Visual Basic .NET</li>
-<li>2002 – F#</li>
-<li>2003 – Groovy</li>
-<li>2003 – Scala</li>
-<li>2007 – Clojure</li>
-<li>2009 – Go</li>
-<li>2010 - CoffeeScript</li>
-<li>2011 – Dart</li>
-<li>2014 - Swift</li>
+  <li>1951 – Regional Assembly Language</li>
+  <li>1952 – Autocode</li>
+  <li>1954 – IPL (LISP语言的祖先)</li>
+  <li>1955 – FLOW-MATIC (COBOL语言的祖先)</li>
+  <li>1957 – FORTRAN (第一个编译型语言)</li>
+  <li>1957 – COMTRAN (COBOL语言的祖先)</li>
+  <li>1958 – LISP</li>
+  <li>1958 – ALGOL 58</li>
+  <li>1959 – FACT (COBOL语言的祖先)</li>
+  <li>1959 – COBOL</li>
+  <li>1959 – RPG</li>
+  <li>1962 – APL</li>
+  <li>1962 – Simula</li>
+  <li>1962 – SNOBOL</li>
+  <li>1963 – CPL (C语言的祖先)</li>
+  <li>1964 – BASIC</li>
+  <li>1964 – PL/I</li>
+  <li>1966 – JOSS</li>
+  <li>1967 – BCPL (C语言的祖先)</li>
+  <li>1968 – Logo</li>
+  <li>1969 – B (C语言的祖先)</li>
+  <li>1970 – Pascal</li>
+  <li>1970 – Forth</li>
+  <li>1972 – C</li>
+  <li>1972 – Smalltalk</li>
+  <li>1972 – Prolog</li>
+  <li>1973 – ML</li>
+  <li>1975 – Scheme</li>
+  <li>1978 – SQL</li>
+  <li>1980 – C++ (既有类的C语言，更名于1983年7月)</li>
+  <li>1983 – Ada</li>
+  <li>1984 – Common Lisp</li>
+  <li>1984 – MATLAB</li>
+  <li>1985 – Eiffel</li>
+  <li>1986 – Objective-C</li>
+  <li>1986 – Erlang</li>
+  <li>1987 – Perl</li>
+  <li>1988 – Tcl</li>
+  <li>1988 – Mathematica</li>
+  <li>1989 – FL</li>
+  <li>1990 – Haskell</li>
+  <li>1991 – Python</li>
+  <li>1991 – Visual Basic</li>
+  <li>1993 – Ruby</li>
+  <li>1993 – Lua</li>
+  <li>1994 – CLOS (ANSI Common Lisp的一部分)</li>
+  <li>1995 – Java</li>
+  <li>1995 – Delphi (Object Pascal)</li>
+  <li>1995 – JavaScript</li>
+  <li>1995 – PHP</li>
+  <li>1996 – WebDNA</li>
+  <li>1997 – Rebol</li>
+  <li>1999 – D</li>
+  <li>2000 – ActionScript</li>
+  <li>2001 – C#</li>
+  <li>2001 – Visual Basic .NET</li>
+  <li>2002 – F#</li>
+  <li>2003 – Groovy</li>
+  <li>2003 – Scala</li>
+  <li>2007 – Clojure</li>
+  <li>2009 – Go</li>
+  <li>2010 - CoffeeScript</li>
+  <li>2011 – Dart</li>
+  <li>2014 - Swift</li>
 </ul>
 
-<h2 id="参考资料">参考资料</h2>
-
+<h2 id="section-24">参考资料</h2>
 <ul>
-<li><a href="http://pan.baidu.com/s/1gdHzPQj">程序设计语言概念</a> 75fh</li>
-<li><a href="http://pan.baidu.com/s/14cRJw">程序设计语言理论基础</a> 61f8</li>
-<li><a href="http://pan.baidu.com/s/1i3mRLyt">编程语言实现模式</a> riav</li>
-<li><a href="http://pan.baidu.com/s/11tl3S">七周七语言</a> l5nx</li>
-<li><a href="http://pan.baidu.com/s/1gdACzIj">C++模板元编程</a> pmcs</li>
-<li><a href="http://pan.baidu.com/s/1eQEInPg">Ruby元编程</a> o3r7</li>
-<li><a href="http://pan.baidu.com/s/1i3gNUPf">黑客与画家</a> e6bu</li>
-<li><a href="http://llvm.org/" title="LLVM">LLVM</a></li>
-<li><a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese" title="中文版Apple官方Swift教程">中文版Apple官方Swift教程</a></li>
+  <li><a href="http://pan.baidu.com/s/1gdHzPQj">程序设计语言概念</a> 75fh</li>
+  <li><a href="http://pan.baidu.com/s/14cRJw">程序设计语言理论基础</a> 61f8</li>
+  <li><a href="http://pan.baidu.com/s/1i3mRLyt">编程语言实现模式</a> riav</li>
+  <li><a href="http://pan.baidu.com/s/11tl3S">七周七语言</a> l5nx</li>
+  <li><a href="http://pan.baidu.com/s/1gdACzIj">C++模板元编程</a> pmcs</li>
+  <li><a href="http://pan.baidu.com/s/1eQEInPg">Ruby元编程</a> o3r7</li>
+  <li><a href="http://pan.baidu.com/s/1i3gNUPf">黑客与画家</a> e6bu</li>
+  <li><a href="http://llvm.org/" title="LLVM">LLVM</a></li>
+  <li><a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese" title="中文版Apple官方Swift教程">中文版Apple官方Swift教程</a></li>
 </ul>
+
 
         </article>
 
@@ -721,7 +748,7 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
                 
                 
     
-    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdt.html">Pdt<span>7</span></a></li>
     
 
             </ul>
@@ -734,11 +761,11 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
     
 
     
-    <li class="tag"><a href="/tags/fp.html">函数式编程<span>7</span></a></li>
+    <li class="tag"><a href="/tags/fp.html">Fp<span>7</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>10</span></a></li>
+    <li class="tag"><a href="/tags/javascript.html">Javascript<span>10</span></a></li>
     
 
     
@@ -762,15 +789,15 @@ Ruby 中不仅有传统的eval，还有class_eval，instance_eval，不仅可以
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">Pdt<span>7</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>2</span></a></li>
+    <li class="tag"><a href="/tags/metaprogramming.html">Metaprogramming<span>2</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/dsl.html">DSL<span>2</span></a></li>
+    <li class="tag"><a href="/tags/dsl.html">Dsl<span>2</span></a></li>
     
 
             </ul>

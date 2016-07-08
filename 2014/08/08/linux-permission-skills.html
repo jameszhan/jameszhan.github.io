@@ -35,80 +35,110 @@
         </header>
 
         <article class="post-content">
-            <h2 id="代码示例">代码示例</h2>
+            <p>##代码示例</p>
 
-<h3 id="直接在远端机器上执行代码">直接在远端机器上执行代码</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ssh ubuntu@10.211.55.13 <span class="s1">&#39;ls -l&#39;</span>
-</code></pre></div>
-<h3 id="登陆远程机器免输入密码">登陆远程机器免输入密码</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh ubuntu@10.211.55.13 <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
+<p>###直接在远端机器上执行代码
+~~~sh</p>
 
-<span class="c">#下面是Amazon EC2的例子</span>
-cat ~/.ssh/id_rsa.pub <span class="p">|</span> ssh -v -i ~/.ssh/trail.pem ubuntu@ec2-54-241-192-74.us-west-1.compute.amazonaws.com <span class="s1">&#39;cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
-</code></pre></div>
-<p>对于自己的专属电脑来说，每次sudo输入密码确实非常啰嗦，尤其是在编写远程部署脚本时，更是遍地是坑</p>
+<p>ssh ubuntu@10.211.55.13 ‘ls -l’
+~~~</p>
 
-<h3 id="sudo免输入密码">sudo免输入密码</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#在/etc/sudoers中更改用户相应的条目如下即可</span>
-ubuntu <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
-james <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
-</code></pre></div>
-<h3 id="添加sudo免输密码用户">添加sudo免输密码用户</h3>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">adduser deploy --ingroup admin
-<span class="c">#添加以下内容到/etc/sudoers</span>
-deploy <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
-</code></pre></div>
-<h2 id="关键文件详解">关键文件详解</h2>
+<p>###登陆远程机器免输入密码
+~~~sh</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>cat ~/.ssh/id_rsa.pub</td>
+      <td>ssh ubuntu@10.211.55.13 ‘cat » ~/.ssh/authorized_keys’</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>#下面是Amazon EC2的例子
+cat ~/.ssh/id_rsa.pub | ssh -v -i ~/.ssh/trail.pem ubuntu@ec2-54-241-192-74.us-west-1.compute.amazonaws.com ‘cat » ~/.ssh/authorized_keys’
+~~~
+对于自己的专属电脑来说，每次sudo输入密码确实非常啰嗦，尤其是在编写远程部署脚本时，更是遍地是坑</p>
+
+<p>###sudo免输入密码
+~~~sh</p>
+
+<p>#在/etc/sudoers中更改用户相应的条目如下即可
+ubuntu ALL=(ALL) NOPASSWD:ALL
+james ALL=(ALL) NOPASSWD:ALL
+~~~</p>
+
+<p>###添加sudo免输密码用户
+~~~sh</p>
+
+<p>adduser deploy –ingroup admin
+#添加以下内容到/etc/sudoers
+deploy ALL=(ALL) NOPASSWD: ALL
+~~~</p>
+
+<p>##关键文件详解</p>
 
 <p>用户，组及权限控制的信息主要和/etc/sudoers，/etc/passwd，/etc/shadow，/etc/group几个文件相关，可以使用id，finger查看用户信息。</p>
 
-<h4 id="etc-sudoers">/etc/sudoers</h4>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#常见格式规范</span>
-<span class="c"># User privilege specification</span>
-root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>      ALL
-<span class="c"># Members of the admin group may gain root privileges</span>
-%admin <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>     ALL
+<p>####/etc/sudoers
+~~~sh</p>
 
-<span class="c">#第一栏，用户或组（%开头表示组用户）</span>
-<span class="c">#第二栏，主机名称</span>
-<span class="c">#第三栏（括号中的那个），表明用户以何种身份执行命令</span>
-<span class="c">#最后一栏，用户可执行的命令列表，用逗号分隔，如果不想输入密码，可以在之前加上NOPASSWD。</span>
+<p>#常见格式规范
+# User privilege specification
+root ALL=(ALL)      ALL
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL)     ALL</p>
 
-%users <span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span> /sbin/mount /cdrom,/sbin/umount /cdrom
-%users <span class="nv">localhost</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:/sbin/shutdown -h now
-</code></pre></div>
-<h4 id="etc-passwd">/etc/passwd</h4>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash
+<p>#第一栏，用户或组（%开头表示组用户）
+#第二栏，主机名称
+#第三栏（括号中的那个），表明用户以何种身份执行命令
+#最后一栏，用户可执行的命令列表，用逗号分隔，如果不想输入密码，可以在之前加上NOPASSWD。</p>
 
-<span class="c"># ubuntu =&gt; 用户名</span>
-<span class="c"># x =&gt; 表示登陆需要密码，若此处无x，则表示该账户登陆不需要密码</span>
-<span class="c"># 1001 =&gt; 用户ID(uid)</span>
-<span class="c"># 27 =&gt; 用户组ID(gid)</span>
-<span class="c"># Ubuntu,,, =&gt; finger inform, 记录用户的相关信息，比如公司，地区等</span>
-<span class="c"># /home/ubuntu =&gt; 用户Home目录</span>
-<span class="c"># /bin/bash =&gt; 该用户使用bash shell的路径.如果是 /sbin/nologin,表示无法登陆系统,只能以FTP形式登录; 如果是 /bin/false,则表示只能发邮件.</span>
-</code></pre></div>
-<h4 id="etc-shadow">/etc/shadow</h4>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ubuntu:<span class="nv">$6$9M43z06q$w</span>/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:
+<p>%users ALL=(root) /sbin/mount /cdrom,/sbin/umount /cdrom
+%users localhost=(ALL) NOPASSWD:/sbin/shutdown -h now
+~~~</p>
 
-<span class="c">#ubuntu =&gt; 用户名</span>
-<span class="c">#$6$yIUbtdK… =&gt; 用户加密后的密码，若为!!，则表示无密码，若为!$6$yIUbtdK...表示该账户已被锁定。</span>
-<span class="c">#15758 =&gt;  该账户密码最新变更的日期,以1970年1月1日为基数开始计算,是2010年2月7日 (可用chage –l user 来查看)</span>
-<span class="c">#0 =&gt; 至少使用多久才允许变更密码,0表示没有限制;若次数为9,则表示该密码创建或变更后至少过9天才能再次变更密码.</span>
-<span class="c">#99999 =&gt; 表示该密码使用的有效周期,99999表示无限制;若此为9,则表示每过9天就需要变更密码</span>
-<span class="c">#7 =&gt; 表示密码到期前7天,提醒用户需要变更密码</span>
-<span class="c">#6 =&gt; 密码到期日起的6天后,如果该用户仍未变更密码,则该账户将被锁定 (默认留空)</span>
-<span class="c">#5 =&gt; 帐号到期日,以1970年1月1日开始计算,5天后账户锁定,此处表示的锁定日为1970便1月6日. (默认留空)</span>
-<span class="c">#最后一个(:后) =&gt; 是为了以后的新开发项做准备的</span>
-</code></pre></div>
-<h4 id="etc-group">/etc/group</h4>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo:x:27:james
+<p>####/etc/passwd
+~~~sh</p>
 
-<span class="c">#sudo =&gt; 用户组名</span>
-<span class="c">#x =&gt; 表示该用户组登录需要密码,若此出无x,则表示该用户组登录时不需要密码</span>
-<span class="c">#27 =&gt; 用户组ID ( gid)</span>
-<span class="c">#james =&gt; 这个用户组中的成员 ( 此处可多个,用户名之间用逗号隔开)</span>
-</code></pre></div>
+<p>ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash</p>
+
+<h1 id="ubuntu--">ubuntu =&gt; 用户名</h1>
+<p># x =&gt; 表示登陆需要密码，若此处无x，则表示该账户登陆不需要密码
+# 1001 =&gt; 用户ID(uid)
+# 27 =&gt; 用户组ID(gid)
+# Ubuntu,,, =&gt; finger inform, 记录用户的相关信息，比如公司，地区等
+# /home/ubuntu =&gt; 用户Home目录
+# /bin/bash =&gt; 该用户使用bash shell的路径.如果是 /sbin/nologin,表示无法登陆系统,只能以FTP形式登录; 如果是 /bin/false,则表示只能发邮件.
+~~~</p>
+
+<p>####/etc/shadow
+~~~sh</p>
+
+<p>ubuntu:$6$9M43z06q$w/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:</p>
+
+<p>#ubuntu =&gt; 用户名
+#$6$yIUbtdK… =&gt; 用户加密后的密码，若为!!，则表示无密码，若为!$6$yIUbtdK…表示该账户已被锁定。
+#15758 =&gt;  该账户密码最新变更的日期,以1970年1月1日为基数开始计算,是2010年2月7日 (可用chage –l user 来查看)
+#0 =&gt; 至少使用多久才允许变更密码,0表示没有限制;若次数为9,则表示该密码创建或变更后至少过9天才能再次变更密码.
+#99999 =&gt; 表示该密码使用的有效周期,99999表示无限制;若此为9,则表示每过9天就需要变更密码
+#7 =&gt; 表示密码到期前7天,提醒用户需要变更密码
+#6 =&gt; 密码到期日起的6天后,如果该用户仍未变更密码,则该账户将被锁定 (默认留空)
+#5 =&gt; 帐号到期日,以1970年1月1日开始计算,5天后账户锁定,此处表示的锁定日为1970便1月6日. (默认留空)
+#最后一个(:后) =&gt; 是为了以后的新开发项做准备的
+~~~</p>
+
+<p>####/etc/group
+~~~sh</p>
+
+<p>sudo:x:27:james</p>
+
+<p>#sudo =&gt; 用户组名
+#x =&gt; 表示该用户组登录需要密码,若此出无x,则表示该用户组登录时不需要密码
+#27 =&gt; 用户组ID ( gid)
+#james =&gt; 这个用户组中的成员 ( 此处可多个,用户名之间用逗号隔开)
+~~~</p>
+
         </article>
 
         <div class="row-fluid">

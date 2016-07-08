@@ -38,7 +38,7 @@
             <p>1991年计算机先驱奖获得者、斯坦福大学计算机科学系教授罗伯特·弗洛伊德(Robert W．Floyd)和威廉姆斯(J．Williams)在1964年共同发明了著名的堆排序算法(Heap Sort)。
 n个关键字序列Kl，K2，…，Kn称为(Heap)，当且仅当该序列满足如下性质(简称为堆性质)：</p>
 
-<p>(1) Ki &lt;= K2i且Ki &lt;= K2i+1 或<br>
+<p>(1) Ki &lt;= K2i且Ki &lt;= K2i+1 或  <br />
 (2) Ki &gt;= K2i且KI &gt;= K2i+1 (1≤i≤ n)</p>
 
 <p>若将此序列所存储的向量R[1..n]看做是一棵完全二叉树的存储结构，则堆实质上是满足如下性质的完全二叉树：树中任一非叶结点的关键字均不大于(或不小于)其左右孩子(若存在)结点的关键字。</p>
@@ -52,62 +52,65 @@ n个关键字序列Kl，K2，…，Kn称为(Heap)，当且仅当该序列满足�
 <p>堆排序可通过树形结构保存部分比较结果，可减少比较次数。</p>
 
 <p>实现一个数从小到大排序，既可以使用大根堆，也可以使用小根堆。</p>
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">//定义元素关系：下表从0开始。</span>
-<span class="kr">inline</span> <span class="kt">int</span> <span class="nf">parent</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;}</span>
-<span class="kr">inline</span> <span class="kt">int</span> <span class="nf">left</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span> <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;}</span>
-<span class="kr">inline</span> <span class="kt">int</span> <span class="nf">right</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;}</span>
 
-<span class="kt">void</span> <span class="nf">adjust</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">//定义元素关系：下表从0开始。
+</span><span class="kr">inline</span> <span class="kt">int</span> <span class="n">parent</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;}</span>
+<span class="kr">inline</span> <span class="kt">int</span> <span class="n">left</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span> <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;}</span>
+<span class="kr">inline</span> <span class="kt">int</span> <span class="n">right</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;}</span>
+ 
+<span class="kt">void</span> <span class="n">adjust</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
        <span class="kt">int</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
        <span class="n">k</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
        <span class="n">j</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
        <span class="k">while</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">){</span>
               <span class="k">if</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">){</span>
-                     <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]){</span><span class="c1">//调整为小根堆，只需把条件换为a[j + 1] &lt; a[j]</span>
-                        <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+                     <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]){</span><span class="c1">//调整为小根堆，只需把条件换为a[j + 1] &lt; a[j]
+</span>                        <span class="n">j</span><span class="o">++</span><span class="p">;</span>
                      <span class="p">}</span>                    
               <span class="p">}</span>
               <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]){</span>
                      <span class="n">a</span><span class="p">[</span><span class="n">parent</span><span class="p">(</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-                     <span class="c1">//找出最大的子元素，放到父节点。</span>
-                     <span class="n">j</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+                     <span class="c1">//找出最大的子元素，放到父节点。
+</span>                     <span class="n">j</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
               <span class="p">}</span><span class="k">else</span><span class="p">{</span>
                      <span class="k">break</span><span class="p">;</span>
               <span class="p">}</span>                  
        <span class="p">}</span>    
        <span class="n">a</span><span class="p">[</span><span class="n">parent</span><span class="p">(</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>    
 <span class="p">}</span>
-
-
-<span class="c1">//基于大根堆的排序策略。</span>
-<span class="kt">void</span> <span class="nf">sort1</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+ 
+ 
+<span class="c1">//基于大根堆的排序策略。
+</span><span class="kt">void</span> <span class="n">sort1</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
        <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span><span class="p">;</span>
-       <span class="c1">//建堆。</span>
-       <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">parent</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
+       <span class="c1">//建堆。
+</span>       <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">parent</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
               <span class="n">adjust</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
        <span class="p">}</span>
        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
-              <span class="c1">//无序区[0, i]，有序区[i+1, n-1];</span>
-              <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+              <span class="c1">//无序区[0, i]，有序区[i+1, n-1];
+</span>              <span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
               <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
               <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
-              <span class="c1">//交换后，无序区[0, i-1]，有序区[i, n-1]，调整无序区[0，i-1]为堆。</span>
-              <span class="n">adjust</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+              <span class="c1">//交换后，无序区[0, i-1]，有序区[i, n-1]，调整无序区[0，i-1]为堆。
+</span>              <span class="n">adjust</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
        <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="c1">//基于小根堆的排序策略。</span>
-<span class="kt">void</span> <span class="nf">sort2</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+ 
+<span class="c1">//基于小根堆的排序策略。
+</span><span class="kt">void</span> <span class="n">sort2</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
     <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span><span class="p">;</span>
-    <span class="c1">//建堆。</span>
-    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">parent</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
+    <span class="c1">//建堆。
+</span>    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">parent</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
           <span class="n">adjust</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
        <span class="n">adjust</span><span class="p">(</span><span class="o">++</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>堆排序是不稳定排序，平均时间复杂度和最坏时间复杂度都是O(nlogn).</p>
 
         </article>

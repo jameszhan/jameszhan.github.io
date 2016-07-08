@@ -18,7 +18,6 @@
             <li><a class="page-link" href="/news/">他山之石</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="page-link" href="/about/">关于我</a></li>
             <li><a class="page-link" href="https://github.com/jameszhan">GitHub</a></li>
         </ul>
     </nav>

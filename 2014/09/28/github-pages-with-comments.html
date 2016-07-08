@@ -35,13 +35,13 @@
         </header>
 
         <article class="post-content">
-            <h3 id="为什么选择github-pages">为什么选择GitHub Pages</h3>
+            <h3 id="github-pages">为什么选择GitHub Pages</h3>
 
 <p>如果我们要写日志，我们一般有两种选择：</p>
 
 <ol>
-<li>在网站提供的博客空间进行写作，例如CSDN，博客园等。</li>
-<li>自己购买虚拟主机，构建自己的个人网站。</li>
+  <li>在网站提供的博客空间进行写作，例如CSDN，博客园等。</li>
+  <li>自己购买虚拟主机，构建自己的个人网站。</li>
 </ol>
 
 <p>两种方式各有优缺点，第一种方案的优点就是简单，不需要任何技术门槛，只需要有对应网站的账号就可以。但是其很难定制自己的博客网站的风格，甚至有时候连书写方式也无法选择（CSDN目前都无法支持Markdown），
@@ -55,7 +55,7 @@
 
 <p>然而，GitHub Pages也不是万能的，由于它默认只支持纯静态的页面，所以我们无法在其中使用我们自己的数据库，这样普通日志具有的评论功能我们默认是无法实现的。</p>
 
-<h3 id="第三方社会化评论系统">第三方社会化评论系统</h3>
+<h3 id="section">第三方社会化评论系统</h3>
 
 <p>感谢OAuth和第三方评论系统，由于它们，我们可以很轻松地使我们的静态网站支持评论功能。</p>
 
@@ -68,74 +68,86 @@
 3. 不需要把密码信息（很多人注册账号的时候喜欢使用同一个密码）暴露给一些小型应用和网站，减少了密码暴露的风险。
 4. 减少不必要的记忆信息，比如账号和密码信息等。</p>
 
-<h4 id="社会化评论系统">社会化评论系统</h4>
+<h4 id="section-1">社会化评论系统</h4>
 
 <p>目前第三方社交评论系统主要有Disqus，Facebook Comment，评论啦(pinglun.la)、友言(uyan.cc)，多说(duoshuo.com)等。
 其中，Disqus和Facebook Comment由于国情原因，在国内网站上几乎没有使用价值。评论啦(pinglun.la)、友言(uyan.cc)，多说(duoshuo.com)等则依托于微博，QQ等第三方登陆平台，可以很方便地接入到我们网站中来。</p>
 
-<h3 id="给博客加入评论功能">给博客加入评论功能</h3>
+<h3 id="section-2">给博客加入评论功能</h3>
 
 <p>下面我们就拿多说举例，来看看GitHub Pages如何接入第三方社交评论系统。</p>
 
 <ol>
-<li>使用你的社交账号登陆多说。</li>
-<li>进到首页，点击我要安装。</li>
-<li>输入相应的网站注册信息，输入完成后，它会提供给你一段HTML代码。</li>
-<li><p>把生成后的代码拷贝到你需要评论的页面当中。</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 多说评论框 start --&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;ds-thread&quot;</span> <span class="na">data-thread-key=</span><span class="s">&quot;请将此处替换成文章在你的站点中的ID&quot;</span> <span class="na">data-title=</span><span class="s">&quot;请替换成文章的标题&quot;</span> <span class="na">data-url=</span><span class="s">&quot;请替换成文章的网址&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-<span class="c">&lt;!-- 多说评论框 end --&gt;</span>
-<span class="c">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
-<span class="kd">var</span> <span class="nx">duoshuoQuery</span> <span class="o">=</span> <span class="p">{</span><span class="nx">short_name</span><span class="o">:</span><span class="s2">&quot;SHORT-NAME&quot;</span><span class="p">};</span>
-    <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-        <span class="nx">ds</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span><span class="nx">ds</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-        <span class="nx">ds</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">==</span> <span class="s1">&#39;https:&#39;</span> <span class="o">?</span> <span class="s1">&#39;https:&#39;</span> <span class="o">:</span> <span class="s1">&#39;http:&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;//static.duoshuo.com/embed.js&#39;</span><span class="p">;</span>
-        <span class="nx">ds</span><span class="p">.</span><span class="nx">charset</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">;</span>
-        <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
-         <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">ds</span><span class="p">);</span>
-    <span class="p">})();</span>
-    <span class="nt">&lt;/script&gt;</span>
-<span class="c">&lt;!-- 多说公共JS代码 end --&gt;</span>
-</code></pre></div>
-<p>其中，data-title和data-url的值比较简单，填写文章的标题和真实网址就可以了。
-关键是data-thread-key的设置，原则上要求对于每一个页面，它的值应该是唯一的，这里我推荐使用相对路径的URL就可以，下面是我本地的例子。</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;ds-thread&quot;</span>
-     <span class="na">data-thread-key=</span><span class="s">&quot;/2014/09/28/github-pages-with-comments.html&quot;</span>
-     <span class="na">data-title=</span><span class="s">&quot;如何实现Github博客评论功能&quot;</span>
-     <span class="na">data-url=</span><span class="s">&quot;http://jameszhan.github.io/2014/09/28/github-pages-with-comments.html&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-</code></pre></div></li>
-<li><p>去除多说广告内容。</p>
+  <li>使用你的社交账号登陆多说。</li>
+  <li>进到首页，点击我要安装。</li>
+  <li>输入相应的网站注册信息，输入完成后，它会提供给你一段HTML代码。</li>
+  <li>
+    <p>把生成后的代码拷贝到你需要评论的页面当中。</p>
 
-<p>以下样式使用scss编写。</p>
-<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nn">#ds-thread</span><span class="nc">.ds-thread</span> <span class="p">{</span>
-  <span class="nn">#ds-reset</span> <span class="p">{</span>
-    <span class="nc">.ds-comments-info</span> <span class="p">{</span>
-      <span class="nc">.ds-comments-tabs</span> <span class="p">{</span>
-        <span class="nt">li</span><span class="nc">.ds-tab</span> <span class="p">{</span>
-          <span class="nc">.ds-comments-tab-weibo</span> <span class="p">{</span>
-            <span class="na">display</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
-          <span class="p">}</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nc">.ds-powered-by</span> <span class="p">{</span>
-      <span class="na">display</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></li>
-<li><p>禁用默认分享到微博和空间的功能。</p>
+    <p>~~~html
+ <!-- 多说评论框 start -->
+     &lt;div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="请替换成文章的标题" data-url="请替换成文章的网址"&gt;&lt;/div&gt;
+ <!-- 多说评论框 end -->
+ <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+ <script type="text/javascript">
+ var duoshuoQuery = {short_name:"SHORT-NAME"};
+     (function() {
+         var ds = document.createElement('script');
+         ds.type = 'text/javascript';ds.async = true;
+         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+         ds.charset = 'UTF-8';
+         (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+     })();
+     </script>
+ <!-- 多说公共JS代码 end -->
+ ~~~
+ 其中，data-title和data-url的值比较简单，填写文章的标题和真实网址就可以了。
+ 关键是data-thread-key的设置，原则上要求对于每一个页面，它的值应该是唯一的，这里我推荐使用相对路径的URL就可以，下面是我本地的例子。</p>
 
-<p>我想很多人都和我一样，很讨厌默认分享的功能，默认多说的分享是勾上的，其实我们只要加入如下的脚本，我们就可以很轻易地去掉默认分享的功能。</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="s1">&#39;#ds-thread textarea[name=message]&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#ds-sync-checkbox&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div></li>
+    <p>~~~html</p>
+    <div class="ds-thread" data-thread-key="/2014/09/28/github-pages-with-comments.html" data-title="如何实现Github博客评论功能" data-url="http://jameszhan.github.io/2014/09/28/github-pages-with-comments.html"></div>
+    <p>~~~</p>
+  </li>
+  <li>
+    <p>去除多说广告内容。</p>
+
+    <p>以下样式使用scss编写。</p>
+
+    <p>~~~scss
+ #ds-thread.ds-thread {
+   #ds-reset {
+     .ds-comments-info {
+       .ds-comments-tabs {
+         li.ds-tab {
+           .ds-comments-tab-weibo {
+             display: none;
+           }
+         }
+       }
+     }
+     .ds-powered-by {
+       display: none;
+     }
+   }
+ }
+ ~~~</p>
+  </li>
+  <li>
+    <p>禁用默认分享到微博和空间的功能。</p>
+
+    <p>我想很多人都和我一样，很讨厌默认分享的功能，默认多说的分享是勾上的，其实我们只要加入如下的脚本，我们就可以很轻易地去掉默认分享的功能。</p>
+
+    <p>~~~javascript
+ $(document).on(‘click’, ‘#ds-thread textarea[name=message]’, function(){
+     $(‘#ds-sync-checkbox’).prop(‘checked’, false);
+ });
+ ~~~</p>
+  </li>
 </ol>
 
 <p>到此，我们的文章评论功能就添加完毕，赶快来尝试一下吧！</p>
+
 
         </article>
 
@@ -145,7 +157,7 @@
                 
                 
     
-    <li class="tag"><a href="/categories/github.html">GitHub<span>2</span></a></li>
+    <li class="tag"><a href="/categories/github.html">Github<span>2</span></a></li>
     
 
             </ul>
@@ -154,11 +166,11 @@
                 
                 
     
-    <li class="tag"><a href="/tags/github.html">GitHub<span>2</span></a></li>
+    <li class="tag"><a href="/tags/github.html">Github<span>2</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>10</span></a></li>
+    <li class="tag"><a href="/tags/javascript.html">Javascript<span>10</span></a></li>
     
 
             </ul>
