@@ -3,10 +3,10 @@
   <channel>
     <title>尽管扯淡</title>
     <description>资深码农，程序设计语言控</description>
-    <link>http://jameszhan.github.io/</link>
-    <atom:link href="http://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 Jul 2016 10:34:23 +0000</pubDate>
-    <lastBuildDate>Fri, 08 Jul 2016 10:34:23 +0000</lastBuildDate>
+    <link>https://jameszhan.github.io/</link>
+    <atom:link href="https://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 15 Dec 2016 17:39:59 +0000</pubDate>
+    <lastBuildDate>Thu, 15 Dec 2016 17:39:59 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -116,8 +116,8 @@ curl -I &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;boot2docker ip&lt;span cl
 
 </description>
         <pubDate>Fri, 15 May 2015 23:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/05/15/docker-in-osx.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/05/15/docker-in-osx.html</guid>
+        <link>https://jameszhan.github.io/2015/05/15/docker-in-osx.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/05/15/docker-in-osx.html</guid>
         
         <category>docker</category>
         
@@ -196,8 +196,8 @@ public abstract save(Lme/jameszhan/underlying/compiler/HackingGeneric$Base;)V
 &lt;p&gt;目前，还没有好的办法来解决这个冲突问题，如果冲突的方法较少的话，可以直接在C里面添加同名方法来解决这个冲突，或者在使用到冲突方法时，直接用A或者B接口来引用当前实例。&lt;/p&gt;
 </description>
         <pubDate>Sun, 03 May 2015 23:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/05/03/hacking-java-generic.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/05/03/hacking-java-generic.html</guid>
+        <link>https://jameszhan.github.io/2015/05/03/hacking-java-generic.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/05/03/hacking-java-generic.html</guid>
         
         <category>java</category>
         
@@ -529,8 +529,8 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 
 </description>
         <pubDate>Sat, 25 Apr 2015 23:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html</guid>
+        <link>https://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html</guid>
         
         <category>javascript</category>
         
@@ -861,8 +861,8 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 
 </description>
         <pubDate>Wed, 01 Apr 2015 23:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/04/01/build-interpret-from-zero.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/04/01/build-interpret-from-zero.html</guid>
+        <link>https://jameszhan.github.io/2015/04/01/build-interpret-from-zero.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/04/01/build-interpret-from-zero.html</guid>
         
         <category>lambda</category>
         
@@ -1034,8 +1034,8 @@ sudo service netatalk restart
 
 </description>
         <pubDate>Fri, 06 Mar 2015 19:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</guid>
+        <link>https://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/03/06/raspberry-time-capsule.html</guid>
         
         <category>raspberrypi</category>
         
@@ -1190,8 +1190,8 @@ gateway 192.168.1.1   # IP of your router
 
 </description>
         <pubDate>Mon, 02 Mar 2015 15:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</guid>
+        <link>https://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/03/02/raspberry-with-wifi.html</guid>
         
         <category>raspberrypi</category>
         
@@ -1379,8 +1379,8 @@ sudo apt-get -y dist-upgrade
 &lt;p&gt;到这里，树莓派的基础配置基本完成，&lt;strong&gt;Take your time and enjoy it！&lt;/strong&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 01 Mar 2015 10:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</guid>
+        <link>https://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/03/01/raspberry-bootstrap.html</guid>
         
         <category>raspberrypi</category>
         
@@ -2065,8 +2065,8 @@ git cat-file -p d9e7958
 &lt;p&gt;尽管 git 命令行功能强大，但是对于阅读某个项目的小部分代码，尤其是要频繁回到历史版本时不是太方便，如果能在浏览器上直接查看，将会方便许多，还好我们已经有了 GitHub 这样的利器，可以帮我们快速定位代码，但是如果你不想把代码分享出去，又没有私有库可以用，不妨可以使用 &lt;a href=&quot;https://github.com/jameszhan/webgit&quot;&gt;webgit&lt;/a&gt; 来查看本地代码。webgit是一个ruby工具，依赖于 ruby 环境，目前功能还不是很完善，感兴趣的同学可以来一起完善。&lt;/p&gt;
 </description>
         <pubDate>Sat, 28 Feb 2015 12:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</guid>
+        <link>https://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/02/28/git-from-bottom-to-top.html</guid>
         
         <category>git</category>
         
@@ -2189,8 +2189,8 @@ server {
 
 </description>
         <pubDate>Wed, 25 Feb 2015 23:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2015/02/25/setup-webdav-with-nginx-in-osx.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2015/02/25/setup-webdav-with-nginx-in-osx.html</guid>
+        <link>https://jameszhan.github.io/2015/02/25/setup-webdav-with-nginx-in-osx.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2015/02/25/setup-webdav-with-nginx-in-osx.html</guid>
         
         <category>webdav</category>
         
@@ -2785,8 +2785,8 @@ uname -a
 
 </description>
         <pubDate>Wed, 01 Oct 2014 18:00:00 +0000</pubDate>
-        <link>http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</link>
-        <guid isPermaLink="true">http://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</guid>
+        <link>https://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</link>
+        <guid isPermaLink="true">https://jameszhan.github.io/2014/10/01/osx-developer-environment-setup.html</guid>
         
         <category>osx</category>
         

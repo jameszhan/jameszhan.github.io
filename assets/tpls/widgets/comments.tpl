@@ -2,7 +2,7 @@
 <div class="ds-thread"
      data-thread-key="/assets/tpls/widgets/comments.tpl"
      data-title="Comments"
-     data-url="http://jameszhan.github.io/assets/tpls/widgets/comments.tpl"></div>
+     data-url="https://jameszhan.github.io/assets/tpls/widgets/comments.tpl"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
