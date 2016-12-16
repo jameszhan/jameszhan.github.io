@@ -67,26 +67,26 @@ brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenge
 
 <p>在安装前需要修改Homebrew配置文件<code class="highlighter-rouge">/usr/local/Library/Formula/nginx.rb</code>，在参数中加入nginx-dav-ext-module。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>args = %W[
-    --prefix=#{prefix}
-    --with-http_ssl_module
-    --with-pcre
-    --with-ipv6
-    --sbin-path=#{bin}/nginx
-    --with-cc-opt=#{cc_opt}
-    --with-ld-opt=#{ld_opt}
-    --conf-path=#{etc}/nginx/nginx.conf
-    --pid-path=#{var}/run/nginx.pid
-    --lock-path=#{var}/run/nginx.lock
-    --http-client-body-temp-path=#{var}/run/nginx/client_body_temp
-    --http-proxy-temp-path=#{var}/run/nginx/proxy_temp
-    --http-fastcgi-temp-path=#{var}/run/nginx/fastcgi_temp
-    --http-uwsgi-temp-path=#{var}/run/nginx/uwsgi_temp
-    --http-scgi-temp-path=#{var}/run/nginx/scgi_temp
-    --http-log-path=#{var}/log/nginx/access.log
-    --error-log-path=#{var}/log/nginx/error.log
-    --with-http_gzip_static_module
-    --add-module=/tmp/nginx-dav-ext-module
+<div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="n">args</span> = %<span class="n">W</span>[
+    --<span class="n">prefix</span>=<span class="c">#{prefix}
+</span>    --<span class="n">with</span>-<span class="n">http_ssl_module</span>
+    --<span class="n">with</span>-<span class="n">pcre</span>
+    --<span class="n">with</span>-<span class="n">ipv6</span>
+    --<span class="n">sbin</span>-<span class="n">path</span>=<span class="c">#{bin}/nginx
+</span>    --<span class="n">with</span>-<span class="n">cc</span>-<span class="n">opt</span>=<span class="c">#{cc_opt}
+</span>    --<span class="n">with</span>-<span class="n">ld</span>-<span class="n">opt</span>=<span class="c">#{ld_opt}
+</span>    --<span class="n">conf</span>-<span class="n">path</span>=<span class="c">#{etc}/nginx/nginx.conf
+</span>    --<span class="n">pid</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx.pid
+</span>    --<span class="n">lock</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx.lock
+</span>    --<span class="n">http</span>-<span class="n">client</span>-<span class="n">body</span>-<span class="n">temp</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx/client_body_temp
+</span>    --<span class="n">http</span>-<span class="n">proxy</span>-<span class="n">temp</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx/proxy_temp
+</span>    --<span class="n">http</span>-<span class="n">fastcgi</span>-<span class="n">temp</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx/fastcgi_temp
+</span>    --<span class="n">http</span>-<span class="n">uwsgi</span>-<span class="n">temp</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx/uwsgi_temp
+</span>    --<span class="n">http</span>-<span class="n">scgi</span>-<span class="n">temp</span>-<span class="n">path</span>=<span class="c">#{var}/run/nginx/scgi_temp
+</span>    --<span class="n">http</span>-<span class="n">log</span>-<span class="n">path</span>=<span class="c">#{var}/log/nginx/access.log
+</span>    --<span class="n">error</span>-<span class="n">log</span>-<span class="n">path</span>=<span class="c">#{var}/log/nginx/error.log
+</span>    --<span class="n">with</span>-<span class="n">http_gzip_static_module</span>
+    --<span class="n">add</span>-<span class="n">module</span>=/<span class="n">tmp</span>/<span class="n">nginx</span>-<span class="n">dav</span>-<span class="n">ext</span>-<span class="n">module</span>
 ]
 </code></pre>
 </div>
@@ -99,30 +99,29 @@ brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenge
 
 <h4 id="auth">生成auth认证配置文件</h4>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>htpasswd -c /u/etc/nginx/user.passwd admin
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>htpasswd -c /u/etc/nginx/user.passwd admin
 htpasswd /u/etc/nginx/user.passwd james
 htpasswd /u/etc/nginx/user.passwd guest
-
 </code></pre>
 </div>
 
 <h4 id="usrlocaletcnginxnginxconf">在配置文件<code class="highlighter-rouge">/usr/local/etc/nginx/nginx.conf</code>加入如下配置：</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># WebDAV
-server {
-    listen 9876;
-    error_page 404 /404;
-    error_page 503 /503;
+<div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="c"># WebDAV
+</span><span class="n">server</span> {
+    <span class="n">listen</span> <span class="m">9876</span>;
+    <span class="n">error_page</span> <span class="m">404</span> /<span class="m">404</span>;
+    <span class="n">error_page</span> <span class="m">503</span> /<span class="m">503</span>;
 
-    location / {
-        root /u/var/webdav;
-        dav_methods PUT DELETE MKCOL COPY MOVE;
-        dav_ext_methods PROPFIND OPTIONS;
-        create_full_put_path on;
-        dav_access user:rw group:rw all:r;
+    <span class="n">location</span> / {
+        <span class="n">root</span> /<span class="n">u</span>/<span class="n">var</span>/<span class="n">webdav</span>;
+        <span class="n">dav_methods</span> <span class="n">PUT</span> <span class="n">DELETE</span> <span class="n">MKCOL</span> <span class="n">COPY</span> <span class="n">MOVE</span>;
+        <span class="n">dav_ext_methods</span> <span class="n">PROPFIND</span> <span class="n">OPTIONS</span>;
+        <span class="n">create_full_put_path</span> <span class="n">on</span>;
+        <span class="n">dav_access</span> <span class="n">user</span>:<span class="n">rw</span> <span class="n">group</span>:<span class="n">rw</span> <span class="n">all</span>:<span class="n">r</span>;
 
-        auth_basic "Authorized Users Only";
-        auth_basic_user_file /u/etc/nginx/user.passwd;
+        <span class="n">auth_basic</span> <span class="s2">"Authorized Users Only"</span>;
+        <span class="n">auth_basic_user_file</span> /<span class="n">u</span>/<span class="n">etc</span>/<span class="n">nginx</span>/<span class="n">user</span>.<span class="n">passwd</span>;
     }
 }
 </code></pre>
@@ -141,8 +140,11 @@ server {
 <h4 id="section">作为静态文件服务器</h4>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>open -a <span class="s2">"Google Chrome"</span> http://127.0.0.1:9876/index.html
+</code></pre>
+</div>
+<p>或者</p>
 
-cadaver http://127.0.0.1:9876
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cadaver http://127.0.0.1:9876
 </code></pre>
 </div>
 

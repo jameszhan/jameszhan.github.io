@@ -5,8 +5,8 @@
     <description>资深码农，程序设计语言控</description>
     <link>https://jameszhan.github.io/</link>
     <atom:link href="https://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 16 Dec 2016 12:56:25 +0000</pubDate>
-    <lastBuildDate>Fri, 16 Dec 2016 12:56:25 +0000</lastBuildDate>
+    <pubDate>Fri, 16 Dec 2016 13:02:25 +0000</pubDate>
+    <lastBuildDate>Fri, 16 Dec 2016 13:02:25 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -2113,26 +2113,26 @@ brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenge
 
 &lt;p&gt;在安装前需要修改Homebrew配置文件&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/Library/Formula/nginx.rb&lt;/code&gt;，在参数中加入nginx-dav-ext-module。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;args = %W[
-    --prefix=#{prefix}
-    --with-http_ssl_module
-    --with-pcre
-    --with-ipv6
-    --sbin-path=#{bin}/nginx
-    --with-cc-opt=#{cc_opt}
-    --with-ld-opt=#{ld_opt}
-    --conf-path=#{etc}/nginx/nginx.conf
-    --pid-path=#{var}/run/nginx.pid
-    --lock-path=#{var}/run/nginx.lock
-    --http-client-body-temp-path=#{var}/run/nginx/client_body_temp
-    --http-proxy-temp-path=#{var}/run/nginx/proxy_temp
-    --http-fastcgi-temp-path=#{var}/run/nginx/fastcgi_temp
-    --http-uwsgi-temp-path=#{var}/run/nginx/uwsgi_temp
-    --http-scgi-temp-path=#{var}/run/nginx/scgi_temp
-    --http-log-path=#{var}/log/nginx/access.log
-    --error-log-path=#{var}/log/nginx/error.log
-    --with-http_gzip_static_module
-    --add-module=/tmp/nginx-dav-ext-module
+&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; = %&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;[
+    --&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{prefix}
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;http_ssl_module&lt;/span&gt;
+    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;pcre&lt;/span&gt;
+    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;ipv6&lt;/span&gt;
+    --&lt;span class=&quot;n&quot;&gt;sbin&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{bin}/nginx
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;cc&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{cc_opt}
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;ld&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{ld_opt}
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{etc}/nginx/nginx.conf
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx.pid
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx.lock
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx/client_body_temp
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;proxy&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx/proxy_temp
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;fastcgi&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx/fastcgi_temp
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;uwsgi&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx/uwsgi_temp
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;scgi&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/run/nginx/scgi_temp
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/log/nginx/access.log
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;=&lt;span class=&quot;c&quot;&gt;#{var}/log/nginx/error.log
+&lt;/span&gt;    --&lt;span class=&quot;n&quot;&gt;with&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;http_gzip_static_module&lt;/span&gt;
+    --&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;=/&lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;nginx&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;dav&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;ext&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;
 ]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2145,30 +2145,29 @@ brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenge
 
 &lt;h4 id=&quot;auth&quot;&gt;生成auth认证配置文件&lt;/h4&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;htpasswd -c /u/etc/nginx/user.passwd admin
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;htpasswd -c /u/etc/nginx/user.passwd admin
 htpasswd /u/etc/nginx/user.passwd james
 htpasswd /u/etc/nginx/user.passwd guest
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;usrlocaletcnginxnginxconf&quot;&gt;在配置文件&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/etc/nginx/nginx.conf&lt;/code&gt;加入如下配置：&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# WebDAV
-server {
-    listen 9876;
-    error_page 404 /404;
-    error_page 503 /503;
+&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# WebDAV
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
+    &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;9876&lt;/span&gt;;
+    &lt;span class=&quot;n&quot;&gt;error_page&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;404&lt;/span&gt; /&lt;span class=&quot;m&quot;&gt;404&lt;/span&gt;;
+    &lt;span class=&quot;n&quot;&gt;error_page&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;503&lt;/span&gt; /&lt;span class=&quot;m&quot;&gt;503&lt;/span&gt;;
 
-    location / {
-        root /u/var/webdav;
-        dav_methods PUT DELETE MKCOL COPY MOVE;
-        dav_ext_methods PROPFIND OPTIONS;
-        create_full_put_path on;
-        dav_access user:rw group:rw all:r;
+    &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; / {
+        &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;webdav&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;dav_methods&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PUT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DELETE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MKCOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;COPY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MOVE&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;dav_ext_methods&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PROPFIND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OPTIONS&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;create_full_put_path&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;dav_access&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;:&lt;span class=&quot;n&quot;&gt;rw&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;:&lt;span class=&quot;n&quot;&gt;rw&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;:&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;;
 
-        auth_basic &quot;Authorized Users Only&quot;;
-        auth_basic_user_file /u/etc/nginx/user.passwd;
+        &lt;span class=&quot;n&quot;&gt;auth_basic&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Authorized Users Only&quot;&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;auth_basic_user_file&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;nginx&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;passwd&lt;/span&gt;;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -2187,8 +2186,11 @@ server {
 &lt;h4 id=&quot;section&quot;&gt;作为静态文件服务器&lt;/h4&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;open -a &lt;span class=&quot;s2&quot;&gt;&quot;Google Chrome&quot;&lt;/span&gt; http://127.0.0.1:9876/index.html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;或者&lt;/p&gt;
 
-cadaver http://127.0.0.1:9876
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cadaver http://127.0.0.1:9876
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
