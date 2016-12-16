@@ -49,7 +49,7 @@
 
 <p>先把移动硬盘插到树莓派USB接口，启动树莓派，并把树莓派接入无线路由器。启动完成后，可以使用如下命令查看硬盘是否已经是否正确接入到USB接口。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo fdisk -l
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo fdisk -l
 <span class="c">#</span>
 <span class="c"># WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.</span>
 <span class="c"># </span>
@@ -77,13 +77,13 @@ sudo blkid
 
 <p>执行如下命令，使得raspbian支持hfs+分区。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo apt-get install hfsplus hfsutils hfsprogs
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo apt-get install hfsplus hfsutils hfsprogs
 </code></pre>
 </div>
 
 <p>挂载hfs+分区。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo mkdir /tm
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo mkdir /tm
 sudo chown -R nobody:nogroup /tm
 sudo mount -t hfsplus -o force,rw /dev/sda2 /tm
 
@@ -100,7 +100,7 @@ sudo umount -v /dev/sda2
 
 <p>手动安装 netatalk 3，它依赖于avahi-daemon（Avahi 是 Apple’s Zeroconf 协议的开源实现，实现类似 Bonjour 的功能，它可以让你在 Mac 系统里自动发现你的 Linux 计算机）。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Remove Netatalk 2</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Remove Netatalk 2</span>
 sudo apt-get --purge remove netatalk
 
 <span class="nb">cd</span> /usr/local/src
@@ -163,7 +163,7 @@ valid users = james
 
 <p>启动 netatalk 服务</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo service avahi-daemon restart
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo service avahi-daemon restart
 sudo service netatalk restart
 </code></pre>
 </div>

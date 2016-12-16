@@ -5,8 +5,8 @@
     <description>资深码农，程序设计语言控</description>
     <link>https://jameszhan.github.io/</link>
     <atom:link href="https://jameszhan.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 15 Dec 2016 17:39:59 +0000</pubDate>
-    <lastBuildDate>Thu, 15 Dec 2016 17:39:59 +0000</lastBuildDate>
+    <pubDate>Fri, 16 Dec 2016 12:56:25 +0000</pubDate>
+    <lastBuildDate>Fri, 16 Dec 2016 12:56:25 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -899,7 +899,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 
 &lt;p&gt;先把移动硬盘插到树莓派USB接口，启动树莓派，并把树莓派接入无线路由器。启动完成后，可以使用如下命令查看硬盘是否已经是否正确接入到USB接口。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo fdisk -l
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo fdisk -l
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# WARNING: GPT (GUID Partition Table) detected on &#39;/dev/sda&#39;! The util fdisk doesn&#39;t support GPT. Use GNU Parted.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# &lt;/span&gt;
@@ -927,13 +927,13 @@ sudo blkid
 
 &lt;p&gt;执行如下命令，使得raspbian支持hfs+分区。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install hfsplus hfsutils hfsprogs
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install hfsplus hfsutils hfsprogs
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;挂载hfs+分区。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mkdir /tm
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mkdir /tm
 sudo chown -R nobody:nogroup /tm
 sudo mount -t hfsplus -o force,rw /dev/sda2 /tm
 
@@ -950,7 +950,7 @@ sudo umount -v /dev/sda2
 
 &lt;p&gt;手动安装 netatalk 3，它依赖于avahi-daemon（Avahi 是 Apple’s Zeroconf 协议的开源实现，实现类似 Bonjour 的功能，它可以让你在 Mac 系统里自动发现你的 Linux 计算机）。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Remove Netatalk 2&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Remove Netatalk 2&lt;/span&gt;
 sudo apt-get --purge remove netatalk
 
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/src
@@ -1013,7 +1013,7 @@ valid users = james
 
 &lt;p&gt;启动 netatalk 服务&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service avahi-daemon restart
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service avahi-daemon restart
 sudo service netatalk restart
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2087,17 +2087,25 @@ git cat-file -p d9e7958
 
 &lt;p&gt;最新的Nginx已经默认支持了webdav模块了，但是支持并不完善，对于PROPFIND OPTIONS还不支持，必须安装&lt;a href=&quot;https://github.com/arut/nginx-dav-ext-module&quot; title=&quot;NGINX WebDAV Extension Module&quot;&gt;WebDAV的扩展模块&lt;/a&gt;。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;nginx&quot;&gt;手动编译和安装Nginx&lt;/h4&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget http://nginx.org/download/nginx-1.8.0.tar.gz --directory-prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp/
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget http://nginx.org/download/nginx-1.8.0.tar.gz --directory-prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp/
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; tar -xzf nginx-1.8.0.tar.gz
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp/nginx-1.8.0
 ./configure --prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/nginx --add-module&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp/nginx-dav-ext-module --with-http_ssl_module --with-pcre --with-ipv6 --sbin-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/nginx/bin/nginx --conf-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/etc/nginx/nginx.conf --pid-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx.pid --lock-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx.lock --http-client-body-temp-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx/client_body_temp --http-proxy-temp-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx/proxy_temp --http-fastcgi-temp-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx/fastcgi_temp --http-uwsgi-temp-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx/uwsgi_temp --http-scgi-temp-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/run/nginx/scgi_temp --http-log-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/log/nginx/access.log --error-log-path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/log/nginx/error.log --with-http_gzip_static_module --with-http_dav_module --with-debug --with-http_gunzip_module
 make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;homebrewnginx-full&quot;&gt;通过Homebrew安装nginx-full&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew unlink nginx
+brew tap homebrew/nginx
+brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenger --with-webdav --with-dav-ext-module
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2129,7 +2137,7 @@ make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make instal
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install nginx --with-debug --with-gunzip --with-libressl --with-passenger --with-spdy --with-webdav
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install nginx --with-debug --with-gunzip --with-libressl --with-passenger --with-spdy --with-webdav
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2140,6 +2148,7 @@ make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make instal
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;htpasswd -c /u/etc/nginx/user.passwd admin
 htpasswd /u/etc/nginx/user.passwd james
 htpasswd /u/etc/nginx/user.passwd guest
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2169,7 +2178,7 @@ server {
 
 &lt;h4 id=&quot;nginx-1&quot;&gt;启动Nginx&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nginx
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nginx
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2177,7 +2186,9 @@ server {
 
 &lt;h4 id=&quot;section&quot;&gt;作为静态文件服务器&lt;/h4&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;open -a &lt;span class=&quot;s2&quot;&gt;&quot;Google Chrome&quot;&lt;/span&gt; http://127.0.0.1:9876/index.html
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;open -a &lt;span class=&quot;s2&quot;&gt;&quot;Google Chrome&quot;&lt;/span&gt; http://127.0.0.1:9876/index.html
+
+cadaver http://127.0.0.1:9876
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2297,14 +2308,14 @@ server {
 &lt;h4 id=&quot;xcode&quot;&gt;安装XCode&lt;/h4&gt;
 &lt;p&gt;XCode可以直接从App Store上下载和更新，安装完以后，我们需要启动它一次，这个时候它会提示你去接受它的协议。 接下来，我们需要安装Command Line Tool。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcode-select --install
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcode-select --install
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;oh-my-zsh&quot;&gt;安装oh-my-zsh&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot; title=&quot;Oh My Zsh&quot;&gt;oh-my-zsh&lt;/a&gt;是一套开源，社区驱动的用于管理zsh配置的框架，可以使用如下的方式安装。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
 &lt;span class=&quot;c&quot;&gt;# Optionally, backup your existing ~/.zshrc file&lt;/span&gt;
 cp ~/.zshrc ~/.zshrc.orig
@@ -2315,12 +2326,13 @@ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 chsh -s /bin/zsh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;接下来，重启你的命令行就可以发现oh-my-zsh已经配置好了。&lt;/p&gt;
 
 &lt;p&gt;如果你想更改zsh的配置，可以编辑~/.zshrc个性化你的配置。
 比如我本地的配置为：&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;jameszhan&quot;&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;jameszhan&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;git svn mvn brew gem go lein npm node rails ruby rvm&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2328,18 +2340,18 @@ chsh -s /bin/zsh
 &lt;h4 id=&quot;homebrew&quot;&gt;安装Homebrew&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&quot;http://brew.sh/&quot; title=&quot;Homebrew&quot;&gt;Homebrew&lt;/a&gt;是OSX下非常好用的包管理工具，类似于Ubuntu下的apt-get，用于替换OSX下的老牌包管理工具port。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ruby -e &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ruby -e &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;homebrew-1&quot;&gt;通过Homebrew安装一些实用工具&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
 brew install curl wget tree gnu-sed gawk rename
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;homebrew-2&quot;&gt;通过Homebrew安装一些常用服务&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
 brew install redis mysql postgresql mongodb sqlite nginx
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2351,7 +2363,7 @@ brew install redis mysql postgresql mongodb sqlite nginx
   &lt;p&gt;&lt;a href=&quot;http://wiki.qemu.org/Main_Page&quot; title=&quot;QEMU&quot;&gt;QEMU&lt;/a&gt;是一套由Fabrice Bellard所编写的以GPL许可证分发源码的模拟处理器，在GNU/Linux平台上使用广泛。。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install qemu --with-libssh2 --with-sdl --with-vde
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install qemu --with-libssh2 --with-sdl --with-vde
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -2360,53 +2372,61 @@ brew install redis mysql postgresql mongodb sqlite nginx
   &lt;p&gt;&lt;a href=&quot;http://bochs.sourceforge.net/&quot; title=&quot;Bochs&quot;&gt;Bochs&lt;/a&gt;是一个基于LGPL的开源x86 虚拟机软件（类似于QEMU）。Bochs的CPU指令是完全自己模拟出来的，这种方式的缺点是速度比较慢；优点是具有无以伦比的可移植性：有Gcc的地方就可以有Bochs。甚至已经有了跑在PocketPC上的Bochs。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install homebrew/x11/bochs
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;vim-vs-emacs&quot;&gt;Vim vs. Emacs&lt;/h4&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install MacVim&lt;/span&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install MacVim&lt;/span&gt;
 brew install macvim --with-cscope --with-lua --override-system-vim
 &lt;span class=&quot;c&quot;&gt;# Install Emacs&lt;/span&gt;
 brew install emacs --cocoa --srgb
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;ol&gt;
   &lt;li&gt;喜欢Vim的看&lt;a href=&quot;http://coolshell.cn/articles/11312.html&quot;&gt;这里&lt;/a&gt;。&lt;/li&gt;
   &lt;li&gt;喜欢Emacs的看&lt;a href=&quot;http://www.masteringemacs.org/&quot;&gt;这里&lt;/a&gt;，给个现成的&lt;a href=&quot;https://github.com/purcell/emacs.d&quot;&gt;.emacs.d&lt;/a&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h4 id=&quot;ruby&quot;&gt;准备Ruby开发环境&lt;/h4&gt;
-&lt;p&gt;##### 安装Ruby
-1. 通过&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot; title=&quot;rbenv&quot;&gt;rbenv&lt;/a&gt;安装ruby&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~~~sh
-brew update
+&lt;h5 id=&quot;ruby-1&quot;&gt;安装ruby&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;通过&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot; title=&quot;rbenv&quot;&gt;rbenv&lt;/a&gt;安装ruby&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
 brew install rbenv ruby-build
 rbenv versions
 rbenv install 2.0.0-p247
-~~~ 2. 通过[RVM][rvm]安装ruby
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-~~~sh
-# install rvm on /usr/local/rvm
+&lt;ol&gt;
+  &lt;li&gt;通过&lt;a href=&quot;https://rvm.io/&quot; title=&quot;RVM&quot;&gt;RVM&lt;/a&gt;安装ruby&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# install rvm on /usr/local/rvm&lt;/span&gt;
 curl -sSL https://get.rvm.io | sudo bash -s stable
 sudo chown -R YOURNAME:rvm /usr/local/rvm
 rvm reload
 rvm list known
-# Install latest stable ruby version
+&lt;span class=&quot;c&quot;&gt;# Install latest stable ruby version&lt;/span&gt;
 rvm install 2.1.2
 rvm use 2.1.2 —default
 
-# update RVM
+&lt;span class=&quot;c&quot;&gt;# update RVM&lt;/span&gt;
 rvmsudo rvm get stable
 sudo chown -R YOURNAME:rvm /usr/local/rvm
-~~~
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;gem&quot;&gt;安装常用的gem&lt;/h5&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install pry rails bundler --no-ri --no-rdoc
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install pry rails bundler --no-ri --no-rdoc
 gem install jekyll
 gem install sinatra
 &lt;/code&gt;&lt;/pre&gt;
@@ -2419,24 +2439,26 @@ gem install sinatra
 &lt;/ol&gt;
 
 &lt;h4 id=&quot;java&quot;&gt;准备Java的开发环境&lt;/h4&gt;
-&lt;p&gt;##### 安装JDK
-我们可以从Oracle官网上去&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot; title=&quot;JDK&quot;&gt;下载&lt;/a&gt;JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。&lt;/p&gt;
+
+&lt;h5 id=&quot;jdk&quot;&gt;安装JDK&lt;/h5&gt;
+&lt;p&gt;我们可以从Oracle官网上去&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot; title=&quot;JDK&quot;&gt;下载&lt;/a&gt;JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#export JAVA_HOME=$(/usr/libexec/java_home -version 1.6)
 export JAVA_HOME=$(/usr/libexec/java_home -version 1.7)
 #export JAVA_HOME=$(/usr/libexec/java_home -version 1.8)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;注意：具体Java版本以你本地安装的版本为准。
-##### 安装Maven&lt;/p&gt;
+&lt;p&gt;注意：具体Java版本以你本地安装的版本为准。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install maven
+&lt;h5 id=&quot;maven&quot;&gt;安装Maven&lt;/h5&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install maven
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;jvm&quot;&gt;JVM语言&lt;/h5&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Groovy&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Groovy&lt;/span&gt;
 brew install groovy
 brew install grails
 &lt;span class=&quot;c&quot;&gt;# Scala&lt;/span&gt;
@@ -2458,17 +2480,20 @@ brew install leiningen
 &lt;h4 id=&quot;node&quot;&gt;准备Node开发环境&lt;/h4&gt;
 
 &lt;h5 id=&quot;nodenpm&quot;&gt;安装node和npm&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install node --enable-debug
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install node --enable-debug
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;zshrcnodepath&quot;&gt;在~/.zshrc配置全局NODE_PATH&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NODE_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/lib/node_modules/&quot;&lt;/span&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NODE_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/lib/node_modules/&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h5 id=&quot;section-9&quot;&gt;常用命令介绍&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看 npm 安装的内容&lt;/span&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看 npm 安装的内容&lt;/span&gt;
 npm list     &lt;span class=&quot;c&quot;&gt;# 本地&lt;/span&gt;
 npm list -g  &lt;span class=&quot;c&quot;&gt;# 全局&lt;/span&gt;
 
@@ -2479,7 +2504,8 @@ npm uninstall &amp;lt;package&amp;gt; &lt;span class=&quot;c&quot;&gt;# 卸载�
 &lt;/div&gt;
 
 &lt;h5 id=&quot;section-10&quot;&gt;安装常用的组件&lt;/h5&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install -g coffee-script
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install -g coffee-script
 npm install -g less
 npm install -g grunt-cli
 npm install -g gulp
@@ -2496,9 +2522,10 @@ npm install jquery
 &lt;/ol&gt;
 
 &lt;h4 id=&quot;php&quot;&gt;搭建PHP开发环境&lt;/h4&gt;
-&lt;p&gt;##### 安装PHP和启动fcgi&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew tap homebrew/homebrew-php
+&lt;h5 id=&quot;phpfcgi&quot;&gt;安装PHP和启动fcgi&lt;/h5&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew tap homebrew/homebrew-php
 &lt;span class=&quot;c&quot;&gt;# Install php-cgi&lt;/span&gt;
 brew reinstall php56 --with-mysql --with-cgi --with-pgsql --with-homebrew-curl --without-pear
 
@@ -2512,32 +2539,42 @@ spawn-fcgi -a 127.0.0.1 -p 6666 -C 6 -f /usr/local/bin/php-cgi -u james -d /u/va
 &lt;p&gt;更多安装选项可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;brew options php56&lt;/code&gt;查看。&lt;/p&gt;
 
 &lt;h5 id=&quot;php-1&quot;&gt;测试PHP环境&lt;/h5&gt;
-&lt;p&gt;###### &lt;code class=&quot;highlighter-rouge&quot;&gt;Nginx&lt;/code&gt; 配置
-~~~
-http {
-    upstream fastcgi_server {
-        server  127.0.0.1:6666;
-    }
-    server {
-        listen              80;
-        server_name         localhost;
-        index               index.html index.htm index.php;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    location / {
-        root   			/u/var/www;
-        index  			index.php index.html index.htm;
+&lt;h6 id=&quot;nginx&quot;&gt;Nginx配置&lt;/h6&gt;
+&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; {
+    &lt;span class=&quot;n&quot;&gt;upstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fastcgi_server&lt;/span&gt; {
+        &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;  &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;6666&lt;/span&gt;;
     }
-    location ~ \.php$ {
-        root			/u/var/www;
-        fastcgi_pass	fastcgi_server;
-        fastcgi_index	index.php;
-        fastcgi_param	SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
-        include			conf/fastcgi_params;
+    &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
+        &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt;              &lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
+        &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;               &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;htm&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;php&lt;/span&gt;;
+
+        &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; / {
+	        &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;   			/&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;;
+	        &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;  			&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;php&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;htm&lt;/span&gt;;
+        }
+        &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; ~ \.&lt;span class=&quot;n&quot;&gt;php&lt;/span&gt;$ {
+	        &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;			/&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;;
+	        &lt;span class=&quot;n&quot;&gt;fastcgi_pass&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;fastcgi_server&lt;/span&gt;;
+	        &lt;span class=&quot;n&quot;&gt;fastcgi_index&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;php&lt;/span&gt;;
+	        &lt;span class=&quot;n&quot;&gt;fastcgi_param&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;SCRIPT_FILENAME&lt;/span&gt;  $&lt;span class=&quot;n&quot;&gt;document_root&lt;/span&gt;/$&lt;span class=&quot;n&quot;&gt;fastcgi_script_name&lt;/span&gt;;
+	        &lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;fastcgi_params&lt;/span&gt;;
+        }
     }
-} } ~~~ ###### 测试页面(`index.php`) ~~~php &amp;lt;?php
-phpinfo(); ?&amp;gt; ~~~ 访问http://localhost/index.php页面即可以查看PHP环境是否搭建成功。
+}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;h6 id=&quot;indexphp&quot;&gt;测试页面(index.php)&lt;/h6&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;phpinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;访问http://localhost/index.php页面即可以查看PHP环境是否搭建成功。&lt;/p&gt;
 
 &lt;h5 id=&quot;section-12&quot;&gt;开发工具的选择&lt;/h5&gt;
 &lt;ol&gt;
@@ -2548,7 +2585,7 @@ phpinfo(); ?&amp;gt; ~~~ 访问http://localhost/index.php页面即可以查看PH
 &lt;h4 id=&quot;section-13&quot;&gt;其他编程语言&lt;/h4&gt;
 &lt;p&gt;如果你是编程语言控，在OS X下你可以很方便地使用各种编程语言。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# C++&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# C++&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;cppcompile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;c++ -std=c++11 -stdlib=libc++&#39;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# install python 2.7&lt;/span&gt;
@@ -2582,10 +2619,11 @@ brew install io
 &lt;/div&gt;
 
 &lt;h2 id=&quot;section-14&quot;&gt;一些实用技巧&lt;/h2&gt;
-&lt;p&gt;### 挂载硬盘到指定目录
-这里，我们演示如何把第二块硬盘挂载到/opt目录。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 列出当前所有硬盘信息&lt;/span&gt;
+&lt;h3 id=&quot;section-15&quot;&gt;挂载硬盘到指定目录&lt;/h3&gt;
+&lt;p&gt;这里，我们演示如何把第二块硬盘挂载到/opt目录。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 列出当前所有硬盘信息&lt;/span&gt;
 diskutil list
 &lt;span class=&quot;c&quot;&gt;# diskN 一般代表第N个硬盘，diskNS1一般表示EFI分区信息，diskNS2一般表示我们的目标分区卷。&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# 列出指定硬盘的详细信息，这里面我们可以得到它的UUID信息&lt;/span&gt;
@@ -2603,9 +2641,10 @@ diskutil unmount  /dev/disk2s2
 
 &lt;p&gt;通过以上的命令，我们确实可以做到把硬盘挂载到具体目录，然后当我们机器重启后，通过刚刚命令修改的配置就会失效。如果我们想固定把硬盘加载到某个目录（尤其当我们第二块硬盘也是内置硬盘）时，又当如何处理呢？事实上，非常简单，执行如下命令，在&lt;code class=&quot;highlighter-rouge&quot;&gt;fstab&lt;/code&gt;中加入一条记录即可。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vifs
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vifs
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;我的电脑配置记录如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UUID=DE74EC97-3EFC-3197-AC0E-AC596773D738 /opt hfs rw 1 0
@@ -2615,7 +2654,7 @@ diskutil unmount  /dev/disk2s2
 
 &lt;h3 id=&quot;finder&quot;&gt;Finder显示默认隐藏的文件&lt;/h3&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 显示所有隐藏文件&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 显示所有隐藏文件&lt;/span&gt;
 defaults write com.apple.finder AppleShowAllFiles -bool YES
 killall Finder
 
@@ -2626,9 +2665,10 @@ killall Finder
 &lt;/div&gt;
 
 &lt;h3 id=&quot;timemachine&quot;&gt;TimeMachine中命令行操作权限问题&lt;/h3&gt;
-&lt;p&gt;##### 删除指定的目录&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Before OSX 10.9&lt;/span&gt;
+&lt;h5 id=&quot;section-16&quot;&gt;删除指定的目录&lt;/h5&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Before OSX 10.9&lt;/span&gt;
 sudo /System/Library/Extensions/TMSafetyNet.kext/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;HD/opt/ 
 &lt;span class=&quot;c&quot;&gt;# After OSX 10.10&lt;/span&gt;
 sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;HD/opt/ 
@@ -2636,27 +2676,26 @@ sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass rm -frv
 sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass find . -name &lt;span class=&quot;s1&quot;&gt;&#39;.DS_Store&#39;&lt;/span&gt; -print -delete
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;重装完系统，特别是在有第二块硬盘的情况下，在使用TimeMachine的时候，会发现整个硬盘很有可能要重新备份，而不是在原来的基础上增量备份，这无疑是对备份空间的巨大浪费，如果你之前已经备份了该磁盘的话，可以强制把TimeMachine中的对应备份强制恢复到该分区即可解决这个问题。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-15&quot;&gt;多媒体相关&lt;/h3&gt;
+&lt;h3 id=&quot;section-17&quot;&gt;多媒体相关&lt;/h3&gt;
 
-&lt;h3 id=&quot;section-16&quot;&gt;#&lt;/h3&gt;
-
-&lt;h4 id=&quot;section-17&quot;&gt;视频播放&lt;/h4&gt;
+&lt;h4 id=&quot;section-18&quot;&gt;视频播放&lt;/h4&gt;
 
 &lt;p&gt;OS X下免费又好用的视频播放器当属VLC，可以支持几乎所有常用的视频格式。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install Caskroom/cask/vlc
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install Caskroom/cask/vlc
 &lt;span class=&quot;c&quot;&gt;# 或者&lt;/span&gt;
 brew cask install vlc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;h4 id=&quot;section-18&quot;&gt;视频格式转换&lt;/h4&gt;
 
-&lt;p&gt;在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。&lt;/p&gt;
+&lt;span class=&quot;c&quot;&gt;#### 视频格式转换&lt;/span&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看ffmpeg的安装选项，可以按照你自己的要求选装&lt;/span&gt;
+在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。
+
+&lt;span class=&quot;sb&quot;&gt;```&lt;/span&gt;bash
+&lt;span class=&quot;c&quot;&gt;# 查看ffmpeg的安装选项，可以按照你自己的要求选装&lt;/span&gt;
 brew info ffmpeg
 
 &lt;span class=&quot;c&quot;&gt;# 安装FFmpeg&lt;/span&gt;
@@ -2687,13 +2726,14 @@ ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate 1000 -b 700 -qmin 3 -qmax 5 -b
 &lt;h3 id=&quot;extended-attributes-eas&quot;&gt;Extended Attributes (EAs)&lt;/h3&gt;
 &lt;p&gt;当我们使用&lt;code class=&quot;highlighter-rouge&quot;&gt;ls -l&lt;/code&gt;查看文件目录时，细心的同学会发现有些文件的ACL后面都多一个@，这个就是我们这节要讨论的扩展属性。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
 -rw-r--r--@ 1 james  admin      755402 Oct 21 22:54 HexFiend.zip
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;在UNIX/Linux当中，文件可以拥有rwx之外的扩展属性，在本例中，测试的几个文件打上了颜色的tag，要查看扩展属性的详情，可以使用命令&lt;code class=&quot;highlighter-rouge&quot;&gt;ls -l@&lt;/code&gt;查看。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
 	com.apple.FinderInfo	        32
 	com.apple.metadata:_kMDItemUserTags	        53
 -rw-r--r--@ 1 james  admin      755402 Oct 21 22:54 HexFiend.zip
@@ -2701,15 +2741,17 @@ ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate 1000 -b 700 -qmin 3 -qmax 5 -b
 	com.apple.metadata:_kMDItemUserTags	        53
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;xattr&lt;/code&gt;命令来操作扩展属性。&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -d com.apple.metadata:_kMDItemUserTags CoRD.zip
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xattr -d com.apple.metadata:_kMDItemUserTags CoRD.zip
 xattr -w hello world CoRD.zip
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ls -l@ CoRD.zip&lt;/code&gt;结果如下：&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin   3.3M Oct 21 22:54 CoRD.zip
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-rw-r--r--@ 1 james  admin   3.3M Oct 21 22:54 CoRD.zip
 	hello	   5B
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2719,7 +2761,7 @@ xattr -w hello world CoRD.zip
 
 &lt;h3 id=&quot;section-19&quot;&gt;常用的命令&lt;/h3&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 删除所有.DS_Store文件&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 删除所有.DS_Store文件&lt;/span&gt;
 sudo find / -name &lt;span class=&quot;s1&quot;&gt;&#39;.DS_Store&#39;&lt;/span&gt; -print -delete
 &lt;span class=&quot;c&quot;&gt;# 删除当前目录下所有空子目录 &lt;/span&gt;
 find . -type d -empty -delete -print

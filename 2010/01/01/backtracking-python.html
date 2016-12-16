@@ -98,54 +98,55 @@
 <h4 id="section-5">使用回溯法实现其他算法</h4>
 
 <ol>
-  <li>
-    <p>列出全部解空间</p>
-
-    <p>~~~python
- def counter(n, m):
-     backtracking(n, m, lambda a, k: True, lambda a: print(a))                                 <br />
- ~~~</p>
-  </li>
-  <li>
-    <p>实现排列算法</p>
-
-    <p>~~~python
- def permutation(n, m):
-     def check(a, k):
-         for i in range(k):
-             if a[i] == a[k]:
-                 return False
-         return True
-     backtracking(n, m, check, display)
- ~~~</p>
-  </li>
-  <li>
-    <p>实现组合算法</p>
-
-    <p>~~~python                                                   <br />
- def combination(n, m):
-     def check(a, k):
-         for i in range(k):
-             if a[i] &gt;= a[k]:
-                 return False
-         return True
-     backtracking(n, m, check, display)                                               <br />
- ~~~</p>
-  </li>
-  <li>
-    <p>解决n皇后问题</p>
-
-    <p>~~~python                                                   <br />
- def nqueen(n):
-     def check(a, k):
-         for i in range(k):
-             if a[i] == a[k] or abs(a[i] - a[k]) == k - i:
-                 return False
-         return True
-     backtracking(n, n, check, lambda a: print(a))                                               <br />
- ~~~</p>
-  </li>
+  <li>列出全部解空间</li>
 </ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="n">backtracking</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>                                   
+</code></pre>
+</div>
+
+<ol>
+  <li>实现排列算法</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">permutation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="n">backtracking</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ol>
+  <li>实现组合算法</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">combination</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="n">backtracking</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="n">display</span><span class="p">)</span>                                                 
+</code></pre>
+</div>
+
+<ol>
+  <li>解决n皇后问题</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">nqueen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">==</span> <span class="n">k</span> <span class="o">-</span> <span class="n">i</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="n">backtracking</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>                                                 
+</code></pre>
+</div>
 
 <p>事实上，回溯法能解决的算法问题远不仅于此，回溯法本质上是穷举法的一种，只要解包含特征：后一个位置的选择依赖于前面的选择状态，我们便可以使用回溯法来实现。尽管回溯法的时间复杂度为n^m，但是由于在搜索解空间树的过程中，很多分支在一早就被剪去了，所以在实际应用过程中，其往往十分高效。</p>
 

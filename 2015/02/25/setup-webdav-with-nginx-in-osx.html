@@ -41,17 +41,25 @@
 
 <p>最新的Nginx已经默认支持了webdav模块了，但是支持并不完善，对于PROPFIND OPTIONS还不支持，必须安装<a href="https://github.com/arut/nginx-dav-ext-module" title="NGINX WebDAV Extension Module">WebDAV的扩展模块</a>。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
 </code></pre>
 </div>
 
 <h4 id="nginx">手动编译和安装Nginx</h4>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>wget http://nginx.org/download/nginx-1.8.0.tar.gz --directory-prefix<span class="o">=</span>/tmp/
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>wget http://nginx.org/download/nginx-1.8.0.tar.gz --directory-prefix<span class="o">=</span>/tmp/
 <span class="nb">cd</span> /tmp <span class="o">&amp;&amp;</span> tar -xzf nginx-1.8.0.tar.gz
 <span class="nb">cd</span> /tmp/nginx-1.8.0
 ./configure --prefix<span class="o">=</span>/usr/local/nginx --add-module<span class="o">=</span>/tmp/nginx-dav-ext-module --with-http_ssl_module --with-pcre --with-ipv6 --sbin-path<span class="o">=</span>/usr/local/nginx/bin/nginx --conf-path<span class="o">=</span>/usr/local/etc/nginx/nginx.conf --pid-path<span class="o">=</span>/usr/local/var/run/nginx.pid --lock-path<span class="o">=</span>/usr/local/var/run/nginx.lock --http-client-body-temp-path<span class="o">=</span>/usr/local/var/run/nginx/client_body_temp --http-proxy-temp-path<span class="o">=</span>/usr/local/var/run/nginx/proxy_temp --http-fastcgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/fastcgi_temp --http-uwsgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/uwsgi_temp --http-scgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/scgi_temp --http-log-path<span class="o">=</span>/usr/local/var/log/nginx/access.log --error-log-path<span class="o">=</span>/usr/local/var/log/nginx/error.log --with-http_gzip_static_module --with-http_dav_module --with-debug --with-http_gunzip_module
 make <span class="o">&amp;&amp;</span> make install
+</code></pre>
+</div>
+
+<h4 id="homebrewnginx-full">通过Homebrew安装nginx-full</h4>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew unlink nginx
+brew tap homebrew/nginx
+brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenger --with-webdav --with-dav-ext-module
 </code></pre>
 </div>
 
@@ -83,7 +91,7 @@ make <span class="o">&amp;&amp;</span> make install
 </code></pre>
 </div>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew install nginx --with-debug --with-gunzip --with-libressl --with-passenger --with-spdy --with-webdav
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install nginx --with-debug --with-gunzip --with-libressl --with-passenger --with-spdy --with-webdav
 </code></pre>
 </div>
 
@@ -94,6 +102,7 @@ make <span class="o">&amp;&amp;</span> make install
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>htpasswd -c /u/etc/nginx/user.passwd admin
 htpasswd /u/etc/nginx/user.passwd james
 htpasswd /u/etc/nginx/user.passwd guest
+
 </code></pre>
 </div>
 
@@ -123,7 +132,7 @@ server {
 
 <h4 id="nginx-1">启动Nginx</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>nginx
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>nginx
 </code></pre>
 </div>
 
@@ -131,7 +140,9 @@ server {
 
 <h4 id="section">作为静态文件服务器</h4>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>open -a <span class="s2">"Google Chrome"</span> http://127.0.0.1:9876/index.html
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>open -a <span class="s2">"Google Chrome"</span> http://127.0.0.1:9876/index.html
+
+cadaver http://127.0.0.1:9876
 </code></pre>
 </div>
 

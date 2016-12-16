@@ -35,8 +35,8 @@
         </header>
 
         <article class="post-content">
-            <p>##JavaScript中的内置对象
-<img src="http://img3.tbcdn.cn/L1/461/1/b_65692_1395717796_28954664.png" alt="js_core" /></p>
+            <h2 id="javascript">JavaScript中的内置对象</h2>
+<p><img src="http://img3.tbcdn.cn/L1/461/1/b_65692_1395717796_28954664.png" alt="js_core" /></p>
 
 <p>注：同背景颜色的对象为同一个对象，白色背景或无背景不受此规则限制，后面的图片规则类似。</p>
 
@@ -46,9 +46,9 @@
 
 <p>其实JavaScript中的constructor概念是很蹩脚的，其实基于原型继承的语言是完全用不上这个东西的。它存在的唯一用处就是给prototype找一个宿主，从而约定一组从该原型派生出来的一组对象的行为。事实上把原型定义在对象上会更直观，也是其他原型编程语言的的普遍做法。也许有的同学就会问了，这样就没有办法区分类和对象了？确实如此，但是原型编程语言其实根本不需要有类的概念，有对象就可以了，从同一个对象原型派生出去的对象即可以把它们认为是同一个类型的对象，通过约定，我们很容易做到这一点，比如大写开头的对象我们把它当做模板或者类型来用（其实它本身依然是一个对象），小写开头的对象就是我们实际需要使用的对象。</p>
 
-<p>##JavaScript内置对象的依赖关系
-<img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717796_1863294342.png" alt="js_prototypes_core" />
-###内置对象的依赖关系
+<h2 id="javascript-1">JavaScript内置对象的依赖关系</h2>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717796_1863294342.png" alt="js_prototypes_core" />
+### 内置对象的依赖关系
 从上图，我们很容易可以看出如下的对象原型之间的依赖关系</p>
 
 <ul>
@@ -80,10 +80,10 @@
 
 <p>关联代码: <a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/system.js">system.js</a></p>
 
-<p>###自定义对象原型的依赖关系
-<img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717797_880796968.png" alt="js_prototypes_objects" /></p>
+<h3 id="section">自定义对象原型的依赖关系</h3>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b_65692_1395717797_880796968.png" alt="js_prototypes_objects" /></p>
 
-<p>##内存模型</p>
+<h2 id="section-1">内存模型</h2>
 
 <div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Hello</span><span class="p">(){}</span>
 <span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hello</span><span class="p">();</span>
@@ -103,6 +103,7 @@
 <span class="kd">var</span> <span class="nx">hello2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hello</span><span class="p">();</span>
 </code></pre>
 </div>
+
 <p>当改变constructor的prototype，对象的constructor也会相应地改变，并且对象的constructor一定等于其prototype的constructor。这里我们更新了Hello的prototype,然后派生出hello2。这个过程中，系统中增加了2个对象，{}和hello2，并且hello2的constructor就是{}的constructor，也即是Object.prototype.constructor。</p>
 
 <p>值得注意的是，之前的prototype将不再和Hello相关联，也即原来的hello对象和Hello函数没有任何关系，更新Hello.prototype将不会对hello产生任何影响，我们可以通过Object.getPrototypeOf(hello)得到其prototype，值得注意的是，该prototype的constructor依然是Hello本身。</p>
@@ -127,10 +128,10 @@
 
 <p>关联代码: <a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/constructor.js">constructor.js</a></p>
 
-<p>##更好的JavaScript</p>
+<h2 id="javascript-2">更好的JavaScript</h2>
 
-<p>###试着忘掉new关键字
-JavaScript的new关键字确实会使不少人感到困惑，当你熟悉原型编程以后，你会发现new这个关键字越来越蹩脚，但是由于历史原因，你又没有办法完全摆脱它，毕竟，普通对象上是没有prototype属性的，必须借助Function原型派生的对象作为其prototype宿主，而new恰恰充当了对象到其原型的桥梁作用。</p>
+<h3 id="new">试着忘掉new关键字</h3>
+<p>JavaScript的new关键字确实会使不少人感到困惑，当你熟悉原型编程以后，你会发现new这个关键字越来越蹩脚，但是由于历史原因，你又没有办法完全摆脱它，毕竟，普通对象上是没有prototype属性的，必须借助Function原型派生的对象作为其prototype宿主，而new恰恰充当了对象到其原型的桥梁作用。</p>
 
 <p>下面，我们将定义一个方法，把new给隐藏起来，允许从一个普通对象直接派生出其他对象。</p>
 
@@ -161,28 +162,29 @@ JavaScript的new关键字确实会使不少人感到困惑，当你熟悉原型�
 
 <p>详细示例代码可以参考：<a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/object_model.js">object_model.js</a></p>
 
-<p>###代码示例
-~~~
-var Vehicle = {
+<h3 id="section-2">代码示例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var Vehicle = {
     start: function(){
-        console.log(“Start “ + this);
+        console.log("Start " + this);
     },
     stop: function(){
-        console.log(“Stop “ + this);
+        console.log("Stop " + this);
     }
-}</p>
+}
 
-<p>var Car = Object.beget(Vehicle);
+var Car = Object.beget(Vehicle);
 Car.tweet = function(){
-    console.log(this + “ tweet”);
-};</p>
+    console.log(this + " tweet");
+};
 
-<p>var myCar = Object.beget(Car);
-Object.traceObj(‘myCar’, myCar);
+var myCar = Object.beget(Car);
+Object.traceObj('myCar', myCar);
 myCar.start();
 myCar.tweet();
 myCar.stop();
-~~~</p>
+</code></pre>
+</div>
 
 <p>详细示例代码可以参考：<a href="https://github.com/jameszhan/simplifyjs/blob/master/kernel/examples.js">examples.js</a>!</p>
 

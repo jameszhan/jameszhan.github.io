@@ -127,14 +127,14 @@
 <h4 id="xcode">安装XCode</h4>
 <p>XCode可以直接从App Store上下载和更新，安装完以后，我们需要启动它一次，这个时候它会提示你去接受它的协议。 接下来，我们需要安装Command Line Tool。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>xcode-select --install
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>xcode-select --install
 </code></pre>
 </div>
 
 <h4 id="oh-my-zsh">安装oh-my-zsh</h4>
 <p><a href="https://github.com/robbyrussell/oh-my-zsh" title="Oh My Zsh">oh-my-zsh</a>是一套开源，社区驱动的用于管理zsh配置的框架，可以使用如下的方式安装。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
 <span class="c"># Optionally, backup your existing ~/.zshrc file</span>
 cp ~/.zshrc ~/.zshrc.orig
@@ -145,12 +145,13 @@ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 chsh -s /bin/zsh
 </code></pre>
 </div>
+
 <p>接下来，重启你的命令行就可以发现oh-my-zsh已经配置好了。</p>
 
 <p>如果你想更改zsh的配置，可以编辑~/.zshrc个性化你的配置。
 比如我本地的配置为：</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">ZSH_THEME</span><span class="o">=</span><span class="s2">"jameszhan"</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">ZSH_THEME</span><span class="o">=</span><span class="s2">"jameszhan"</span>
 <span class="nv">plugins</span><span class="o">=(</span>git svn mvn brew gem go lein npm node rails ruby rvm<span class="o">)</span>
 </code></pre>
 </div>
@@ -158,18 +159,18 @@ chsh -s /bin/zsh
 <h4 id="homebrew">安装Homebrew</h4>
 <p><a href="http://brew.sh/" title="Homebrew">Homebrew</a>是OSX下非常好用的包管理工具，类似于Ubuntu下的apt-get，用于替换OSX下的老牌包管理工具port。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>ruby -e <span class="s2">"</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">"</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>ruby -e <span class="s2">"</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">"</span>
 </code></pre>
 </div>
 
 <h5 id="homebrew-1">通过Homebrew安装一些实用工具</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew update
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew update
 brew install curl wget tree gnu-sed gawk rename
 </code></pre>
 </div>
 
 <h5 id="homebrew-2">通过Homebrew安装一些常用服务</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew update
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew update
 brew install redis mysql postgresql mongodb sqlite nginx
 </code></pre>
 </div>
@@ -181,7 +182,7 @@ brew install redis mysql postgresql mongodb sqlite nginx
   <p><a href="http://wiki.qemu.org/Main_Page" title="QEMU">QEMU</a>是一套由Fabrice Bellard所编写的以GPL许可证分发源码的模拟处理器，在GNU/Linux平台上使用广泛。。</p>
 </blockquote>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew install qemu --with-libssh2 --with-sdl --with-vde
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install qemu --with-libssh2 --with-sdl --with-vde
 </code></pre>
 </div>
 
@@ -190,53 +191,61 @@ brew install redis mysql postgresql mongodb sqlite nginx
   <p><a href="http://bochs.sourceforge.net/" title="Bochs">Bochs</a>是一个基于LGPL的开源x86 虚拟机软件（类似于QEMU）。Bochs的CPU指令是完全自己模拟出来的，这种方式的缺点是速度比较慢；优点是具有无以伦比的可移植性：有Gcc的地方就可以有Bochs。甚至已经有了跑在PocketPC上的Bochs。</p>
 </blockquote>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install homebrew/x11/bochs
 </code></pre>
 </div>
 
 <h4 id="vim-vs-emacs">Vim vs. Emacs</h4>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Install MacVim</span>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Install MacVim</span>
 brew install macvim --with-cscope --with-lua --override-system-vim
 <span class="c"># Install Emacs</span>
 brew install emacs --cocoa --srgb
 </code></pre>
 </div>
+
 <ol>
   <li>喜欢Vim的看<a href="http://coolshell.cn/articles/11312.html">这里</a>。</li>
   <li>喜欢Emacs的看<a href="http://www.masteringemacs.org/">这里</a>，给个现成的<a href="https://github.com/purcell/emacs.d">.emacs.d</a>。</li>
 </ol>
 
 <h4 id="ruby">准备Ruby开发环境</h4>
-<p>##### 安装Ruby
-1. 通过<a href="https://github.com/sstephenson/rbenv" title="rbenv">rbenv</a>安装ruby</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>~~~sh
-brew update
+<h5 id="ruby-1">安装ruby</h5>
+
+<ol>
+  <li>通过<a href="https://github.com/sstephenson/rbenv" title="rbenv">rbenv</a>安装ruby</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew update
 brew install rbenv ruby-build
 rbenv versions
 rbenv install 2.0.0-p247
-~~~ 2. 通过[RVM][rvm]安装ruby
+</code></pre>
+</div>
 
-~~~sh
-# install rvm on /usr/local/rvm
+<ol>
+  <li>通过<a href="https://rvm.io/" title="RVM">RVM</a>安装ruby</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># install rvm on /usr/local/rvm</span>
 curl -sSL https://get.rvm.io | sudo bash -s stable
 sudo chown -R YOURNAME:rvm /usr/local/rvm
 rvm reload
 rvm list known
-# Install latest stable ruby version
+<span class="c"># Install latest stable ruby version</span>
 rvm install 2.1.2
 rvm use 2.1.2 —default
 
-# update RVM
+<span class="c"># update RVM</span>
 rvmsudo rvm get stable
 sudo chown -R YOURNAME:rvm /usr/local/rvm
-~~~
 </code></pre>
 </div>
 
 <h5 id="gem">安装常用的gem</h5>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>gem install pry rails bundler --no-ri --no-rdoc
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>gem install pry rails bundler --no-ri --no-rdoc
 gem install jekyll
 gem install sinatra
 </code></pre>
@@ -249,24 +258,26 @@ gem install sinatra
 </ol>
 
 <h4 id="java">准备Java的开发环境</h4>
-<p>##### 安装JDK
-我们可以从Oracle官网上去<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="JDK">下载</a>JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。</p>
+
+<h5 id="jdk">安装JDK</h5>
+<p>我们可以从Oracle官网上去<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="JDK">下载</a>JDK的最新版本，目前最新版本是JDK8，建议把JDK7和JDK8都装上，可以在~/.zshrc文件指定JAVA_HOME的路径来切换Java的版本。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>#export JAVA_HOME=$(/usr/libexec/java_home -version 1.6)
 export JAVA_HOME=$(/usr/libexec/java_home -version 1.7)
 #export JAVA_HOME=$(/usr/libexec/java_home -version 1.8)
 </code></pre>
 </div>
-<p>注意：具体Java版本以你本地安装的版本为准。
-##### 安装Maven</p>
+<p>注意：具体Java版本以你本地安装的版本为准。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew install maven
+<h5 id="maven">安装Maven</h5>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install maven
 </code></pre>
 </div>
 
 <h5 id="jvm">JVM语言</h5>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Groovy</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Groovy</span>
 brew install groovy
 brew install grails
 <span class="c"># Scala</span>
@@ -288,17 +299,20 @@ brew install leiningen
 <h4 id="node">准备Node开发环境</h4>
 
 <h5 id="nodenpm">安装node和npm</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew install node --enable-debug
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install node --enable-debug
 </code></pre>
 </div>
 
 <h5 id="zshrcnodepath">在~/.zshrc配置全局NODE_PATH</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">NODE_PATH</span><span class="o">=</span><span class="s2">"/usr/local/lib/node_modules/"</span>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">NODE_PATH</span><span class="o">=</span><span class="s2">"/usr/local/lib/node_modules/"</span>
 </code></pre>
 </div>
 
 <h5 id="section-9">常用命令介绍</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 查看 npm 安装的内容</span>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 查看 npm 安装的内容</span>
 npm list     <span class="c"># 本地</span>
 npm list -g  <span class="c"># 全局</span>
 
@@ -309,7 +323,8 @@ npm uninstall &lt;package&gt; <span class="c"># 卸载包</span>
 </div>
 
 <h5 id="section-10">安装常用的组件</h5>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>npm install -g coffee-script
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>npm install -g coffee-script
 npm install -g less
 npm install -g grunt-cli
 npm install -g gulp
@@ -326,9 +341,10 @@ npm install jquery
 </ol>
 
 <h4 id="php">搭建PHP开发环境</h4>
-<p>##### 安装PHP和启动fcgi</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew tap homebrew/homebrew-php
+<h5 id="phpfcgi">安装PHP和启动fcgi</h5>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew tap homebrew/homebrew-php
 <span class="c"># Install php-cgi</span>
 brew reinstall php56 --with-mysql --with-cgi --with-pgsql --with-homebrew-curl --without-pear
 
@@ -342,32 +358,42 @@ spawn-fcgi -a 127.0.0.1 -p 6666 -C 6 -f /usr/local/bin/php-cgi -u james -d /u/va
 <p>更多安装选项可以使用<code class="highlighter-rouge">brew options php56</code>查看。</p>
 
 <h5 id="php-1">测试PHP环境</h5>
-<p>###### <code class="highlighter-rouge">Nginx</code> 配置
-~~~
-http {
-    upstream fastcgi_server {
-        server  127.0.0.1:6666;
-    }
-    server {
-        listen              80;
-        server_name         localhost;
-        index               index.html index.htm index.php;</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    location / {
-        root   			/u/var/www;
-        index  			index.php index.html index.htm;
+<h6 id="nginx">Nginx配置</h6>
+<div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="n">http</span> {
+    <span class="n">upstream</span> <span class="n">fastcgi_server</span> {
+        <span class="n">server</span>  <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">6666</span>;
     }
-    location ~ \.php$ {
-        root			/u/var/www;
-        fastcgi_pass	fastcgi_server;
-        fastcgi_index	index.php;
-        fastcgi_param	SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
-        include			conf/fastcgi_params;
+    <span class="n">server</span> {
+        <span class="n">listen</span>              <span class="m">80</span>;
+        <span class="n">server_name</span>         <span class="n">localhost</span>;
+        <span class="n">index</span>               <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span> <span class="n">index</span>.<span class="n">php</span>;
+
+        <span class="n">location</span> / {
+	        <span class="n">root</span>   			/<span class="n">u</span>/<span class="n">var</span>/<span class="n">www</span>;
+	        <span class="n">index</span>  			<span class="n">index</span>.<span class="n">php</span> <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span>;
+        }
+        <span class="n">location</span> ~ \.<span class="n">php</span>$ {
+	        <span class="n">root</span>			/<span class="n">u</span>/<span class="n">var</span>/<span class="n">www</span>;
+	        <span class="n">fastcgi_pass</span>	<span class="n">fastcgi_server</span>;
+	        <span class="n">fastcgi_index</span>	<span class="n">index</span>.<span class="n">php</span>;
+	        <span class="n">fastcgi_param</span>	<span class="n">SCRIPT_FILENAME</span>  $<span class="n">document_root</span>/$<span class="n">fastcgi_script_name</span>;
+	        <span class="n">include</span>			<span class="n">conf</span>/<span class="n">fastcgi_params</span>;
+        }
     }
-} } ~~~ ###### 测试页面(`index.php`) ~~~php &lt;?php
-phpinfo(); ?&gt; ~~~ 访问http://localhost/index.php页面即可以查看PHP环境是否搭建成功。
+}
 </code></pre>
 </div>
+
+<h6 id="indexphp">测试页面(index.php)</h6>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+	<span class="nb">phpinfo</span><span class="p">();</span>
+<span class="cp">?&gt;</span>
+</code></pre>
+</div>
+
+<p>访问http://localhost/index.php页面即可以查看PHP环境是否搭建成功。</p>
 
 <h5 id="section-12">开发工具的选择</h5>
 <ol>
@@ -378,7 +404,7 @@ phpinfo(); ?&gt; ~~~ 访问http://localhost/index.php页面即可以查看PHP环
 <h4 id="section-13">其他编程语言</h4>
 <p>如果你是编程语言控，在OS X下你可以很方便地使用各种编程语言。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># C++</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># C++</span>
 <span class="nb">alias </span><span class="nv">cppcompile</span><span class="o">=</span><span class="s1">'c++ -std=c++11 -stdlib=libc++'</span>
 
 <span class="c"># install python 2.7</span>
@@ -412,10 +438,11 @@ brew install io
 </div>
 
 <h2 id="section-14">一些实用技巧</h2>
-<p>### 挂载硬盘到指定目录
-这里，我们演示如何把第二块硬盘挂载到/opt目录。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 列出当前所有硬盘信息</span>
+<h3 id="section-15">挂载硬盘到指定目录</h3>
+<p>这里，我们演示如何把第二块硬盘挂载到/opt目录。</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 列出当前所有硬盘信息</span>
 diskutil list
 <span class="c"># diskN 一般代表第N个硬盘，diskNS1一般表示EFI分区信息，diskNS2一般表示我们的目标分区卷。</span>
 <span class="c"># 列出指定硬盘的详细信息，这里面我们可以得到它的UUID信息</span>
@@ -433,9 +460,10 @@ diskutil unmount  /dev/disk2s2
 
 <p>通过以上的命令，我们确实可以做到把硬盘挂载到具体目录，然后当我们机器重启后，通过刚刚命令修改的配置就会失效。如果我们想固定把硬盘加载到某个目录（尤其当我们第二块硬盘也是内置硬盘）时，又当如何处理呢？事实上，非常简单，执行如下命令，在<code class="highlighter-rouge">fstab</code>中加入一条记录即可。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo vifs
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo vifs
 </code></pre>
 </div>
+
 <p>我的电脑配置记录如下：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>UUID=DE74EC97-3EFC-3197-AC0E-AC596773D738 /opt hfs rw 1 0
@@ -445,7 +473,7 @@ diskutil unmount  /dev/disk2s2
 
 <h3 id="finder">Finder显示默认隐藏的文件</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 显示所有隐藏文件</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 显示所有隐藏文件</span>
 defaults write com.apple.finder AppleShowAllFiles -bool YES
 killall Finder
 
@@ -456,9 +484,10 @@ killall Finder
 </div>
 
 <h3 id="timemachine">TimeMachine中命令行操作权限问题</h3>
-<p>##### 删除指定的目录</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Before OSX 10.9</span>
+<h5 id="section-16">删除指定的目录</h5>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Before OSX 10.9</span>
 sudo /System/Library/Extensions/TMSafetyNet.kext/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh<span class="se">\ </span>HD/opt/ 
 <span class="c"># After OSX 10.10</span>
 sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass rm -frv 2011-10-16-232226/Macintosh<span class="se">\ </span>HD/opt/ 
@@ -466,27 +495,26 @@ sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass rm -frv
 sudo /System/Library/Extensions/TMSafetyNet.kext/Contents/Helpers/bypass find . -name <span class="s1">'.DS_Store'</span> -print -delete
 </code></pre>
 </div>
+
 <p>重装完系统，特别是在有第二块硬盘的情况下，在使用TimeMachine的时候，会发现整个硬盘很有可能要重新备份，而不是在原来的基础上增量备份，这无疑是对备份空间的巨大浪费，如果你之前已经备份了该磁盘的话，可以强制把TimeMachine中的对应备份强制恢复到该分区即可解决这个问题。</p>
 
-<h3 id="section-15">多媒体相关</h3>
+<h3 id="section-17">多媒体相关</h3>
 
-<h3 id="section-16">#</h3>
-
-<h4 id="section-17">视频播放</h4>
+<h4 id="section-18">视频播放</h4>
 
 <p>OS X下免费又好用的视频播放器当属VLC，可以支持几乎所有常用的视频格式。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>brew install Caskroom/cask/vlc
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install Caskroom/cask/vlc
 <span class="c"># 或者</span>
 brew cask install vlc
-</code></pre>
-</div>
 
-<h4 id="section-18">视频格式转换</h4>
 
-<p>在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。</p>
+<span class="c">#### 视频格式转换</span>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 查看ffmpeg的安装选项，可以按照你自己的要求选装</span>
+在Windows下，我们有很多视频格式转换的工具，尽管良莠不齐，但是只要有耐心，总是可以达到转换的要求，在OS X下，App Store上也可以找到一些转码工具，但是一般都价格不菲。事实上，绝大部分视频转码工具底层都用到了FFmpeg，而FFmpeg是完全开源和免费的，既然如此，我们为何不直接使用ffmpeg来进行视音频的转码处理呢。
+
+<span class="sb">```</span>bash
+<span class="c"># 查看ffmpeg的安装选项，可以按照你自己的要求选装</span>
 brew info ffmpeg
 
 <span class="c"># 安装FFmpeg</span>
@@ -517,13 +545,14 @@ ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate 1000 -b 700 -qmin 3 -qmax 5 -b
 <h3 id="extended-attributes-eas">Extended Attributes (EAs)</h3>
 <p>当我们使用<code class="highlighter-rouge">ls -l</code>查看文件目录时，细心的同学会发现有些文件的ACL后面都多一个@，这个就是我们这节要讨论的扩展属性。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
 -rw-r--r--@ 1 james  admin      755402 Oct 21 22:54 HexFiend.zip
 </code></pre>
 </div>
+
 <p>在UNIX/Linux当中，文件可以拥有rwx之外的扩展属性，在本例中，测试的几个文件打上了颜色的tag，要查看扩展属性的详情，可以使用命令<code class="highlighter-rouge">ls -l@</code>查看。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin     3409417 Oct 21 22:54 CoRD.zip
 	com.apple.FinderInfo	        32
 	com.apple.metadata:_kMDItemUserTags	        53
 -rw-r--r--@ 1 james  admin      755402 Oct 21 22:54 HexFiend.zip
@@ -531,15 +560,17 @@ ffmpeg -i INPUT.avi -f mp4 -vcodec mpeg4 -maxrate 1000 -b 700 -qmin 3 -qmax 5 -b
 	com.apple.metadata:_kMDItemUserTags	        53
 </code></pre>
 </div>
+
 <p>可以使用<code class="highlighter-rouge">xattr</code>命令来操作扩展属性。</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>xattr -d com.apple.metadata:_kMDItemUserTags CoRD.zip
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>xattr -d com.apple.metadata:_kMDItemUserTags CoRD.zip
 xattr -w hello world CoRD.zip
 </code></pre>
 </div>
+
 <p><code class="highlighter-rouge">ls -l@ CoRD.zip</code>结果如下：</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin   3.3M Oct 21 22:54 CoRD.zip
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>-rw-r--r--@ 1 james  admin   3.3M Oct 21 22:54 CoRD.zip
 	hello	   5B
 </code></pre>
 </div>
@@ -549,7 +580,7 @@ xattr -w hello world CoRD.zip
 
 <h3 id="section-19">常用的命令</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 删除所有.DS_Store文件</span>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 删除所有.DS_Store文件</span>
 sudo find / -name <span class="s1">'.DS_Store'</span> -print -delete
 <span class="c"># 删除当前目录下所有空子目录 </span>
 find . -type d -empty -delete -print
