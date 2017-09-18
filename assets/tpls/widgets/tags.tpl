@@ -9,7 +9,7 @@
     <li class="tag"><a href="/tags/c.html">C <span>3</span></a></li>
     <li class="tag"><a href="/tags/pdl.html">程序设计语言 <span>2</span></a></li>
     <li class="tag"><a href="/tags/algorithm.html">Algorithm <span>6</span></a></li>
-    <li class="tag"><a href="/tags/python.html">Python <span>1</span></a></li>
+    <li class="tag"><a href="/tags/python.html">Python <span>2</span></a></li>
     <li class="tag"><a href="/tags/backtracking.html">回溯法 <span>3</span></a></li>
     <li class="tag"><a href="/tags/ruby.html">Ruby <span>5</span></a></li>
     <li class="tag"><a href="/tags/linux.html">Linux <span>6</span></a></li>
