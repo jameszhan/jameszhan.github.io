@@ -8,19 +8,21 @@
 
     <title>尽管扯淡-通过实例看解释器和编译器的区别</title>
     <meta name="description" content="资深码农，程序设计语言控">
-    <link rel="canonical" href="https://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="canonical" href="http://localhost:4000/2015/04/25/compiler-vs-interpreter.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
 </head>
-
 
 <body>
 
 <header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
-
 <div class="container">
     <div class="col-md-9">
     <div class="post">
@@ -28,9 +30,7 @@
         <header class="post-header">
             <h1 class="post-title">通过实例看解释器和编译器的区别</h1>
             <p class="post-meta">
-                2015年04月25日 •
-                詹子知(James Zhan) •
-                版权所有，转载须声明出处
+                2015年04月25日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
             </p>
         </header>
 
@@ -358,19 +358,17 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
         <div class="row-fluid">
             <ul class="list-inline">
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
-                
-                
+                 
     
-    <li class="tag"><a href="/categories/pdt.html">Pdt<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>
             <ul class="list-inline">
                 <li><i class="glyphicon glyphicon-tags"></i></li>
-                
-                
+                 
     
-    <li class="tag"><a href="/tags/javascript.html">Javascript<span>10</span></a></li>
+    <li class="tag"><a href="/tags/javascript.html">JavaScript<span>10</span></a></li>
     
 
     
@@ -382,7 +380,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">Pdt<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
     
 
             </ul>
@@ -393,7 +391,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
                 
                 <li class="prev"><a href="/2015/04/01/build-interpret-from-zero.html" title="零基础构建语言解释器">&larr; 上一篇</a></li>
                 
-                <li><a href="https://jameszhan.github.io">Archive</a></li>
+                <li><a href="http://localhost:4000">Archive</a></li>
                 
                 <li class="next"><a href="/2015/05/03/hacking-java-generic.html" title="Java泛型使用中碰到的奇怪问题">下一篇 &rarr;</a>
                 </li>
@@ -402,32 +400,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
         </div>
     </div>
 
-    <!-- 多说评论框 start -->
-<div class="ds-thread"
-     data-thread-key="/2015/04/25/compiler-vs-interpreter.html"
-     data-title="通过实例看解释器和编译器的区别"
-     data-url="https://jameszhan.github.io/2015/04/25/compiler-vs-interpreter.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:"jameszhan"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-
-    $(document).on('click', '#ds-thread textarea[name=message]', function(){
-        $('#ds-sync-checkbox').prop('checked', false);
-    });
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-    <!--<div data-include="/assets/tpls/widgets/comments.tpl"></div>-->
+    
 </div>
 
 <div class="col-md-3">

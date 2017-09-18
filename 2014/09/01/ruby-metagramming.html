@@ -8,19 +8,21 @@
 
     <title>尽管扯淡-Ruby元编程技巧</title>
     <meta name="description" content="资深码农，程序设计语言控">
-    <link rel="canonical" href="https://jameszhan.github.io/2014/09/01/ruby-metagramming.html">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="canonical" href="http://localhost:4000/2014/09/01/ruby-metagramming.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
 </head>
-
 
 <body>
 
 <header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
-
 <div class="container">
     <div class="col-md-9">
     <div class="post">
@@ -28,8 +30,7 @@
         <header class="post-header">
             <h1 class="post-title">Ruby元编程技巧</h1>
             <p class="post-meta">
-                2014年09月01日 •
-                詹子知(James Zhan)
+                2014年09月01日 • 詹子知(James Zhan)
             </p>
         </header>
 
@@ -822,8 +823,7 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
         <div class="row-fluid">
             <ul class="list-inline">
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
-                
-                
+                 
     
     <li class="tag"><a href="/categories/ruby.html">Ruby<span>1</span></a></li>
     
@@ -831,22 +831,21 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
             </ul>
             <ul class="list-inline">
                 <li><i class="glyphicon glyphicon-tags"></i></li>
-                
-                
+                 
     
     <li class="tag"><a href="/tags/ruby.html">Ruby<span>5</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/metaprogramming.html">Metaprogramming<span>2</span></a></li>
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>2</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/dsl.html">Dsl<span>2</span></a></li>
+    <li class="tag"><a href="/tags/dsl.html">DSL<span>2</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/pdl.html">Pdl<span>2</span></a></li>
+    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>2</span></a></li>
     
 
             </ul>
@@ -857,7 +856,7 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
                 
                 <li class="prev"><a href="/2014/08/18/angular-injector-analyze.html" title="抽丝剥茧——AngularJS Injector分析">&larr; 上一篇</a></li>
                 
-                <li><a href="https://jameszhan.github.io">Archive</a></li>
+                <li><a href="http://localhost:4000">Archive</a></li>
                 
                 <li class="next"><a href="/2014/09/10/lambda-church-number.html" title="Lambda演算之自然数">下一篇 &rarr;</a>
                 </li>
@@ -866,32 +865,7 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
         </div>
     </div>
 
-    <!-- 多说评论框 start -->
-<div class="ds-thread"
-     data-thread-key="/2014/09/01/ruby-metagramming.html"
-     data-title="Ruby元编程技巧"
-     data-url="https://jameszhan.github.io/2014/09/01/ruby-metagramming.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:"jameszhan"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-
-    $(document).on('click', '#ds-thread textarea[name=message]', function(){
-        $('#ds-sync-checkbox').prop('checked', false);
-    });
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-    <!--<div data-include="/assets/tpls/widgets/comments.tpl"></div>-->
+    
 </div>
 
 <div class="col-md-3">

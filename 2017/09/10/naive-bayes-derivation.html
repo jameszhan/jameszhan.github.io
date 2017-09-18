@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-朴素贝叶斯从放弃到入门</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/09/10/naive-bayes-derivation.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">朴素贝叶斯从放弃到入门</h1>
+            <p class="post-meta">
+                2017年09月10日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h2 id="section">理论基础</h2>
+
+<h3 id="section-1">联合概率</h3>
+
+<p>联合概率表示两个事件共同发生的概率。A与B的联合概率表示为$P(AB)$，$P(A,B)$或者$P(A \bigcap B)$。</p>
+
+<p>联合概率可以推广到任意又穷多个事件出现的情况，设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$），事件$A_1,A_2,\cdots,A_n$共同发生的概率记为$P(A_1A_2 \dots A_n)$，$P(A_1,A_2,\dots,A_n)$或者$P(A_1 \bigcap A_2 \bigcap \dots \bigcap A_n)$</p>
+
+<h3 id="section-2">条件概率</h3>
+
+<p>设A，B 是两个事件，且$P(A) &gt; 0$，则称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下，事件B发生的条件概率。一般地，$P(B|A) \not= P(B)$ ，且它满足以下三条件：（1）非负性；（2）规范性；（3）可列可加性。</p>
+
+<p>设E为随机试验，Ω为样本空间，A，B为任意两个事件，设$P(A)&gt;0$，称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下事件B的条件概率。</p>
+
+<p>上述乘法公式可推广到任意有穷多个事件时的情况。
+设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$）且$P(A_1,A_2,\cdots,A_n)&gt;0$，则$P(A_1A_2 \cdots A_n)=P(A_1)P(A_2|A_1) \cdots P(A_n|A_1A_2 \cdots A_{n-1}) = \prod_{i=1}^n P(A_i|A_1 \cdots A_{i-1})$。</p>
+
+<p>对于一段文本序列$S=w_1,w_2,\cdots,W_T$，它的概率可表示为：
+<script type="math/tex">P(S) = P(w_1,w_2,\cdots,W_T) = \prod_{t=1}^T(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_T|w_1w_2 \cdots w_{T-1})</script></p>
+
+<h4 id="ngram">Ngram模型</h4>
+
+<p>1.Ngram模型</p>
+
+<p><span><script type="math/tex">P(w_t|w_1w_2 \cdots w_{t-1}) \approx P(w_t|w_{t-n+1} \cdots w_{t-1})</script></span></p>
+
+<p>2.bigram</p>
+
+<p><span><script type="math/tex">P(w_t|w_1w_2 \cdots w_{t-1}) \approx P(w_t|w_{t-1})</script></span></p>
+
+<p>3.trigram</p>
+
+<p><span><script type="math/tex">P(w_t|w_1w_2 \cdots w_{t-1}) \approx P(w_t|w_{t-1}w_{t-2})</script></span></p>
+
+<h4 id="section-3">独立性假设</h4>
+
+<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_T) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_T)</script>
+
+<h4 id="section-4">其他</h4>
+
+<script type="math/tex; mode=display">先验概率 = P(原因)；后验概率 = P(原因|结果)</script>
+
+<script type="math/tex; mode=display">P(a,b|c) = \frac{P(a,b,c)}{P(c)} = \frac{P(a,b,c)}{P(b,c)} \cdot \frac{P(b,c)}{P(c)} = P(a|b,c) \cdot P(b|c)</script>
+
+<h3 id="section-5">完备事件组/样本空间的划分</h3>
+
+<p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组事件，若</p>
+
+<ol>
+  <li>$\forall_{i\not=j} A_i \bigcap A_j = \emptyset; i,j\in(1,2,\cdots,n)$</li>
+  <li>$\sum_{i=1}^n A_i = \Omega$</li>
+</ol>
+
+<p>则称（$A_1,\cdots,A_i,\cdots,A_n$）是样本空间Ω的一个划分，或称为样本空间Ω 的一个完备事件组。</p>
+
+<h3 id="section-6">全概率公式</h3>
+
+<p><span>设（$A_1,\cdots,A_i,\cdots,A_n$）施一个完备事件组，则有$P(B) = \sum_{i=1}^n P(A_i) \cdot P(B|A_i) = \sum_{i=1}^n P(A_iB)$</span></p>
+
+<h3 id="section-7">贝叶斯公式</h3>
+
+<p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组完备事件组，则有
+<script type="math/tex">P(A_i|B) = \frac{PA_iB}{P(B)} = \frac{P(A_i)P(B|A_i)}{\sum_{j=1}^nP(A_j)P(B|A_j)}</script></p>
+
+<blockquote>
+  <p>根据条件概率和全概率公式，很容易得出贝叶斯公式。</p>
+</blockquote>
+
+<h2 id="section-8">贝叶斯定理的应用</h2>
+
+<h3 id="section-9">贝叶斯定理在艾滋病检测上的应用</h3>
+
+<p>假设艾滋病在人群中的发病率为万分之一，艾滋病检测假阴性的概率千分之一（假阴性的意思是本来有病应该呈现阳性，但是呈现了阴性）；艾滋病检测假阳性的概率为万分之一（假阳性意思是本来没病应该呈现阴性，但是呈现了阳性）。假设某人在某次检测当中结果呈现阳性，那么他真正感染艾滋病的概率是多少？</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 艾滋病在人群中的发病概率P(T)</span>
+<span class="n">p</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0001</span>
+<span class="c"># 在有艾滋病的场景下，检测为阳性的概率P(检测为阳性|患病)，即1-P(假阴性)</span>
+<span class="n">p</span><span class="p">(</span><span class="n">fT</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.999</span>
+<span class="c"># 在没有艾滋病的场景下，检测为阳性的概率P(检测为阳性|不患病)，即假阳性</span>
+<span class="n">p</span><span class="p">(</span><span class="n">f_T</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0001</span>
+</code></pre>
+</div>
+
+<p>根据贝叶斯公式，检测为阳性，感染艾滋病的概率
+
+$$P(患病|检测为阳性) = \frac{P(检测为阳性|患病) \cdot P(患病)}{P(检测为阳性)}$$
+
+$$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳性|不患病) \cdot P(不患病)$$
+</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span> <span class="o">+</span> <span class="n">pf_T</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pT</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>将数据代入公式，计算得出P(患病|检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pT</span> <span class="o">=</span> <span class="mf">49.977</span>
+<span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
+<span class="c"># 0.999899817803</span>
+</code></pre>
+</div>
+
+<h3 id="section-10">贝叶斯定理在垃圾邮件过滤上的应用</h3>
+
+<p>给定训练集，垃圾邮件和正常邮件各5000封，假定词$w_1$，$w_2$出现的频率如下。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>词</th>
+      <th>邮件类别</th>
+      <th>词在该邮件类别中的数量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$w_1$</td>
+      <td>Spam</td>
+      <td>250</td>
+    </tr>
+    <tr>
+      <td>$w_1$</td>
+      <td>Health</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>$w_2$</td>
+      <td>Spam</td>
+      <td>495</td>
+    </tr>
+    <tr>
+      <td>$w_2$</td>
+      <td>Health</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(垃圾邮件)</span>
+<span class="n">pS</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c"># P(正常邮件)</span>
+<span class="n">pH</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pS</span> <span class="c"># 0.5</span>
+<span class="c"># P(w1|垃圾邮件)</span>
+<span class="n">pw1S</span> <span class="o">=</span> <span class="mf">250.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.05</span>
+<span class="c"># P(w1|正常邮件)</span>
+<span class="n">pw1H</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.001</span>
+</code></pre>
+</div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>根据贝叶斯定理，我们很容易计算$P(垃圾邮件</td>
+      <td>w_1)$的概率。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pwS</span><span class="p">,</span> <span class="n">pwH</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span> <span class="o">+</span> <span class="n">pwH</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pS</span><span class="p">))</span>
+
+<span class="c"># P(垃圾邮件|w1)</span>
+<span class="n">pSw1</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">)</span> <span class="c"># 0.980392156863</span>
+</code></pre>
+</div>
+
+<p>其实根据样本分布，我们也很容易计算<b>$P(垃圾邮件|w_1)$</b>的概率。</p>
+
+<script type="math/tex; mode=display">P(垃圾邮件|w_1) = \frac{P(w_1,垃圾邮件)}{P(w_1)} = \frac{250}{250 + 5} = 98.04%</script>
+
+<p>我们可以看出样本中包含$w_1$的邮件是垃圾邮件的概率超过98%，如果样本的分布和总体的分布一致，可以看出$w_1$的推断能力很强，尽管如此，我们依然不能根据单个词来明确的判断一封包含$w_1$的新邮件就是垃圾邮件。我们需要更多的证据。</p>
+
+<p>一封邮件由多个词组成，如果一封邮件不只是包含$w_1$，还包含$w_2$，那么这封邮件的是垃圾概率是多少呢。</p>
+
+<script type="math/tex; mode=display">P(垃圾邮件|w_1,w_2) = \frac{P(垃圾邮件,w_1,w_2)}{P(w_1,w_2)}</script>
+
+<script type="math/tex; mode=display">P(w_1,w_2) = P(w_1,w_2|垃圾邮件) \cdot P(垃圾邮件) + P(w_1,w_2|正常邮件) \cdot P(正常邮件) = P(w_1,w_2,垃圾邮件) + P(w_1,w_2,正常邮件)</script>
+
+<p>也即：</p>
+
+<script type="math/tex; mode=display">P(垃圾邮件|w_1,w_2) = \frac{P(垃圾邮件,w_1,w_2)}{P(w_1,w_2,垃圾邮件) + P(w_1,w_2,正常邮件)}</script>
+
+<p>这里涉及两个联合概率事件。</p>
+
+<ol>
+  <li>已知$w_1$，$w_2$的情况下，该邮件是垃圾邮件的概率，即$P(w_1,w_2,垃圾邮件)$，记为 $E_1$。</li>
+  <li>已知$w_1$，$w_2$的情况下，该邮件是正常邮件的概率，即$P(w_1,w_2,正常邮件)$，记为 $E_2$。</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>事件</th>
+      <th>$w_1$</th>
+      <th>$w_2$</th>
+      <th>垃圾邮件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$E_1$</td>
+      <td>出现</td>
+      <td>出现</td>
+      <td>是</td>
+    </tr>
+    <tr>
+      <td>$E_2$</td>
+      <td>出现</td>
+      <td>出现</td>
+      <td>不是</td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="math/tex; mode=display">P(E_1) = P(w_1,w_2,垃圾邮件) = P(垃圾邮件) * P(w_1|垃圾邮件) * P(w_2|垃圾邮件,w_1)</script>
+
+<p>然而<b>$P(w_2|垃圾邮件,w_1)$</b>该怎么计算呢？现在是朴素贝叶斯出场的时候了，基于独立性假设，$w_1$，$w_2$之间相互独立。则有：</p>
+
+<script type="math/tex; mode=display">P(w_2|垃圾邮件,w_1) = P(w_2|垃圾邮件)</script>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(S,w1,w2) = P(S) * P(w1|S) * P(w2|S,w1)</span>
+<span class="c"># Independence hypothesis =&gt; P(S,w1,w2) = P(S) * P(w1|S) * P(w2|S)</span>
+<span class="k">def</span> <span class="nf">joint</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw2S</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pS</span> <span class="o">*</span> <span class="n">pw1S</span> <span class="o">*</span> <span class="n">pw2S</span>
+</code></pre>
+</div>
+
+<p><span>$P(E_1) = P(垃圾邮件) * P(w_1|垃圾邮件) * P(w_2|垃圾邮件)$</span></p>
+
+<p><span>$P(E_2) = P(正常邮件) * P(w_1|正常邮件) * P(w_2|正常邮件)$</span></p>
+
+<p><span>目标概率：$P(垃圾邮件|w_1,w_2) = \frac{P(E_1)}{P(E_1) + P(E_2)}$</span></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(w2|垃圾邮件)</span>
+<span class="n">ps2W</span> <span class="o">=</span> <span class="mf">495.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.001</span>
+<span class="c"># P(w2|正常邮件) </span>
+<span class="n">pw2H</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.099</span>
+
+<span class="c"># P(E1)</span>
+<span class="n">pE1</span> <span class="o">=</span> <span class="n">joint</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw2S</span><span class="p">)</span> <span class="c"># 0.002475</span>
+<span class="n">pE2</span> <span class="o">=</span> <span class="n">joint</span><span class="p">(</span><span class="n">pH</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">,</span> <span class="n">pw2H</span><span class="p">)</span> <span class="c"># 5e-07</span>
+
+<span class="c"># P(垃圾邮件|w_1,w_2)</span>
+<span class="k">print</span> <span class="n">pE1</span> <span class="o">/</span> <span class="p">(</span><span class="n">pE1</span> <span class="o">+</span> <span class="n">pE2</span><span class="p">)</span> <span class="c"># 0.999798020602</span>
+</code></pre>
+</div>
+
+<h3 id="section-11">黑客与画家中的疑问</h3>
+
+<p>Paul Graham在他的《黑客与画家》当中，有举过朴素贝叶斯的例子，他的做法是选出区分度最高的15个词，并计算其联合概率，并给出了最终公式。</p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2,\cdots,w_{15}} = \frac{\prod_{i=1}^{15} P_{spam|w_i}}{\prod_{i=1}^{15} P_{spam|w_i} + \prod_{i=1}^{15} (1 - P_{spam|w_i})}</script>
+
+<p>那么这个公式是怎么推导出来的呢？为了方便，我们取$w_1$，$w_2$两个词来尝试推导出这个公式，简化以后，公式变为：</p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + (1 - P_{spam|w_1}) \cdot (1 - P_{spam|w_2})}</script>
+
+<p>下面我们开始推导过程。</p>
+
+<p>根据贝叶斯定理有：</p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2}} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2|spam} \cdot P_{spam} + P_{w_1,w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}</script>
+
+<p><span>根据独立性假设$P_{w_1,w_2|spam} = P_{w_1|w_2,spam} \cdot P_{w_2|spam} = P_{w_1|spam} \cdot P_{w_2|spam}$，得到：</span></p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam}}{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam} + P_{w_1|\tilde{spam}} \cdot P_{w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}</script>
+
+<p><span>根据贝叶斯公式$P_{w|S} = \frac{P_{S|w} \cdot P_w}{P_S}$，得到：</span></p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\tilde{spam}}}} = \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
+
+<p><span>取$P_{spam}=P_{\tilde{spam}}=0.5$，得到：</span></p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2}}</script>
+
+<p>又因为：</p>
+
+<script type="math/tex; mode=display">P_{\tilde{spam}|w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}</script>
+
+<p>最终可得：</p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + (1 - P_{spam|w_1}) \cdot (1 - P_{spam|w_2})}</script>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pSw1</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">)</span>
+<span class="n">pSw2</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw2S</span><span class="p">,</span> <span class="n">pw2H</span><span class="p">)</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">pS</span> <span class="o">*</span> <span class="n">pSw1</span> <span class="o">*</span> <span class="n">pSw2</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">pH</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pSw1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pSw2</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">e1</span> <span class="o">/</span> <span class="p">(</span><span class="n">e1</span> <span class="o">+</span> <span class="n">e2</span><span class="p">)</span> <span class="c"># 0.999798020602</span>
+</code></pre>
+</div>
+
+<p>可见，在$P_{spam}=P_{\tilde{spam}}=0.5$的情况下，结果和之前是一样的。</p>
+
+<p>推广到15个词，就得到：</p>
+
+<script type="math/tex; mode=display">P_{spam|w_1,w_2,\cdots,w_{15}} = \frac{\prod_{i=1}^{15} P_{spam|w_i}}{\prod_{i=1}^{15} P_{spam|w_i} + \prod_{i=1}^{15} (1 - P_{spam|w_i})}</script>
+
+<h3 id="section-12">实战垃圾邮件过滤</h3>
+
+<h4 id="section-13">公式推导</h4>
+
+<p>给定一个邮件M，它由文本序列$S=w_1,w_2,\ldots,w_n$组成，则给定邮件为垃圾为垃圾邮件的概率为：</p>
+
+<script type="math/tex; mode=display">P(spam|M) = P(spam|w_1,w_2,\cdots,w_n) = \frac{P(w_1,w_2,\cdots,w_n|spam) \cdot P(spam)}{P(w_1,w_2,\ldots,w_n|spam) \cdot P(spam) + P(w_1,w_2,\ldots,w_n|\tilde{spam}) \cdot P(\tilde{spam}) }</script>
+
+<p>根据朴素贝叶斯的独立性假设，则有：</p>
+
+<script type="math/tex; mode=display">P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\tilde{spam}) \cdot P(\tilde{spam}) }</script>
+
+<h4 id="section-14">概率计算</h4>
+
+<ul>
+  <li>垃圾邮件概率：$P(spam) = \frac{count(mc[spam])}{count(mc[spam]) + count(mc[health])}$</li>
+  <li>正常邮件概率：$P(\tilde{spam}) = 1 - P(spam)$</li>
+  <li>$w_i$在正常邮件中的概率：<span>$P(w_i|\tilde{spam}) = \frac{count(wc[w_i][health])}{count[mc[health]]}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$</span></li>
+  <li>$w_i$在垃圾邮件中的概率：<span>$P(w_i|spam) = \frac{count(wc[w_i][spam])}{count[mc[spam]]}$，也就是 $\frac{w_i关联的垃圾邮件数量}{垃圾邮件的数量}$</span></li>
+</ul>
+
+<h4 id="section-15">代码演示</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="k">class</span> <span class="nc">AntiSpam</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wc</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># 记录每个词在垃圾邮件和正常邮件中出现的次数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mc</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># 记录垃圾邮件和正常邮件中出现的次数</span>
+
+    <span class="k">def</span> <span class="nf">incw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">incm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incw</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incm</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">"mc: </span><span class="si">%</span><span class="s">s </span><span class="se">\n</span><span class="s">wc:</span><span class="si">%</span><span class="s">s</span><span class="se">\n\n\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">wcount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span> <span class="ow">and</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="p">[</span><span class="n">word</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="n">category</span><span class="p">])</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+
+    <span class="k">def</span> <span class="nf">wprob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcount</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">cprob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="p">[</span><span class="n">category</span><span class="p">])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="c"># 利用对数来计算</span>
+    <span class="k">def</span> <span class="nf">safe_prob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="n">s</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wprob</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">))</span>
+            <span class="n">h</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wprob</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">'health'</span><span class="p">))</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'spam'</span><span class="p">))</span>
+        <span class="n">h</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'health'</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+
+    <span class="c"># 利用乘法来计算</span>
+    <span class="k">def</span> <span class="nf">prob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="n">sprob</span><span class="p">,</span> <span class="n">hprob</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="n">sprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wprob</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">)</span>
+            <span class="n">hprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wprob</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">'health'</span><span class="p">)</span>
+        <span class="n">sprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'spam'</span><span class="p">)</span>
+        <span class="n">hprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'health'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sprob</span> <span class="o">/</span> <span class="p">(</span><span class="n">sprob</span> <span class="o">+</span> <span class="n">hprob</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>模拟样本训练</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">antiSpam</span> <span class="o">=</span> <span class="n">AntiSpam</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4989</span><span class="p">):</span>
+    <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'world'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">],</span> <span class="s">'health'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4901</span><span class="p">):</span>
+    <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'invoice'</span><span class="p">,</span> <span class="s">'bill'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">],</span> <span class="s">'spam'</span><span class="p">)</span>
+
+<span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'promotion'</span><span class="p">,</span> <span class="s">'cool'</span><span class="p">],</span> <span class="s">'health'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'spam'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'attention'</span><span class="p">],</span> <span class="s">'health'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+    <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'promotion'</span><span class="p">,</span> <span class="s">'cool'</span><span class="p">],</span> <span class="s">'spam'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">90</span><span class="p">):</span>
+    <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'spam'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'attention'</span><span class="p">],</span> <span class="s">'spam'</span><span class="p">)</span>
+
+<span class="n">antiSpam</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c"># mc: {'health': 5000, 'spam': 5000} </span>
+<span class="c"># wc: {'attention': {'health': 10, 'spam': 90}, 'spam': {'health': 10, 'spam': 90}, 'bill': {'spam': 4901}, 'discount': {'health': 1, 'spam': 9}, 'invoice': {'spam': 4901}, 'mail': {'health': 10, 'spam': 90}, 'world': {'health': 4989}, 'promotion': {'health': 1, 'spam': 9}, 'todo': {'health': 4989, 'spam': 4901}, 'hello': {'health': 4989}, 'cool': {'health': 1, 'spam': 9}}</span>
+</code></pre>
+</div>
+
+<p>垃圾邮件过滤</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>         <span class="c"># 0.987588626017</span>
+<span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">safe_prob</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>    <span class="c"># 0.987588626017</span>
+
+<span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>            <span class="c"># 0.00176901392183</span>
+<span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">safe_prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>       <span class="c"># 0.00176901392183</span>
+
+<span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>            <span class="c"># 0.999999995374</span>
+<span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">safe_prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>       <span class="c"># 0.999999995374</span>
+</code></pre>
+</div>
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>1</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>1</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/mathematics.html">Mathematics<span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>6</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2015/05/15/docker-in-osx.html" title="在OS X上运行Docker">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a> 
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>
