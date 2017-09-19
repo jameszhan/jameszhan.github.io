@@ -26,7 +26,7 @@
     <li class="tag"><a href="/tags/lisp.html">Lisp <span>4</span></a></li>
     <li class="tag"><a href="/tags/pdt.html">程序设计语言理论 <span>7</span></a></li>
     <li class="tag"><a href="/tags/codestyle.html">代码风格 <span>1</span></a></li>
-    <li class="tag"><a href="/tags/mathematics.html">Mathematics <span>5</span></a></li>
+    <li class="tag"><a href="/tags/mathematics.html">数学 <span>5</span></a></li>
     <li class="tag"><a href="/tags/java.html">Java <span>3</span></a></li>
     <li class="tag"><a href="/tags/swift.html">Swift <span>1</span></a></li>
     <li class="tag"><a href="/tags/github.html">GitHub <span>2</span></a></li>
