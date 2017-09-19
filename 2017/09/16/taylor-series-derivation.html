@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-泰勒级数从放弃到入门</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/09/16/taylor-series-derivation.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">泰勒级数从放弃到入门</h1>
+            <p class="post-meta">
+                2017年09月16日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h2 id="section">知识准备</h2>
+
+<h4 id="section-1">极限</h4>
+
+<p><span>设函数$f(x)$在点$x_0$的某一去心邻域内有定义，如果存在常数$a$，对于任意给定的正数$\epsilon$，总存在正数$\delta$，使得当$x$满足不等式$0 &lt; |x - x_0| &lt; \delta$时，对应的函数值$f(x)$都满足不等式$|f(x) - a| &lt; \epsilon$，那么常数$a$就叫做函数$f(x)$当$x \to x_0$时的极限，记作：</span></p>
+
+<script type="math/tex; mode=display">\lim_{x \to x_0} f(x) = a</script>
+
+<h4 id="section-2">导数</h4>
+<p>设函数$y = f(x)$在点$x_)$的某个邻域内有定义，当自变量$x$在$x_0$处取得增量$\Delta x$（点$x_0 + \Delta x$仍在该邻域内）时，相应地函数$y$取得增量$\Delta y = f(x) - f(x_0)$；如果$\Delta y$与$\Delta x$之比当$\Delta x \to 0$时的极限存在，则称函数$y = f(x)$在点$x_0$处可导，并称这个极限为函数$y = f(x)$在点$x_0$处的导数，记为：</p>
+
+<script type="math/tex; mode=display">f^{'}(x_0) = y^{'}|_{x=x_0} = \left. \frac{dy}{dx} \right|_{x=x_0} = \lim_{\Delta x \to 0} \frac{\Delta y}{\Delta x} = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}</script>
+
+<h4 id="section-3">函数极限和无穷小的关系</h4>
+<p>在自变量$x$的同一变化过程$x \to x_0$(或$x \to \infty$)中，函数$f(x)$具有极限A的充分必要条件$f(x) = A + a$，其中$a$是无穷小。</p>
+
+<script type="math/tex; mode=display">\lim_{x \to x_0} f(x) = A \iff f(x) = A + a|_{a -> 0}</script>
+
+<h4 id="section-4">洛必达法则</h4>
+
+<p>洛必达法则是在一定条件下通过分子分母分别求导再求极限来确定未定式值的方法。</p>
+
+<h5 id="section-5">$0/0$型不定式极限</h5>
+
+<p>若函数$f(x)$和$g(x)$满足下列条件：</p>
+
+<ol>
+  <li>$\lim_{x \to a} f(x) = 0, \lim_{x \to a} g(x) = 0$;</li>
+  <li>在点$a$的某去心邻域内两者都可导，且$g^{‘}(x) \not= 0$;</li>
+  <li>$\lim_{x \to a} \frac{f^{‘}(x)}{g^{‘}(x)} = A$(A可为实数，也可为$\pm \infty$)。</li>
+</ol>
+
+<p>则</p>
+
+<script type="math/tex; mode=display">\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f^{'}(x)}{g^{'}(x)} = A</script>
+
+<h5 id="inftyinfty">$\infty/\infty$型不定式极限</h5>
+
+<p>若函数$f(x)$和$g(x)$满足下列条件：</p>
+
+<ol>
+  <li>$\lim_{x \to a} f(x) = \infty, \lim_{x \to a^+} g(x) = \infty$;</li>
+  <li>在点$a$的某去心邻域内两者都可导，且$g^{‘}(x) \not= 0$;</li>
+  <li>$\lim_{x \to a^+} \frac{f^{‘}(x)}{g^{‘}(x)} = A$(A可为实数，也可为$\pm \infty 或 \infty$)。</li>
+</ol>
+
+<p>则</p>
+
+<script type="math/tex; mode=display">\lim_{x \to a^+} \frac{f(x)}{g(x)} = \lim_{x \to a^+} \frac{f^{'}(x)}{g^{'}(x)} = A</script>
+
+<h2 id="section-6">泰勒级数</h2>
+
+<h4 id="section-7">定义</h4>
+
+<p>设$n$是一个正整数。如果定义在一个包含$a$的区间上的函数$f$在$a$点处$n - 1$次可导，那么对于这个区间上的任意$x$都有：</p>
+
+<script type="math/tex; mode=display">f(x) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(a)}{k!}(x - a)^k + R_n(x)</script>
+
+<p>其中的多项式称为函数在$a$出的泰勒展开式，$R_n(x)$是泰勒公式的余项且是$(x - a)^n$的高阶无穷小。</p>
+
+<p>泰勒公式是在局部，用一个多项式函数，近似地替代一个复杂函数。泰勒展开式与$f(x)$的每一阶导数值完全相等，而这种“各阶导数值相等”揭示了多项式函数和他要替代的复杂函数$f(x)$在每一个维度$(1,x,x^2,\cdots,x^{n-1})$上完全相同的事实。</p>
+
+<h4 id="section-8">推导过程</h4>
+
+<p>假设函数$f(x)$在点$a$的邻域内有定义，且在点$a$处$n - 1$次可导。</p>
+
+<p>根据导数定义及函数极限与无穷小的关系，易得：</p>
+
+<script type="math/tex; mode=display">f^{'}(x_0) = \lim_{\Delta x \to 0} \frac{\Delta y}{\Delta x} \implies \frac{\Delta y}{\Delta x} = \left. f^{'}(x_0) + a_1 \right|_{a_1 \to 0}</script>
+
+<p>给定点$x_0$邻域中的点$x$，$\Delta y = f(x) - f(x_0), \Delta x = x - x_0$，则有公式①</p>
+
+<script type="math/tex; mode=display">f(x) = f(x_0) + f^{'}(x_0)\Delta x + a_1 \Delta x</script>
+
+<p>比较无穷小量$a_1$和$\Delta x$的关系。</p>
+
+<script type="math/tex; mode=display">a_1 = \frac{f(x) - f(x_0) - f^{'}(x_0)(x - x_0)}{x - x_0} \implies \lim_{\Delta x \to 0} \frac{a_1}{\Delta x} = \lim_{x \to x_0} \frac{f(x) - f(x_0) - f^{'}(x_0)(x - x_0)}{(x - x_0)^2}</script>
+
+<p>根据$0/0$洛必达法则</p>
+
+<script type="math/tex; mode=display">\lim_{\Delta x \to 0} \frac{a_1}{\Delta x} = \lim_{x \to x_0} \frac{f^{'}(x) - f^{'}(x_0)}{2(x - x_0)} = \frac{1}{2}f^{''}(x_0)</script>
+
+<p>根据极限与无穷小的关系，得到：</p>
+
+<script type="math/tex; mode=display">\frac{a_1}{\Delta x} = \left. \frac{1}{2}f^{''}(x_0) + a_2 \right|_{a_2 \to 0}</script>
+
+<p>代入公式①，得到公式②：</p>
+
+<script type="math/tex; mode=display">f(x) = f(x_0) + f^{'}(x_0)\Delta x + \frac{1}{2}f^{''}(x_0)\Delta^2 x + a_2\Delta^2 x</script>
+
+<p>同理，可以求得</p>
+
+<script type="math/tex; mode=display">a_2 = \frac{f(x) - f(x_0) - f^{'}(x_0) \Delta x - \frac{1}{2}f^{''}(x_0)\Delta^2 x}{\Delta^2 x} \implies \lim_{\Delta x \to 0} \frac{a_2}{\Delta x} = \lim_{x \to x_0} \frac{f(x) - f(x_0) - f^{'}(x_0)(x - x_0) - \frac{1}{2}f^{''}(x_0)(x - x_0)^2}{(x - x_0)^3}</script>
+
+<p>连续应用洛必达法则可得：</p>
+
+<script type="math/tex; mode=display">\lim_{\Delta x \to 0} \frac{a_2}{\Delta x} = \lim_{x \to x_0} \frac{f^{'}(x) - f^{'}(x_0) - f^{''}(x_0)(x - x_0)}{3(x - x_0)^2} = \lim_{x \to x_0} \frac{f^{''}(x) - f^{''}(x_0)}{3!(x - x_0)} = \frac{1}{3!} f^{'''}(x_0)</script>
+
+<p><span>把$a_2 = \left. (\frac{1}{3!}f^{‘’’}(x_0) + a_3)\Delta x \right|_{a_3 \to 0}$代入公式②，得到公式③：</span></p>
+
+<script type="math/tex; mode=display">f(x) = f(x_0) + f^{'}(x_0)\Delta x + \frac{1}{2!}f^{''}(x_0)\Delta^2 x + \frac{1}{3!}f^{'''}(x_0) \Delta^3 x + a_3\Delta^3 x</script>
+
+<p>以此类推，根据数学归纳法，易证明泰勒公式最后结论。</p>
+
+<h4 id="section-9">应用</h4>
+
+<p>在数值计算方面，利用多项式函数近似、去逼近一个复杂函数，是研究实际问题的一个非常重要的方式，也即是把质的困难转化为量的复杂。比如$e$和$\pi$的计算，机器学习中的优化算法当中，也大量利用到了泰勒公式。</p>
+
+<h5 id="section-10">数值计算</h5>
+
+<p>$ e^x \approx 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} +  \cdots + \frac{x^n}{n!} $</p>
+
+<p>$ \frac{\pi}{4} \approx \sum_{i=0}^n \frac{(-1)^i}{2 \cdot i + 1}$</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">*=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="c"># Count e</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">([</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)])</span>
+<span class="k">print</span> <span class="n">e</span>     <span class="c"># 2.71828182846</span>
+
+<span class="c"># Count π 这个公式收敛很慢</span>
+<span class="n">pi</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">([(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span><span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)])</span>
+<span class="k">print</span> <span class="n">pi</span>    <span class="c"># 3.14159165359</span>
+</code></pre>
+</div>
+
+<h5 id="section-11">渐进演示</h5>
+
+<p>利用泰勒级数展开逼近$e^x$</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span>
+    <span class="k">while</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">*=</span> <span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="k">def</span> <span class="nf">item</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">taylor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">([</span><span class="n">item</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)])</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">taylor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span> <span class="s">'r:'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">taylor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span> <span class="s">'g:'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">taylor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span> <span class="s">'b-.'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">taylor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span> <span class="s">'r--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">taylor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">X</span><span class="p">],</span> <span class="s">'y-.'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="s">'r:'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/assets/images/taylor_as_e.png" alt="TaylorAsEX" /></p>
+
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>2</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>2</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/mathematics.html">Mathematics<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python<span>3</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2017/09/10/naive-bayes-derivation.html" title="朴素贝叶斯从放弃到入门">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a> 
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

@@ -45,15 +45,16 @@
 
 <h3 id="section-2">条件概率</h3>
 
-<p>设A，B 是两个事件，且$P(A) &gt; 0$，则称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下，事件B发生的条件概率。一般地，$P(B|A) \not= P(B)$ ，且它满足以下三条件：（1）非负性；（2）规范性；（3）可列可加性。</p>
+<p><span>设A，B 是两个事件，且$P(A) &gt; 0$，则称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下，事件B发生的条件概率。一般地，$P(B|A) \not= P(B)$ ，且它满足以下三条件：（1）非负性；（2）规范性；（3）可列可加性。</span></p>
 
-<p>设E为随机试验，Ω为样本空间，A，B为任意两个事件，设$P(A)&gt;0$，称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下事件B的条件概率。</p>
+<p><span>设E为随机试验，Ω为样本空间，A，B为任意两个事件，设$P(A)&gt;0$，称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下事件B的条件概率。</span></p>
 
 <p>上述乘法公式可推广到任意有穷多个事件时的情况。
-设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$）且$P(A_1,A_2,\cdots,A_n)&gt;0$，则$P(A_1A_2 \cdots A_n)=P(A_1)P(A_2|A_1) \cdots P(A_n|A_1A_2 \cdots A_{n-1}) = \prod_{i=1}^n P(A_i|A_1 \cdots A_{i-1})$。</p>
+<span>设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$）且$P(A_1,A_2,\cdots,A_n)&gt;0$，则$P(A_1A_2 \cdots A_n)=P(A_1)P(A_2|A_1) \cdots P(A_n|A_1A_2 \cdots A_{n-1}) = \prod_{i=1}^n P(A_i|A_1 \cdots A_{i-1})$。</span></p>
 
-<p>对于一段文本序列$S=w_1,w_2,\cdots,W_T$，它的概率可表示为：
-<script type="math/tex">P(S) = P(w_1,w_2,\cdots,W_T) = \prod_{t=1}^T(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_T|w_1w_2 \cdots w_{T-1})</script></p>
+<p>对于一段文本序列$S=w_1,w_2,\cdots,W_T$，它的概率可表示为：</p>
+
+<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,W_T) = \prod_{t=1}^T(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_T|w_1w_2 \cdots w_{T-1})</script>
 
 <h4 id="ngram">Ngram模型</h4>
 
@@ -96,12 +97,11 @@
 
 <h3 id="section-7">贝叶斯公式</h3>
 
-<p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组完备事件组，则有
-<script type="math/tex">P(A_i|B) = \frac{PA_iB}{P(B)} = \frac{P(A_i)P(B|A_i)}{\sum_{j=1}^nP(A_j)P(B|A_j)}</script></p>
+<p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组完备事件组，则有</p>
 
-<blockquote>
-  <p>根据条件概率和全概率公式，很容易得出贝叶斯公式。</p>
-</blockquote>
+<script type="math/tex; mode=display">P(A_i|B) = \frac{PA_iB}{P(B)} = \frac{P(A_i)P(B|A_i)}{\sum_{j=1}^nP(A_j)P(B|A_j)}</script>
+
+<p>根据条件概率和全概率公式，很容易得出贝叶斯公式。</p>
 
 <h2 id="section-8">贝叶斯定理的应用</h2>
 
@@ -118,12 +118,13 @@
 </code></pre>
 </div>
 
-<p>根据贝叶斯公式，检测为阳性，感染艾滋病的概率
+<div>
+根据贝叶斯公式，检测为阳性，感染艾滋病的概率
 
 $$P(患病|检测为阳性) = \frac{P(检测为阳性|患病) \cdot P(患病)}{P(检测为阳性)}$$
 
 $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳性|不患病) \cdot P(不患病)$$
-</p>
+</div>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span> <span class="o">+</span> <span class="n">pf_T</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pT</span><span class="p">))</span>
@@ -132,7 +133,14 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 </code></pre>
 </div>
 
-<p>将数据代入公式，计算得出P(患病|检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</p>
+<table>
+  <tbody>
+    <tr>
+      <td>将数据代入公式，计算得出P(患病</td>
+      <td>检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pT</span> <span class="o">=</span> <span class="mf">49.977</span>
 <span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
@@ -459,7 +467,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>1</span></a></li>
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>2</span></a></li>
     
 
             </ul>
@@ -467,19 +475,19 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
                 <li><i class="glyphicon glyphicon-tags"></i></li>
                  
     
-    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>1</span></a></li>
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>2</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/mathematics.html">Mathematics<span>4</span></a></li>
+    <li class="tag"><a href="/tags/mathematics.html">Mathematics<span>5</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>6</span></a></li>
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>7</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/python.html">Python<span>2</span></a></li>
+    <li class="tag"><a href="/tags/python.html">Python<span>3</span></a></li>
     
 
             </ul>
@@ -492,7 +500,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
                 
                 <li><a href="http://localhost:4000">Archive</a></li>
                 
-                <li class="next disabled"><a>没有了</a> 
+                <li class="next"><a href="/2017/09/16/taylor-series-derivation.html" title="泰勒级数从放弃到入门">下一篇 &rarr;</a>
+                </li>
+                
             </ul>
         </div>
     </div>
