@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-牛顿法从放弃到入门</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/09/17/newton_method_derivation.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">牛顿法从放弃到入门</h1>
+            <p class="post-meta">
+                2017年09月17日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h3 id="section">问题</h3>
+
+<p>科学或工程问题的求解和模拟最终往往都要解决求根或优化问题，前一种情形要求出方程或方程组的解；后一种情形则要找出使函数取极大或极小值的点，即使是对实验数据进行拟合或数值求解微分方程，也总是将问题简化成上述两类问题。</p>
+
+<p>第一类问题本质是求出$f(x) = 0$的解，第二类问题则可以转化为求$g(x) = f^{‘}(x) = 0$的解，其实本质我们都可以转化为求解方程根的问题。</p>
+
+<h3 id="section-1">对分法</h3>
+
+<p>在解方程的问题上，我们最容易会想到就是通过对分法迭代逐步逼近方程的根，最终达到求解方程的根的目的。他的基本思想如下：</p>
+
+<p>如果$f$在所考虑的区间上连续，且$[x_0, x_1]$是有根区间，即$f(x_0) \cdot f(x_1) &lt; 0$，则取</p>
+
+<script type="math/tex; mode=display">x_2 = \frac{x_0 + x_1}{2}</script>
+
+<p>并计算$f(x_2)$，如果$f(x_2) = 0$则结束，否则或者$f(x_2)$与$f(x_0)$符号相反，此时$[x_0, x_2]$是新的有根区间，长度为原来的一半，或者$f(x_2)$与$f(x_1)$符号相反，此时$[x_2, x_1]$是新的有根区间，长度也为原来的一半，不管哪种情形，都通过计算一个新的函数值（$f(x_2)$的计算）将零点$x^*$的不确定性降低了50%，接下来在新的区间上重复这一过程，直到有根区间的长度充分小。</p>
+
+<p>算法描述如下：</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">gx</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">'[ Epoch {0} ] guess = {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gx0</span><span class="p">,</span> <span class="n">gx1</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">g</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">gx0</span> <span class="o">*</span> <span class="n">gx</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre>
+</div>
+
+<p>测试解方程</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 求解f(x) = x^2 - 5 = 0</span>
+<span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 28 ] guess = 2.23606797867</span>
+<span class="c"># 2.23606797867</span>
+<span class="c"># 求解f(x) = x^2 - 2 = 0</span>
+<span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 27 ] guess = 1.41421356052</span>
+<span class="c"># 1.41421356052</span>
+</code></pre>
+</div>
+
+<p>可以看出求解$x^2 = 5$迭代了29次，求解$x^2 = 2$迭代了28次，具体的迭代次数与$[x_0, x_1]$的区间长度和精度$epsilon = 1e-8$有关，对于这样的收敛速度，实在是太慢了，通常需要几次迭代才可以增加一位正确的有效数字。</p>
+
+<blockquote>
+  <p>如果对分法第n次的迭代的误差是$\epsilon$，那么为了使误差降低为$\frac{\epsilon}{10}$，即使结果增加一位正确的有效数字，则需要再迭代$m$次，$m = log_2(10) = 3.3219$。</p>
+</blockquote>
+
+<p>除此之外，对分法对初始区间$[x_0, x_1]$也有很高要求，需要保证该区间是有根区间。</p>
+
+<p>那么有没有对初始值要求不高，收敛速度更快的算法呢？答案是有的，它就是下文要重点分析的牛顿法。</p>
+
+<h3 id="section-2">牛顿法</h3>
+
+<h4 id="section-3">算法描述</h4>
+
+<p>牛顿法（或称牛顿-拉弗森(Newton-Raphson)迭代）：对于可微函数$f$，选定一个点$x_0$，计算</p>
+
+<script type="math/tex; mode=display">x_1 = x_0 - \frac{f(x_0)}{f^{'}(x_0)}</script>
+
+<script type="math/tex; mode=display">x_2 = x_1 - \frac{f(x_1)}{f^{'}(x_1)}</script>
+
+<script type="math/tex; mode=display">x_3 = x_2 - \frac{f(x_2)}{f^{'}(x_2)}</script>
+
+<script type="math/tex; mode=display">\vdots</script>
+
+<p>直到满足某个判停准则，最终得到的$x_k$为$f$零点的近似值。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 根据导数公式求解函数g的导函数</span>
+<span class="k">def</span> <span class="nf">derivative</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">epsilon</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span> <span class="o">-</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">dx</span>
+
+<span class="c"># 牛顿法代码实现</span>
+<span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">guess</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">initial</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">guess</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">epsilon</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'[ Epoch {0} ] guess = {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">guess</span><span class="p">)</span>
+        <span class="n">guess</span> <span class="o">=</span> <span class="n">guess</span> <span class="o">-</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">derivative</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)(</span><span class="n">guess</span><span class="p">)))</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">guess</span>
+</code></pre>
+</div>
+
+<p>测试解方程</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 求解f(x) = x^2 - 5 = 0</span>
+<span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 4 ] guess = 2.23606889563</span>
+<span class="c"># 2.2360679775</span>
+<span class="c"># 求解f(x) = x^2 - 2 = 0</span>
+<span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 0 ] guess = 2</span>
+<span class="c"># [ Epoch 1 ] guess = 1.49999999696</span>
+<span class="c"># [ Epoch 2 ] guess = 1.41666666616</span>
+<span class="c"># [ Epoch 3 ] guess = 1.41421568629</span>
+<span class="c"># 1.41421356237</span>
+</code></pre>
+</div>
+
+<p>可以看出求解$x^2 = 5$只迭代了5次，求解$x^2 = 2$迭代了4次，收敛速度非常快。</p>
+
+<h4 id="section-4">几何意义</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># coding=UTF-8</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">'r-.'</span><span class="p">,</span> <span class="s">'g-.'</span><span class="p">,</span> <span class="s">'b-.'</span><span class="p">,</span> <span class="s">'y-.'</span><span class="p">,</span> <span class="s">'c-.'</span><span class="p">,</span> <span class="s">'m-.'</span><span class="p">,</span> <span class="s">'k-.'</span><span class="p">,</span> <span class="s">'w-.'</span><span class="p">,</span> <span class="s">'r-.'</span><span class="p">,</span> <span class="s">'g-.'</span><span class="p">,</span> <span class="s">'b-.'</span><span class="p">,</span> <span class="s">'y-.'</span><span class="p">,</span> <span class="s">'c-.'</span><span class="p">,</span> <span class="s">'m-.'</span><span class="p">,</span> <span class="s">'k-.'</span><span class="p">,</span> <span class="s">'w-.'</span><span class="p">]</span>
+<span class="c"># 切线方程</span>
+<span class="k">def</span> <span class="nf">tangent</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span>
+<span class="c"># 求导函数</span>
+<span class="k">def</span> <span class="nf">derivative</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">epsilon</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">)</span> <span class="o">-</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">dx</span>
+<span class="c"># 绘制牛顿法逼近过程</span>
+<span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">guess</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">initial</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">guess</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">epsilon</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'[ Epoch {0} ] guess = {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">guess</span><span class="p">)</span>
+        <span class="n">slope</span> <span class="o">=</span> <span class="n">derivative</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)(</span><span class="n">guess</span><span class="p">)</span>
+        <span class="n">guess</span> <span class="o">=</span> <span class="n">guess</span> <span class="o">-</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span> <span class="o">/</span> <span class="n">slope</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tangent</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="n">guess</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">guess</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">guess</span>
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">5</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="s">'k-'</span><span class="p">)</span>
+<span class="n">solve</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># [ Epoch 0 ] guess = 10</span>
+<span class="c"># [ Epoch 1 ] guess = 5.25000023439</span>
+<span class="c"># [ Epoch 2 ] guess = 3.10119077758</span>
+<span class="c"># [ Epoch 3 ] guess = 2.35673746512</span>
+<span class="c"># [ Epoch 4 ] guess = 2.23915725731</span>
+<span class="c"># [ Epoch 5 ] guess = 2.23607010927</span>
+</code></pre>
+</div>
+
+<p><img src="/assets/images/newton_method_geometry.png" alt="NewtonMethodGeometry" /></p>
+
+<p>很容易看出，离零点越远的地方收敛速度越快，离零点越近的地方收敛速度越慢，每一次迭代，都比上一次的值更接近$f(x) = 0$。</p>
+
+<h4 id="section-5">逼近序列的推导</h4>
+
+<script type="math/tex; mode=display">x_{n+1} = x_n - \frac{f(x_n)}{f^{'}(x_n)}</script>
+
+<p><img src="/assets/images/newton_method.png" alt="NewtonMethod" /></p>
+
+<p>通过上文中的几何意义，点$x_{n+1}$是$f(x)$在点$x_n$处的切线与$x$轴的交点，切线的直线方程为：</p>
+
+<script type="math/tex; mode=display">y = f^{'}(x_n)(x - x_{n}) + f(x_n)</script>
+
+<p>令$y = 0$，很容易计算出</p>
+
+<script type="math/tex; mode=display">x = x_n - \frac{f(x_n)}{f^{'}(x_n)}</script>
+
+<p>我们可以根据<a href="https://www.atatech.org/articles/90442">泰勒公式</a>的一阶展开来推导出该公式。</p>
+
+<script type="math/tex; mode=display">f(x) \approx f(x_n) + f^{'}(x_n)(x - x_n) = 0</script>
+
+<p>可以直接得出</p>
+
+<script type="math/tex; mode=display">x = x_n - \frac{f(x_n)}{f^{'}(x_n)}</script>
+
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>3</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/mathematics.html">数学<span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python<span>4</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2017/09/16/taylor-series-derivation.html" title="泰勒级数从放弃到入门">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a> 
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

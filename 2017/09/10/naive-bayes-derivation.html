@@ -133,14 +133,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 </code></pre>
 </div>
 
-<table>
-  <tbody>
-    <tr>
-      <td>将数据代入公式，计算得出P(患病</td>
-      <td>检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</td>
-    </tr>
-  </tbody>
-</table>
+<p><span>将数据代入公式，计算得出P(患病|检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</span></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pT</span> <span class="o">=</span> <span class="mf">49.977</span>
 <span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
@@ -222,7 +215,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <script type="math/tex; mode=display">P(垃圾邮件|w_1,w_2) = \frac{P(垃圾邮件,w_1,w_2)}{P(w_1,w_2)}</script>
 
-<script type="math/tex; mode=display">P(w_1,w_2) = P(w_1,w_2|垃圾邮件) \cdot P(垃圾邮件) + P(w_1,w_2|正常邮件) \cdot P(正常邮件) = P(w_1,w_2,垃圾邮件) + P(w_1,w_2,正常邮件)</script>
+<script type="math/tex; mode=display">P(w_1,w_2) = P(w_1,w_2|垃圾邮件) \cdot P(垃圾邮件) + P(w_1,w_2|正常邮件) \cdot P(正常邮件)</script>
+
+<script type="math/tex; mode=display">= P(w_1,w_2,垃圾邮件) + P(w_1,w_2,正常邮件)</script>
 
 <p>也即：</p>
 
@@ -315,7 +310,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <p><span>根据贝叶斯公式$P_{w|S} = \frac{P_{S|w} \cdot P_w}{P_S}$，得到：</span></p>
 
-<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\tilde{spam}}}} = \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
+
+<script type="math/tex; mode=display">= \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
 
 <p><span>取$P_{spam}=P_{\tilde{spam}}=0.5$，得到：</span></p>
 
@@ -323,7 +320,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <p>又因为：</p>
 
-<script type="math/tex; mode=display">P_{\tilde{spam}|w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}</script>
+<script type="math/tex; mode=display">P_{\tilde{spam}|w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}}</script>
+
+<script type="math/tex; mode=display">= 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}</script>
 
 <p>最终可得：</p>
 
@@ -467,7 +466,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>2</span></a></li>
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>3</span></a></li>
     
 
             </ul>
@@ -475,19 +474,19 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
                 <li><i class="glyphicon glyphicon-tags"></i></li>
                  
     
-    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>2</span></a></li>
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>3</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/mathematics.html">数学<span>5</span></a></li>
+    <li class="tag"><a href="/tags/mathematics.html">数学<span>6</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>7</span></a></li>
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>8</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/python.html">Python<span>3</span></a></li>
+    <li class="tag"><a href="/tags/python.html">Python<span>4</span></a></li>
     
 
             </ul>
