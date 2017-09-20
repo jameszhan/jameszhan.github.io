@@ -5,8 +5,8 @@
     <description>资深码农，程序设计语言控</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 20 Sep 2017 08:33:58 +0000</pubDate>
-    <lastBuildDate>Wed, 20 Sep 2017 08:33:58 +0000</lastBuildDate>
+    <pubDate>Wed, 20 Sep 2017 08:43:05 +0000</pubDate>
+    <lastBuildDate>Wed, 20 Sep 2017 08:43:05 +0000</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -186,7 +186,7 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;x = x_n - \frac{f(x_n)}{f^{'}(x_n)}&lt;/script&gt;
 
-&lt;p&gt;我们可以根据&lt;a href=&quot;https://www.atatech.org/articles/90442&quot;&gt;泰勒公式&lt;/a&gt;的一阶展开来推导出该公式。&lt;/p&gt;
+&lt;p&gt;我们可以根据&lt;a href=&quot;/2017/09/16/taylor-series-derivation.html&quot;&gt;泰勒公式&lt;/a&gt;的一阶展开来推导出该公式。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x) \approx f(x_n) + f^{'}(x_n)(x - x_n) = 0&lt;/script&gt;
 
