@@ -16,6 +16,6 @@
     <li class="tag"><a href="/categories/raspberrypi.html">树莓派 <span>3</span></a></li>
     <li class="tag"><a href="/categories/pdl.html">程序设计语言 <span>1</span></a></li>
     <li class="tag"><a href="/categories/docker.html">Docker <span>1</span></a></li>
-    <li class="tag"><a href="/categories/ml.html">Machine Learning <span>3</span></a></li>
+    <li class="tag"><a href="/categories/ml.html">Machine Learning <span>5</span></a></li>
     </ul>
 </div>

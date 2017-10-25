@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-不动点迭代及其收敛性</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/09/16/fixed-point-iteration.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">不动点迭代及其收敛性</h1>
+            <p class="post-meta">
+                2017年09月16日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h3 id="section">什么是不动点迭代法</h3>
+
+<p>函数$f$的不动点是一个值$x$使得$f(x) = x$。例如，0和1是函数$f(x) = x^2$的不动点，因为$0^2 = 0$而$1^2 = 1$，即曲线$y = f(x)$与直线$y = x$存在交点$P(x^{\ast}, x^{\ast})$。</p>
+
+<p>对于某些函数，通过某些初始猜测出发，反复地应用$f$，</p>
+
+<script type="math/tex; mode=display">f(x), f(f(x)), f(f(f(x))),\cdots</script>
+
+<p>直到值的变化不大时，就可以找到它的一个不动点。</p>
+
+<p>算法描述如下：</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">guess</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">guess</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">guess</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">epsilon</span><span class="p">:</span>
+        <span class="n">guess</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">'[ Epoch {0} ] guess = {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">guess</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">guess</span>
+</code></pre>
+</div>
+
+<p>下面示例演示了</p>
+
+<ol>
+  <li>求解$f(x) = \frac{x + \frac{5}{x}}{2} = x$也即求解$x^2=5$。</li>
+  <li>求解$f(x) = \frac{x + \frac{8}{x^2}}{2} = x$也即求解$x^3=8$。</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 5 ] guess = 2.2360679775</span>
+<span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<span class="c"># [ Epoch 27 ] guess = 2.00000000337</span>
+</code></pre>
+</div>
+
+<h3 id="section-1">不动点迭代法的收敛性</h3>
+
+<p>一般地，将非线性方程$f(x) = 0$化为一个同解方程</p>
+
+<div>$$ \varphi(x) = x　　　① $$</div>
+
+<p>并且假设$\varphi(x)$是一个连续函数，选定一个点$x_0$，计算</p>
+
+<script type="math/tex; mode=display">x_1 = \varphi(x_0)</script>
+
+<script type="math/tex; mode=display">x_2 = \varphi(x_1)</script>
+
+<script type="math/tex; mode=display">x_3 = \varphi(x_2)</script>
+
+<script type="math/tex; mode=display">\vdots</script>
+
+<div>$$ \left. x_{k+1} = \varphi(x_k) \right|_{k \in (1, 2, 3,\cdots)}　　　② $$ </div>
+
+<p>②式为求解非线性方程①的迭代公式，$\varphi(x)$为迭代函数，$x_k$为第$k$步的迭代值。
+如果存在一点$x^*$，使得序列${x_k}$满足，</p>
+
+<script type="math/tex; mode=display">\lim_{k \to \infty} x_k = x^*</script>
+
+<p>称②式收敛，否则为发散。</p>
+
+<p>上例中，我们求解了方程$f(x) = x^2 - 5 = 0$，给出的同解方程是$\varphi(x) = \frac{x + \frac{5}{x}}{2} = x$和。</p>
+
+<p>为什么我们不使用更简单的$\varphi(x) = \frac{5}{x} = x$？答案是，因为它不收敛，它关于直线$y = x$对称，易得$x_1 = \varphi(x_0)$及$x_2 = \varphi(x_1) = x_0$，$x$值总在$x_0$和$\varphi(x_0)$之间摆动。</p>
+
+<p>一般地，我们有两种类型的收敛迭代。</p>
+
+<p><img src="/assets/images/fixed_point_01.png" alt="fixed_point_01" />
+<img src="/assets/images/fixed_point_02.png" alt="fixed_point_02" /></p>
+
+<p>对应有两种类型的发散</p>
+
+<p><img src="/assets/images/fixed_point_03.png" alt="fixed_point_03" />
+<img src="/assets/images/fixed_point_04.png" alt="fixed_point_04" /></p>
+
+<p>通过观察我们发现，在曲线$y = \varphi(x)$与直线$y = x$交点$P(x^{\ast}, x^{\ast})$处，$x^{\ast}$对应的曲线切线斜率的绝对值小于1（y=x的斜率）时，迭代收敛。一旦交点对应的曲线切线的斜率大于1，迭代就会无法收敛。</p>
+
+<p>$\varphi(x)$要收敛，必须满足如下不动点定理。</p>
+
+<p>设迭代函数$\varphi(x)$在区间$[a, b]$上连续，且满足</p>
+
+<p>(1). 当$x \in [a, b]$时，$a \leq \varphi(x) \leq b$；</p>
+
+<p>(2). 存在一正数$L$，满足$0 &lt; L &lt; 1$，且$\forall x \in [a, b]$，有</p>
+<div>$$ \left| \varphi^{'}(x) \right| \leq L $$</div>
+
+<p>则：</p>
+
+<p>a). 方程$\varphi(x) = x$在$[a, b]$内有唯一解$x^*$</p>
+
+<p>b). 对于任意初值$x_0 \in [a, b]$，迭代法$x_{k+1} = \varphi(x_k)$均收敛于$x^{\ast}$</p>
+
+<p>c). <span>$\left| x_k - x^* \right| \leq \frac{L}{1 - L}\left| x_k - x_{k - 1} \right|$</span></p>
+
+<p>d). <span>$\left| x_k - x^* \right| \leq \frac{L^k}{1 - L}\left| x_1 - x_0 \right|$</span></p>
+
+<p>证明过程如下：</p>
+
+<p>设 $f(x) = x - \varphi(x)$，则$f(x)$在[a, b]上连续可导，根据条件(1)，</p>
+
+<script type="math/tex; mode=display">f(a) = a - \varphi(a) \leq 0</script>
+
+<script type="math/tex; mode=display">f(b) = b - \varphi(b) \geq 0</script>
+
+<p>由根的存在定理，方程$f(x) = 0$在$[a, b]$上至少存在一个根(存在性)。</p>
+
+<p>根据条件(2)，</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left|\varphi^{'}(x)\right| \leq L < 1 %]]></script>
+
+<script type="math/tex; mode=display">f^{'}(x) = 1 - \varphi^{'}(x) > 0</script>
+
+<p>则函数$f(x)$在$[a, b]$上单调递增，a).方程$f(x) = 0$在$[a, b]$内有唯一解$x^{\ast}$(唯一性)</p>
+
+<p>由微分中值定理</p>
+
+<script type="math/tex; mode=display">x_{k+1} - x^{\ast} = \varphi(x_k) - \varphi(x^{\ast}) = \varphi^{'}(\xi)(x_{k} - x^{\ast})</script>
+
+<script type="math/tex; mode=display">x_{k+1} - x_k = \varphi(x_k) - \varphi(x_{k-1}) = \varphi^{'}(\overline \xi)(x_{k} - x_{k-1})</script>
+
+<script type="math/tex; mode=display">\varphi^{'}(x) \leq L</script>
+
+<script type="math/tex; mode=display">\implies \left| x_{k + 1} - x^{\ast} \right| \leq L \left| x_k - x^{\ast} \right| = L \left| x_{k + 1} - x^{\ast} - (x_{k + 1} - x_k) \right| \leq  L \left| x_{k + 1} - x^{\ast} \right| + L \left| x_{k + 1} - x_k \right|</script>
+
+<script type="math/tex; mode=display">\implies c). \left| x_{k + 1} - x^{\ast} \right| \leq \frac{L}{1-L}\left| x_{k + 1} - x_k \right|</script>
+
+<script type="math/tex; mode=display">\implies d). \left| x_{k + 1} - x^{\ast} \right| \leq \frac{L^k}{1-L}\left| x_1 - x_0 \right|</script>
+
+<p>即</p>
+
+<script type="math/tex; mode=display">\left| x_{k + 1} - x^{\ast} \right| \leq \frac{L}{1-L}\left| x_{k + 1} - x_k \right| \leq \frac{L^k}{1-L}\left| x_1 - x_0 \right|</script>
+
+<p>因为$L &lt; 1$, 因此对于任意初值$x_0$，迭代法$x_{k+1} = \varphi(k)$均收敛于$x^{\ast}$。</p>
+
+<script type="math/tex; mode=display">\lim_{k \to \infty}(x_k - x^{\ast}) = 0</script>
+
+<!-- $\varphi(x) = \frac{5}{x}$的导函数为$\varphi^{'}(x) = -\frac{5}{x^2} < 0$，不满足条件(2)，因此它不收敛。同样$\varphi(x) = \frac{8}{x^2}$的导函数为$\varphi^{'}(x) = -\frac{16}{x^3}$。 -->
+
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/ml.html">Machine Learning<span>5</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/ml.html">Machine Learning<span>5</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/mathematics.html">数学<span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/algorithm.html">Algorithm<span>10</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/python.html">Python<span>6</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2017/09/16/taylor-series-derivation.html" title="泰勒级数从放弃到入门">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next"><a href="/2017/09/17/newton-method-derivation.html" title="牛顿法从放弃到入门">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>
