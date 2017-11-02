@@ -5,8 +5,8 @@
     <description>资深码农，程序设计语言控</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 02 Nov 2017 05:43:11 +0000</pubDate>
-    <lastBuildDate>Thu, 02 Nov 2017 05:43:11 +0000</lastBuildDate>
+    <pubDate>Thu, 02 Nov 2017 07:16:52 +0000</pubDate>
+    <lastBuildDate>Thu, 02 Nov 2017 07:16:52 +0000</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -120,29 +120,16 @@
 &lt;p&gt;上例，我们演示了一元线性回归梯度下降的迭代解法，更一般地，我们考虑n个变量的情况，我们有m条记录。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{bmatrix}{cc|c}
-x_{10} &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n} \\
-x_{20} &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2n} \\
-\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-x_{m0} &amp; x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{mn} \\
-\end{bmatrix} 
-\cdot
-\begin{bmatrix}
-\theta_0    \\
-\theta_1    \\
-\theta_2    \\
-\vdots      \\
-\theta_n    \\
-\end{bmatrix} 
-=
-\begin{bmatrix}
-y_1     \\
-y_2     \\
-\vdots      \\
-y_m     \\
-\end{bmatrix} %]]&gt;&lt;/script&gt;
+\left[
+    \begin{array}{ccccc|c}
+x^{(1)}_{0} &amp; x^{(1)}_{1} &amp; x^{(1)}_{2} &amp; \cdots &amp; x^{(1)}_{n} &amp; y^{(1)} \\
+x^{(2)}_{0} &amp; x^{(2)}_{1} &amp; x^{(2)}_{2} &amp; \cdots &amp; x^{(2)}_{n} &amp; y^{(2)} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+x^{(m)}_{0} &amp; x^{(m)}_{1} &amp; x^{(m)}_{2} &amp; \cdots &amp; x^{(m)}_{n} &amp; y^{(m)} \\
+    \end{array}
+\right] %]]&gt;&lt;/script&gt;
 
-&lt;p&gt;&lt;span&gt;为了不失一般性和简化公式，我们令$x_{i0}|_{i \in (1,2,\cdots,m)} = 1$&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;为了不失一般性和简化公式，我们令 $\left.x_0^{(i)} = 1\right|_{i \in (1,2,\cdots,m)}$ &lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;我们需要找到一个假设$h$，使得应用到上述数据，其代价函数最小。&lt;/p&gt;
 
@@ -248,53 +235,39 @@ x_n \\
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;LOSS 
 = 
 \begin{bmatrix}
-loss_1 \\
-loss_2 \\
+loss^{(1)} \\
+loss^{(2)} \\
 \vdots \\
-loss_m \\
+loss^{(m)} \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-h_{\theta}(x_1) - y_1 \\
-h_{\theta}(x_2) - y_2 \\
+h_{\theta}(x^{(1)}) - y^{(1)} \\
+h_{\theta}(x^{(2)}) - y^{(2)} \\
 \vdots \\
-h_{\theta}(x_m) - y_m \\
+h_{\theta}(x^{(m)}) - y^{(m)} \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-\sum_{j=0}^nx_{1j}\theta_j \\
-\sum_{j=0}^nx_{2j}\theta_j \\
+\sum_{j=0}^nx^{(1)}_{j}\theta_j \\
+\sum_{j=0}^nx^{(2)}_{j}\theta_j \\
 \vdots \\
-\sum_{j=0}^nx_{mj}\theta_j \\
+\sum_{j=0}^nx^{(m)}_{j}\theta_j \\
 \end{bmatrix}
 -
 \begin{bmatrix}
-y_1 \\
-y_2 \\
+y^{(1)} \\
+y^{(2)} \\
 \vdots \\
-y_m \\
-\end{bmatrix}
-=
-\begin{bmatrix}
-x_{1} \cdot \theta \\
-x_{2} \cdot \theta \\
-\vdots \\
-x_{m} \cdot \theta \\
-\end{bmatrix}
--
-\begin{bmatrix}
-y_1 \\
-y_2 \\
-\vdots \\
-y_m \\
+y^{(m)} \\
 \end{bmatrix}&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 = \begin{bmatrix}
-x_{10} &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n} \\
-x_{20} &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2n} \\
+x^{(1)}_{0} &amp; x^{(1)}_{1} &amp; x^{(1)}_{2} &amp; \cdots &amp; x^{(1)}_{n} \\
+x^{(2)}_{0} &amp; x^{(2)}_{1} &amp; x^{(2)}_{2} &amp; \cdots &amp; x^{(2)}_{n} \\
 \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-x_{m0} &amp; x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{mn} \\
+x^{(m)}_{0} &amp; x^{(m)}_{1} &amp; x^{(m)}_{2} &amp; \cdots &amp; x^{(m)}_{n} \\
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -305,10 +278,10 @@ x_{m0} &amp; x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{mn} \\
 \end{bmatrix}
 -
 \begin{bmatrix}
-y_0 \\
-y_1 \\
+y^{(1)} \\
+y^{(2)} \\
 \vdots \\
-y_m \\
+y^{(m)} \\
 \end{bmatrix}
 = X \cdot \theta - Y %]]&gt;&lt;/script&gt;
 
@@ -321,33 +294,33 @@ y_m \\
 \end{bmatrix} 
 =
 \begin{bmatrix}
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{i0} \\
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{i1} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{0} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{1} \\
 \vdots \\
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{in} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{n} \\
 \end{bmatrix} 
 =
 \begin{bmatrix}
-\sum_{i=1}^mloss_ix_{i0} \\
-\sum_{i=1}^mloss_ix_{i1} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{0} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{1} \\
 \vdots \\
-\sum_{i=1}^mloss_ix_{in} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{n} \\
 \end{bmatrix}&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 = \begin{bmatrix}
-x_{10} &amp; x_{20} &amp; \cdots &amp; x_{m0} \\
-x_{11} &amp; x_{21} &amp; \cdots &amp; x_{m1} \\
+x^{(1)}_{0} &amp; x^{(2)}_{0} &amp; \cdots &amp; x^{(m)}_{0} \\
+x^{(1)}_{1} &amp; x^{(2)}_{1} &amp; \cdots &amp; x^{(m)}_{1} \\
 \vdots \\
-x_{1n} &amp; x_{2n} &amp; \cdots &amp; x_{mn} \\
+x^{(1)}_{n} &amp; x^{(2)}_{n} &amp; \cdots &amp; x^{(m)}_{n} \\
 \end{bmatrix} 
 \cdot
 \begin{bmatrix}
-loss_1 \\
-loss_2 \\
+loss^{(1)} \\
+loss^{(2)} \\
 \vdots \\
-loss_m \\
-\end{bmatrix} 
+loss^{(m)} \\
+\end{bmatrix}
 = X^T \cdot LOSS %]]&gt;&lt;/script&gt;
 
 &lt;p&gt;完整代码如下&lt;/p&gt;
@@ -384,6 +357,42 @@ loss_m \\
 
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'y = {0} * x + {1}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# y = 0.193953964855 * x + 0.01615274985&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;最终实现&lt;/h3&gt;
+
+&lt;p&gt;在上面的使用上，我们需要调用方主动为每一个$x_0$赋值为1，其实这一部分完全可以在算法里面实现，简化调用方的使用成本。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epsilon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1e-8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;column_stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sse2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Xt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;sse&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sse&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sse2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epsilon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;sse2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sse&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;gradient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Xt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gradient&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.89&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;7.83&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;9.80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;11.77&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;13.80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;15.75&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;17.71&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e-6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'y = {0} * x + {1}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>

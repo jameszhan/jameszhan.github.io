@@ -144,29 +144,16 @@
 <p>上例，我们演示了一元线性回归梯度下降的迭代解法，更一般地，我们考虑n个变量的情况，我们有m条记录。</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
-\begin{bmatrix}{cc|c}
-x_{10} & x_{11} & x_{12} & \cdots & x_{1n} \\
-x_{20} & x_{21} & x_{22} & \cdots & x_{2n} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-x_{m0} & x_{m1} & x_{m2} & \cdots & x_{mn} \\
-\end{bmatrix} 
-\cdot
-\begin{bmatrix}
-\theta_0    \\
-\theta_1    \\
-\theta_2    \\
-\vdots      \\
-\theta_n    \\
-\end{bmatrix} 
-=
-\begin{bmatrix}
-y_1     \\
-y_2     \\
-\vdots      \\
-y_m     \\
-\end{bmatrix} %]]></script>
+\left[
+    \begin{array}{ccccc|c}
+x^{(1)}_{0} & x^{(1)}_{1} & x^{(1)}_{2} & \cdots & x^{(1)}_{n} & y^{(1)} \\
+x^{(2)}_{0} & x^{(2)}_{1} & x^{(2)}_{2} & \cdots & x^{(2)}_{n} & y^{(2)} \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+x^{(m)}_{0} & x^{(m)}_{1} & x^{(m)}_{2} & \cdots & x^{(m)}_{n} & y^{(m)} \\
+    \end{array}
+\right] %]]></script>
 
-<p><span>为了不失一般性和简化公式，我们令$x_{i0}|_{i \in (1,2,\cdots,m)} = 1$</span></p>
+<p><span>为了不失一般性和简化公式，我们令 $\left.x_0^{(i)} = 1\right|_{i \in (1,2,\cdots,m)}$ </span></p>
 
 <p>我们需要找到一个假设$h$，使得应用到上述数据，其代价函数最小。</p>
 
@@ -272,53 +259,39 @@ x_n \\
 <script type="math/tex; mode=display">LOSS 
 = 
 \begin{bmatrix}
-loss_1 \\
-loss_2 \\
+loss^{(1)} \\
+loss^{(2)} \\
 \vdots \\
-loss_m \\
+loss^{(m)} \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-h_{\theta}(x_1) - y_1 \\
-h_{\theta}(x_2) - y_2 \\
+h_{\theta}(x^{(1)}) - y^{(1)} \\
+h_{\theta}(x^{(2)}) - y^{(2)} \\
 \vdots \\
-h_{\theta}(x_m) - y_m \\
+h_{\theta}(x^{(m)}) - y^{(m)} \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-\sum_{j=0}^nx_{1j}\theta_j \\
-\sum_{j=0}^nx_{2j}\theta_j \\
+\sum_{j=0}^nx^{(1)}_{j}\theta_j \\
+\sum_{j=0}^nx^{(2)}_{j}\theta_j \\
 \vdots \\
-\sum_{j=0}^nx_{mj}\theta_j \\
+\sum_{j=0}^nx^{(m)}_{j}\theta_j \\
 \end{bmatrix}
 -
 \begin{bmatrix}
-y_1 \\
-y_2 \\
+y^{(1)} \\
+y^{(2)} \\
 \vdots \\
-y_m \\
-\end{bmatrix}
-=
-\begin{bmatrix}
-x_{1} \cdot \theta \\
-x_{2} \cdot \theta \\
-\vdots \\
-x_{m} \cdot \theta \\
-\end{bmatrix}
--
-\begin{bmatrix}
-y_1 \\
-y_2 \\
-\vdots \\
-y_m \\
+y^{(m)} \\
 \end{bmatrix}</script>
 
 <script type="math/tex; mode=display">% <![CDATA[
 = \begin{bmatrix}
-x_{10} & x_{11} & x_{12} & \cdots & x_{1n} \\
-x_{20} & x_{21} & x_{22} & \cdots & x_{2n} \\
+x^{(1)}_{0} & x^{(1)}_{1} & x^{(1)}_{2} & \cdots & x^{(1)}_{n} \\
+x^{(2)}_{0} & x^{(2)}_{1} & x^{(2)}_{2} & \cdots & x^{(2)}_{n} \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
-x_{m0} & x_{m1} & x_{m2} & \cdots & x_{mn} \\
+x^{(m)}_{0} & x^{(m)}_{1} & x^{(m)}_{2} & \cdots & x^{(m)}_{n} \\
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -329,10 +302,10 @@ x_{m0} & x_{m1} & x_{m2} & \cdots & x_{mn} \\
 \end{bmatrix}
 -
 \begin{bmatrix}
-y_0 \\
-y_1 \\
+y^{(1)} \\
+y^{(2)} \\
 \vdots \\
-y_m \\
+y^{(m)} \\
 \end{bmatrix}
 = X \cdot \theta - Y %]]></script>
 
@@ -345,33 +318,33 @@ y_m \\
 \end{bmatrix} 
 =
 \begin{bmatrix}
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{i0} \\
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{i1} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{0} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{1} \\
 \vdots \\
-\sum_{i=1}^m(h_\theta(x_i) - y_i)x_{in} \\
+\sum_{i=1}^m(h_\theta(x^{(i)} - y^{(i)})x^{(i)}_{n} \\
 \end{bmatrix} 
 =
 \begin{bmatrix}
-\sum_{i=1}^mloss_ix_{i0} \\
-\sum_{i=1}^mloss_ix_{i1} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{0} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{1} \\
 \vdots \\
-\sum_{i=1}^mloss_ix_{in} \\
+\sum_{i=1}^mloss^{(i)}x^{(i)}_{n} \\
 \end{bmatrix}</script>
 
 <script type="math/tex; mode=display">% <![CDATA[
 = \begin{bmatrix}
-x_{10} & x_{20} & \cdots & x_{m0} \\
-x_{11} & x_{21} & \cdots & x_{m1} \\
+x^{(1)}_{0} & x^{(2)}_{0} & \cdots & x^{(m)}_{0} \\
+x^{(1)}_{1} & x^{(2)}_{1} & \cdots & x^{(m)}_{1} \\
 \vdots \\
-x_{1n} & x_{2n} & \cdots & x_{mn} \\
+x^{(1)}_{n} & x^{(2)}_{n} & \cdots & x^{(m)}_{n} \\
 \end{bmatrix} 
 \cdot
 \begin{bmatrix}
-loss_1 \\
-loss_2 \\
+loss^{(1)} \\
+loss^{(2)} \\
 \vdots \\
-loss_m \\
-\end{bmatrix} 
+loss^{(m)} \\
+\end{bmatrix}
 = X^T \cdot LOSS %]]></script>
 
 <p>完整代码如下</p>
@@ -408,6 +381,42 @@ loss_m \\
 
 <span class="k">print</span> <span class="s">'y = {0} * x + {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 <span class="c"># y = 0.193953964855 * x + 0.01615274985</span>
+</code></pre>
+</div>
+
+<h3 id="section-5">最终实现</h3>
+
+<p>在上面的使用上，我们需要调用方主动为每一个$x_0$赋值为1，其实这一部分完全可以在算法里面实现，简化调用方的使用成本。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">gd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">X</span><span class="p">))</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">_X</span><span class="p">)</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">sse2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="mi">0</span>
+    <span class="n">Xt</span> <span class="o">=</span> <span class="n">_X</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">_X</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">Y</span>
+
+        <span class="n">sse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sse</span> <span class="o">-</span> <span class="n">sse2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sse2</span> <span class="o">=</span> <span class="n">sse</span>
+
+        <span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
+        <span class="n">theta</span> <span class="o">-=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient</span>
+    <span class="k">return</span> <span class="n">theta</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.99</span><span class="p">,</span> <span class="mf">3.89</span><span class="p">,</span> <span class="mf">5.80</span><span class="p">,</span> <span class="mf">7.83</span><span class="p">,</span> <span class="mf">9.80</span><span class="p">,</span> <span class="mf">11.77</span><span class="p">,</span> <span class="mf">13.80</span><span class="p">,</span> <span class="mf">15.75</span><span class="p">,</span> <span class="mf">17.71</span><span class="p">]</span>
+
+<span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">gd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">'y = {0} * x + {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </code></pre>
 </div>
 
