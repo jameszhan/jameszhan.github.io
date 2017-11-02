@@ -52,9 +52,9 @@
 <p>上述乘法公式可推广到任意有穷多个事件时的情况。
 <span>设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$）且$P(A_1,A_2,\cdots,A_n)&gt;0$，则$P(A_1A_2 \cdots A_n)=P(A_1)P(A_2|A_1) \cdots P(A_n|A_1A_2 \cdots A_{n-1}) = \prod_{i=1}^n P(A_i|A_1 \cdots A_{i-1})$。</span></p>
 
-<p>对于一段文本序列$S=w_1,w_2,\cdots,W_T$，它的概率可表示为：</p>
+<p>对于一段文本序列$S=w_1,w_2,\cdots,w_n$，它的概率可表示为：</p>
 
-<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,W_T) = \prod_{t=1}^T(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_T|w_1w_2 \cdots w_{T-1})</script>
+<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_n) = \prod_{t=1}^n(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_n|w_1w_2 \cdots w_{n-1})</script>
 
 <h4 id="ngram">Ngram模型</h4>
 
@@ -72,7 +72,7 @@
 
 <h4 id="section-3">独立性假设</h4>
 
-<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_T) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_T)</script>
+<script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_n) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_n)</script>
 
 <h4 id="section-4">其他</h4>
 
@@ -188,14 +188,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 </code></pre>
 </div>
 
-<table>
-  <tbody>
-    <tr>
-      <td>根据贝叶斯定理，我们很容易计算$P(垃圾邮件</td>
-      <td>w_1)$的概率。</td>
-    </tr>
-  </tbody>
-</table>
+<p><span>根据贝叶斯定理，我们很容易计算$P(垃圾邮件|w_1)$的概率。</span></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pwS</span><span class="p">,</span> <span class="n">pwH</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span> <span class="o">+</span> <span class="n">pwH</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pS</span><span class="p">))</span>
@@ -302,27 +295,27 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <p>根据贝叶斯定理有：</p>
 
-<script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2}} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2|spam} \cdot P_{spam} + P_{w_1,w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}</script>
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2}} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2|spam} \cdot P_{spam} + P_{w_1,w_2|\overline{spam}} \cdot P_{\overline{spam}}}</script>
 
 <p><span>根据独立性假设$P_{w_1,w_2|spam} = P_{w_1|w_2,spam} \cdot P_{w_2|spam} = P_{w_1|spam} \cdot P_{w_2|spam}$，得到：</span></p>
 
-<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam}}{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam} + P_{w_1|\tilde{spam}} \cdot P_{w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}</script>
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam}}{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam} + P_{w_1|\overline{spam}} \cdot P_{w_2|\overline{spam}} \cdot P_{\overline{spam}}}</script>
 
 <p><span>根据贝叶斯公式$P_{w|S} = \frac{P_{S|w} \cdot P_w}{P_S}$，得到：</span></p>
 
-<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\overline{spam}|w_1} \cdot P_{w_1} \cdot P_{\overline{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\overline{spam}}}}</script>
 
-<script type="math/tex; mode=display">= \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}</script>
+<script type="math/tex; mode=display">= \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\overline{spam}|w_1} \cdot P_{\overline{spam}|w_2} \cdot P_{spam}}{P_{\overline{spam}}}}</script>
 
-<p><span>取$P_{spam}=P_{\tilde{spam}}=0.5$，得到：</span></p>
+<p><span>取$P_{spam}=P_{\overline{spam}}=0.5$，得到：</span></p>
 
-<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2}}</script>
+<script type="math/tex; mode=display">P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + P_{\overline{spam}|w_1} \cdot P_{\overline{spam}|w_2}}</script>
 
 <p>又因为：</p>
 
-<script type="math/tex; mode=display">P_{\tilde{spam}|w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}}</script>
+<script type="math/tex; mode=display">P_{\overline{spam}|w} = \frac{P_{w|\overline{spam}} \cdot P_{\overline{spam}}}{P_w} = \frac{P_{w|\overline{spam}} \cdot P_{\overline{spam}}}{P_{w|\overline{spam}} \cdot P_{\overline{spam}} + P_{w|spam} \cdot P_{spam}}</script>
 
-<script type="math/tex; mode=display">= 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}</script>
+<script type="math/tex; mode=display">= 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\overline{spam}} \cdot P_{\overline{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}</script>
 
 <p>最终可得：</p>
 
@@ -336,7 +329,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 </code></pre>
 </div>
 
-<p>可见，在$P_{spam}=P_{\tilde{spam}}=0.5$的情况下，结果和之前是一样的。</p>
+<p>可见，在$P_{spam}=P_{\overline{spam}}=0.5$的情况下，结果和之前是一样的。</p>
 
 <p>推广到15个词，就得到：</p>
 
@@ -348,22 +341,90 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <p>给定一个邮件M，它由文本序列$S=w_1,w_2,\ldots,w_n$组成，则给定邮件为垃圾为垃圾邮件的概率为：</p>
 
-<script type="math/tex; mode=display">P(spam|M) = P(spam|w_1,w_2,\cdots,w_n) = \frac{P(w_1,w_2,\cdots,w_n|spam) \cdot P(spam)}{P(w_1,w_2,\ldots,w_n|spam) \cdot P(spam) + P(w_1,w_2,\ldots,w_n|\tilde{spam}) \cdot P(\tilde{spam}) }</script>
+<script type="math/tex; mode=display">P(spam|M) = P(spam|w_1,w_2,\cdots,w_n) = \frac{P(w_1,w_2,\cdots,w_n|spam) \cdot P(spam)}{P(w_1,w_2,\ldots,w_n|spam) \cdot P(spam) + P(w_1,w_2,\ldots,w_n|\overline{spam}) \cdot P(\overline{spam}) }</script>
 
 <p>根据朴素贝叶斯的独立性假设，则有：</p>
 
-<script type="math/tex; mode=display">P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\tilde{spam}) \cdot P(\tilde{spam}) }</script>
+<script type="math/tex; mode=display">P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam) \cdot P(spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\overline{spam}) \cdot P(\overline{spam}) }</script>
 
-<h4 id="section-14">概率计算</h4>
+<h4 id="section-14">模型数据</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>spam</td>
+      <td>count1</td>
+    </tr>
+    <tr>
+      <td>$\overline{spam}$</td>
+      <td>count2</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>word</th>
+      <th>category</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$w_1$</td>
+      <td>spam</td>
+      <td>$w_1c_1$</td>
+    </tr>
+    <tr>
+      <td>$w_1$</td>
+      <td>$\overline{spam}$</td>
+      <td>$w_1c_2$</td>
+    </tr>
+    <tr>
+      <td>$w_2$</td>
+      <td>spam</td>
+      <td>$w_2c_1$</td>
+    </tr>
+    <tr>
+      <td>$w_2$</td>
+      <td>$\overline{spam}$</td>
+      <td>$w_2c_2$</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>$w_n$</td>
+      <td>spam</td>
+      <td>$w_nc_1$</td>
+    </tr>
+    <tr>
+      <td>$w_n$</td>
+      <td>$\overline{spam}$</td>
+      <td>$w_nc_1$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="section-15">概率计算</h4>
 
 <ul>
-  <li>垃圾邮件概率：$P(spam) = \frac{count(mc[spam])}{count(mc[spam]) + count(mc[health])}$</li>
-  <li>正常邮件概率：$P(\tilde{spam}) = 1 - P(spam)$</li>
-  <li>$w_i$在正常邮件中的概率：<span>$P(w_i|\tilde{spam}) = \frac{count(wc[w_i][health])}{count[mc[health]]}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$</span></li>
-  <li>$w_i$在垃圾邮件中的概率：<span>$P(w_i|spam) = \frac{count(wc[w_i][spam])}{count[mc[spam]]}$，也就是 $\frac{w_i关联的垃圾邮件数量}{垃圾邮件的数量}$</span></li>
+  <li>垃圾邮件概率：$ P(spam) = \frac{count(spam)}{count(spam) + count(\overline{spam})}$</li>
+  <li>正常邮件概率：$P(\overline{spam}) = 1 - P(spam)$</li>
+  <li>$w_i$在垃圾邮件中的概率：<span>$P(w_i|spam) = \frac{count(w_i,spam)}{count(spam)}$，也就是 $\frac{w_i关联的垃圾邮件数量}{垃圾邮件的数量}$</span></li>
+  <li>$w_i$在正常邮件中的概率：<span>$P(w_i|\overline{spam}) = \frac{count(w_i,\overline{spam})}{count(\overline{spam})}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$</span></li>
 </ul>
 
-<h4 id="section-15">代码演示</h4>
+<h4 id="section-16">代码演示</h4>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="k">class</span> <span class="nc">AntiSpam</span><span class="p">:</span>

@@ -5,8 +5,8 @@
     <description>资深码农，程序设计语言控</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 26 Oct 2017 18:27:09 +0000</pubDate>
-    <lastBuildDate>Thu, 26 Oct 2017 18:27:09 +0000</lastBuildDate>
+    <pubDate>Thu, 02 Nov 2017 03:45:59 +0000</pubDate>
+    <lastBuildDate>Thu, 02 Nov 2017 03:45:59 +0000</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -120,7 +120,7 @@
 &lt;p&gt;上例，我们演示了一元线性回归梯度下降的迭代解法，更一般地，我们考虑n个变量的情况，我们有m条记录。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{bmatrix}
+\begin{bmatrix}{cc|c}
 x_{10} &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n} \\
 x_{20} &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2n} \\
 \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
@@ -748,6 +748,73 @@ loss_m \\
 
 &lt;!-- $\varphi(x) = \frac{5}{x}$的导函数为$\varphi^{'}(x) = -\frac{5}{x^2} &lt; 0$，不满足条件(2)，因此它不收敛。同样$\varphi(x) = \frac{8}{x^2}$的导函数为$\varphi^{'}(x) = -\frac{16}{x^3}$。 --&gt;
 
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;category&lt;/th&gt;
+      &lt;th&gt;count&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;count1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;count2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;word&lt;/th&gt;
+      &lt;th&gt;category&lt;/th&gt;
+      &lt;th&gt;count&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_1$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_1c_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_1$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_1c_2$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_2$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_2c_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_2$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_2c_2$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;…&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_n$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_nc_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_n$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_nc_1$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 </description>
         <pubDate>Sat, 16 Sep 2017 23:00:00 +0000</pubDate>
         <link>http://localhost:4000/2017/09/16/fixed-point-iteration.html</link>
@@ -975,9 +1042,9 @@ loss_m \\
 &lt;p&gt;上述乘法公式可推广到任意有穷多个事件时的情况。
 &lt;span&gt;设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$）且$P(A_1,A_2,\cdots,A_n)&amp;gt;0$，则$P(A_1A_2 \cdots A_n)=P(A_1)P(A_2|A_1) \cdots P(A_n|A_1A_2 \cdots A_{n-1}) = \prod_{i=1}^n P(A_i|A_1 \cdots A_{i-1})$。&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;对于一段文本序列$S=w_1,w_2,\cdots,W_T$，它的概率可表示为：&lt;/p&gt;
+&lt;p&gt;对于一段文本序列$S=w_1,w_2,\cdots,w_n$，它的概率可表示为：&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(S) = P(w_1,w_2,\cdots,W_T) = \prod_{t=1}^T(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_T|w_1w_2 \cdots w_{T-1})&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(S) = P(w_1,w_2,\cdots,w_n) = \prod_{t=1}^n(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_n|w_1w_2 \cdots w_{n-1})&lt;/script&gt;
 
 &lt;h4 id=&quot;ngram&quot;&gt;Ngram模型&lt;/h4&gt;
 
@@ -995,7 +1062,7 @@ loss_m \\
 
 &lt;h4 id=&quot;section-3&quot;&gt;独立性假设&lt;/h4&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(S) = P(w_1,w_2,\cdots,w_T) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_T)&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(S) = P(w_1,w_2,\cdots,w_n) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_n)&lt;/script&gt;
 
 &lt;h4 id=&quot;section-4&quot;&gt;其他&lt;/h4&gt;
 
@@ -1111,14 +1178,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;根据贝叶斯定理，我们很容易计算$P(垃圾邮件&lt;/td&gt;
-      &lt;td&gt;w_1)$的概率。&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;&lt;span&gt;根据贝叶斯定理，我们很容易计算$P(垃圾邮件|w_1)$的概率。&lt;/span&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bayes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
@@ -1225,27 +1285,27 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 &lt;p&gt;根据贝叶斯定理有：&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2}} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2|spam} \cdot P_{spam} + P_{w_1,w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2}} = \frac{P_{w_1,w_2|spam} \cdot P_{spam}}{P_{w_1,w_2|spam} \cdot P_{spam} + P_{w_1,w_2|\overline{spam}} \cdot P_{\overline{spam}}}&lt;/script&gt;
 
 &lt;p&gt;&lt;span&gt;根据独立性假设$P_{w_1,w_2|spam} = P_{w_1|w_2,spam} \cdot P_{w_2|spam} = P_{w_1|spam} \cdot P_{w_2|spam}$，得到：&lt;/span&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam}}{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam} + P_{w_1|\tilde{spam}} \cdot P_{w_2|\tilde{spam}} \cdot P_{\tilde{spam}}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam}}{P_{w_1|spam} \cdot P_{w_2|spam} \cdot P_{spam} + P_{w_1|\overline{spam}} \cdot P_{w_2|\overline{spam}} \cdot P_{\overline{spam}}}&lt;/script&gt;
 
 &lt;p&gt;&lt;span&gt;根据贝叶斯公式$P_{w|S} = \frac{P_{S|w} \cdot P_w}{P_S}$，得到：&lt;/span&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2}}{P_{spam|w_1} \cdot P_{w_1} \cdot P_{spam|w_2} \cdot P_{w_2} + \frac{P_{\overline{spam}|w_1} \cdot P_{w_1} \cdot P_{\overline{spam}|w_2} \cdot P_{w_2} \cdot P_{spam}}{P_{\overline{spam}}}}&lt;/script&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;= \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2} \cdot P_{spam}}{P_{\tilde{spam}}}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;= \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + \frac{P_{\overline{spam}|w_1} \cdot P_{\overline{spam}|w_2} \cdot P_{spam}}{P_{\overline{spam}}}}&lt;/script&gt;
 
-&lt;p&gt;&lt;span&gt;取$P_{spam}=P_{\tilde{spam}}=0.5$，得到：&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;取$P_{spam}=P_{\overline{spam}}=0.5$，得到：&lt;/span&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + P_{\tilde{spam}|w_1} \cdot P_{\tilde{spam}|w_2}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{spam|w_1,w_2} \approx \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + P_{\overline{spam}|w_1} \cdot P_{\overline{spam}|w_2}}&lt;/script&gt;
 
 &lt;p&gt;又因为：&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{\tilde{spam}|w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_w} = \frac{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{\overline{spam}|w} = \frac{P_{w|\overline{spam}} \cdot P_{\overline{spam}}}{P_w} = \frac{P_{w|\overline{spam}} \cdot P_{\overline{spam}}}{P_{w|\overline{spam}} \cdot P_{\overline{spam}} + P_{w|spam} \cdot P_{spam}}&lt;/script&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;= 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\tilde{spam}} \cdot P_{\tilde{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;= 1 - \frac{P_{w|spam} \cdot P_{spam}}{P_{w|\overline{spam}} \cdot P_{\overline{spam}} + P_{w|spam} \cdot P_{spam}} = 1 - P_{spam|w}&lt;/script&gt;
 
 &lt;p&gt;最终可得：&lt;/p&gt;
 
@@ -1259,7 +1319,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;可见，在$P_{spam}=P_{\tilde{spam}}=0.5$的情况下，结果和之前是一样的。&lt;/p&gt;
+&lt;p&gt;可见，在$P_{spam}=P_{\overline{spam}}=0.5$的情况下，结果和之前是一样的。&lt;/p&gt;
 
 &lt;p&gt;推广到15个词，就得到：&lt;/p&gt;
 
@@ -1271,22 +1331,90 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 &lt;p&gt;给定一个邮件M，它由文本序列$S=w_1,w_2,\ldots,w_n$组成，则给定邮件为垃圾为垃圾邮件的概率为：&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(spam|M) = P(spam|w_1,w_2,\cdots,w_n) = \frac{P(w_1,w_2,\cdots,w_n|spam) \cdot P(spam)}{P(w_1,w_2,\ldots,w_n|spam) \cdot P(spam) + P(w_1,w_2,\ldots,w_n|\tilde{spam}) \cdot P(\tilde{spam}) }&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(spam|M) = P(spam|w_1,w_2,\cdots,w_n) = \frac{P(w_1,w_2,\cdots,w_n|spam) \cdot P(spam)}{P(w_1,w_2,\ldots,w_n|spam) \cdot P(spam) + P(w_1,w_2,\ldots,w_n|\overline{spam}) \cdot P(\overline{spam}) }&lt;/script&gt;
 
 &lt;p&gt;根据朴素贝叶斯的独立性假设，则有：&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\tilde{spam}) \cdot P(\tilde{spam}) }&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam) \cdot P(spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\overline{spam}) \cdot P(\overline{spam}) }&lt;/script&gt;
 
-&lt;h4 id=&quot;section-14&quot;&gt;概率计算&lt;/h4&gt;
+&lt;h4 id=&quot;section-14&quot;&gt;模型数据&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;category&lt;/th&gt;
+      &lt;th&gt;count&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;count1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;count2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;word&lt;/th&gt;
+      &lt;th&gt;category&lt;/th&gt;
+      &lt;th&gt;count&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_1$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_1c_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_1$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_1c_2$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_2$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_2c_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_2$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_2c_2$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;…&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_n$&lt;/td&gt;
+      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;$w_nc_1$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;$w_n$&lt;/td&gt;
+      &lt;td&gt;$\overline{spam}$&lt;/td&gt;
+      &lt;td&gt;$w_nc_1$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;section-15&quot;&gt;概率计算&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;垃圾邮件概率：$P(spam) = \frac{count(mc[spam])}{count(mc[spam]) + count(mc[health])}$&lt;/li&gt;
-  &lt;li&gt;正常邮件概率：$P(\tilde{spam}) = 1 - P(spam)$&lt;/li&gt;
-  &lt;li&gt;$w_i$在正常邮件中的概率：&lt;span&gt;$P(w_i|\tilde{spam}) = \frac{count(wc[w_i][health])}{count[mc[health]]}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$&lt;/span&gt;&lt;/li&gt;
-  &lt;li&gt;$w_i$在垃圾邮件中的概率：&lt;span&gt;$P(w_i|spam) = \frac{count(wc[w_i][spam])}{count[mc[spam]]}$，也就是 $\frac{w_i关联的垃圾邮件数量}{垃圾邮件的数量}$&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;垃圾邮件概率：$ P(spam) = \frac{count(spam)}{count(spam) + count(\overline{spam})}$&lt;/li&gt;
+  &lt;li&gt;正常邮件概率：$P(\overline{spam}) = 1 - P(spam)$&lt;/li&gt;
+  &lt;li&gt;$w_i$在垃圾邮件中的概率：&lt;span&gt;$P(w_i|spam) = \frac{count(w_i,spam)}{count(spam)}$，也就是 $\frac{w_i关联的垃圾邮件数量}{垃圾邮件的数量}$&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;$w_i$在正常邮件中的概率：&lt;span&gt;$P(w_i|\overline{spam}) = \frac{count(w_i,\overline{spam})}{count(\overline{spam})}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$&lt;/span&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;section-15&quot;&gt;代码演示&lt;/h4&gt;
+&lt;h4 id=&quot;section-16&quot;&gt;代码演示&lt;/h4&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AntiSpam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
