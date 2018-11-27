@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-Docker 基础之 Cgroups</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/08/18/docker-in-cgroups.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Docker 基础之 Cgroups</h1>
+            <p class="post-meta">
+                2017年08月18日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h2 id="背景">背景</h2>
+
+<p>Cgroups 是 control groups 的缩写，是 Linux 内核提供的一种可以限制、记录、隔离进程组
+（process groups）所使用的物理资源（如：cpu,memory,IO 等等）的机制。最初由 google 的
+工程师提出，后来被整合进 Linux 内核。Cgroups 也是 LXC 为实现虚拟化所使用的资源管理
+手段，可以说没有 cgroups 就没有 LXC。</p>
+
+<h2 id="用法">用法</h2>
+<p>本文演示一下 <code class="highlighter-rouge">cgroups</code> 对 <code class="highlighter-rouge">CPU</code> 资源的控制。</p>
+
+<h3 id="准备程序">准备程序</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim full_cpu.go
+</code></pre></div></div>
+
+<p>以下程序可以跑满机器的所有核心。</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+  </span><span class="s">"flag"</span><span class="x">
+  </span><span class="s">"runtime"</span><span class="x">
+  </span><span class="s">"fmt"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="n">cpunum</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">flag</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="s">"cpunum"</span><span class="p">,</span><span class="x"> </span><span class="m">0</span><span class="p">,</span><span class="x"> </span><span class="s">"cpunum"</span><span class="p">)</span><span class="x">
+  </span><span class="n">flag</span><span class="o">.</span><span class="n">Parse</span><span class="p">()</span><span class="x">
+  </span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"cpunum:"</span><span class="p">,</span><span class="x"> </span><span class="o">*</span><span class="n">cpunum</span><span class="p">)</span><span class="x">
+  </span><span class="n">runtime</span><span class="o">.</span><span class="n">GOMAXPROCS</span><span class="p">(</span><span class="o">*</span><span class="n">cpunum</span><span class="p">)</span><span class="x">
+  </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="o">*</span><span class="n">cpunum</span><span class="x"> </span><span class="o">-</span><span class="x"> </span><span class="m">1</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+      </span><span class="k">for</span><span class="x"> </span><span class="p">{</span><span class="x">
+	  
+      </span><span class="p">}</span><span class="x">
+    </span><span class="p">}()</span><span class="x">
+  </span><span class="p">}</span><span class="x">
+  </span><span class="k">for</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+  </span><span class="p">}</span><span class="x">
+</span><span class="p">}</span><span class="x">
+</span></code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go build full_cpu.go
+
+<span class="c"># 查看本机的CPU核心数</span>
+nproc
+
+./full_cpu <span class="nt">-cpunum</span> <span class="sb">`</span>nproc<span class="sb">`</span>
+</code></pre></div></div>
+
+<p>查看程序的资源消耗</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>top <span class="nt">-u</span> james
+</code></pre></div></div>
+
+<p><img src="/assets/images/docker-cgroups-01.png" alt="屏幕快照 2018-09-05 下午5.10.59.png" /></p>
+
+<h3 id="使用-cgroups-控制-cpu-资源">使用 <code class="highlighter-rouge">Cgroups</code> 控制 <code class="highlighter-rouge">CPU</code> 资源</h3>
+
+<p><code class="highlighter-rouge">Cgroups</code> 子系统介绍：</p>
+
+<ul>
+  <li>blkio – 这个子系统为块设备设定输入/输出限制，比如物理设备(磁盘，固态硬盘，USB 等 等)。</li>
+  <li>cpu – 这个子系统使用调度程序提供对 CPU 的 cgroup 任务访问。</li>
+  <li>cpuacct – 这个子系统自动生成 cgroup 中任务所使用的 CPU 报告。</li>
+  <li>cpuset – 这个子系统为 cgroup 中的任务分配独立 CPU(在多核系统)和内存节点。</li>
+  <li>devices – 这个子系统可允许或者拒绝 cgroup 中的任务访问设备。</li>
+  <li>freezer – 这个子系统挂起或者恢复 cgroup 中的任务。</li>
+  <li>memory – 这个子系统设定 cgroup 中任务使用的内存限制，并自动生成由那些任务使用的 内存资源报告。</li>
+  <li>net_cls – 这个子系统使用等级识别符(classid)标记网络数据包，可允许 Linux 流量控制程 序(tc)识别从具体 cgroup 中生成的数据包。</li>
+  <li>ns – 名称空间子系统。</li>
+</ul>
+
+<p><code class="highlighter-rouge">Cgroups</code> 的配置默认在 <code class="highlighter-rouge">/sys/fs/cgroup/</code> 目录下。</p>
+
+<h4 id="建立新组-mygroup">建立新组 <code class="highlighter-rouge">mygroup</code></h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sh <span class="nt">-c</span> su root
+
+mkdir /sys/fs/cgroup/cpu/mygroup
+<span class="nb">ls</span> /sys/fs/cgroup/cpu/mygroup
+<span class="c"># cgroup.clone_children  cpuacct.stat          cpu.cfs_period_us  cpu.rt_runtime_us  notify_on_release</span>
+<span class="c"># cgroup.event_control   cpuacct.usage         cpu.cfs_quota_us   cpu.shares         tasks</span>
+<span class="c"># cgroup.procs           cpuacct.usage_percpu  cpu.rt_period_us   cpu.stat</span>
+
+<span class="nb">cat</span> /sys/fs/cgroup/cpu/mygroup/cpu.cfs_period_us
+<span class="c"># 100000</span>
+<span class="nb">cat</span> /sys/fs/cgroup/cpu/mygroup/cpu.cfs_quota_us
+<span class="c"># -1</span>
+<span class="nb">cat</span> /sys/fs/cgroup/cpu/mygroup/tasks
+</code></pre></div></div>
+
+<p>只要在 <code class="highlighter-rouge">/sys/fs/cgroup/cpu/</code> 目录下创建完目录，系统就会自动在我们的目录下增加以上文件。</p>
+
+<p><code class="highlighter-rouge">cpu.cfs_period_us</code> 用来配置时间周期长度，<code class="highlighter-rouge">cpu.cfs_quota_us</code> 用来配置当前 <code class="highlighter-rouge">cgroup</code> 在设置的周期长度内所能使用的CPU时间数，两个文件配合起来设置CPU的使用上限，如果 <code class="highlighter-rouge">cpu.cfs_quota_us</code> 的值为 -1(默认值)，表示不受 cpu 时间的限制。</p>
+
+<h4 id="限制-cpu-资源的使用">限制 <code class="highlighter-rouge">CPU</code> 资源的使用</h4>
+
+<p>先来看单核的场景</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./full_cpu <span class="nt">-cpunum</span><span class="o">=</span>1 <span class="o">&gt;</span> /dev/null &amp;
+<span class="c"># [1] 14986</span>
+
+top <span class="nt">-u</span> james
+</code></pre></div></div>
+<p><img src="/assets/images/docker-cgroups-02.png" alt="屏幕快照 2018-09-05 下午5.35.43.png" /></p>
+
+<p>把 <code class="highlighter-rouge">CPU</code> 资源限制在 <code class="highlighter-rouge">10%</code>。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sh <span class="nt">-c</span> su root
+<span class="nb">echo </span>100000 | tee /sys/fs/cgroup/cpu/mygroup/cpu.cfs_period_us
+<span class="nb">echo </span>10000 | tee /sys/fs/cgroup/cpu/mygroup/cpu.cfs_quota_us
+
+
+<span class="c"># 14986 是上文 full_cpu 程序的 PID</span>
+<span class="nb">echo </span>14986 | <span class="nb">sudo </span>tee /sys/fs/cgroup/cpu/mygroup/tasks
+
+top <span class="nt">-u</span> james
+</code></pre></div></div>
+
+<p><img src="/assets/images/docker-cgroups-03.png" alt="屏幕快照 2018-09-05 下午5.41.29.png" /></p>
+
+<p>我们再来看看多核的场景</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sh <span class="nt">-c</span> su root
+<span class="nb">echo </span>100000 | tee /sys/fs/cgroup/cpu/mygroup/cpu.cfs_period_us
+<span class="nb">echo </span>10000 | tee /sys/fs/cgroup/cpu/mygroup/cpu.cfs_quota_us
+
+./full_cpu <span class="nt">-cpunum</span><span class="o">=</span>3  <span class="o">&gt;</span> /dev/null &amp;
+<span class="c"># [1] 2394</span>
+
+top <span class="nt">-u</span> james
+</code></pre></div></div>
+
+<p><img src="/assets/images/docker-cgroups-04.png" alt="屏幕快照 2018-09-05 下午8.33.12.png" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 2394 是上文 full_cpu 程序的 PID</span>
+<span class="nb">echo </span>2394 <span class="o">&gt;</span> /sys/fs/cgroup/cpu/mygroup/tasks
+</code></pre></div></div>
+<p><img src="/assets/images/docker-cgroups-05.png" alt="屏幕快照 2018-09-05 下午8.34.18.png" /></p>
+
+<p>这里有一个有意思的地方，<code class="highlighter-rouge">CPU</code> 配额并没有如我们预期地降低到 <code class="highlighter-rouge">10%</code>，而是 <code class="highlighter-rouge">210%</code>，表现上就是我们的配额配置，在同时启动 3 个 <code class="highlighter-rouge">goroutine</code> 的情况下，只对 1 个 <code class="highlighter-rouge">CPU</code> 生效了，另外 2 个 <code class="highlighter-rouge">CPU</code> 完全没有受到影响。这个表现比较诡异，自己查了很多资料也没有找到具体原因，如果有某位看客知道具体原因，还望不吝赐教。</p>
+
+<h2 id="其他">其他</h2>
+
+<h3 id="在-centos-上安装-golang">在 CentOS 上安装 GoLang</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /tmp
+curl <span class="nt">-LO</span> https://storage.googleapis.com/golang/go1.11.linux-amd64.tar.gz
+
+<span class="c"># Compare digest with https://storage.googleapis.com/golang/go1.11.linux-amd64.tar.gz.sha256</span>
+sha256sum go1.11.linux-amd64.tar.gz
+
+
+<span class="nb">sudo tar</span> <span class="nt">-C</span> /usr/local <span class="nt">-xvzf</span> go1.11.linux-amd64.tar.gz
+<span class="nb">ls</span> /usr/local/go
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin
+</code></pre></div></div>
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/docker.html">Docker<span>3</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/docker.html">Docker<span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux<span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/osx.html">OS X<span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell<span>7</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2017/08/16/docker-chroot.html" title="Docker 基础之 chroot">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next"><a href="/2017/09/10/naive-bayes-derivation.html" title="朴素贝叶斯从放弃到入门">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

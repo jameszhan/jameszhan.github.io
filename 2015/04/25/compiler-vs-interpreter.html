@@ -41,11 +41,10 @@
 
 <p>本例，为了演示简单，我们的计算器仅支持四则运算，负数和括号。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>expression : term | expression '+' term | expression '-' term
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>expression : term | expression '+' term | expression '-' term
 term : primary_expression | term '*' primary_expression | term '/' primary_expression
 primary_expression : DOUBLE_LITERAL | '(' expression ')' | '-' primary_expression
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>在实现Interpreter和Compiler之前，我们都需要先实现语法解析器（Parser），它的主要工作就是把输入的代码字符串转换为AST（抽象语法树），Interpreter和Compiler都是以AST作为输入。</p>
 
@@ -53,7 +52,7 @@ primary_expression : DOUBLE_LITERAL | '(' expression ')' | '-' primary_expressio
 
 <p>上图描述了一个典型的Compiler Passes，左边是Compiler前端，右边是编译器后端。Interpreter和Compiler的差别在于后端，相比于Compiler，Interpreter的后端要简单的多，几乎是一步到位，直接解释执行annotated AST得到结果。</p>
 
-<h3 id="parser">Parser的实现</h3>
+<h3 id="parser的实现">Parser的实现</h3>
 
 <p>Parser的工作主要有两步：</p>
 
@@ -67,7 +66,7 @@ primary_expression : DOUBLE_LITERAL | '(' expression ')' | '-' primary_expressio
 Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些token的类型需要到了语法解析过程中才可以最终确定。下文要演示的到负号和减号就是这种情况。</p>
 </blockquote>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">tokens</span> <span class="o">=</span> <span class="nx">code</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'"'</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">i</span><span class="p">){</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span> <span class="c1">// not in string</span>
             <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">([</span><span class="sr">-+*</span><span class="se">/</span><span class="sr">()</span><span class="se">])</span><span class="sr">/g</span><span class="p">,</span> <span class="s2">" $1 "</span><span class="p">);</span>
@@ -93,10 +92,9 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
     <span class="p">});</span>
     <span class="k">return</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">parseExpression</span><span class="p">(</span><span class="nx">tokens</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">v1</span><span class="p">,</span> <span class="nx">v2</span><span class="p">,</span> <span class="nx">token</span><span class="p">;</span>
     <span class="nx">v1</span> <span class="o">=</span> <span class="nx">parseTerm</span><span class="p">(</span><span class="nx">tokens</span><span class="p">);</span>
     <span class="nx">token</span> <span class="o">=</span> <span class="nx">tokens</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
@@ -146,29 +144,28 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
         <span class="k">throw</span> <span class="k">new</span> <span class="nx">SyntaxError</span><span class="p">(</span><span class="s2">"Unknown token "</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" in Primary."</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>细心的同学一定注意到，这个代码的实现和前面的文法规则非常神似，其实，在现实中，很少有人直接手写Parser（语法规则简单的语言除外，比如LISP），语法解析的工作我们通常都可以借助工具来做，比较常用的有yacc，AntLR，JavaCC等。</p>
 
 <h3 id="interpreter">Interpreter</h3>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="s1">'number'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'number'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
-        <span class="k">case</span> <span class="s1">'negative'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'negative'</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
-        <span class="k">case</span> <span class="s1">'op'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'op'</span><span class="p">:</span>
             <span class="k">switch</span> <span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">case</span> <span class="s1">'+'</span><span class="err">:</span>
+                <span class="k">case</span> <span class="s1">'+'</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
-                <span class="k">case</span> <span class="s1">'-'</span><span class="err">:</span>
+                <span class="k">case</span> <span class="s1">'-'</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">-</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
-                <span class="k">case</span> <span class="s1">'*'</span><span class="err">:</span>
+                <span class="k">case</span> <span class="s1">'*'</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
-                <span class="k">case</span> <span class="s1">'/'</span><span class="err">:</span>
+                <span class="k">case</span> <span class="s1">'/'</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">/</span> <span class="nx">interpret</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">);</span>
                 <span class="nl">default</span> <span class="p">:</span>
                     <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">"Unknown operator: "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
@@ -177,32 +174,29 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">"Unknown ast node: "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Interpreter直接解释执行AST，并返回最终结果。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">interpret</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">"3 * -(8 + -2)"</span><span class="p">)));</span> <span class="c1">// =&gt; -18</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">interpret</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">"3 * -(8 + -2)"</span><span class="p">)));</span> <span class="c1">// =&gt; -18</span>
+</code></pre></div></div>
 
 <h3 id="compiler">Compiler</h3>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="s1">'number'</span><span class="err">:</span>
-            <span class="k">return</span> <span class="s2">"ds.push("</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">")\n"</span><span class="p">;</span>
-        <span class="k">case</span> <span class="s1">'negative'</span><span class="err">:</span>
-            <span class="k">return</span> <span class="s2">"ds.push(-ds.pop())\n"</span><span class="p">;</span>
-        <span class="k">case</span> <span class="s1">'op'</span><span class="err">:</span>
-            <span class="k">return</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"ds.push(ds.pop() "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">" ds.pop())\n"</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">'number'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">"ds.push("</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">")</span><span class="err">\</span><span class="s2">n"</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">'negative'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">"ds.push(-ds.pop())</span><span class="err">\</span><span class="s2">n"</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">'op'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"ds.push(ds.pop() "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">" ds.pop())</span><span class="err">\</span><span class="s2">n"</span><span class="p">;</span>
         <span class="nl">default</span> <span class="p">:</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">"Unknown ast node: "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Compiler不直接执行AST，而是把AST翻译成目标语言，比如汇编语言或者Java字节码，本例，我们假定我们的目标机器是一个栈式虚拟机，且使用JavaScript兼容的语法。</p>
 
@@ -210,7 +204,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
   <p>真实的编译器要比本例复杂的多，生成目标代码往往不是一步到位的，一般都会包括中间代码生成，代码优化等相关内容。</p>
 </blockquote>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">assemblyCode</span> <span class="o">=</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">"3 * -(8 + -2)"</span><span class="p">));</span> 
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">assemblyCode</span> <span class="o">=</span> <span class="nx">compile</span><span class="p">(</span><span class="nx">parse</span><span class="p">(</span><span class="s2">"3 * -(8 + -2)"</span><span class="p">));</span> 
 <span class="c1">// ds.push(3)</span>
 <span class="c1">// ds.push(8)</span>
 <span class="c1">// ds.push(2)</span>
@@ -218,37 +212,35 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 <span class="c1">// ds.push(ds.pop() + ds.pop())</span>
 <span class="c1">// ds.push(-ds.pop())</span>
 <span class="c1">// ds.push(ds.pop() * ds.pop())</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>执行目标语言代码。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">vm</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">initDs</span> <span class="o">=</span> <span class="s2">"var ds = []\n"</span><span class="p">,</span>
-        <span class="nx">popDs</span> <span class="o">=</span> <span class="s2">"\nds.pop()\n"</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">vm</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">initDs</span> <span class="o">=</span> <span class="s2">"var ds = []</span><span class="err">\</span><span class="s2">n"</span><span class="p">,</span>
+        <span class="nx">popDs</span> <span class="o">=</span> <span class="s2">"</span><span class="err">\</span><span class="s2">nds.pop()</span><span class="err">\</span><span class="s2">n"</span><span class="p">;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="na">exec</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">){</span>
-            <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">initDs</span> <span class="o">+</span> <span class="nx">code</span> <span class="o">+</span> <span class="nx">popDs</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kr">eval</span><span class="p">(</span><span class="nx">initDs</span> <span class="o">+</span> <span class="nx">code</span> <span class="o">+</span> <span class="nx">popDs</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">};</span>
 <span class="p">})();</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">assemblyCode</span><span class="p">));</span> <span class="c1">// =&gt; -18</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Compiler vs. Interpreter</p>
 
 <p>从上面的过程中，我们可以看出其实Compiler和Interpreter有很多的相似之处，只不过是目标不一样罢了。其实除了它们都接受AST作为输入之外，它们在AST的遍历方式上一般也是一致的，下面我们就重构一下上面的代码。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="s1">'number'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'number'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitNumber</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
-        <span class="k">case</span> <span class="s1">'negative'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'negative'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitNegative</span><span class="p">(</span><span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">));</span>
-        <span class="k">case</span> <span class="s1">'op'</span><span class="err">:</span>
+        <span class="k">case</span> <span class="s1">'op'</span><span class="p">:</span>
             <span class="k">return</span> <span class="nx">visitor</span><span class="p">.</span><span class="nx">visitOp</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v1</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">),</span> <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">v2</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">));</span>
         <span class="nl">default</span> <span class="p">:</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">EvalError</span><span class="p">(</span><span class="s2">"Unknown ast node: "</span> <span class="o">+</span> <span class="nx">ast</span><span class="p">);</span>
@@ -296,14 +288,13 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
             <span class="p">}</span>
         <span class="p">};</span>
     <span class="nx">travel</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">visitor</span><span class="p">);</span>
-    <span class="k">return</span> <span class="nx">code</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">"\n"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">code</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">"</span><span class="err">\</span><span class="s2">n"</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>重构后的代码好像比之前没有什么简化的地方，但是它却把AST的遍历和AST的操作给分离了开来，这样做的好处在于，一旦我们要为AST定义新的行为，只需要实现Visitor即可。比如，下例演示了打印AST的功能。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">printAST</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">printAST</span><span class="p">(</span><span class="nx">ast</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">visitor</span> <span class="o">=</span> <span class="p">{</span>
         <span class="na">visitNumber</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">number</span><span class="p">;</span>
@@ -317,7 +308,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
     <span class="p">},</span> <span class="nx">graph</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">indent</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
         <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
-            <span class="nx">indent</span> <span class="o">+=</span> <span class="s2">"\t"</span><span class="p">;</span>
+            <span class="nx">indent</span> <span class="o">+=</span> <span class="s2">"</span><span class="err">\</span><span class="s2">t"</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">forEach</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">map</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">reduce</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//isArray</span>
             <span class="kd">var</span> <span class="nx">op</span> <span class="o">=</span> <span class="nx">node</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -340,12 +331,11 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
 <span class="c1">//  	 +</span>
 <span class="c1">//  		 5</span>
 <span class="c1">//  		 6</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>从这个例子中我们可以看出，Compiler和Interpreter其实并没有很大的不同，它们最大的区别不过是对AST遍历过程中所进行的操作不同罢了。</p>
 
-<h3 id="section">参考资料</h3>
+<h3 id="参考资料">参考资料</h3>
 
 <ol>
   <li><a href="https://github.com/jameszhan/prototypes/blob/master/javascript/lang/compiler_vs_interpreter.js" title="详细源码">完整源代码</a></li>
@@ -360,7 +350,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
     
 
             </ul>
@@ -380,7 +370,7 @@ Lexer在返回token类型的时候可以不需要百分百准确，毕竟有些t
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
     
 
             </ul>

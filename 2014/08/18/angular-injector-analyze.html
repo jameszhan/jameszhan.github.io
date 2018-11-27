@@ -35,7 +35,7 @@
         </header>
 
         <article class="post-content">
-            <h2 id="section">常用函数说明</h2>
+            <h2 id="常用函数说明">常用函数说明</h2>
 
 <p>在开始分析之前我们需要了解下一些基本扩展，详细定义查看<a href="https://github.com/jameszhan/simplifyjs/blob/master/global.js">global.js</a>，有兴趣的朋友可以细看他们的实现，这里简单说明下我们分析中需要用到的函数。</p>
 
@@ -43,15 +43,14 @@
 
 <p><strong>forEach</strong> 对each的扩展，可以处理多种不同类型的数据遍历，处理函数可以绑定到不同的context上进行处理。</p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'misko'</span><span class="p">,</span> <span class="na">gender</span><span class="p">:</span> <span class="s1">'male'</span><span class="p">};</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'misko'</span><span class="p">,</span> <span class="na">gender</span><span class="p">:</span> <span class="s1">'male'</span><span class="p">};</span>
 <span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="nx">forEach</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">key</span><span class="p">){</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">': '</span> <span class="o">+</span> <span class="nx">value</span><span class="p">);</span>
 <span class="p">},</span> <span class="nx">log</span><span class="p">);</span>
 
 <span class="nx">expect</span><span class="p">(</span><span class="nx">log</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'name: misko'</span><span class="p">,</span> <span class="s1">'gender: male'</span><span class="p">]);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><strong>extend</strong> 复制（多个）源对象属性到目标对象。</p>
 
@@ -63,23 +62,22 @@
 
 <p><strong>assertNotHasOwnProperty</strong> 确定当前参数不等于hasOwnProperty</p>
 
-<h2 id="annotate">annotate函数</h2>
+<h2 id="annotate函数">annotate函数</h2>
 <p>annotate用于解析函数定义，并剥离出其依赖的参数列表。<a href="https://github.com/jameszhan/simplifyjs/blob/master/angular/injector/annotate.js">annotate.js</a></p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">expect</span><span class="p">(</span><span class="nx">annotate</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){})).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">expect</span><span class="p">(</span><span class="nx">annotate</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){})).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]);</span>
 <span class="nx">expect</span><span class="p">(</span><span class="nx">annotate</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){}])).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h2 id="invoke">invoke函数</h2>
+<h2 id="invoke函数">invoke函数</h2>
 <p>invoke函数用于动态执行函数，并自动注入参数，如果locals定义，则优先从locals中取，否则从getService中取。<a href="https://github.com/jameszhan/simplifyjs/blob/master/angular/injector/invoke.js">invoke.js</a></p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">getService</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">mockedService</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">getService</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">mockedService</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="s2">"Mocked Value"</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span> <span class="p">},</span>
     <span class="nx">target</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'james'</span><span class="p">},</span>
@@ -101,25 +99,24 @@
 <span class="c1">//this:  { name: 'james' }</span>
 
 <span class="nx">invoke</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-    <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+    <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kr">arguments</span><span class="p">);</span>
 <span class="p">},</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">locals</span><span class="p">);</span>
 <span class="c1">//Outputs:</span>
 <span class="c1">//arguments: [  ]</span>
 <span class="c1">//this:  { name: 'james' }</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="createinternalinjector">createInternalInjector</h2>
 <p>createInternalInjector是invoke的增强版，实现了getService方法，加入了cache机制，并可以检测循环依赖，优先从cache中取值，如果cache中没有，则最终取值还需要依赖于外部传入的factory方法。<a href="https://github.com/jameszhan/simplifyjs/blob/master/angular/injector/internal_injector.js">internal_injector.js</a></p>
 
 <p>值得一提的是，instantiate方法是createInternalInjector另一个增强点，创建一个Type实例，并把Type函数绑定到该实例上执行，如果Type函数返回的是函数或者对象，则返回该结果，否则返回该实例。</p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">injector</span> <span class="o">=</span> <span class="nx">createInternalInjector</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">){</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">injector</span> <span class="o">=</span> <span class="nx">createInternalInjector</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">){</span>
     <span class="k">return</span> <span class="s2">"Found: "</span> <span class="o">+</span> <span class="nx">serviceName</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span> <span class="p">},</span>
     <span class="nx">target</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'james'</span><span class="p">},</span>
@@ -142,7 +139,7 @@
 
 <span class="kd">var</span> <span class="nx">Hello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"Hello"</span><span class="p">;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="p">[</span><span class="s2">", "</span><span class="p">]),</span> <span class="s2">"]"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="p">[</span><span class="s2">", "</span><span class="p">]),</span> <span class="s2">"]"</span><span class="p">);</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -158,34 +155,33 @@
 <span class="c1">//this:  { name: 'Hello' }</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"ret:"</span><span class="p">,</span> <span class="nx">ret</span><span class="p">);</span> <span class="c1">//Output: "ret: { name: 'Hello' }"</span>
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'a'</span><span class="p">));</span> <span class="c1">// Output: "Found: a"</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'a'</span><span class="p">));</span> <span class="c1">// Output: "Found: a"</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">annotate</span><span class="p">(</span><span class="nx">Hello</span><span class="p">));</span> <span class="c1">//Output: "[ 'a', 'b', 'c' ]"</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"a"</span><span class="p">));</span> <span class="c1">//Output: true</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"b"</span><span class="p">));</span> <span class="c1">//Output: true</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"g"</span><span class="p">));</span> <span class="c1">//Output: false</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h2 id="injector">完整版injector实现</h2>
+<h2 id="完整版injector实现">完整版injector实现</h2>
 
 <p>经过上述的铺垫，整个injector的实现已经呼之欲出了，injector创建了2个internalInjector，一个用于管理provider(providerInjector)，一个用于管理instance（instanceInjector），最终返回instanceInjector。<a href="https://github.com/jameszhan/simplifyjs/blob/master/angular/injector/injector.js">injector.js</a></p>
 
 <h3 id="providerinjector">providerInjector</h3>
-<p>创建providerInjector，factory总是返回失败，也就是说，当要使用某provider依赖时，必须先往providerCache中注入它。默认情况下，providerCache中已经添加了$provide，它含有provider，factory，service，value，constant，decorator实现，用于支持不同类型的provider创建。
-#### provider
-provider的默认实现，value，factory，service都依赖于它。它用于创建一个provider实例，其必须包含一个$get方法，用于返回需要注入的实例。
-#### factory
-根据传入的函数快速创建provider实例。
-#### service
-根据传入的构造函数创建service实例，并通过factory创建provider实例。
-#### value
-根据valueFn通过factory创建provider实例。
-#### constant
-不创建provider，直接更新providerCache和instanceCache。
-#### decorator
-创建provider的decorator。</p>
+<p>创建providerInjector，factory总是返回失败，也就是说，当要使用某provider依赖时，必须先往providerCache中注入它。默认情况下，providerCache中已经添加了$provide，它含有provider，factory，service，value，constant，decorator实现，用于支持不同类型的provider创建。</p>
+<h4 id="provider">provider</h4>
+<p>provider的默认实现，value，factory，service都依赖于它。它用于创建一个provider实例，其必须包含一个$get方法，用于返回需要注入的实例。</p>
+<h4 id="factory">factory</h4>
+<p>根据传入的函数快速创建provider实例。</p>
+<h4 id="service">service</h4>
+<p>根据传入的构造函数创建service实例，并通过factory创建provider实例。</p>
+<h4 id="value">value</h4>
+<p>根据valueFn通过factory创建provider实例。</p>
+<h4 id="constant">constant</h4>
+<p>不创建provider，直接更新providerCache和instanceCache。</p>
+<h4 id="decorator">decorator</h4>
+<p>创建provider的decorator。</p>
 
 <h3 id="instanceinjector">instanceInjector</h3>
 <p>要获取实例，先需要获取实例的provider，再调用instanceInjector调用provider.$get方法得到实例。</p>
@@ -196,7 +192,7 @@ provider的默认实现，value，factory，service都依赖于它。它用于�
   <li>如果是module是string，则需要调用angularModule得到当前的module.<a href="https://github.com/jameszhan/simplifyjs/blob/master/angular/loader.js">loader.js</a>实现了angular.module方法。一般我们在加载string module之前的先需要调用angular.module方法初始化该模块。值得注意的是，angular.module在调用的时候，其中定义的方法都是延迟执行的，而要到createInjector时也就是loadModules时执行。</li>
 </ol>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"../loader.js"</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"../loader.js"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">angularModule</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">setupModuleLoader</span><span class="p">(</span><span class="nx">GLOBAL</span><span class="p">);</span>
 
@@ -256,11 +252,11 @@ provider的默认实现，value，factory，service都依赖于它。它用于�
 <span class="c1">//Run ng</span>
 
 <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">i</span><span class="p">){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span> <span class="p">},</span>
     <span class="nx">func2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span> <span class="s1">'g'</span><span class="p">,</span> <span class="s1">'h'</span><span class="p">,</span> <span class="s1">'i'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="s2">", "</span><span class="p">),</span> <span class="s2">"]"</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();}],</span>
     <span class="nx">target</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'james'</span><span class="p">},</span>
@@ -299,7 +295,7 @@ provider的默认实现，value，factory，service都依赖于它。它用于�
 
 <span class="kd">var</span> <span class="nx">Hello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">g</span><span class="p">,</span> <span class="nx">h</span><span class="p">){</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"Hello"</span><span class="p">;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="p">[</span><span class="s2">", "</span><span class="p">]),</span> <span class="s2">"]"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"arguments: ["</span><span class="p">,</span> <span class="p">[].</span><span class="nx">join</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="p">[</span><span class="s2">", "</span><span class="p">]),</span> <span class="s2">"]"</span><span class="p">);</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"this: "</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span>
 <span class="p">}</span>
@@ -316,15 +312,14 @@ provider的默认实现，value，factory，service都依赖于它。它用于�
 <span class="c1">//this:  { name: 'Hello' }</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"ret: "</span> <span class="o">+</span> <span class="nx">ret</span><span class="p">);</span> <span class="c1">//Output: "ret:  { name: 'Hello' }"</span>
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'a'</span><span class="p">));</span> <span class="c1">//Output: 'A'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'a'</span><span class="p">));</span> <span class="c1">//Output: 'A'</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">annotate</span><span class="p">(</span><span class="nx">Hello</span><span class="p">));</span> <span class="c1">//Output: "[ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' ]"</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"a"</span><span class="p">));</span> <span class="c1">//Output: true</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"b"</span><span class="p">));</span> <span class="c1">//Output: true</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">injector</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"z"</span><span class="p">));</span> <span class="c1">//Output: false</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
         </article>
 

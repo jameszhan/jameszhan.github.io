@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-理解 Ruby 中的变量作用域</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2018/02/03/ruby-variable-scope.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">理解 Ruby 中的变量作用域</h1>
+            <p class="post-meta">
+                2018年02月03日 • 詹子知(James Zhan)
+            </p>
+        </header>
+
+        <article class="post-content">
+            <p>在冯·诺依曼计算机体系结构的内存中，变量的属性可以视为一个六元组：（名字，地址，值，类型，生命期，作用域）。地址属性具有明显的冯·诺依曼体系结构的色彩，代表变量所关联的存储器地址。类型规定了变量的取值范围和可能的操作。生命期表示变量与某个存储区地址绑定的过程。根据生命期的不同，变量可以被分为四类：静态、栈动态、显式堆动态和隐式堆动态。作用域表征变量在语句中的可见范围，主要分为静态作用域和动态作用域两种。</p>
+
+<p>作用域是所有编程语言都需要了解的基础概念之一，它是是为了解决开发过程中变量名冲突发展起来的概念。</p>
+
+<h2 id="ruby-变量"><strong>Ruby</strong> 变量</h2>
+
+<p><strong>Ruby</strong> 中的变量主要有以下四种。</p>
+
+<ul>
+  <li>局部变量（a_var）: 可见范围取决于作用域。</li>
+  <li>全局变量（$a_var）：在程序的任何地方可见。</li>
+  <li>实例变量（@a_var）：对定义该变量的类的实例及其实例方法可见，但不可以直接被类使用。</li>
+  <li>类变量（@@a_var）：仅对定义该类变量的类及其子类可见。</li>
+</ul>
+
+<h2 id="局部变量">局部变量</h2>
+
+<blockquote>
+  <p><code class="highlighter-rouge">Kernel#local_variables</code> 方法可以方便我们查看当前作用域中定义了哪些变量。</p>
+</blockquote>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">begin</span>
+  <span class="nb">puts</span> <span class="n">a_var</span>              <span class="c1"># NameError，需要先声明才可以访问</span>
+<span class="k">rescue</span> <span class="no">NameError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="se">\n</span><span class="s2">locals is </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>undefined local variable or method `a_var' for main:Object
+locals is [:e, :_oh, :_ih, :title]
+</code></pre></div></div>
+
+<p><strong>Ruby</strong> 语言是赋值即变量声明的语言，他没有与 <strong>JavaScript</strong> 语言的 <code class="highlighter-rouge">var x</code> 和 <strong>Java</strong> 的 <code class="highlighter-rouge">String str</code> 相当的变量声明。只能通过赋值语句来声明变量，但是却不需要该赋值语句真正被执行。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="kp">false</span>
+  <span class="n">a_var</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="n">a_var</span><span class="p">.</span><span class="nf">nil?</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>true
+</code></pre></div></div>
+
+<h3 id="scope-gates">Scope Gates</h3>
+
+<p>每个 <strong>Ruby</strong> 作用域包含一组绑定，并且不同的作用域之间被 <strong>Scope Gate</strong> 分割开来。<strong>Scope Gate</strong> 的作用是关闭前一个作用域，同时打开一个新的作用域。<strong>Ruby</strong> 中使用 <code class="highlighter-rouge">class</code>，<code class="highlighter-rouge">module</code> 或 <code class="highlighter-rouge">def</code> 关键字来隔离作用域，也就是充当 <strong>Scope Gate</strong>。</p>
+
+<p>先来看个例子：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">def</span> <span class="nf">change_x</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">end</span>
+
+<span class="n">change_x</span>
+<span class="n">x</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sx">%%file change_x.py
+
+x = 1
+def change_x():
+  x = 2
+
+change_x()
+print("x = {0}".format(x))
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Writing change_x.py
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="sb">`python change_x.py`</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = 1
+</code></pre></div></div>
+
+<p>如你所料，<code class="highlighter-rouge">x</code> 的值并没有真正被修改。这和 <strong>Python</strong> 表现是一致的，但是其深层的原理却有比较大的差别。</p>
+
+<p>在 <strong>Python</strong> 中，<code class="highlighter-rouge">change_x</code> 是一个闭包，它可以看到外部的 <code class="highlighter-rouge">x</code>，之所以没有修改成功，是因为 <code class="highlighter-rouge">change_x</code> 重新定义了本地变量 <code class="highlighter-rouge">x</code>，并把 <code class="highlighter-rouge">2</code> 赋值给了 <code class="highlighter-rouge">x</code>。</p>
+
+<p>在 <strong>Ruby</strong> 中，<code class="highlighter-rouge">change_x</code> 则是打开了一个全新的作用域，它是无法访问到外部的变量 <code class="highlighter-rouge">x</code> 的。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sx">%%file check_x.py
+
+x = 1
+def check_x():
+  print("I can see x = {0} in check_x.".format(x))
+
+check_x()
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Writing check_x.py
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="sb">`python check_x.py`</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I can see x = 1 in check_x.
+</code></pre></div></div>
+
+<p>我们再来看一个多层 <strong>Scope Gate</strong> 的例子：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main0</span> <span class="o">=</span> <span class="s1">'main0'</span>
+
+<span class="k">module</span> <span class="nn">MyModule</span>
+  <span class="n">module1</span> <span class="o">=</span> <span class="s1">'module1'</span>
+  <span class="nb">puts</span> <span class="s2">"enter MyModule locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+  
+  <span class="k">class</span> <span class="nc">MyClass</span>
+    <span class="n">class2</span> <span class="o">=</span> <span class="s1">'class2'</span>
+    <span class="nb">puts</span> <span class="s2">"enter MyClass locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="k">def</span> <span class="nf">my_method</span>
+      <span class="n">method_3</span> <span class="o">=</span> <span class="s1">'method3'</span>
+      <span class="nb">puts</span> <span class="s2">"my_method locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">end</span>
+    
+    <span class="nb">puts</span> <span class="s2">"exit MyClass locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  
+  <span class="nb">puts</span> <span class="s2">"exit MyModule locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+    
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyModule</span><span class="o">::</span><span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>
+  
+<span class="nb">puts</span> <span class="s2">"main locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>enter MyModule locals: [:module1]
+enter MyClass locals: [:class2]
+exit MyClass locals: [:class2]
+exit MyModule locals: [:module1]
+my_method locals: [:method_3]
+my_method locals: [:method_3]
+main locals: [:main0, :obj, :_i7, :_7, :_i6, :_6, :_i5, :_5, :_i4, :_4, :_i3, :_3, :x, :_i2, :_2, :a_var, :_i, :_ii, :_iii, :_, :__, :___, :_i1, :_1, :e, :_oh, :_ih, :title]
+</code></pre></div></div>
+
+<p>容易看出程序打开了五个独立的作用域</p>
+
+<ul>
+  <li>顶级作用域（<code class="highlighter-rouge">main0</code> 所在的作用域）</li>
+  <li>进入 <code class="highlighter-rouge">MyModule</code> 时创建的作用域</li>
+  <li>进入 <code class="highlighter-rouge">MyClass</code> 时创建的作用域</li>
+  <li>第一次调用 <code class="highlighter-rouge">my_method()</code> 方法时创建的一个作用域</li>
+  <li>第二次调用 <code class="highlighter-rouge">my_method()</code> 方法时创建的一个作用域</li>
+</ul>
+
+<p>如何知道每次调用同一方法时会重新创建新的作用域而不是重用已有的，我们通过一个程序来验证。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">100</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">"my_method locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+    <span class="nb">binding</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">binding1</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>
+<span class="n">binding2</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>
+
+<span class="nb">puts</span> <span class="s2">"v in binding1 is </span><span class="si">#{</span><span class="n">binding1</span><span class="p">.</span><span class="nf">local_variable_get</span><span class="p">(</span><span class="ss">:v</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"v in binding2 is </span><span class="si">#{</span><span class="n">binding2</span><span class="p">.</span><span class="nf">local_variable_get</span><span class="p">(</span><span class="ss">:v</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+
+<span class="n">binding1</span><span class="p">.</span><span class="nf">local_variable_set</span><span class="p">(</span><span class="ss">:v2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">puts</span> <span class="s2">"binding1 variables is </span><span class="si">#{</span><span class="n">binding1</span><span class="p">.</span><span class="nf">local_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"binding2 variables is </span><span class="si">#{</span><span class="n">binding2</span><span class="p">.</span><span class="nf">local_variables</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_method locals: [:v]
+my_method locals: [:v]
+v in binding1 is 25
+v in binding2 is 36
+binding1 variables is [:v2, :v]
+binding2 variables is [:v]
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">class</code> / <code class="highlighter-rouge">module</code> 与 <code class="highlighter-rouge">def</code> 之间还有一点微妙的差别，在类和模块定义中的代码会被立即执行，相反，方法定义中的代码只有在方法被调用的时候才会被执行。</p>
+
+<h3 id="顶级上下文top-level-context">顶级上下文（Top Level Context）</h3>
+
+<p>当开始运行 <strong>Ruby</strong> 程序时，<strong>Ruby</strong> 虚拟机会创建一个名为 <code class="highlighter-rouge">main</code> 的对象作为当前对象，这个对象被称为顶级上下文，这个名字的由来是因为这时处在调用栈的顶层，这时要么还没调用任何方法，要么调用的所有方法都已经返回了。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="nb">self</span>
+<span class="nb">puts</span> <span class="nb">self</span><span class="p">.</span><span class="nf">class</span>
+<span class="nb">puts</span> <span class="nb">local_variables</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main
+Object
+[:_i9, :_9, :binding1, :binding2, :_i8, :_8, :main0, :obj, :_i7, :_7, :_i6, :_6, :_i5, :_5, :_i4, :_4, :_i3, :_3, :x, :_i2, :_2, :a_var, :_i, :_ii, :_iii, :_, :__, :___, :_i1, :_1, :e, :_oh, :_ih, :title]
+</code></pre></div></div>
+
+<p>我们现在运行代码的作用域就是顶级实例变量 <code class="highlighter-rouge">main</code> 所在的作用域。</p>
+
+<h3 id="词法作用域">词法作用域</h3>
+
+<p>词法作用域(lexical scope)也叫静态作用域(static scope)。它其实是指作用域在词法解析阶段既确定了，不会改变。在 每个 <strong>Scope Gate</strong> 内部，<strong>Ruby</strong> 局部变量遵循词法作用域规则，代码块的开始和结束会开启和关闭一个新的词法作用域。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">CleanRoom2</span>
+  
+  <span class="n">outer1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+    <span class="n">outer1_v</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inner1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+      <span class="n">inter1_v</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="nb">local_variables</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">outer2</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+    <span class="n">outer2_v</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inner2</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span> 
+      <span class="n">inner2_v</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">outer1</span><span class="p">.</span><span class="nf">call</span><span class="p">.</span><span class="nf">call</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">outer2</span><span class="p">.</span><span class="nf">call</span><span class="p">.</span><span class="nf">call</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[:inter1_v, :outer1_v, :inner1, :outer1, :outer2]
+</code></pre></div></div>
+
+<p>可以看到 <code class="highlighter-rouge">inner1</code> 是在 <code class="highlighter-rouge">outer1</code> 中定义，调用是在 <code class="highlighter-rouge">inner2</code> 块中，可以看到在 <code class="highlighter-rouge">inner1</code> 中的可见的变量有定义在 <code class="highlighter-rouge">CleanRoom</code> 中的所有变量<code class="highlighter-rouge">[:outer1, :outer2]</code>，定义在 <code class="highlighter-rouge">outer1</code> 中的 <code class="highlighter-rouge">[:outer1_v, :inner1]</code> 和定义在 <code class="highlighter-rouge">inner1</code> 中的 <code class="highlighter-rouge">[:inner1_v]</code>。尽管执行是在 <code class="highlighter-rouge">outer2</code> 和 <code class="highlighter-rouge">inner2</code> 的内部，但是 <code class="highlighter-rouge">inner1</code> 并不能访问它们的变量定义。</p>
+
+<p>通俗地说，代码块会在定义时获取周围的绑定，也可以在代码块中定义额外的绑定，但这些绑定会在块结束时消失。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">CleanRoom</span>
+  
+  <span class="n">outer1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+    <span class="n">outer1_v</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inner1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+      <span class="n">inter1_v</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="nb">puts</span> <span class="s2">"inner1 locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">end</span>
+    <span class="nb">puts</span> <span class="s2">"outer1 locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">inner1</span>
+  <span class="k">end</span>
+  
+  <span class="nb">puts</span> <span class="s2">"CleanRoom locals: </span><span class="si">#{</span><span class="nb">local_variables</span><span class="si">}</span><span class="s2">"</span>
+
+  <span class="n">outer2</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span>
+    <span class="n">outer2_v</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">inner2</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span> 
+      <span class="n">inner2_v</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">outer1</span><span class="p">.</span><span class="nf">call</span><span class="p">.</span><span class="nf">call</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">outer2</span><span class="p">.</span><span class="nf">call</span><span class="p">.</span><span class="nf">call</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CleanRoom locals: [:outer1, :outer2]
+outer1 locals: [:outer1_v, :inner1, :outer1, :outer2]
+inner1 locals: [:inter1_v, :outer1_v, :inner1, :outer1, :outer2]
+</code></pre></div></div>
+
+<p>在代码块中，声明变量前，总是先往上查找上层环境是不是已经有该变量，如有，则直接重用，若没有则在当前块中声明该变量。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">foo</span><span class="p">()</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="s1">'old'</span>
+  <span class="nb">lambda</span> <span class="k">do</span> 
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">'new'</span> 
+  <span class="k">end</span><span class="p">.</span><span class="nf">call</span>
+  <span class="n">x</span>
+<span class="k">end</span>
+
+<span class="n">foo</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"new"
+</code></pre></div></div>
+
+<h3 id="动态作用域">动态作用域</h3>
+
+<p>与词法作用域中作用域是源代码级别上的一块完整独立的范围不同，在动态作用域中，作用域则是进入该作用域开始直至离开这一时间轴上的完整独立的范围。与此相同的特征也体现在其他好多地方。比如，在某处理进行期间，一时改变某变量的值随后将原值返回的代码编写方式就相当于创建了自己专属的动态作用域。又如，异常处理与动态作用域也很相似，函数抛出异常时的处理方式受到调用函数的 try/ catch语句的影响。</p>
+
+<ul>
+  <li>词法作用域：讨论代码的组织结构上的抽象，讨论的是“圈地”的问题（形式上的规范）。</li>
+  <li>动态作用域：变量的可见性，完成对信息的隐藏，也就是处理“割据”问题（实际的占有）。</li>
+</ul>
+
+<p>现在局部变量很少会使用动态作用域，因为动态作用域中被改写的值会影响到被调用的函数，因此在引用变量时它是什么样的值，不看调用方的代码是无从得知的。如果只是为了获取调用处的值，完全可以通过参数传递来解决。动态作用域和词法作用域实现上的差别，可以参考<a href="https://www.atatech.org/articles/33571#7">我之前的文章</a>。</p>
+
+<p>由于 <strong>Ruby</strong> 局部变量不支持动态作用域，下面的例子，我们使用 <strong>Perl</strong> 语言来演示，它同时支持词法作用域和动态作用域。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sx">%%file dynamic_scope.pl
+sub invoker {
+    local $x = 'invoker';
+    &amp;func();
+}
+
+sub invoker2 {
+    local $x = 'invoker2';
+    &amp;func();
+}
+
+$x = 'global';
+sub func {
+    print "$x\n";
+}
+
+invoker();
+invoker2();
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Writing dynamic_scope.pl
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="sb">`perl dynamic_scope.pl`</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>invoker
+invoker2
+</code></pre></div></div>
+
+<h2 id="全局变量">全局变量</h2>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">global_variables</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[:$_, :$~, :$;, :$-F, :$@, :$!, :$SAFE, :$&amp;, :$`, :$', :$+, :$=, :$KCODE, :$-K, :$,, :$/, :$-0, :$\, :$stdin, :$stdout, :$stderr, :$&gt;, :$&lt;, :$., :$FILENAME, :$-i, :$*, :$:, :$-I, :$LOAD_PATH, :$", :$LOADED_FEATURES, :$?, :$$, :$VERBOSE, :$-v, :$-w, :$-W, :$DEBUG, :$-d, :$0, :$PROGRAM_NAME, :$-p, :$-l, :$-a, :$fileutils_rb_have_lchmod, :$fileutils_rb_have_lchown, :$my_var]
+</code></pre></div></div>
+
+<p><strong>Ruby</strong> 中只要变量名称以 <code class="highlighter-rouge">$</code> 开头，这个变量就是全局变量。全局变量可以再任何作用域中访问。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">scope1</span>
+  <span class="vg">$my_var</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">scope2</span>
+  <span class="nb">puts</span> <span class="s2">"$my_var is </span><span class="si">#{</span><span class="vg">$my_var</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="n">scope2</span>
+<span class="n">scope1</span>
+<span class="n">scope2</span>
+
+<span class="nb">global_variables</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$my_var is 100
+$my_var is 100
+
+
+
+
+
+[:$_, :$~, :$;, :$-F, :$@, :$!, :$SAFE, :$&amp;, :$`, :$', :$+, :$=, :$KCODE, :$-K, :$,, :$/, :$-0, :$\, :$stdin, :$stdout, :$stderr, :$&gt;, :$&lt;, :$., :$FILENAME, :$-i, :$*, :$:, :$-I, :$LOAD_PATH, :$", :$LOADED_FEATURES, :$?, :$$, :$VERBOSE, :$-v, :$-w, :$-W, :$DEBUG, :$-d, :$0, :$PROGRAM_NAME, :$-p, :$-l, :$-a, :$fileutils_rb_have_lchmod, :$fileutils_rb_have_lchown, :$my_var]
+</code></pre></div></div>
+
+<p>全局变量的问题在于系统中的任何部分都可以修改它们，我们几乎没法追踪谁把他们改成了什么。因此，基本的原则是：如非必要，尽可能少使用全局变量。</p>
+
+<h2 id="实例变量">实例变量</h2>
+
+<p><strong>Ruby</strong> 中只要变量名称以 <code class="highlighter-rouge">@</code> 开头，这个变量就是实例变量，它总是属于某个实例。实例变量作用域本质是<strong>动态作用域</strong>，是进入该作用域开始直至离开这一时间轴上的完整独立的范围，也就进入这个实例开始，到离开这个实例结束。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="vi">@a_var</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2">, instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">，@a_var = </span><span class="si">#{</span><span class="nb">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">class</span> <span class="nc">AClass</span>
+  <span class="vi">@a_var</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2">, instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">，@a_var = </span><span class="si">#{</span><span class="nb">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+  
+  <span class="k">def</span> <span class="nf">a_method</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
+    <span class="vi">@a_var</span> <span class="o">=</span> <span class="n">init_var</span>
+    <span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2">, instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">，@a_var = </span><span class="si">#{</span><span class="nb">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  
+  <span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2">, instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">，@a_var = </span><span class="si">#{</span><span class="nb">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+<span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2">, instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">，@a_var = </span><span class="si">#{</span><span class="nb">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">AClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="no">AClass</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">obj</span><span class="p">.</span><span class="nf">a_method</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">obj2</span><span class="p">.</span><span class="nf">a_method</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="nb">puts</span> <span class="nb">self</span><span class="p">.</span><span class="nf">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="no">AClass</span><span class="p">.</span><span class="nf">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">obj</span><span class="p">.</span><span class="nf">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">obj2</span><span class="p">.</span><span class="nf">instance_variable_get</span><span class="p">(</span><span class="ss">:@a_var</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self: main, instance_variables: [:@a_var, :@my_var]，@a_var = 1
+self: AClass, instance_variables: [:@a_var]，@a_var = 2
+self: AClass, instance_variables: [:@a_var]，@a_var = 2
+self: main, instance_variables: [:@a_var, :@my_var]，@a_var = 1
+self: #&lt;AClass:0x007fefe3a04bc0&gt;, instance_variables: [:@a_var]，@a_var = 3
+self: #&lt;AClass:0x007fefe3a04b98&gt;, instance_variables: [:@a_var]，@a_var = 6
+1
+2
+3
+6
+</code></pre></div></div>
+
+<p>一般地，我们可以认为 <strong>Ruby</strong> 所有的东西都是对象，也就是 <code class="highlighter-rouge">VALUE</code> 的实例，包括 <code class="highlighter-rouge">Class</code> 和 <code class="highlighter-rouge">Module</code>，接下来我们来分析一下上面的代码。</p>
+
+<p>代码开始，我们是在顶级上下文对象 <code class="highlighter-rouge">main</code> 当中，<code class="highlighter-rouge">@a_var = 1</code> 也就是给 <code class="highlighter-rouge">main</code> 对象声明一个 <code class="highlighter-rouge">@a_var</code> 的一个实例变量。</p>
+
+<p>执行完 <code class="highlighter-rouge">class AClass</code> 后，进入对象 <code class="highlighter-rouge">AClass</code> (<code class="highlighter-rouge">Class</code> 的实例)，<code class="highlighter-rouge">@a_var = 2</code> 也就是给 <code class="highlighter-rouge">AClass</code> 对象声明一个 <code class="highlighter-rouge">@a_var</code> 的一个实例变量。</p>
+
+<p><code class="highlighter-rouge">def a_method ... end</code> 为AClass新增一个实例方法 <code class="highlighter-rouge">a_method</code>，注意，方法定义中的代码块这个时候并不会被执行。</p>
+
+<p>继续执行，执行完 <code class="highlighter-rouge">end</code> 后，离开对象 <code class="highlighter-rouge">AClass</code> 重新进入对象 <code class="highlighter-rouge">main</code>。</p>
+
+<p><code class="highlighter-rouge">obj = AClass.new</code> 创建 <code class="highlighter-rouge">AClass</code> 实例 <code class="highlighter-rouge">obj</code>，<code class="highlighter-rouge">obj.a_method(3)</code> 执行过程简单来说，是先进入对象 <code class="highlighter-rouge">obj</code>，接着执行 <code class="highlighter-rouge">a_method</code> 中的代码块，最后退出对象 <code class="highlighter-rouge">obj</code>，重新进入 <code class="highlighter-rouge">main</code>。</p>
+
+<p><strong>Ruby</strong> 中的所有方法都是实例方法，执行方法的时候它总有一个接收者，也就是执行该方法的当前实例，如果不指定接收者，隐含的接收者总是 <code class="highlighter-rouge">self</code>。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method1</span>
+  <span class="vi">@my_var</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> with instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">my_method2</span>
+  <span class="nb">puts</span> <span class="vi">@my_var</span>
+  <span class="nb">puts</span> <span class="s2">"self: </span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> with instance_variables: </span><span class="si">#{</span><span class="nb">instance_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="n">my_method1</span>
+<span class="n">my_method2</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self: main with instance_variables: [:@a_var, :@my_var]
+1
+self: main with instance_variables: [:@a_var, :@my_var]
+</code></pre></div></div>
+
+<p>实例变量的作用域属于实际占有它的对象，一旦进入该对象，该对象的所有方法都可以对它进行访问，而不用管它定义在哪里。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ASuper</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">()</span>
+    <span class="vi">@my_var</span> <span class="o">=</span> <span class="mi">100</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">ASubClass</span> <span class="o">&lt;</span> <span class="no">ASuper</span>
+  <span class="k">def</span> <span class="nf">show_my_var</span>
+    <span class="vi">@my_var</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">ASubClass</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">show_my_var</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100
+</code></pre></div></div>
+
+<h2 id="类变量">类变量</h2>
+
+<p><strong>类变量</strong> 顾名思义就是类独有的变量，但是其作用域，不同语言之间还是有一些差别。</p>
+
+<p><strong>Java</strong> 中，类变量可以被类本身，类实例访问（不推荐），不能被子类本身或子类实例访问，读取修改的都是同一变量。</p>
+
+<p><strong>Python</strong> 中，类变量可以被类本身，子类，类实例及子类实例访问，但是修改只可以通过类本身来修改，通过子类，类实例，或者子类实例赋值，不会修改类变量本身，等价于为子类，类实例，子类实例创建一个同名的变量。</p>
+
+<p><strong>Ruby</strong> 中，类变量的作用域与 <strong>Python</strong> 比较类似，但是对同名修改的处理方式不一样。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span>
+  <span class="vc">@@a_var</span> <span class="o">=</span> <span class="mi">6</span>
+  
+  <span class="k">class</span> <span class="nc">AA</span>
+    <span class="vc">@@aa_var</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">show</span>
+      <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">end</span>
+    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">show</span>
+    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="no">A</span><span class="p">.</span><span class="nf">show</span>
+<span class="no">A</span><span class="o">::</span><span class="no">AA</span><span class="p">.</span><span class="nf">show</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A::AA variables: [:@@aa_var]
+A variables: [:@@a_var]
+A variables: [:@@a_var]
+A::AA variables: [:@@aa_var]
+</code></pre></div></div>
+
+<p>从这个例子可以看出，类变量是类间隔离的，即使它们存在嵌套定义关系。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">B</span> <span class="o">&lt;</span> <span class="no">A</span>
+  
+  <span class="k">class</span> <span class="nc">BB</span> <span class="o">&lt;</span> <span class="no">AA</span>
+    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="si">}</span><span class="s2"> variables: </span><span class="si">#{</span><span class="nb">class_variables</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="no">B</span><span class="p">.</span><span class="nf">show</span>
+<span class="no">B</span><span class="o">::</span><span class="no">BB</span><span class="p">.</span><span class="nf">show</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B::BB variables: [:@@aa_var]
+B variables: [:@@a_var]
+B variables: [:@@a_var]
+B::BB variables: [:@@aa_var]
+</code></pre></div></div>
+
+<p>父类中定义的类变量，子类中可以访问。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+  <span class="vc">@@c_var</span> <span class="o">=</span> <span class="mi">1</span>
+  
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">show_c</span>
+    <span class="vc">@@c_var</span>
+  <span class="k">end</span>
+  
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">D</span> <span class="o">&lt;</span> <span class="no">C</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">set_c</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="vc">@@c_var</span> <span class="o">=</span> <span class="n">v</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="no">C</span><span class="p">.</span><span class="nf">show_c</span>
+<span class="nb">puts</span> <span class="no">D</span><span class="p">.</span><span class="nf">show_c</span>
+
+<span class="no">D</span><span class="p">.</span><span class="nf">set_c</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="nb">puts</span> <span class="no">C</span><span class="p">.</span><span class="nf">show_c</span>
+<span class="nb">puts</span> <span class="no">D</span><span class="p">.</span><span class="nf">show_c</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+1
+11
+11
+</code></pre></div></div>
+
+<p>可以看到，子类中可以修改父类中的类变量，初看起来，这也不是什么大问题，我们接着再来看另外的例子。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CC</span><span class="p">;</span> <span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">DD</span> <span class="o">&lt;</span> <span class="no">CC</span>
+  <span class="vc">@@d_var</span> <span class="o">=</span> <span class="mi">1</span>
+  
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">show_d</span>
+    <span class="vc">@@d_var</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="no">DD</span><span class="p">.</span><span class="nf">show_d</span>
+<span class="nb">puts</span> <span class="no">CC</span><span class="p">.</span><span class="nf">class_variables</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="no">DD</span><span class="p">.</span><span class="nf">class_variables</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+[:@@d_var]
+[]
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CC</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="vc">@@d_var</span> <span class="o">=</span> <span class="n">v</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">CC</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="no">DD</span><span class="p">.</span><span class="nf">show_d</span>
+
+<span class="nb">puts</span> <span class="no">CC</span><span class="p">.</span><span class="nf">class_variables</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="no">DD</span><span class="p">.</span><span class="nf">class_variables</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100
+[:@@d_var]
+[]
+</code></pre></div></div>
+
+<p>调用父类的修改方法，声明了一个同名类变量，居然把子类的同名变量给改了。不仅如此，类变量在继承树的位置也上升到了父类，说明如果继承树上有几个类含有同名类变量，<strong>Ruby</strong> 会强制统一这些同名类变量。</p>
+
+<p><strong>Ruby</strong> 中类变量陷阱还不止此，我们再来看一个例子：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CCC</span>
+  <span class="vc">@@c_var</span> <span class="o">=</span> <span class="s1">'C'</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">DDD</span>
+  <span class="vc">@@d_var</span> <span class="o">=</span> <span class="s1">'D'</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">CCC</span>
+  <span class="k">def</span> <span class="nc">DDD</span><span class="o">.</span><span class="nf">value</span>
+    <span class="vc">@@c_var</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">DDD</span>
+  <span class="k">def</span> <span class="nc">CCC</span><span class="o">.</span><span class="nf">value</span>
+    <span class="vc">@@d_var</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="no">CCC</span><span class="p">.</span><span class="nf">value</span>
+<span class="nb">puts</span> <span class="no">DDD</span><span class="p">.</span><span class="nf">value</span>
+
+<span class="nb">puts</span> <span class="no">CCC</span><span class="p">.</span><span class="nf">class_variables</span>
+<span class="nb">puts</span> <span class="no">DDD</span><span class="p">.</span><span class="nf">class_variables</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D
+C
+[:@@c_var]
+[:@@d_var]
+</code></pre></div></div>
+
+<p>通过<strong>Open Class</strong>，我们很轻松地打破了类隔离的规则。</p>
+
+<p>我们再来看看类变量与实例之间的关系：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+  <span class="vc">@@value</span> <span class="o">=</span> <span class="s1">'c'</span>
+  
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vc">@@value</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="vc">@@value</span> <span class="o">=</span> <span class="n">v</span>
+  <span class="k">end</span>
+    
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">puts</span> <span class="n">obj</span><span class="p">.</span><span class="nf">show</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s1">'new'</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">obj</span><span class="p">.</span><span class="nf">show</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c
+new
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CC</span> 
+  <span class="vc">@@value</span> <span class="o">=</span> <span class="s1">'c'</span>
+  
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">value</span>
+    <span class="vc">@@value</span>
+  <span class="k">end</span>
+  
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">DD</span> <span class="o">&lt;</span> <span class="no">CC</span>
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vc">@@value</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="vc">@@value</span> <span class="o">=</span> <span class="n">v</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">DD</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">puts</span> <span class="n">obj</span><span class="p">.</span><span class="nf">show</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="s1">'new'</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">obj</span><span class="p">.</span><span class="nf">show</span>
+<span class="nb">puts</span> <span class="no">CC</span><span class="p">.</span><span class="nf">value</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c
+new
+new
+</code></pre></div></div>
+
+<p>类实例和子类实例都可以访问和修改类变量，如果使用不小心，特别容易造成错误的修改，错误很难追踪。</p>
+
+<p>正是由于 <strong>Ruby</strong> 类变量的这些特性，特别容易导致错误，尤其是在元编程的时候，所以一般都不推荐在程序中使用类变量。</p>
+
+<p>其实类变量主要的功能还是类间隔离，父子类之间共享类变量其实是没有必要的，上类中 <code class="highlighter-rouge">D</code> 继承 <code class="highlighter-rouge">C</code>，只是表明 <code class="highlighter-rouge">D</code> 的实例也是 <code class="highlighter-rouge">C</code> 的实例，但是 <code class="highlighter-rouge">D</code> 和 <code class="highlighter-rouge">C</code> 之间并没有从属关系，他们都是 <code class="highlighter-rouge">Class</code> 的实例。</p>
+
+<p>其实 <strong>Ruby</strong> 也可以轻松实现类似 <strong>Java</strong> 类变量的方案，那就是借助实例变量来模拟。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+    
+    <span class="k">def</span> <span class="nf">val</span>
+      <span class="vi">@val</span>
+    <span class="k">end</span>
+    
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+      <span class="vi">@val</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">end</span>
+    
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">val</span>
+<span class="no">MyClass</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">val</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100
+100
+</code></pre></div></div>
+
+<p>只所以可以这么做，是因为 <code class="highlighter-rouge">MyClass</code> 本身也是一个对象，它是 <code class="highlighter-rouge">Class</code> 的实例，因为实例变量只可以被对象自身访问。即便是 <code class="highlighter-rouge">MyClass</code> 的子类，也不能访问 <code class="highlighter-rouge">@val</code>。</p>
+
+<p>基于以上的事实，用 <strong>Ruby</strong> 编程的时候，如果不是有特殊的需求，尽量不要使用类变量，尤其是在 <strong>Open Class</strong> 的场景。</p>
+
+<p>更多 Ruby 资料整理，移步<a href="https://github.com/jameszhan/notes-ruby">Ruby 编程手札</a></p>
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/ruby.html">Ruby<span>3</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/ruby.html">Ruby<span>7</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/dsl.html">DSL<span>4</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2018/02/02/ruby-code-block.html" title="简单谈下 Ruby 中的代码块">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next disabled"><a>没有了</a> 
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

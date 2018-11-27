@@ -35,53 +35,47 @@
         </header>
 
         <article class="post-content">
-            <h3 id="section">基础知识：</h3>
+            <h3 id="基础知识">基础知识：</h3>
 
-<h5 id="section-1">定义函数指针：</h5>
+<h5 id="定义函数指针">定义函数指针：</h5>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">return_type</span> <span class="p">(</span><span class="o">*</span><span class="n">func_pointer</span><span class="p">)(</span><span class="n">parameter_list</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">return_type</span> <span class="p">(</span><span class="o">*</span><span class="n">func_pointer</span><span class="p">)(</span><span class="n">parameter_list</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h5 id="section-2">定义返回函数指针的函数：</h5>
+<h5 id="定义返回函数指针的函数">定义返回函数指针的函数：</h5>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">return_type</span><span class="p">(</span><span class="o">*</span><span class="n">function</span><span class="p">(</span><span class="n">func_parameter_list</span><span class="p">))(</span><span class="n">parameter_list</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">return_type</span><span class="p">(</span><span class="o">*</span><span class="n">function</span><span class="p">(</span><span class="n">func_parameter_list</span><span class="p">))(</span><span class="n">parameter_list</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>定义了一个函数<code class="highlighter-rouge">function</code>，该函数的参数列表是<code class="highlighter-rouge">(function_patameter_list)</code>，返回类型是一个函数指针，这个函数指针的原型是<code class="highlighter-rouge">return_type(*)(parameter_list)</code>。</p>
 
-<h3 id="section-3">经典例子</h3>
+<h3 id="经典例子">经典例子</h3>
 
-<h4 id="signal">signal函数原型</h4>
+<h4 id="signal函数原型">signal函数原型</h4>
 
 <p>Linux 2.0之前版本</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span> <span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span> <span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</code></pre></div></div>
 
 <p>Linux 2.6 版本</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">__sighandler_t</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">__sighandler_t</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">__sighandler_t</span> <span class="n">signal</span> <span class="p">(</span><span class="kt">int</span> <span class="n">__sig</span><span class="p">,</span> <span class="n">__sighandler_t</span> <span class="n">__handler</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="section-4">示例</h3>
+<h3 id="示例">示例</h3>
 
 <p>可以用以下两种方式定义返回函数指针的函数。第二种方式是第一种方式的替换， 也更易理解。</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">OP</span><span class="p">(</span><span class="kt">char</span><span class="p">))(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
-</code></pre>
-</div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">OP</span><span class="p">(</span><span class="kt">char</span><span class="p">))(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</code></pre></div></div>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">int</span> <span class="n">OP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">int</span> <span class="n">OP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
 <span class="n">OP</span><span class="o">*</span> <span class="n">fun</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">);</span> 
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
 </span>
 <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">opp</span><span class="p">(</span><span class="kt">char</span><span class="p">))(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
 <span class="k">typedef</span> <span class="kt">int</span> <span class="n">OP</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
@@ -116,8 +110,7 @@
         <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
         </article>
 
@@ -126,7 +119,7 @@
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/PDL.html">PDL<span>2</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
     
 
             </ul>
@@ -138,7 +131,7 @@
     
 
     
-    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>2</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
     
 
             </ul>

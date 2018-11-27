@@ -35,7 +35,7 @@
         </header>
 
         <article class="post-content">
-            <h3 id="section">什么是不动点迭代法</h3>
+            <h3 id="什么是不动点迭代法">什么是不动点迭代法</h3>
 
 <p>函数$f$的不动点是一个值$x$使得$f(x) = x$。例如，0和1是函数$f(x) = x^2$的不动点，因为$0^2 = 0$而$1^2 = 1$，即曲线$y = f(x)$与直线$y = x$存在交点$P(x^{\ast}, x^{\ast})$。</p>
 
@@ -47,15 +47,14 @@
 
 <p>算法描述如下：</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">guess</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">guess</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">guess</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">guess</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">epsilon</span><span class="p">:</span>
         <span class="n">guess</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
         <span class="k">print</span> <span class="s">'[ Epoch {0} ] guess = {1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">guess</span><span class="p">)</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">guess</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>下面示例演示了</p>
 
@@ -64,14 +63,13 @@
   <li>求解$f(x) = \frac{x + \frac{8}{x^2}}{2} = x$也即求解$x^3=8$。</li>
 </ol>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
 <span class="c"># [ Epoch 5 ] guess = 2.2360679775</span>
 <span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
 <span class="c"># [ Epoch 27 ] guess = 2.00000000337</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="section-1">不动点迭代法的收敛性</h3>
+<h3 id="不动点迭代法的收敛性">不动点迭代法的收敛性</h3>
 
 <p>一般地，将非线性方程$f(x) = 0$化为一个同解方程</p>
 

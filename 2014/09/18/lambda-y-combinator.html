@@ -45,111 +45,98 @@
   <li>部分语言对过程的命名必须等到该过程定义完成后才可以进行，这个时候我们必须找到一种方式使其能够很容易地获得递归的能力。</li>
 </ol>
 
-<h4 id="factoriallambda">下面我们就是用factorial函数为原型，来看看如何使用lambda演算基本的规则，为其增加递归的能力。</h4>
+<h4 id="下面我们就是用factorial函数为原型来看看如何使用lambda演算基本的规则为其增加递归的能力">下面我们就是用factorial函数为原型，来看看如何使用lambda演算基本的规则，为其增加递归的能力。</h4>
 
 <p>传统定义方式，不过这个方式不符合我们的需求，因为它使用到了函数自身fact。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">fact</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">fact</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nf">fact</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>几乎所有的问题解决过程都可以通过分层来解决，既然它不允许我们直接使用fact，那我们是不是可以直接把fact作为函数传入呢？</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(</span><span class="nf">fact2</span><span class="w"> </span><span class="n">fact2</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>为了后续处理方便，我们先对该函数进行currying。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">((</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">((</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fact3</span><span class="w"> </span><span class="n">fact3</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>((self self) (dec n)) 是不是有点丑陋，我们知道λ演算是数学家们搞出来的，他们对构造形式是有很严重的洁癖的。既然我们就是函数本身，为什么还需要(self, self)这样多此一举呢。
 如果我们的定义能变成下面这样就比较完美了。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
+</span></code></pre></div></div>
 <p>或者换成二元形式</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">f,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact3</span><span class="w"> </span><span class="p">[</span><span class="n">f,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+</span></code></pre></div></div>
 <p>这样也许更符合数学家们的口味，但是该函数是无法被直接执行的，这个使我们暂时假定的factorial的理想函数形式。为了构造这个理想函数形式，我们不妨把它变成(f (dec n))，下面我们试着把(self self)拎出来，用作参数f传入。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact4</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact4</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nf">letfn</span><span class="w"> </span><span class="p">[(</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))]</span><span class="w">
             </span><span class="p">(</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fact4</span><span class="w"> </span><span class="n">fact4</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>我们来看fac-gen的形式，其等价于</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+</span></code></pre></div></div>
 <p>是不是和我们理想中的fact形式已经很接近了，当然其中有一个自由变量n，没关系，我们给他加个帽子。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact5</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact5</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
     </span><span class="p">(</span><span class="nf">letfn</span><span class="w"> </span><span class="p">[(</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
               </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))]</span><span class="w">
       </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fact5</span><span class="w"> </span><span class="n">fact5</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>这次的fac-gen和我们的理想函数形式非常像了，换成二元就是</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
+</span></code></pre></div></div>
 <p>这正是我们找寻的理想形式。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact6</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact6</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="nf">letfn</span><span class="w"> </span><span class="p">[(</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
             </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))]</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fact6</span><span class="w"> </span><span class="n">fact6</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>让我们把fac-gen抽出来，作为一个单独的函数，它刚好就是我们要构造的factorial函数的理想形式，并给出fact7函数的定义。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fac-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))))</span><span class="w">
 </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact7</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fact7</span><span class="w"> </span><span class="n">fact7</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>其实这个时候，fact7和factorial的计算过程已经没有什么关系了，换而言之，其实它可以更通用一些。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact8</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fact8</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
-</span><span class="c1">;; (fact8 fac-gen) = fact7
+</span><span class="c1">;; (fact8 fac-gen) = fact7</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">fact8</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">fact8</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>fact8其实和factorial的计算过程没有任何关系，所以我们不妨给它换个名字</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>事实确是如此，该函数有一种神奇的能力，它不仅使可以计算factorial，它事实上可以计算所有形如factorial理想形式的函数递归。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fib-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">2</span><span class="p">))))))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fib-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">2</span><span class="p">))))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
@@ -159,124 +146,111 @@
 
 </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">range-gen</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">(((</span><span class="nf">y</span><span class="w"> </span><span class="n">range-gen</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="w"> </span><span class="n">range-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>我们看下我们的调用，都是形如：(((y *-gen) (y *-gen)) n)的形式，还是相当丑陋的，我们不如精简下，简化其调用过程。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="nf">letfn</span><span class="w"> </span><span class="p">[(</span><span class="nf">g</span><span class="w"> </span><span class="p">[</span><span class="n">self</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">gen</span><span class="w"> </span><span class="p">(</span><span class="nf">self</span><span class="w"> </span><span class="n">self</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))]</span><span class="w">
     </span><span class="p">(</span><span class="nf">g</span><span class="w"> </span><span class="n">g</span><span class="p">)))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">y1</span><span class="w"> </span><span class="n">range-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">y1</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">y1</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>去除letfn，把self使用f替换。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">[</span><span class="n">gen</span><span class="p">]</span><span class="w">
   </span><span class="p">((</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nf">g</span><span class="w"> </span><span class="n">g</span><span class="p">))</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
       </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">gen</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="n">f</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">Y</span><span class="w"> </span><span class="n">range-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">Y</span><span class="w"> </span><span class="n">fib-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>说了这么多，这个东西和Y Combinator又有什么关系？其实，我们最终得出的Y函数，其实就是我们所要苦苦找寻的Y Combinator函数，它具有性质Y(F) = F(Y(F)) = F(F(Y(F)))。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">fac-gen</span><span class="w"> </span><span class="p">(</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)))</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
-<h3 id="y-combinator">不动点组合子(Y Combinator)</h3>
+<h3 id="不动点组合子y-combinator">不动点组合子(Y Combinator)</h3>
 <p>函数f的不动点是一个值x使得f(x) = x。例如，0和1是函数f(x) = x**2的不动点，因为0**2 = 0而1**2 = 1。鉴于一阶函数（在简单值比如整数上的函数）的不动点
 是个一阶值，高阶函数f的不动点是另一个函数g使得f(g) = g。那么，不动点算子是任何函数fix使得对于任何函数f都有 f(fix(f)) = fix(f).</p>
 
 <p>在无类型lambda演算中众所周知的（可能是最简单的）不动点组合子叫做Y组合子。它是Haskell B. Curry发现的，定义为Y = λf.(λx.f (x x)) (λx.f (x x))用一个例子函数g来展开它，我们可以看到上面这个函数是怎么成为一个不动点组合子的：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Y g = (λf.(λx. f (x x)) (λx. f (x x))) g
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Y g = (λf.(λx. f (x x)) (λx. f (x x))) g
     = (λx. g (x x)) (λx. g (x x))            （λf的β-归约 - 应用主函数于g）
     = (λy. g (y y)) (λx. g (x x))            （α-转换 - 重命名约束变量）
     = g ((λx. g (x x)) (λx. g (x x)))        （λy的β-归约 - 应用左侧函数于右侧函数）
     = g (Y g)（Y的定义）
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>根据定义得出的函数如下，但是它毫无用武之地，当把参数应用到它之上时，它将会进入无穷递归。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(defn y [f]
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(defn y [f]
   ((fn [x] (f (x x)))
     (fn [x] (f (x x)))))
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>当该函数应用到f上时，当有</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>((fn [x] (f (x x))) (fn [x] (f (x x)))))
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((fn [x] (f (x x))) (fn [x] (f (x x)))))
+</code></pre></div></div>
 <p>let g = (fn [x] (f x x)) 当有如下的执行过程</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(f (g g)) = (f ((fn [x] (f (x x))) g)) 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(f (g g)) = (f ((fn [x] (f (x x))) g)) 
           = (f (f (g g)))
           ...
           = (f ... (f (g g)))
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>由于此处总是eager load，故此函数会进入无穷递归。</p>
 
 <p>有没有办法让(f (x x))不展开呢? 可以，只需要加个lambda就可以使其变成lazy load。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
   </span><span class="p">((</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">
      </span><span class="o">#</span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="n">x</span><span class="p">)))</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">
       </span><span class="o">#</span><span class="p">(</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="n">x</span><span class="p">)))))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>由于新增的lambda没有参数，故在clojure中我们调用的函数也不能有参数，但是已经可以实现递归了，下面的例子会进入无穷递归。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">((</span><span class="nf">y1</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="no">:hello</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="p">))))</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">((</span><span class="nf">y1</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="no">:hello</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">f</span><span class="p">))))</span><span class="w">
+</span></code></pre></div></div>
 
 <p>让我们给他加入参数，以便做支持更多的调用场景。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
   </span><span class="p">((</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>上面的代码实现有明显重复的地方，根据DRY原则，我们稍稍对源代码进行下改造。</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="w">
   </span><span class="p">((</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nf">g</span><span class="w"> </span><span class="n">g</span><span class="p">))</span><span class="w">
     </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">args</span><span class="p">]</span><span class="w"> </span><span class="p">((</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="n">args</span><span class="p">)))))</span><span class="w">
 </span><span class="p">(</span><span class="nb">assert</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="p">((</span><span class="nf">Y</span><span class="w"> </span><span class="n">fac-gen</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="mi">120</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>我们根据Y Combinator也同时得出了Y函数的定义，和我们之前根据factorial推演得出的结果一模一样。</p>
 
 <p>让我们来证明下，我们的Y确实是一个通用的不动点组合子。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Y = λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Y = λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)
 Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
        = (λx.λn.g (x x) n) (λx.λn.g (x x) n) n
        = (λy.λm.g (y y) m) (λx.λn.g (x x) n) n
        = (λm.g ((λx.λn.g (x x) n) (λx.λn.g (x x) n)) m) n
        = (λm.g (Y g) m) n
        = g (Y g) n
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="section">参考</h3>
+<h3 id="参考">参考</h3>
 <ol>
   <li><a href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html">Lambda演算之自然数</a></li>
   <li><a href="https://raw.githubusercontent.com/jameszhan/rhea/master/codes/clojure/calculation/deriving_y_combinator.clj">y-combinator演算示例代码</a></li>
@@ -290,7 +264,7 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
     
 
             </ul>
@@ -314,7 +288,7 @@ Y g n  = (λf.(λx.λn.f (x x) n) (λx.λn.f (x x) n)) g n
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
     
 
     

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>尽管扯淡-Docker 基础之 chroot</title>
+    <meta name="description" content="资深码农，程序设计语言控">
+    <link rel="canonical" href="http://localhost:4000/2017/08/16/docker-chroot.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/main.css">
+</head>
+
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" data-include="/assets/tpls/header.tpl"></header>
+<div class="container">
+    <div class="col-md-9">
+    <div class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Docker 基础之 chroot</h1>
+            <p class="post-meta">
+                2017年08月16日 • 詹子知(James Zhan) • 版权所有，转载须声明出处
+            </p>
+        </header>
+
+        <article class="post-content">
+            <h2 id="背景">背景</h2>
+
+<h3 id="什么是chroot">什么是chroot</h3>
+
+<p><code class="highlighter-rouge">chroot</code> 是一个 <code class="highlighter-rouge">UNIX</code> 操作系统上的系统调用，用于将一个进程及其子进程的根目录改变到文件系统中的一个新位置，让这些进程只能访问到该目录。这个功能的想法是为每个进程提供独立的磁盘空间</p>
+
+<h3 id="chroot的优势">chroot的优势</h3>
+
+<p>在经过 chroot 之后，系统读取到的目录和文件将不在是旧系统根下的而是新根下(即被指定的新的位置)的目录结构和文件，因此它带来的好处大致有以下3个：</p>
+<ul>
+  <li>增加了系统的安全性，限制了用户的权力；
+  在经过 chroot 之后，在新根下将访问不到旧系统的根目录结构和文件，这样就增强了系统的安全性。这个一般是在登录 (login) 前使用 chroot，以此达到用户不能访问一些特定的文件。</li>
+  <li>建立一个与原系统隔离的系统目录结构，方便用户的开发；
+  使用 chroot 后，系统读取的是新根下的目录和文件，这是一个与原系统根下文件不相关的目录结构。在这个新的环境中，可以用来测试软件的静态编译以及一些与系统不相关的独立开发。</li>
+  <li>切换系统的根目录位置，引导 Linux 系统启动以及急救系统等。
+  chroot 的作用就是切换系统的根位置，而这个作用最为明显的是在系统初始引导磁盘的处理过程中使用，从初始 RAM 磁盘 (initrd) 切换系统的根位置并执行真正的 init。另外，当系统出现一些问题时，我们也可以使用 chroot 来切换到一个临时的系统。</li>
+</ul>
+
+<h2 id="如何使用-chroot">如何使用 chroot</h2>
+
+<h3 id="准备-linux-镜像">准备 Linux 镜像</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p busybox &amp;&amp; (sudo docker export $(sudo docker create busybox) | tar -C busybox -xvf -)
+
+mkdir -p stretch &amp;&amp; (sudo docker export $(sudo docker create debian:stretch-slim) | tar -C stretch -xvf -)
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">Busybox</code> 被称为是嵌入式 <code class="highlighter-rouge">Linux</code> 中的瑞士军刀。<code class="highlighter-rouge">Busybox</code> 包含了许多有用的命令，如 <code class="highlighter-rouge">cat</code>、<code class="highlighter-rouge">find</code> 等，但是它的体积却非常的小，<code class="highlighter-rouge">bin</code> 目录下所有命令都是静态编译，不依赖动态共享库文件。</p>
+
+<p><code class="highlighter-rouge">debian:stretch-slim</code> 即为 <code class="highlighter-rouge">Debian 9</code> 的稳定发行版，<code class="highlighter-rouge">slim</code> 表示精简版。</p>
+
+<h3 id="执行-chroot">执行 chroot</h3>
+
+<p><code class="highlighter-rouge">chroot</code> 到 <code class="highlighter-rouge">busybox</code> 目录，并执行命令 <code class="highlighter-rouge">/bin/busybox --list</code>。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>chroot busybox /bin/busybox <span class="nt">--list</span>
+</code></pre></div></div>
+<pre><code class="language-txt">[
+[[
+acpid
+add-shell
+addgroup
+adduser
+adjtimex
+ar
+...
+</code></pre>
+
+<p><code class="highlighter-rouge">chroot</code> 到 <code class="highlighter-rouge">busybox</code> 目录，并执行命令 <code class="highlighter-rouge">/bin/sh</code>。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>chroot busybox /bin/sh
+</code></pre></div></div>
+<p>在 <code class="highlighter-rouge">sh</code> 中执行 <code class="highlighter-rouge">busybox</code> 中的命令</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span>
+<span class="c"># bin dev etc home proc root sys tmp usr var</span>
+whoami
+<span class="c"># root</span>
+
+mount <span class="nt">-t</span> proc proc /proc
+ps aux
+<span class="c"># PID   USER     TIME  COMMAND</span>
+<span class="c">#    1 root      0:50 /usr/lib/systemd/systemd --system --deserialize 20</span>
+<span class="c">#    2 root      0:00 [kthreadd]</span>
+<span class="c"># ...</span>
+
+ifconfig
+<span class="c"># ifconfig: /proc/net/dev: No such file or directory</span>
+<span class="c"># docker0   Link encap:Ethernet  HWaddr 02:42:88:28:3C:C5</span>
+<span class="c">#          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0</span>
+<span class="c">#          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span>
+<span class="c">#</span>
+<span class="c"># eth0      Link encap:Ethernet  HWaddr 00:16:3E:0C:86:F9</span>
+<span class="c">#          inet addr:172.18.113.32  Bcast:172.18.127.255  Mask:255.255.240.0</span>
+<span class="c">#          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span>
+<span class="c">#</span>
+...
+</code></pre></div></div>
+<p>对比宿主机 <code class="highlighter-rouge">IP</code> 配置会发现网络是没有隔离的。</p>
+
+<p><code class="highlighter-rouge">chroot</code> 到 <code class="highlighter-rouge">stretch</code> 目录，默认执行 <code class="highlighter-rouge">/bin/bash</code>。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>chroot stretch
+</code></pre></div></div>
+
+<p>在 <code class="highlighter-rouge">bash</code> 中执行 <code class="highlighter-rouge">stretch</code> 中的命令</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /etc/issue
+<span class="c"># Debian GNU/Linux 9 \n \l</span>
+whoami
+<span class="c"># root</span>
+</code></pre></div></div>
+
+<h3 id="chroot-如何执行可执行文件">chroot 如何执行可执行文件</h3>
+
+<p>前面演示了 <code class="highlighter-rouge">chroot</code> 切换到 <code class="highlighter-rouge">busybox</code> 及 <code class="highlighter-rouge">stretch</code> 目录执行命令，给人的感觉好像在使用一个全新的系统。事实上，执行命令的还是宿主操作系统，它只不过把根目录限定在了指定目录，执行文件的相关依赖也必须在此根目录下。</p>
+
+<p><code class="highlighter-rouge">chroot</code> 执行命令，并不需要目标目录有一个完整的 <code class="highlighter-rouge">linux</code> 内核，只要是和宿主操作系统同体系符合 <code class="highlighter-rouge">ELF</code> 格式的可执行文件，就可以直接执行。</p>
+
+<h4 id="示例1">示例1</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-fr</span> rootfs <span class="o">&amp;&amp;</span> mkdir rootfs
+cp ~/busybox/bin/ls ~/rootfs/
+<span class="nb">sudo </span>chroot rootfs ./ls
+<span class="c"># ls</span>
+</code></pre></div></div>
+<h4 id="示例2">示例2</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-fr</span> rootfs <span class="o">&amp;&amp;</span> mkdir rootfs
+cp ~/busybox/bin/<span class="o">{</span>sh,ls,echo,cat,mkdir<span class="o">}</span> ~/rootfs/
+<span class="nb">sudo </span>chroot rootfs ./sh
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./mkdir tmp
+./echo <span class="s1">'Hello World'</span> <span class="o">&gt;</span> /tmp/hello.txt
+./cat /tmp/hello.txt
+<span class="c"># Hello World</span>
+./ls /
+<span class="c"># cat    echo   ls     mkdir  sh     tmp</span>
+./ls /tmp
+hello.txt
+</code></pre></div></div>
+
+<h4 id="示例3">示例3</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp ~/stretch/bin/bash ~/rootfs/
+<span class="nb">sudo </span>chroot rootfs ./bash
+<span class="c"># chroot: failed to run command ‘./bash’: No such file or directory</span>
+</code></pre></div></div>
+<p>这里报错，是因为，在 <code class="highlighter-rouge">stretch</code> 的 <code class="highlighter-rouge">bash</code> 不是静态编译的，它依赖于其它的动态库，只有把依赖文件也准备好，<code class="highlighter-rouge">bash</code> 命令才可以正确执行。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看 bash 依赖的动态库</span>
+ldd ~/stretch/bin/bash
+
+mkdir ~/rootfs/lib ~/rootfs/lib64
+cp ~/stretch/lib/x86_64-linux-gnu/ld-2.24.so ~/rootfs/lib64/ld-linux-x86-64.so.2
+cp ~/stretch/lib/x86_64-linux-gnu/libtinfo.so.5.9 ~/rootfs/lib/libtinfo.so.5
+cp ~/stretch/lib/x86_64-linux-gnu/libdl-2.24.so ~/rootfs/lib/libdl.so.2
+cp ~/stretch/lib/x86_64-linux-gnu/libc.so.6 ~/rootfs/lib/libc.so.6
+
+tree ~/rootfs
+<span class="c"># /home/james/rootfs</span>
+<span class="c"># ├── bash</span>
+<span class="c"># ├── lib</span>
+<span class="c"># │   ├── libc.so.6</span>
+<span class="c"># │   ├── libdl.so.2</span>
+<span class="c"># │   └── libtinfo.so.5</span>
+<span class="c"># └── lib64</span>
+<span class="c">#     └── ld-linux-x86-64.so.2</span>
+<span class="c">#     </span>
+<span class="nb">sudo </span>chroot rootfs ./bash
+</code></pre></div></div>
+
+<h3 id="chroot-系统调用">chroot 系统调用</h3>
+
+<p>上面介绍了 chroot 命令行使用，但是更常见的方式是其它程序语言通过系统调用的方式来使用。chroot 的编写涉及了2个函数，chroot() 以及 chdir()，它们都包含在 unistd.h 头文件中。</p>
+
+<h4 id="示例1-1">示例1</h4>
+
+<p>本例演示了 <code class="highlighter-rouge">chroot</code> 到 <code class="highlighter-rouge">~/busybox</code> 目录中执行命令。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim chroot_demo.py
+chmod +x chroot_demo.py
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Usage: chroot [COMMAND...] </span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chroot</span><span class="p">(</span><span class="s">"/home/james/busybox"</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">"umount ./proc"</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">"mount -t proc ./proc /proc"</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">execvp</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> ./chroot_demo.py <span class="nb">ls</span>
+<span class="c"># bin dev etc home proc root sys tmp usr var</span>
+<span class="nb">sudo</span> ./chroot_demo.py whoami
+<span class="c"># root</span>
+
+<span class="nb">sudo</span> ./chroot_demo.py ps
+<span class="c"># PID   USER     TIME  COMMAND</span>
+<span class="c">#    1 root      0:49 /usr/lib/systemd/systemd --system --deserialize 20</span>
+<span class="c">#    2 root      0:00 [kthreadd]</span>
+<span class="c">#    3 root      0:02 [ksoftirqd/0]</span>
+<span class="c"># ...</span>
+
+<span class="nb">sudo</span> ./chroot_demo.py ifconfig
+<span class="c"># docker0   Link encap:Ethernet  HWaddr 02:42:88:28:3C:C5</span>
+<span class="c">#           inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0</span>
+<span class="c">#           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span>
+<span class="c">#           RX packets:3702045 errors:0 dropped:0 overruns:0 frame:0</span>
+<span class="c">#           TX packets:4221866 errors:0 dropped:0 overruns:0 carrier:0</span>
+<span class="c">#           collisions:0 txqueuelen:0</span>
+<span class="c">#           RX bytes:150990614 (143.9 MiB)  TX bytes:36552003396 (34.0 GiB)</span>
+<span class="c"># </span>
+<span class="c"># eth0      Link encap:Ethernet  HWaddr 00:16:3E:0C:86:F9</span>
+<span class="c">#           inet addr:172.18.113.32  Bcast:172.18.127.255  Mask:255.255.240.0</span>
+<span class="c">#           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span>
+<span class="c">#           RX packets:105629916 errors:0 dropped:0 overruns:0 frame:0</span>
+<span class="c">#           TX packets:43745130 errors:0 dropped:0 overruns:0 carrier:0</span>
+<span class="c">#           collisions:0 txqueuelen:1000</span>
+<span class="c">#           RX bytes:102811026834 (95.7 GiB)  TX bytes:70775210676 (65.9 GiB)</span>
+<span class="c"># </span>
+...
+</code></pre></div></div>
+
+<h4 id="示例2-1">示例2</h4>
+
+<p>本例展示如何用系统调用的方式来实现一个类 <code class="highlighter-rouge">chroot</code> 命令。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim chroot_rootfs.py
+chmod +x chroot_rootfs.py
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Usage: chroot [COMMAND...] </span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"root = {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chroot</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">argv</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">shell</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"SHELL"</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">shell</span><span class="p">:</span>
+                    <span class="n">shell</span> <span class="o">=</span> <span class="s">"/bin/bash"</span>
+                <span class="n">argv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shell</span><span class="p">)</span>
+                <span class="n">argv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">"-i"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">execvp</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">argv</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"OSError: {0} with command {1}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./chroot_rootfs.py
+Usage: chroot NEWROOT <span class="o">[</span>COMMAND...]
+
+<span class="nb">sudo</span> ./chroot_rootfs.py ~/busybox /bin/ls
+<span class="c"># bin dev etc home proc root sys tmp usr var</span>
+</code></pre></div></div>
+
+        </article>
+
+        <div class="row-fluid">
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-folder-open"></i></li>
+                 
+    
+    <li class="tag"><a href="/categories/docker.html">Docker<span>3</span></a></li>
+    
+
+            </ul>
+            <ul class="list-inline">
+                <li><i class="glyphicon glyphicon-tags"></i></li>
+                 
+    
+    <li class="tag"><a href="/tags/docker.html">Docker<span>3</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/linux.html">Linux<span>8</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/osx.html">OS X<span>6</span></a></li>
+    
+
+    
+    <li class="tag"><a href="/tags/shell.html">Shell<span>7</span></a></li>
+    
+
+            </ul>
+        </div>
+
+        <div class="row-fluid">
+            <ul class="pagination pull-right">
+                
+                <li class="prev"><a href="/2015/05/15/docker-in-osx.html" title="在OS X上运行Docker">&larr; 上一篇</a></li>
+                
+                <li><a href="http://localhost:4000">Archive</a></li>
+                
+                <li class="next"><a href="/2017/08/18/docker-in-cgroups.html" title="Docker 基础之 Cgroups">下一篇 &rarr;</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="col-md-3">
+    <div data-include="/assets/tpls/widgets/tags.tpl"></div>
+<div data-include="/assets/tpls/widgets/categories.tpl"></div>
+
+</div>
+
+
+</div>
+
+<div class="container" data-include="/assets/tpls/footer.tpl"></div>
+
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/assets/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/assets/javascripts/firing.js"></script>
+<div class="analytics">
+    <script type="text/javascript" src="/assets/javascripts/analytics.js"></script>
+</div>
+</body>
+</html>

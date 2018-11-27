@@ -35,7 +35,7 @@
         </header>
 
         <article class="post-content">
-            <h3 id="github-pages">为什么选择GitHub Pages</h3>
+            <h3 id="为什么选择github-pages">为什么选择GitHub Pages</h3>
 
 <p>如果我们要写日志，我们一般有两种选择：</p>
 
@@ -55,25 +55,27 @@
 
 <p>然而，GitHub Pages也不是万能的，由于它默认只支持纯静态的页面，所以我们无法在其中使用我们自己的数据库，这样普通日志具有的评论功能我们默认是无法实现的。</p>
 
-<h3 id="section">第三方社会化评论系统</h3>
+<h3 id="第三方社会化评论系统">第三方社会化评论系统</h3>
 
 <p>感谢OAuth和第三方评论系统，由于它们，我们可以很轻松地使我们的静态网站支持评论功能。</p>
 
 <h4 id="oauth">OAuth</h4>
 
 <p>OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAUTH的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAUTH是安全的。oAuth是Open Authorization的简写。
-简单地说，OAuth使得用户可以利用一些已有的身份（比如Weibo，QQ）去登陆一些其他的网站，而不需要在该网站重新注册自己的身份信息。这样做有如下几个优点：
-1. 省去了注册流程，可以快速地登陆网站。
-2. 省去了注册流程中资料的填写流程，减少了自己一些隐私信息暴露的风险。
-3. 不需要把密码信息（很多人注册账号的时候喜欢使用同一个密码）暴露给一些小型应用和网站，减少了密码暴露的风险。
-4. 减少不必要的记忆信息，比如账号和密码信息等。</p>
+简单地说，OAuth使得用户可以利用一些已有的身份（比如Weibo，QQ）去登陆一些其他的网站，而不需要在该网站重新注册自己的身份信息。这样做有如下几个优点：</p>
+<ol>
+  <li>省去了注册流程，可以快速地登陆网站。</li>
+  <li>省去了注册流程中资料的填写流程，减少了自己一些隐私信息暴露的风险。</li>
+  <li>不需要把密码信息（很多人注册账号的时候喜欢使用同一个密码）暴露给一些小型应用和网站，减少了密码暴露的风险。</li>
+  <li>减少不必要的记忆信息，比如账号和密码信息等。</li>
+</ol>
 
-<h4 id="section-1">社会化评论系统</h4>
+<h4 id="社会化评论系统">社会化评论系统</h4>
 
 <p>目前第三方社交评论系统主要有Disqus，Facebook Comment，评论啦(pinglun.la)、友言(uyan.cc)，多说(duoshuo.com)等。
 其中，Disqus和Facebook Comment由于国情原因，在国内网站上几乎没有使用价值。评论啦(pinglun.la)、友言(uyan.cc)，多说(duoshuo.com)等则依托于微博，QQ等第三方登陆平台，可以很方便地接入到我们网站中来。</p>
 
-<h3 id="section-2">给博客加入评论功能</h3>
+<h3 id="给博客加入评论功能">给博客加入评论功能</h3>
 
 <p>下面我们就拿多说举例，来看看GitHub Pages如何接入第三方社交评论系统。</p>
 
@@ -84,7 +86,7 @@
   <li>把生成后的代码拷贝到你需要评论的页面当中。</li>
 </ol>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- 多说评论框 start --&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 多说评论框 start --&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ds-thread"</span> <span class="na">data-thread-key=</span><span class="s">"请将此处替换成文章在你的站点中的ID"</span> <span class="na">data-title=</span><span class="s">"请替换成文章的标题"</span> <span class="na">data-url=</span><span class="s">"请替换成文章的网址"</span><span class="nt">&gt;&lt;/div&gt;</span>
 <span class="c">&lt;!-- 多说评论框 end --&gt;</span>
 <span class="c">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span>
@@ -92,7 +94,7 @@
 <span class="kd">var</span> <span class="nx">duoshuoQuery</span> <span class="o">=</span> <span class="p">{</span><span class="na">short_name</span><span class="p">:</span><span class="s2">"SHORT-NAME"</span><span class="p">};</span>
 <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
-    <span class="nx">ds</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">'text/javascript'</span><span class="p">;</span><span class="nx">ds</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">ds</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">'text/javascript'</span><span class="p">;</span><span class="nx">ds</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
     <span class="nx">ds</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">==</span> <span class="s1">'https:'</span> <span class="p">?</span> <span class="s1">'https:'</span> <span class="p">:</span> <span class="s1">'http:'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'//static.duoshuo.com/embed.js'</span><span class="p">;</span>
     <span class="nx">ds</span><span class="p">.</span><span class="nx">charset</span> <span class="o">=</span> <span class="s1">'UTF-8'</span><span class="p">;</span>
     <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">'head'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
@@ -100,18 +102,16 @@
 <span class="p">})();</span>
 <span class="nt">&lt;/script&gt;</span>
 <span class="c">&lt;!-- 多说公共JS代码 end --&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>其中，data-title和data-url的值比较简单，填写文章的标题和真实网址就可以了。
 关键是data-thread-key的设置，原则上要求对于每一个页面，它的值应该是唯一的，这里我推荐使用相对路径的URL就可以，下面是我本地的例子。</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ds-thread"</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ds-thread"</span>
      <span class="na">data-thread-key=</span><span class="s">"/2014/09/28/github-pages-with-comments.html"</span>
      <span class="na">data-title=</span><span class="s">"如何实现Github博客评论功能"</span>
      <span class="na">data-url=</span><span class="s">"http://localhost:4000/2014/09/28/github-pages-with-comments.html"</span><span class="nt">&gt;&lt;/div&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>去除多说广告内容。</li>
@@ -119,7 +119,7 @@
 
 <p>以下样式使用scss编写。</p>
 
-<div class="language-scss highlighter-rouge"><pre class="highlight"><code><span class="nn">#ds-thread</span><span class="nc">.ds-thread</span> <span class="p">{</span>
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">#ds-thread</span><span class="nc">.ds-thread</span> <span class="p">{</span>
   <span class="nn">#ds-reset</span> <span class="p">{</span>
     <span class="nc">.ds-comments-info</span> <span class="p">{</span>
       <span class="nc">.ds-comments-tabs</span> <span class="p">{</span>
@@ -135,8 +135,7 @@
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>禁用默认分享到微博和空间的功能。</li>
@@ -144,11 +143,10 @@
 
 <p>我想很多人都和我一样，很讨厌默认分享的功能，默认多说的分享是勾上的，其实我们只要加入如下的脚本，我们就可以很轻易地去掉默认分享的功能。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="s1">'#ds-thread textarea[name=message]'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="s1">'#ds-thread textarea[name=message]'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
     <span class="nx">$</span><span class="p">(</span><span class="s1">'#ds-sync-checkbox'</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">'checked'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="p">});</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>到此，我们的文章评论功能就添加完毕，赶快来尝试一下吧！</p>
 

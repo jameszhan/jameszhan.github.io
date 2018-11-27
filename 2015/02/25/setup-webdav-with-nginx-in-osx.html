@@ -37,37 +37,34 @@
         <article class="post-content">
             <p><a href="http://www.webdav.org/" title="WebDAV">WebDAV</a>（Web-based Distributed Authoring and Versioning）是基于 HTTP/1.1 的一个通信协议。它为 HTTP/1.1 添加了一些扩展（就是在 GET、POST、HEAD 等几个 HTTP 标准方法以外添加了一些新的方法），使得应用程序可以直接将文件写到 Web Server 上，并且在写文件时候可以对文件加锁，写完后对文件解锁，还可以支持对文件所做的版本控制。这个协议的出现极大地增加了 Web 作为一种创作媒体对于我们的价值。基于 WebDAV 可以实现一个功能强大的内容管理系统或者配置管理系统。</p>
 
-<h3 id="nginxwebdav">安装Nginx并配置WebDAV模块</h3>
+<h3 id="安装nginx并配置webdav模块">安装Nginx并配置WebDAV模块</h3>
 
 <p>最新的Nginx已经默认支持了webdav模块了，但是支持并不完善，对于PROPFIND OPTIONS还不支持，必须安装<a href="https://github.com/arut/nginx-dav-ext-module" title="NGINX WebDAV Extension Module">WebDAV的扩展模块</a>。</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/arut/nginx-dav-ext-module.git /tmp/nginx-dav-ext-module
+</code></pre></div></div>
 
-<h4 id="nginx">手动编译和安装Nginx</h4>
+<h4 id="手动编译和安装nginx">手动编译和安装Nginx</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>wget http://nginx.org/download/nginx-1.8.0.tar.gz --directory-prefix<span class="o">=</span>/tmp/
-<span class="nb">cd</span> /tmp <span class="o">&amp;&amp;</span> tar -xzf nginx-1.8.0.tar.gz
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://nginx.org/download/nginx-1.8.0.tar.gz <span class="nt">--directory-prefix</span><span class="o">=</span>/tmp/
+<span class="nb">cd</span> /tmp <span class="o">&amp;&amp;</span> <span class="nb">tar</span> <span class="nt">-xzf</span> nginx-1.8.0.tar.gz
 <span class="nb">cd</span> /tmp/nginx-1.8.0
-./configure --prefix<span class="o">=</span>/usr/local/nginx --add-module<span class="o">=</span>/tmp/nginx-dav-ext-module --with-http_ssl_module --with-pcre --with-ipv6 --sbin-path<span class="o">=</span>/usr/local/nginx/bin/nginx --conf-path<span class="o">=</span>/usr/local/etc/nginx/nginx.conf --pid-path<span class="o">=</span>/usr/local/var/run/nginx.pid --lock-path<span class="o">=</span>/usr/local/var/run/nginx.lock --http-client-body-temp-path<span class="o">=</span>/usr/local/var/run/nginx/client_body_temp --http-proxy-temp-path<span class="o">=</span>/usr/local/var/run/nginx/proxy_temp --http-fastcgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/fastcgi_temp --http-uwsgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/uwsgi_temp --http-scgi-temp-path<span class="o">=</span>/usr/local/var/run/nginx/scgi_temp --http-log-path<span class="o">=</span>/usr/local/var/log/nginx/access.log --error-log-path<span class="o">=</span>/usr/local/var/log/nginx/error.log --with-http_gzip_static_module --with-http_dav_module --with-debug --with-http_gunzip_module
+./configure <span class="nt">--prefix</span><span class="o">=</span>/usr/local/nginx <span class="nt">--add-module</span><span class="o">=</span>/tmp/nginx-dav-ext-module <span class="nt">--with-http_ssl_module</span> <span class="nt">--with-pcre</span> <span class="nt">--with-ipv6</span> <span class="nt">--sbin-path</span><span class="o">=</span>/usr/local/nginx/bin/nginx <span class="nt">--conf-path</span><span class="o">=</span>/usr/local/etc/nginx/nginx.conf <span class="nt">--pid-path</span><span class="o">=</span>/usr/local/var/run/nginx.pid <span class="nt">--lock-path</span><span class="o">=</span>/usr/local/var/run/nginx.lock <span class="nt">--http-client-body-temp-path</span><span class="o">=</span>/usr/local/var/run/nginx/client_body_temp <span class="nt">--http-proxy-temp-path</span><span class="o">=</span>/usr/local/var/run/nginx/proxy_temp <span class="nt">--http-fastcgi-temp-path</span><span class="o">=</span>/usr/local/var/run/nginx/fastcgi_temp <span class="nt">--http-uwsgi-temp-path</span><span class="o">=</span>/usr/local/var/run/nginx/uwsgi_temp <span class="nt">--http-scgi-temp-path</span><span class="o">=</span>/usr/local/var/run/nginx/scgi_temp <span class="nt">--http-log-path</span><span class="o">=</span>/usr/local/var/log/nginx/access.log <span class="nt">--error-log-path</span><span class="o">=</span>/usr/local/var/log/nginx/error.log <span class="nt">--with-http_gzip_static_module</span> <span class="nt">--with-http_dav_module</span> <span class="nt">--with-debug</span> <span class="nt">--with-http_gunzip_module</span>
 make <span class="o">&amp;&amp;</span> make install
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="homebrewnginx-full">通过Homebrew安装nginx-full</h4>
+<h4 id="通过homebrew安装nginx-full">通过Homebrew安装nginx-full</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew unlink nginx
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew unlink nginx
 brew tap homebrew/nginx
-brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenger --with-webdav --with-dav-ext-module
-</code></pre>
-</div>
+brew install nginx-full <span class="nt">--with-debug</span> <span class="nt">--with-gunzip</span> <span class="nt">---with-http2</span> <span class="nt">--with-passenger</span> <span class="nt">--with-webdav</span> <span class="nt">--with-dav-ext-module</span>
+</code></pre></div></div>
 
-<h4 id="homebrewnginx">通过Homebrew安装Nginx</h4>
+<h4 id="通过homebrew安装nginx">通过Homebrew安装Nginx</h4>
 
 <p>在安装前需要修改Homebrew配置文件<code class="highlighter-rouge">/usr/local/Library/Formula/nginx.rb</code>，在参数中加入nginx-dav-ext-module。</p>
 
-<div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="n">args</span> = %<span class="n">W</span>[
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">args</span> = %<span class="n">W</span>[
     --<span class="n">prefix</span>=<span class="c">#{prefix}
 </span>    --<span class="n">with</span>-<span class="n">http_ssl_module</span>
     --<span class="n">with</span>-<span class="n">pcre</span>
@@ -88,26 +85,23 @@ brew install nginx-full --with-debug --with-gunzip ---with-http2 --with-passenge
 </span>    --<span class="n">with</span>-<span class="n">http_gzip_static_module</span>
     --<span class="n">add</span>-<span class="n">module</span>=/<span class="n">tmp</span>/<span class="n">nginx</span>-<span class="n">dav</span>-<span class="n">ext</span>-<span class="n">module</span>
 ]
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install nginx --with-debug --with-gunzip --with-libressl --with-passenger --with-spdy --with-webdav
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install nginx <span class="nt">--with-debug</span> <span class="nt">--with-gunzip</span> <span class="nt">--with-libressl</span> <span class="nt">--with-passenger</span> <span class="nt">--with-spdy</span> <span class="nt">--with-webdav</span>
+</code></pre></div></div>
 
-<h3 id="webdav">配置和启动WebDAV服务</h3>
+<h3 id="配置和启动webdav服务">配置和启动WebDAV服务</h3>
 
-<h4 id="auth">生成auth认证配置文件</h4>
+<h4 id="生成auth认证配置文件">生成auth认证配置文件</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>htpasswd -c /u/etc/nginx/user.passwd admin
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>htpasswd <span class="nt">-c</span> /u/etc/nginx/user.passwd admin
 htpasswd /u/etc/nginx/user.passwd james
 htpasswd /u/etc/nginx/user.passwd guest
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="usrlocaletcnginxnginxconf">在配置文件<code class="highlighter-rouge">/usr/local/etc/nginx/nginx.conf</code>加入如下配置：</h4>
+<h4 id="在配置文件usrlocaletcnginxnginxconf加入如下配置">在配置文件<code class="highlighter-rouge">/usr/local/etc/nginx/nginx.conf</code>加入如下配置：</h4>
 
-<div class="language-conf highlighter-rouge"><pre class="highlight"><code><span class="c"># WebDAV
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># WebDAV
 </span><span class="n">server</span> {
     <span class="n">listen</span> <span class="m">9876</span>;
     <span class="n">error_page</span> <span class="m">404</span> /<span class="m">404</span>;
@@ -124,31 +118,27 @@ htpasswd /u/etc/nginx/user.passwd guest
         <span class="n">auth_basic_user_file</span> /<span class="n">u</span>/<span class="n">etc</span>/<span class="n">nginx</span>/<span class="n">user</span>.<span class="n">passwd</span>;
     }
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><a href="http://nginx.org/en/docs/http/ngx_http_dav_module.html" title="Module ngx_http_dav_module">点此</a>可以查看详细的配置参考。</p>
 
-<h4 id="nginx-1">启动Nginx</h4>
+<h4 id="启动nginx">启动Nginx</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>nginx
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nginx
+</code></pre></div></div>
 
-<h3 id="webdav-1">访问WebDAV服务</h3>
+<h3 id="访问webdav服务">访问WebDAV服务</h3>
 
-<h4 id="section">作为静态文件服务器</h4>
+<h4 id="作为静态文件服务器">作为静态文件服务器</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>open -a <span class="s2">"Google Chrome"</span> http://127.0.0.1:9876/index.html
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="nt">-a</span> <span class="s2">"Google Chrome"</span> http://127.0.0.1:9876/index.html
+</code></pre></div></div>
 <p>或者</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cadaver http://127.0.0.1:9876
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cadaver http://127.0.0.1:9876
+</code></pre></div></div>
 
-<h4 id="section-1">作为网盘</h4>
+<h4 id="作为网盘">作为网盘</h4>
 
 <p>在Finder下，按快捷键<code class="highlighter-rouge">Command+K</code>打开<em>Connect to Server</em>窗口。</p>
 
@@ -178,7 +168,7 @@ htpasswd /u/etc/nginx/user.passwd guest
     
 
     
-    <li class="tag"><a href="/tags/osx.html">OS X<span>4</span></a></li>
+    <li class="tag"><a href="/tags/osx.html">OS X<span>6</span></a></li>
     
 
             </ul>

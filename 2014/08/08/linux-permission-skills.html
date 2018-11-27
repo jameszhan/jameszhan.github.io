@@ -35,47 +35,43 @@
         </header>
 
         <article class="post-content">
-            <h2 id="section">代码示例</h2>
+            <h2 id="代码示例">代码示例</h2>
 
-<h3 id="section-1">直接在远端机器上执行代码</h3>
+<h3 id="直接在远端机器上执行代码">直接在远端机器上执行代码</h3>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>ssh ubuntu@10.211.55.13 <span class="s1">'ls -l'</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh ubuntu@10.211.55.13 <span class="s1">'ls -l'</span>
+</code></pre></div></div>
 
-<h3 id="section-2">登陆远程机器免输入密码</h3>
+<h3 id="登陆远程机器免输入密码">登陆远程机器免输入密码</h3>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cat ~/.ssh/id_rsa.pub | ssh ubuntu@10.211.55.13 <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> ~/.ssh/id_rsa.pub | ssh ubuntu@10.211.55.13 <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
 
 <span class="c">#下面是Amazon EC2的例子</span>
-cat ~/.ssh/id_rsa.pub | ssh -v -i ~/.ssh/trail.pem ubuntu@ec2-54-241-192-74.us-west-1.compute.amazonaws.com <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
-</code></pre>
-</div>
+<span class="nb">cat</span> ~/.ssh/id_rsa.pub | ssh <span class="nt">-v</span> <span class="nt">-i</span> ~/.ssh/trail.pem ubuntu@ec2-54-241-192-74.us-west-1.compute.amazonaws.com <span class="s1">'cat &gt;&gt; ~/.ssh/authorized_keys'</span>
+</code></pre></div></div>
 <p>对于自己的专属电脑来说，每次sudo输入密码确实非常啰嗦，尤其是在编写远程部署脚本时，更是遍地是坑</p>
 
-<h3 id="sudo">sudo免输入密码</h3>
+<h3 id="sudo免输入密码">sudo免输入密码</h3>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#在/etc/sudoers中更改用户相应的条目如下即可</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#在/etc/sudoers中更改用户相应的条目如下即可</span>
 ubuntu <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
 james <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:ALL
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="sudo-1">添加sudo免输密码用户</h3>
+<h3 id="添加sudo免输密码用户">添加sudo免输密码用户</h3>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>adduser deploy --ingroup admin
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adduser deploy <span class="nt">--ingroup</span> admin
 <span class="c">#添加以下内容到/etc/sudoers</span>
 deploy <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h2 id="section-3">关键文件详解</h2>
+<h2 id="关键文件详解">关键文件详解</h2>
 
 <p>用户，组及权限控制的信息主要和/etc/sudoers，/etc/passwd，/etc/shadow，/etc/group几个文件相关，可以使用id，finger查看用户信息。</p>
 
 <h4 id="etcsudoers">/etc/sudoers</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#常见格式规范</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#常见格式规范</span>
 <span class="c"># User privilege specification</span>
 root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span>      ALL
 <span class="c"># Members of the admin group may gain root privileges</span>
@@ -87,13 +83,12 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 <span class="c">#最后一栏，用户可执行的命令列表，用逗号分隔，如果不想输入密码，可以在之前加上NOPASSWD。</span>
 
 %users <span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span> /sbin/mount /cdrom,/sbin/umount /cdrom
-%users <span class="nv">localhost</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:/sbin/shutdown -h now
-</code></pre>
-</div>
+%users <span class="nv">localhost</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD:/sbin/shutdown <span class="nt">-h</span> now
+</code></pre></div></div>
 
 <h4 id="etcpasswd">/etc/passwd</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu:x:1001:27:Ubuntu,,,:/home/ubuntu:/bin/bash
 
 <span class="c"># ubuntu =&gt; 用户名</span>
 <span class="c"># x =&gt; 表示登陆需要密码，若此处无x，则表示该账户登陆不需要密码</span>
@@ -102,12 +97,11 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 <span class="c"># Ubuntu,,, =&gt; finger inform, 记录用户的相关信息，比如公司，地区等</span>
 <span class="c"># /home/ubuntu =&gt; 用户Home目录</span>
 <span class="c"># /bin/bash =&gt; 该用户使用bash shell的路径.如果是 /sbin/nologin,表示无法登陆系统,只能以FTP形式登录; 如果是 /bin/false,则表示只能发邮件.</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="etcshadow">/etc/shadow</h4>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>ubuntu:<span class="nv">$6$9M43z06q$w</span>/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu:<span class="nv">$6$9M43z06q$w</span>/Q8D7pD7a/JNJKaI2jmcrNmumMHBu8poxU6VYzWFDac7FhtDspeaOLlKmEkgOGRRDW.Sxcow8kwzp7hGtUGf.:15758:0:99999:7:6:5:
 
 <span class="c">#ubuntu =&gt; 用户名</span>
 <span class="c">#$6$yIUbtdK… =&gt; 用户加密后的密码，若为!!，则表示无密码，若为!$6$yIUbtdK...表示该账户已被锁定。</span>
@@ -118,19 +112,17 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
 <span class="c">#6 =&gt; 密码到期日起的6天后,如果该用户仍未变更密码,则该账户将被锁定 (默认留空)</span>
 <span class="c">#5 =&gt; 帐号到期日,以1970年1月1日开始计算,5天后账户锁定,此处表示的锁定日为1970便1月6日. (默认留空)</span>
 <span class="c">#最后一个(:后) =&gt; 是为了以后的新开发项做准备的</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="etcgroup">/etc/group</h4>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo:x:27:james
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span>:x:27:james
 
 <span class="c">#sudo =&gt; 用户组名</span>
 <span class="c">#x =&gt; 表示该用户组登录需要密码,若此出无x,则表示该用户组登录时不需要密码</span>
 <span class="c">#27 =&gt; 用户组ID ( gid)</span>
 <span class="c">#james =&gt; 这个用户组中的成员 ( 此处可多个,用户名之间用逗号隔开)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
         </article>
 
@@ -147,11 +139,11 @@ root <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</s
                 <li><i class="glyphicon glyphicon-tags"></i></li>
                  
     
-    <li class="tag"><a href="/tags/linux.html">Linux<span>6</span></a></li>
+    <li class="tag"><a href="/tags/linux.html">Linux<span>8</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/shell.html">Shell<span>4</span></a></li>
+    <li class="tag"><a href="/tags/shell.html">Shell<span>7</span></a></li>
     
 
             </ul>

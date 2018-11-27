@@ -37,7 +37,7 @@
         <article class="post-content">
             <p>先上代码</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HackingGeneric</span> <span class="o">{</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HackingGeneric</span> <span class="o">{</span>
 
     <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Base</span> <span class="o">{</span>
 
@@ -66,8 +66,7 @@
     <span class="o">}</span>
 
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>上述代码是无法编译的，编译错误在代码<code class="highlighter-rouge">d.save(base)</code>处。</p>
 
@@ -79,20 +78,18 @@
 
 <p>编译成bytecode后，A#save签名如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>// access flags 0x401
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// access flags 0x401
 // signature (TT;)V
 // declaration (TT
 public abstract save(Ljava/lang/Object;)V
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>B#save签名如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>// access flags 0x401
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// access flags 0x401
 // declaration (Lme/jameszhan/underlying/compiler/HackingGeneric$Base
 public abstract save(Lme/jameszhan/underlying/compiler/HackingGeneric$Base;)V
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Java编译语句<code class="highlighter-rouge">d.save(base)</code>时，很自然地去找对应的方法签名，泛型展开后，发现A，B中都有同样的签名，但是他们在bytecode中的签名又不一样，于是，Java编译器凌乱了。</p>
 
@@ -105,7 +102,7 @@ public abstract save(Lme/jameszhan/underlying/compiler/HackingGeneric$Base;)V
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>1</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
     
 
             </ul>

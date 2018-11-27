@@ -53,7 +53,7 @@ n个关键字序列Kl，K2，…，Kn称为(Heap)，当且仅当该序列满足�
 
 <p>实现一个数从小到大排序，既可以使用大根堆，也可以使用小根堆。</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">//定义元素关系：下表从0开始。
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//定义元素关系：下表从0开始。
 </span><span class="kr">inline</span> <span class="kt">int</span> <span class="n">parent</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;}</span>
 <span class="kr">inline</span> <span class="kt">int</span> <span class="n">left</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span> <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;}</span>
 <span class="kr">inline</span> <span class="kt">int</span> <span class="n">right</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span><span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;}</span>
@@ -108,8 +108,7 @@ n个关键字序列Kl，K2，…，Kn称为(Heap)，当且仅当该序列满足�
        <span class="n">adjust</span><span class="p">(</span><span class="o">++</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>堆排序是不稳定排序，平均时间复杂度和最坏时间复杂度都是O(nlogn).</p>
 

@@ -35,29 +35,29 @@
         </header>
 
         <article class="post-content">
-            <h2 id="section">知识准备</h2>
+            <h2 id="知识准备">知识准备</h2>
 
-<h4 id="section-1">极限</h4>
+<h4 id="极限">极限</h4>
 
 <p><span>设函数$f(x)$在点$x_0$的某一去心邻域内有定义，如果存在常数$a$，对于任意给定的正数$\epsilon$，总存在正数$\delta$，使得当$x$满足不等式$0 &lt; |x - x_0| &lt; \delta$时，对应的函数值$f(x)$都满足不等式$|f(x) - a| &lt; \epsilon$，那么常数$a$就叫做函数$f(x)$当$x \to x_0$时的极限，记作：</span></p>
 
 <script type="math/tex; mode=display">\lim_{x \to x_0} f(x) = a</script>
 
-<h4 id="section-2">导数</h4>
+<h4 id="导数">导数</h4>
 <p>设函数$y = f(x)$在点$x_)$的某个邻域内有定义，当自变量$x$在$x_0$处取得增量$\Delta x$（点$x_0 + \Delta x$仍在该邻域内）时，相应地函数$y$取得增量$\Delta y = f(x) - f(x_0)$；如果$\Delta y$与$\Delta x$之比当$\Delta x \to 0$时的极限存在，则称函数$y = f(x)$在点$x_0$处可导，并称这个极限为函数$y = f(x)$在点$x_0$处的导数，记为：</p>
 
 <script type="math/tex; mode=display">f^{'}(x_0) = y^{'}|_{x=x_0} = \left. \frac{dy}{dx} \right|_{x=x_0} = \lim_{\Delta x \to 0} \frac{\Delta y}{\Delta x} = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}</script>
 
-<h4 id="section-3">函数极限和无穷小的关系</h4>
+<h4 id="函数极限和无穷小的关系">函数极限和无穷小的关系</h4>
 <p>在自变量$x$的同一变化过程$x \to x_0$(或$x \to \infty$)中，函数$f(x)$具有极限A的充分必要条件$f(x) = A + a$，其中$a$是无穷小。</p>
 
 <script type="math/tex; mode=display">\lim_{x \to x_0} f(x) = A \iff f(x) = A + a|_{a -> 0}</script>
 
-<h4 id="section-4">洛必达法则</h4>
+<h4 id="洛必达法则">洛必达法则</h4>
 
 <p>洛必达法则是在一定条件下通过分子分母分别求导再求极限来确定未定式值的方法。</p>
 
-<h5 id="section-5">$0/0$型不定式极限</h5>
+<h5 id="00型不定式极限">$0/0$型不定式极限</h5>
 
 <p>若函数$f(x)$和$g(x)$满足下列条件：</p>
 
@@ -71,7 +71,7 @@
 
 <script type="math/tex; mode=display">\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f^{'}(x)}{g^{'}(x)} = A</script>
 
-<h5 id="inftyinfty">$\infty/\infty$型不定式极限</h5>
+<h5 id="inftyinfty型不定式极限">$\infty/\infty$型不定式极限</h5>
 
 <p>若函数$f(x)$和$g(x)$满足下列条件：</p>
 
@@ -85,9 +85,9 @@
 
 <script type="math/tex; mode=display">\lim_{x \to a^+} \frac{f(x)}{g(x)} = \lim_{x \to a^+} \frac{f^{'}(x)}{g^{'}(x)} = A</script>
 
-<h2 id="section-6">泰勒级数</h2>
+<h2 id="泰勒级数">泰勒级数</h2>
 
-<h4 id="section-7">定义</h4>
+<h4 id="定义">定义</h4>
 
 <p>设$n$是一个正整数。如果定义在一个包含$a$的区间上的函数$f$在$a$点处$n - 1$次可导，那么对于这个区间上的任意$x$都有：</p>
 
@@ -97,7 +97,7 @@
 
 <p>泰勒公式是在局部，用一个多项式函数，近似地替代一个复杂函数。泰勒展开式与$f(x)$的每一阶导数值完全相等，而这种“各阶导数值相等”揭示了多项式函数和他要替代的复杂函数$f(x)$在每一个维度$(1,x,x^2,\cdots,x^{n-1})$上完全相同的事实。</p>
 
-<h4 id="section-8">推导过程</h4>
+<h4 id="推导过程">推导过程</h4>
 
 <p>假设函数$f(x)$在点$a$的邻域内有定义，且在点$a$处$n - 1$次可导。</p>
 
@@ -141,17 +141,17 @@
 
 <p>以此类推，根据数学归纳法，易证明泰勒公式最后结论。</p>
 
-<h4 id="section-9">应用</h4>
+<h4 id="应用">应用</h4>
 
 <p>在数值计算方面，利用多项式函数近似、去逼近一个复杂函数，是研究实际问题的一个非常重要的方式，也即是把质的困难转化为量的复杂。比如$e$和$\pi$的计算，机器学习中的优化算法当中，也大量利用到了泰勒公式。</p>
 
-<h5 id="section-10">数值计算</h5>
+<h5 id="数值计算">数值计算</h5>
 
 <p>$ e^x \approx 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} +  \cdots + \frac{x^n}{n!} $</p>
 
 <p>$ \frac{\pi}{4} \approx \sum_{i=0}^n \frac{(-1)^i}{2 \cdot i + 1}$</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span>
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">*=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -165,15 +165,14 @@
 <span class="c"># Count π 这个公式收敛很慢</span>
 <span class="n">pi</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">([(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span><span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)])</span>
 <span class="k">print</span> <span class="n">pi</span>    <span class="c"># 3.14159165359</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h5 id="section-11">渐进演示</h5>
+<h5 id="渐进演示">渐进演示</h5>
 
 <p>利用泰勒级数展开逼近$e^x$</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
 <span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">c</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span>
@@ -200,8 +199,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="s">'k:'</span><span class="p">)</span>                    <span class="c"># 黑色</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="/assets/images/taylor_as_e.png" alt="TaylorAsEX" /></p>
 

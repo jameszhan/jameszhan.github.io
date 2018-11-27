@@ -39,17 +39,17 @@
 
 <p>想必很多人都使用过外置硬盘来完成电脑数据的备份，这确实可以工作的很好，不过尽管移动硬盘可以移动，但是相比WiFi，移动性还是差了很多，尤其是当在膝上办公的时候。如果有一个无线硬盘驱动器，确实可以方便不少，然而Time Capsule价格虚高，而且可定制性也不强，对于我这种爱折腾的人来说，自然不是一个好的选择，如果可以使用树莓派打造一个廉价版的Time Capsule，一定是一个很有趣的事情。</p>
 
-<h3 id="section">准备工作</h3>
+<h3 id="准备工作">准备工作</h3>
 
-<h4 id="section-1">准备移动硬盘</h4>
+<h4 id="准备移动硬盘">准备移动硬盘</h4>
 
 <p>如果你是空硬盘，建议你在OS X系统下格式化它，文件系统选择HFS+。方便移动硬盘不使用无线的时候也可以直接连接Mac电脑。如果你的硬盘已经是Mac系统备份盘，则不需要做任何处理。如果你硬盘是其他文件系统格式，则建议你备份数据后，再在OS X系统把硬盘格式化为HFS+。</p>
 
-<h4 id="section-2">准备树莓派</h4>
+<h4 id="准备树莓派">准备树莓派</h4>
 
 <p>先把移动硬盘插到树莓派USB接口，启动树莓派，并把树莓派接入无线路由器。启动完成后，可以使用如下命令查看硬盘是否已经是否正确接入到USB接口。</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo fdisk -l
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>fdisk <span class="nt">-l</span>
 <span class="c">#</span>
 <span class="c"># WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.</span>
 <span class="c"># </span>
@@ -65,73 +65,69 @@
 <span class="c"># /dev/sda1               1  1953525167   976762583+  ee  GPT</span>
 
 <span class="c"># 列出所有块设备</span>
-sudo blkid
+<span class="nb">sudo </span>blkid
 <span class="c"># /dev/mmcblk0p1: SEC_TYPE="msdos" LABEL="boot" UUID="140A-14B7" TYPE="vfat"</span>
 <span class="c"># /dev/mmcblk0p2: UUID="f24a4949-f4b2-4cad-a780-a138695079ec" TYPE="ext4"</span>
 <span class="c"># /dev/sda1: LABEL="EFI" UUID="70D6-1701" TYPE="vfat"</span>
 <span class="c"># /dev/sda2: UUID="7070f919-7738-309f-9a49-e3d643f33346" LABEL="TM" TYPE="hfsplus"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="hfs">挂载hfs+分区</h3>
+<h3 id="挂载hfs分区">挂载hfs+分区</h3>
 
 <p>执行如下命令，使得raspbian支持hfs+分区。</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo apt-get install hfsplus hfsutils hfsprogs
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get install hfsplus hfsutils hfsprogs
+</code></pre></div></div>
 
 <p>挂载hfs+分区。</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo mkdir /tm
-sudo chown -R nobody:nogroup /tm
-sudo mount -t hfsplus -o force,rw /dev/sda2 /tm
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>mkdir /tm
+<span class="nb">sudo </span>chown <span class="nt">-R</span> nobody:nogroup /tm
+<span class="nb">sudo </span>mount <span class="nt">-t</span> hfsplus <span class="nt">-o</span> force,rw /dev/sda2 /tm
 
 <span class="c"># 如果想卸载，可以采用此命令 </span>
-sudo umount -v /dev/sda2 
-</code></pre>
-</div>
+<span class="nb">sudo </span>umount <span class="nt">-v</span> /dev/sda2 
+</code></pre></div></div>
 
-<h3 id="section-3">配置无线硬盘驱动器</h3>
+<h3 id="配置无线硬盘驱动器">配置无线硬盘驱动器</h3>
 
-<h4 id="netatalk">安装配置netatalk</h4>
+<h4 id="安装配置netatalk">安装配置netatalk</h4>
 
 <p>Netatalk 是一个免费开源的 AppleTalk 通信协议的实现，Linux 或者 BSD 系统通过它可以充当 Mac 的文件服务器 (AppleShare File Server, 网络协议是 AFP)、AppleTalk 路由、打印服务器等。</p>
 
 <p>手动安装 netatalk 3，它依赖于avahi-daemon（Avahi 是 Apple’s Zeroconf 协议的开源实现，实现类似 Bonjour 的功能，它可以让你在 Mac 系统里自动发现你的 Linux 计算机）。</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Remove Netatalk 2</span>
-sudo apt-get --purge remove netatalk
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Remove Netatalk 2</span>
+<span class="nb">sudo </span>apt-get <span class="nt">--purge</span> remove netatalk
 
 <span class="nb">cd</span> /usr/local/src
-sudo wget http://prdownloads.sourceforge.net/netatalk/netatalk-3.1.7.tar.gz
-tar -xvzf netatalk-3.1.7.tar.gz
+<span class="nb">sudo </span>wget http://prdownloads.sourceforge.net/netatalk/netatalk-3.1.7.tar.gz
+<span class="nb">tar</span> <span class="nt">-xvzf</span> netatalk-3.1.7.tar.gz
 
 <span class="c"># 安装相关依赖</span>
-sudo apt-get install automake autoconf avahi-daemon build-essential checkinstall db5.1-util db-util git-core libacl1-dev libavahi-client-dev libdb5.1-dev libgcrypt11 libgcrypt11-dev libpam0g-dev libtool pkg-config
+<span class="nb">sudo </span>apt-get install automake autoconf avahi-daemon build-essential checkinstall db5.1-util db-util git-core libacl1-dev libavahi-client-dev libdb5.1-dev libgcrypt11 libgcrypt11-dev libpam0g-dev libtool pkg-config
 
 <span class="nb">cd </span>netatalk-3.1.7
 
 ./configure <span class="se">\</span>
-    --enable-fhs <span class="se">\</span>
-    --with-acls <span class="se">\</span>
-    --with-init-style<span class="o">=</span>debian-sysv <span class="se">\</span>
-    --with-zeroconf
+    <span class="nt">--enable-fhs</span> <span class="se">\</span>
+    <span class="nt">--with-acls</span> <span class="se">\</span>
+    <span class="nt">--with-init-style</span><span class="o">=</span>debian-sysv <span class="se">\</span>
+    <span class="nt">--with-zeroconf</span>
 
 make
-sudo make install
+<span class="nb">sudo </span>make install
 
-sudo emacs /etc/afp.conf
-sudo emacs /etc/netatalk/afp_signature.conf
+<span class="nb">sudo </span>emacs /etc/afp.conf
+<span class="nb">sudo </span>emacs /etc/netatalk/afp_signature.conf
 
 <span class="c"># 创建一个用户用于netatalk</span>
-sudo adduser james --ingroup staff
-</code></pre>
-</div>
+<span class="nb">sudo </span>adduser james <span class="nt">--ingroup</span> staff
+</code></pre></div></div>
 
 <p>/etc/afp.conf 示例</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[Global]
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Global]
 mimic model = TimeCapsule6,106
 log level = default:warn
 log file = /var/log/afpd.log
@@ -154,8 +150,7 @@ time machine = yes
 [MacHome]
 path = /home/james
 valid users = james
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <blockquote>
   <p>最好不要在同一机器上既配置密码登陆又配置不需要密码的多个目录，这样会出现权限不一致的情况。</p>
@@ -163,12 +158,11 @@ valid users = james
 
 <p>启动 netatalk 服务</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo service avahi-daemon restart
-sudo service netatalk restart
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>service avahi-daemon restart
+<span class="nb">sudo </span>service netatalk restart
+</code></pre></div></div>
 
-<h3 id="timecapsule">访问TimeCapsule</h3>
+<h3 id="访问timecapsule">访问TimeCapsule</h3>
 
 <p>如果你用的是OS X系统，当netatalk服务启动后，局域网的OS X系统的电脑应该都可以主动发现TimeCapsule。</p>
 
@@ -202,7 +196,7 @@ sudo service netatalk restart
     
 
     
-    <li class="tag"><a href="/tags/linux.html">Linux<span>6</span></a></li>
+    <li class="tag"><a href="/tags/linux.html">Linux<span>8</span></a></li>
     
 
     
@@ -214,11 +208,11 @@ sudo service netatalk restart
     
 
     
-    <li class="tag"><a href="/tags/osx.html">OS X<span>4</span></a></li>
+    <li class="tag"><a href="/tags/osx.html">OS X<span>6</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/shell.html">Shell<span>4</span></a></li>
+    <li class="tag"><a href="/tags/shell.html">Shell<span>7</span></a></li>
     
 
             </ul>

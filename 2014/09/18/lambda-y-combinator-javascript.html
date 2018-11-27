@@ -38,51 +38,49 @@
             <p>上一节中，我们讲到了如何使用λ演算来描述自然数，可以看出λ演算的表现力确实非常强大，然而遗憾的是，由于lambda演算中使用的都是匿名函数，所以它无法很直观地表述递归。
 如果缺少了递归，λ演算的能力无疑会大打折扣。</p>
 
-<p>所有基于λ演算的语言中，其实都是支持对过程进行命名的，那为什么这里我们还需要探讨匿名函数的递归呢？
-1. 为了保持纯洁性，我们希望仅仅通过λ演算的规则本身来解决递归的问题。
-2. 部分语言对过程的命名必须等到该过程定义完成后才可以进行，这个时候我们必须找到一种方式使其能够很容易地获得递归的能力。</p>
+<p>所有基于λ演算的语言中，其实都是支持对过程进行命名的，那为什么这里我们还需要探讨匿名函数的递归呢？</p>
+<ol>
+  <li>为了保持纯洁性，我们希望仅仅通过λ演算的规则本身来解决递归的问题。</li>
+  <li>部分语言对过程的命名必须等到该过程定义完成后才可以进行，这个时候我们必须找到一种方式使其能够很容易地获得递归的能力。</li>
+</ol>
 
-<h3 id="factoriallambda">下面我们就是用factorial函数为原型，来看看如何使用lambda演算基本的规则，为其增加递归的能力。</h3>
+<h3 id="下面我们就是用factorial函数为原型来看看如何使用lambda演算基本的规则为其增加递归的能力">下面我们就是用factorial函数为原型，来看看如何使用lambda演算基本的规则，为其增加递归的能力。</h3>
 
 <p>传统定义方式，不过这个方式不符合我们的需求，因为它使用到了函数自身fact。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fact</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fact</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
     <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">fact</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>几乎所有的问题解决过程都可以通过分层来解决，既然它不允许我们直接使用fact，那我们是不是可以直接把fact作为函数传入呢？</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">n</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">n</span><span class="p">){</span>
     <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>为了后续处理方便，我们先对该函数进行currying。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">)(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>((self self) (dec n)) 是不是有点丑陋，我们知道λ演算是数学家们搞出来的，他们对构造形式是有很严重的洁癖的。既然我们就是函数本身，为什么还需要f(f)这样多此一举呢。
 如果我们的定义能变成下面这样就比较完美了。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>var fac = function(f){
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var fac = function(f){
     return function(n) {
         return n &lt;= 1 ? 1 : n * f(n - 1);
     };
 };
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>这样也许更符合数学家们的口味，但是该函数是无法被直接执行的，这个使我们暂时假定的factorial的理想函数形式。为了构造这个理想函数形式，我们不妨把它变成f(n - 1)，下面我们试着把f(f)拎出来，用作参数f传入。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac2</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac2</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">){</span>
             <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">g</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
@@ -90,12 +88,11 @@
         <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">));</span>
     <span class="p">};</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>可以看出h已经是fac函数的理想形式，不过它还包含自由变量n，没关系，我们可以把它先约束起来。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac3</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac3</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">){</span>
             <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
@@ -105,12 +102,11 @@
         <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">))(</span><span class="nx">n</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>让我们把h抽出来，作为一个单独的函数，它刚好就是我们要构造的factorial函数的理想形式，并给出fac4函数的定义。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac_gen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fac_gen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">){</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
         <span class="k">return</span> <span class="nx">m</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">m</span> <span class="o">*</span> <span class="nx">g</span><span class="p">(</span><span class="nx">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
     <span class="p">};</span>
@@ -120,12 +116,11 @@
         <span class="k">return</span> <span class="nx">fac_gen</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">))(</span><span class="nx">n</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>其实这个时候，fact4和factorial的计算过程已经没有什么关系了，换而言之，其实它可以更通用一些，我们不妨给它取个通用些的名字。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">){</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
         <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
             <span class="k">return</span> <span class="nx">gen</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">))(</span><span class="nx">n</span><span class="p">);</span>
@@ -133,24 +128,22 @@
     <span class="p">};</span>
 <span class="p">};</span>
 <span class="kd">var</span> <span class="nx">fac5</span> <span class="o">=</span> <span class="nx">y</span><span class="p">(</span><span class="nx">fac_gen</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>事实确是如此，该函数有一种神奇的能力，它不仅使可以计算factorial，它事实上可以计算所有形如factorial理想形式的函数递归。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fib_gen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fib_gen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
     <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
         <span class="k">return</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nx">f</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">f</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">};</span>
 <span class="nx">y</span><span class="p">(</span><span class="nx">fac_gen</span><span class="p">)(</span><span class="nx">y</span><span class="p">(</span><span class="nx">fac_gen</span><span class="p">))(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">//120</span>
 <span class="nx">y</span><span class="p">(</span><span class="nx">fib_gen</span><span class="p">)(</span><span class="nx">y</span><span class="p">(</span><span class="nx">fib_gen</span><span class="p">))(</span><span class="mi">6</span><span class="p">)</span> <span class="c1">//8</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>我们看下我们的调用，都是形如：y(<em>_gen)(y(</em>_gen))(n)的形式，还是相当丑陋的，我们不如精简下，简化其调用过程。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">y1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">y1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
             <span class="k">return</span> <span class="nx">gen</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">f</span><span class="p">))(</span><span class="nx">n</span><span class="p">);</span>
@@ -158,11 +151,10 @@
     <span class="p">};</span>
     <span class="k">return</span> <span class="nx">g</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 <span class="p">};</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>更常规的写法</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gen</span><span class="p">){</span>
     <span class="k">return</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">g</span><span class="p">){</span>
         <span class="k">return</span> <span class="nx">g</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
     <span class="p">})(</span><span class="kd">function</span><span class="p">(</span><span class="nx">f</span><span class="p">){</span>
@@ -173,12 +165,11 @@
 <span class="p">};</span>
 
 <span class="nx">Y</span><span class="p">(</span><span class="nx">fac_gen</span><span class="p">)(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">//120</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>说了这么多，这个东西和Y Combinator又有什么关系？其实，我们最终得出的Y函数，其实就是我们所要苦苦找寻的Y Combinator函数，它具有性质Y(F) = F(Y(F)) = F(F(Y(F)))。</p>
 
-<h3 id="section">参考</h3>
+<h3 id="参考">参考</h3>
 <ol>
   <li><a href="http://jameszhan.github.io/2014/09/10/lambda-church-number.html">Lambda演算之自然数</a></li>
   <li><a href="http://jameszhan.github.io/2014/09/18/lambda-y-combinator.html">Lambda演算之Y-Combinator的推导(Clojure描述)</a></li>
@@ -192,7 +183,7 @@
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/categories/pdl.html">程序设计语言<span>10</span></a></li>
     
 
             </ul>
@@ -212,7 +203,7 @@
     
 
     
-    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>7</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
     
 
     

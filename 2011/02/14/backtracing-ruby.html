@@ -35,21 +35,20 @@
         </header>
 
         <article class="post-content">
-            <h3 id="section">什么是回溯法</h3>
+            <h3 id="什么是回溯法">什么是回溯法</h3>
 <p>回溯法（探索与回溯法）是一种选优搜索法，又称为试探法，按选优条件向前搜索，以达到目标。但当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，这种走不通就退回再走的技术为回溯法，而满足回溯条件的某个状态的点称为“回溯点”。</p>
 
 <p>包含问题的所有解的解空间树中，按照深度优先搜索的策略，从根结点出发深度探索解空间树。当探索到某一结点时，要先判断该结点是否包含问题的解，如果包含，就从该结点出发继续探索下去，如果该结点不包含问题的解，则逐层向其祖先结点回溯。（其实回溯法就是对隐式图的深度优先搜索算法）。 若用回溯法求问题的所有解时，要回溯到根，且根结点的所有可行的子树都要已被搜索遍才结束。 而若使用回溯法求任一个解时，只要搜索到问题的一个解就可以结束。</p>
 
-<h3 id="section-1">算法实现</h3>
+<h3 id="算法实现">算法实现</h3>
 
-<h4 id="section-2">算法准备</h4>
+<h4 id="算法准备">算法准备</h4>
 
 <p>准备一个默认的打印函数，把数组a中的数组转换成字母打印出来。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">ALPHABET</span> <span class="o">=</span> <span class="no">Array</span><span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">)</span>                       
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">ALPHABET</span> <span class="o">=</span> <span class="no">Array</span><span class="p">(</span><span class="s1">'A'</span><span class="o">..</span><span class="s1">'Z'</span><span class="p">)</span>                       
 <span class="no">DISPLAY</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="o">|</span> <span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="no">ALPHABET</span><span class="p">[</span><span class="n">i</span><span class="p">]}}</span>   
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>实现方式，在这里，我们设计回溯法的实现需要接受是个参数，分别是n, m, handle，以及block。</p>
 
@@ -59,11 +58,11 @@
   <li>block则是我们要选择的约束函数。对于执行过程中某一个特定位置，如果当前的值满足要求，则继续找下一个位置的值，否则，把当前值加1，如果加1以后的结果超过n的值，则退回到上一位置，并把上一位置的值加1，继续往后查找。</li>
 </ol>
 
-<h4 id="section-3">递归版本</h4>
+<h4 id="递归版本">递归版本</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span><span class="p">)</span> 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span><span class="p">)</span> 
   <span class="n">dfs</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="o">|</span>              
-    <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">n</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>               
+    <span class="p">(</span><span class="mi">0</span><span class="o">...</span><span class="n">n</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>               
       <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>                        
       <span class="k">if</span> <span class="k">yield</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>                  
         <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span>                 
@@ -77,12 +76,11 @@
   <span class="n">a</span> <span class="o">=</span> <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>                
   <span class="n">dfs</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                      
 <span class="k">end</span>                                   
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="section-4">非递归版本实现</h4>
+<h4 id="非递归版本实现">非递归版本实现</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span><span class="p">)</span>  
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span><span class="p">)</span>  
   <span class="n">k</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>           
   <span class="k">while</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span>                         
     <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>                          
@@ -101,33 +99,31 @@
     <span class="k">end</span>                                
   <span class="k">end</span>                                  
 <span class="k">end</span>                                    
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="section-5">使用回溯法实现其他算法</h4>
+<h4 id="使用回溯法实现其他算法">使用回溯法实现其他算法</h4>
 
 <ol>
   <li>列出全部解空间</li>
 </ol>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>             
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>             
   <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span> <span class="k">unless</span> <span class="n">handle</span>       
   <span class="n">backtrace</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="o">|</span>    
     <span class="kp">true</span>                               
   <span class="k">end</span>                                  
 <span class="k">end</span>                                    
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>实现排列算法</li>
 </ol>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">permutation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                       
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">permutation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                       
   <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span> <span class="k">unless</span> <span class="n">handle</span>                     
   <span class="n">backtrack</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="o">|</span>                  
     <span class="n">succ</span> <span class="o">=</span> <span class="kp">true</span>                                      
-    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">k</span><span class="p">)</span> <span class="k">do</span>                              
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="p">(</span><span class="mi">0</span><span class="o">...</span><span class="n">k</span><span class="p">)</span> <span class="k">do</span>                              
      <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>                                 
        <span class="n">succ</span> <span class="o">=</span> <span class="kp">false</span>                                  
        <span class="k">break</span>                                         
@@ -136,18 +132,17 @@
     <span class="n">succ</span>                                             
   <span class="k">end</span>                                                
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>实现组合算法</li>
 </ol>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">combination</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                       
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">combination</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                       
   <span class="n">handle</span> <span class="o">=</span> <span class="no">DISPLAY</span> <span class="k">unless</span> <span class="n">handle</span>                     
   <span class="n">backtrace</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="o">|</span>                  
     <span class="n">succ</span> <span class="o">=</span> <span class="kp">true</span>                                      
-    <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">k</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>                              
+    <span class="p">(</span><span class="mi">0</span><span class="o">...</span><span class="n">k</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>                              
       <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>                                
         <span class="n">succ</span> <span class="o">=</span> <span class="kp">false</span>                                 
         <span class="k">break</span>                                        
@@ -156,17 +151,16 @@
     <span class="n">succ</span>                                             
   <span class="k">end</span>                                                
 <span class="k">end</span>                                                  
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>解决n皇后问题</li>
 </ol>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">nqueen</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                               
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">nqueen</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span>                               
   <span class="n">backtrace</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="o">|</span>                  
     <span class="n">succ</span> <span class="o">=</span> <span class="kp">true</span>                                      
-    <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">k</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>                              
+    <span class="p">(</span><span class="mi">0</span><span class="o">...</span><span class="n">k</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>                              
       <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">||</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]).</span><span class="nf">abs</span> <span class="o">==</span> <span class="n">k</span> <span class="o">-</span> <span class="n">i</span>  
         <span class="n">succ</span> <span class="o">=</span> <span class="kp">false</span>                                 
         <span class="k">break</span>                                        
@@ -175,14 +169,13 @@
     <span class="n">succ</span>                                             
   <span class="k">end</span>                                                
 <span class="k">end</span>                                                  
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>事实上，回溯法能解决的算法问题远不仅于此，回溯法本质上是穷举法的一种，只要解包含特征：后一个位置的选择依赖于前面的选择状态，我们便可以使用回溯法来实现。尽管回溯法的时间复杂度为n^m，但是由于在搜索解空间树的过程中，很多分支在一早就被剪去了，所以在实际应用过程中，其往往十分高效。</p>
 
-<h4 id="section-6">实例演示</h4>
+<h4 id="实例演示">实例演示</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="kp">__FILE__</span> <span class="o">==</span> <span class="vg">$0</span>   
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="kp">__FILE__</span> <span class="o">==</span> <span class="vg">$0</span>   
     <span class="nb">puts</span> <span class="s1">'counter =&gt;'</span>                              
     <span class="n">counter</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                                  
                                                    
@@ -195,8 +188,7 @@
     <span class="nb">puts</span> <span class="s1">'nqueue =&gt; '</span>                              
     <span class="n">nqueen</span><span class="p">(</span><span class="mi">5</span><span class="p">){</span><span class="o">|</span><span class="n">a</span><span class="o">|</span><span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}}</span>   
 <span class="k">end</span>                                                
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><a href="https://github.com/jameszhan/rhea/blob/master/codes/ruby/algorithm/backtracking.rb">查看完整代码</a>。</p>
 
@@ -220,7 +212,7 @@
     
 
     
-    <li class="tag"><a href="/tags/ruby.html">Ruby<span>5</span></a></li>
+    <li class="tag"><a href="/tags/ruby.html">Ruby<span>7</span></a></li>
     
 
     

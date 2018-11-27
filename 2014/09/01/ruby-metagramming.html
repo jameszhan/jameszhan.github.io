@@ -37,25 +37,23 @@
         <article class="post-content">
             <p>（摘自ruby元编程原书附录）</p>
 
-<h2 id="section">常见惯用法</h2>
+<h2 id="常见惯用法">常见惯用法</h2>
 
-<h3 id="a1-mimic-methods">A.1 拟态方法（Mimic Methods）</h3>
+<h3 id="a1-拟态方法mimic-methods">A.1 拟态方法（Mimic Methods）</h3>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">puts</span> <span class="s2">"Hello,world!"</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="s2">"Hello,world!"</span>
+</code></pre></div></div>
 
 <p>这里的 puts 实际上是个方法，完整写法</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">puts</span><span class="p">(</span><span class="s2">"Hello,world!"</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span><span class="p">(</span><span class="s2">"Hello,world!"</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>去掉括号的写法使得它像个关键字，同时也更为简洁，因此称之为拟态方法。</p>
 
 <p>属性的问题：</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">my_attr</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="vi">@p</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">end</span>
@@ -66,36 +64,32 @@
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_attr</span> <span class="o">=</span> <span class="s1">'some value'</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_attr</span>         <span class="c1"># =&gt; 'some value'</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>代码obj.my_attr = ‘some value’的功能与代码obj.my_attr=(‘some value’)的功能是相同的，不过前者看起来更清爽。</p>
 
 <p>来自 Camping 的例子，这里的 R 实际上是一个方法，’/help’ 是它的参数，返回值是一个 Class的实例。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Help</span> <span class="o">&lt;</span> <span class="no">R</span> <span class="s1">'/help'</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Help</span> <span class="o">&lt;</span> <span class="no">R</span> <span class="s1">'/help'</span>
     <span class="k">def</span> <span class="nf">get</span>
         <span class="c1"># rendering for HTTP GET...</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="a2-nil-guards">A.2 空指针保护（Nil Guards）</h3>
+<h3 id="a2-空指针保护nil-guards">A.2 空指针保护（Nil Guards）</h3>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">||=</span> <span class="p">[]</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">||=</span> <span class="p">[]</span>
+</code></pre></div></div>
 
 <p>以上代码等价于</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">||</span> <span class="p">[]</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">||</span> <span class="p">[]</span>
+</code></pre></div></div>
 
 <p>空指针保护常用于初始化实例变量，看看下面这个类：</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="vi">@a</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">end</span>
@@ -103,112 +97,102 @@
         <span class="vi">@a</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>使用空指针保护，可以更简练地重写以上这段代码：</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">elements</span>
         <span class="vi">@a</span> <span class="o">||=</span> <span class="p">[]</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>上面的代码会在最后它要被访问的时候才进行初始化，这种惯用法被称为<strong>惰性实例变量(Lazy Instance Variable)</strong>。</p>
 
-<h3 id="a3-tricks-with-method-arguments">A.3 关于方法参数的技巧（Tricks with Method Arguments）</h3>
+<h3 id="a3-关于方法参数的技巧tricks-with-method-arguments">A.3 关于方法参数的技巧（Tricks with Method Arguments）</h3>
 
 <p>####具名参数(Named Arguments)</p>
 
 <p>当在Ruby中调用方法时，你不得不按照特定的顺序输入参数。如果顺序错误，则会引入一个bug：</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="c1">#...</span>
 <span class="k">end</span>
 <span class="n">login</span><span class="p">(</span><span class="s1">'james'</span><span class="p">,</span> <span class="s1">'just doing some administration'</span><span class="p">,</span> <span class="s1">'123456'</span><span class="p">)</span> <span class="c1">#bug</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>当有一大串参数要输入时，这种错误非常常见。
 Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数来解决这个问题。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">login</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'bill'</span><span class="p">,</span> <span class="ss">message: </span><span class="s1">'just doing some administration'</span><span class="p">,</span> <span class="ss">password: </span><span class="s1">'123456'</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">login</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'bill'</span><span class="p">,</span> <span class="ss">message: </span><span class="s1">'just doing some administration'</span><span class="p">,</span> <span class="ss">password: </span><span class="s1">'123456'</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h4 id="argument-arrays-and-default-values">参数数组和默认值(Argument Arrays and Default Values)</h4>
+<h4 id="参数数组和默认值argument-arrays-and-default-values">参数数组和默认值(Argument Arrays and Default Values)</h4>
 
 <p>*操作符可以把多个参数收集到一个数组中；</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="n">args</span>
 <span class="k">end</span>
 
 <span class="n">my_method</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'2'</span> <span class="p">,</span> <span class="s1">'three'</span> <span class="p">)</span> <span class="c1"># =]]&gt; [1, "2", "three"]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Ruby 也支持如下参数默认值：</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">"a default value"</span> <span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">"a default value"</span> <span class="p">)</span>
     <span class="s2">"</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2"> and </span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 <span class="n">my_method</span><span class="p">(</span><span class="s2">"a value"</span> <span class="p">)</span> <span class="c1"># =&gt; "a value and a default value"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="mixing-arguments-idioms">混合使用参数的惯用法(Mixing Arguments Idioms)</h4>
+<h4 id="混合使用参数的惯用法mixing-arguments-idioms">混合使用参数的惯用法(Mixing Arguments Idioms)</h4>
 
 <p>Ruby 2.0以前</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
   <span class="n">lots</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:lots</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"default"</span>
   <span class="n">args</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:args</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"another"</span>
   <span class="n">hand</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:by_hand</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"annoying"</span>
-  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
-<span class="nf">end</span>
+  <span class="o">...</span>
+<span class="k">end</span>
 <span class="n">my_method</span> <span class="s2">"with"</span><span class="p">,</span> <span class="ss">lots: </span><span class="s2">"of"</span><span class="p">,</span> <span class="ss">args: </span><span class="s2">"in"</span><span class="p">,</span> <span class="ss">by_hand: </span><span class="s2">"form"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Ruby 2.0以后</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="ss">lots: </span><span class="s2">"default"</span><span class="p">,</span> <span class="ss">args: </span><span class="s2">"another"</span><span class="p">,</span> <span class="ss">by_hand: </span><span class="s2">"annoying"</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="ss">lots: </span><span class="s2">"default"</span><span class="p">,</span> <span class="ss">args: </span><span class="s2">"another"</span><span class="p">,</span> <span class="ss">by_hand: </span><span class="s2">"annoying"</span><span class="p">)</span>
   <span class="n">lots</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:lots</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"default"</span>
   <span class="n">args</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:args</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"another"</span>
   <span class="n">hand</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">[</span><span class="ss">:by_hand</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"annoying"</span>
-  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
-<span class="nf">end</span>
+  <span class="o">...</span>
+<span class="k">end</span>
 <span class="n">my_method</span> <span class="s2">"with"</span><span class="p">,</span> <span class="ss">lots: </span><span class="s2">"of"</span><span class="p">,</span> <span class="ss">args: </span><span class="s2">"in"</span><span class="p">,</span> <span class="ss">by_hand: </span><span class="s2">"form"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="a4-self-yield">A.4 Self Yield</h3>
 <p>当给方法传入一个块时，你会期望这个方法通过yield对块进行回调。这种回调有一种有用的变形，就是对象可以把自身传给这个块。下面的例子来自于RubyGems包管理器。</p>
 
-<h4 id="section-1">传统写法</h4>
+<h4 id="传统写法">传统写法</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">spec</span> <span class="o">=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="p">.</span><span class="nf">new</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spec</span> <span class="o">=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">spec</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"My Gem name"</span>
 <span class="n">spec</span><span class="p">.</span><span class="nf">version</span> <span class="o">=</span> <span class="s2">"0.0.1"</span>
 <span class="c1"># ...</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="self-yield-">Self Yield 写法</h4>
+<h4 id="self-yield-写法">Self Yield 写法</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">spec</span> <span class="o">=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spec</span> <span class="o">=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">s</span><span class="o">|</span>
     <span class="n">s</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"My Gem name"</span>
     <span class="n">s</span><span class="p">.</span><span class="nf">version</span> <span class="o">=</span> <span class="s2">"0.0.1"</span>
     <span class="c1"># ...</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="gemspecification-">Gem::Specification 源代码</h4>
+<h4 id="gemspecification-源代码">Gem::Specification 源代码</h4>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Gem</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Gem</span>
     <span class="k">class</span> <span class="nc">Specification</span>
         <span class="k">def</span> <span class="nf">initialize</span>
             <span class="k">yield</span> <span class="nb">self</span> <span class="k">if</span> <span class="nb">block_given?</span>
@@ -217,80 +201,71 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
         <span class="c1">#...</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="tap-">来自 tap() 的例子</h4>
+<h4 id="来自-tap-的例子">来自 tap() 的例子</h4>
 <p>在Ruby中，长长的方法调用链很普遍</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span><span class="p">.</span><span class="nf">upcase</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># =&gt; "B"</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span><span class="p">.</span><span class="nf">upcase</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># =&gt; "B"</span>
+</code></pre></div></div>
 
 <p>但是某一步出错，你将不得不如下调试</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span> <span class="p">,</span> <span class="s1">'b'</span> <span class="p">,</span> <span class="s1">'c'</span> <span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span> <span class="p">,</span> <span class="s1">'b'</span> <span class="p">,</span> <span class="s1">'c'</span> <span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span>
 <span class="nb">puts</span> <span class="n">temp</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="nf">upcase</span><span class="p">.</span><span class="nf">next</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>这非常笨拙；Ruby 1.9 中引入了 tap() 方法，我们可以这样做</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="s1">'a'</span> <span class="p">,</span> <span class="s1">'b'</span> <span class="p">,</span> <span class="s1">'c'</span> <span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span><span class="p">.</span><span class="nf">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">x</span> <span class="p">}.</span><span class="nf">upcase</span><span class="p">.</span><span class="nf">next</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s1">'a'</span> <span class="p">,</span> <span class="s1">'b'</span> <span class="p">,</span> <span class="s1">'c'</span> <span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="s1">'d'</span> <span class="p">).</span><span class="nf">shift</span><span class="p">.</span><span class="nf">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">x</span> <span class="p">}.</span><span class="nf">upcase</span><span class="p">.</span><span class="nf">next</span>
+</code></pre></div></div>
 
 <p>老版本的 Ruby ，我们也可以很容易的实现一个</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Object</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Object</span>
     <span class="k">def</span> <span class="nf">tap</span>
         <span class="k">yield</span> <span class="nb">self</span>
         <span class="nb">self</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="a5-symboltoproc-">A.5 Symbol#to_proc() 方法</h3>
+<h3 id="a5-symbolto_proc-方法">A.5 Symbol#to_proc() 方法</h3>
 <p>这种有点诡异的法术在Ruby程序员中很流行，请看下面的代码</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span> <span class="p">,</span> <span class="s1">'bill'</span> <span class="p">,</span> <span class="s1">'heather'</span> <span class="p">]</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span> <span class="p">,</span> <span class="s1">'bill'</span> <span class="p">,</span> <span class="s1">'heather'</span> <span class="p">]</span>
 <span class="n">names</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="nb">name</span><span class="o">|</span> <span class="nb">name</span><span class="p">.</span><span class="nf">capitalize</span> <span class="p">}</span> <span class="c1"># =&gt; ["Bob", "Bill", "Heather"]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>更简洁的写法</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span> <span class="p">,</span> <span class="s1">'bill'</span> <span class="p">,</span> <span class="s1">'heather'</span> <span class="p">]</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span> <span class="p">,</span> <span class="s1">'bill'</span> <span class="p">,</span> <span class="s1">'heather'</span> <span class="p">]</span>
 <span class="n">names</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:capitalize</span><span class="p">)</span> <span class="c1"># =&gt; ["Bob", "Bill", "Heather"]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>当&amp;操作符作用于一个对象时，它会调用该对象的to_proc方法，将其转化为一个proc对象。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Symbol</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Symbol</span>
     <span class="k">def</span> <span class="nf">to_proc</span>
         <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span> <span class="p">}</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h2 id="section-2">法术手册</h2>
-<p>### 法术集 (The Spells)</p>
+<h2 id="法术手册">法术手册</h2>
+<h3 id="法术集-the-spells">法术集 (The Spells)</h3>
 
-<h4 id="argument-array">数组参数(Argument Array)</h4>
+<h4 id="数组参数argument-array">数组参数(Argument Array)</h4>
 <p>把一组参数压入到一个数组中。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="n">args</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">arg</span><span class="o">|</span> <span class="n">arg</span><span class="p">.</span><span class="nf">reverse</span> <span class="p">}</span>
 <span class="k">end</span>
 <span class="n">my_method</span><span class="p">(</span><span class="s1">'abc'</span> <span class="p">,</span> <span class="s1">'xyz'</span> <span class="p">,</span> <span class="s1">'123'</span> <span class="p">)</span> <span class="c1"># =]]&gt; ["cba", "zyx", "321"]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="around-alias">环绕别名(Around Alias)</h4>
+<h4 id="环绕别名around-alias">环绕别名(Around Alias)</h4>
 <p>从一个重新定义的方法中调用原始的、被重命名的版本。
 三个基本步骤：
     1. 通过 alias 对原有方法定义一个别名
@@ -298,7 +273,7 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     3. 在该方法中调用别名方法
 通过此方式可以改写原来方法，又不破坏原有功能。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
     <span class="k">alias</span> <span class="ss">:old_reverse</span> <span class="ss">:reverse</span>
     <span class="k">def</span> <span class="nf">reverse</span>
         <span class="s2">"x</span><span class="si">#{</span><span class="n">old_reverse</span><span class="si">}</span><span class="s2">x"</span>
@@ -306,13 +281,12 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 
 <span class="s2">"abc"</span><span class="p">.</span><span class="nf">reverse</span> <span class="c1"># =&gt; "xcbax"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="blank-slate">白板(Blank Slate)</h4>
+<h4 id="白板blank-slate">白板(Blank Slate)</h4>
 <p>移除一个对象中的所有方法，以便通过method_missing添加幽灵方法。主要目的避免原有类中的方法同新增方法产生冲突。注意以__开头的方法不能移除，比如__send__等。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="s2">"a Ghost Method"</span>
     <span class="k">end</span>
@@ -328,16 +302,15 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 
 <span class="n">obj</span><span class="p">.</span><span class="nf">to_s</span> <span class="c1"># =&gt; "a Ghost Method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="class-extension">类扩展(Class Extension)</h4>
+<h4 id="类扩展class-extension">类扩展(Class Extension)</h4>
 <p>通过向eigenclass中混入模块来定义类方法（是对象扩展的一个特例）。
 扩展的方法存在于eigenclass类中，对类来说就是类方法，对对象实例来说就是单件方法。
 提示：一个类，如class C具有双重身份。本身是个类，同时又是Class类的一个实例。类混入实际上是针对他作为Class类的一个实例对象的身份来进行的。
 因此类扩展的方式一样适用于对象实例的扩展，那就是对象扩展了。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
 
 <span class="k">module</span> <span class="nn">M</span>
     <span class="k">def</span> <span class="nf">my_method</span>
@@ -350,22 +323,25 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 
 <span class="no">C</span><span class="p">.</span><span class="nf">my_method</span> <span class="c1"># =&gt; "a class method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="class-extension-mixin">类扩展混入(Class Extension Mixin)</h4>
+<h4 id="类扩展混入class-extension-mixin">类扩展混入(Class Extension Mixin)</h4>
 <p>使一个模块可以通过钩子方法扩展它的包含者。
-同上面基本类似，差别主要有：
-  1. 通过 extend 方法，避免手工打开 eigenclass (即class « C; end)操作。
-  2. 通过 included 钩子方法触发。
-  3. 可以同时添加实例方法跟类方法（这个例子没有演示）</p>
+同上面基本类似，差别主要有：</p>
+<ol>
+  <li>通过 extend 方法，避免手工打开 eigenclass (即class « C; end)操作。</li>
+  <li>通过 included 钩子方法触发。</li>
+  <li>可以同时添加实例方法跟类方法（这个例子没有演示）</li>
+</ol>
 
-<p>基本编写方式：
-  1. 定义一个模块，如 MyMixin
-  2. 在 MyMixin 中定义一个内部模块，通常叫 ClassMethods，并定义一些方法，这些方法会成为包含者的类方法。
-  3. 覆写 MyMixin#included() 方法，extend ClassMethods。</p>
+<p>基本编写方式：</p>
+<ol>
+  <li>定义一个模块，如 MyMixin</li>
+  <li>在 MyMixin 中定义一个内部模块，通常叫 ClassMethods，并定义一些方法，这些方法会成为包含者的类方法。</li>
+  <li>覆写 MyMixin#included() 方法，extend ClassMethods。</li>
+</ol>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">M</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">M</span>
     <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
         <span class="n">base</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="no">ClassMethods</span><span class="p">)</span>
     <span class="k">end</span>
@@ -381,33 +357,33 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
     <span class="kp">include</span> <span class="no">M</span>
 <span class="k">end</span>
 <span class="no">C</span><span class="p">.</span><span class="nf">my_method</span> <span class="c1"># =&gt; "a class method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="class-instance-variable">类实例变量(Class Instance Variable)</h4>
+<h4 id="类实例变量class-instance-variable">类实例变量(Class Instance Variable)</h4>
 <p>在一个 Class 对象的实例变量中存储类级别的状态。
-核心提示：
-  1. 这里的class C要当做Class类的一个实例对象看待。普通实例对象如何创建实例变量，类实例对象就如何创建实例变量。
-  2. class … end 实际上是在运行一段代码，不要用常规的关键字理解。
-  3. 访问类实例变量，只能通过类方法（因为其 self 就是类名），或者加上类名前缀。</p>
+核心提示：</p>
+<ol>
+  <li>这里的class C要当做Class类的一个实例对象看待。普通实例对象如何创建实例变量，类实例对象就如何创建实例变量。</li>
+  <li>class … end 实际上是在运行一段代码，不要用常规的关键字理解。</li>
+  <li>访问类实例变量，只能通过类方法（因为其 self 就是类名），或者加上类名前缀。</li>
+</ol>
 
 <p>想一想如果我们运行时类名动态变化，如何处理，显然我们还有 eval 工具组（使用 instance_eval ，class_eval，eval 均可）</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="vi">@my_class_instance_variable</span> <span class="o">=</span> <span class="s2">"some value"</span>
     <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">class_attribute</span>
         <span class="vi">@my_class_instance_variable</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="no">C</span><span class="p">.</span><span class="nf">class_attribute</span> <span class="c1"># =&gt; "some value"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="class-macro">类宏(Class Macro)</h4>
+<h4 id="类宏class-macro">类宏(Class Macro)</h4>
 <p>在类定义中使用一个类方法。
 就是一个伪装成关键字的类方法。如attr_accessor :a, :b，类宏一般结合类扩展混入技术进行。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
 <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="no">C</span>
     <span class="k">def</span> <span class="nf">my_macro</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
         <span class="s2">"my_macro(</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">) called"</span>
@@ -416,52 +392,48 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">class</span> <span class="nc">C</span>
     <span class="n">my_macro</span> <span class="ss">:x</span> <span class="c1"># =&gt; "my_macro(x) called"</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="clean-room">洁净室(Clean Room)</h4>
+<h4 id="洁净室clean-room">洁净室(Clean Room)</h4>
 <p>使用对象作为执行块的上下文环境
 实际上就是通过 instance_eval 限定执行块的作用域。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CleanRoom</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CleanRoom</span>
     <span class="k">def</span> <span class="nf">a_useful_method</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="no">CleanRoom</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="p">{</span> <span class="n">a_useful_method</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">}</span> <span class="c1"># =&gt; 6</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="code-processor">代码处理器(Code Processor)</h4>
+<h4 id="代码处理器code-processor">代码处理器(Code Processor)</h4>
 <p>处理从外部获得的字符串代码</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">File</span><span class="p">.</span><span class="nf">readlines</span><span class="p">(</span><span class="s2">"a_file_containing_lines_of_ruby.txt"</span> <span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">File</span><span class="p">.</span><span class="nf">readlines</span><span class="p">(</span><span class="s2">"a_file_containing_lines_of_ruby.txt"</span> <span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
     <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">line</span><span class="p">.</span><span class="nf">chomp</span><span class="si">}</span><span class="s2"> ==&gt; </span><span class="si">#{</span><span class="nb">eval</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 
 <span class="c1">#&gt;&gt; 1 + 1 ==&gt; 2</span>
 <span class="c1">#&gt;&gt; 3 * 2 ==&gt; 6</span>
 <span class="c1">#&gt;&gt; Math.log10(100) ==&gt; 2.0</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="context-probe">上下文探针(Context Probe)</h4>
+<h4 id="上下文探针context-probe">上下文探针(Context Probe)</h4>
 <p>执行块来获取对象上下文中的信息。
 其实就是通过 instance_eval 将对象内部的作用域暴露出来。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">initialize</span>
         <span class="vi">@x</span> <span class="o">=</span> <span class="s2">"a private instance variable"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="p">{</span> <span class="vi">@x</span> <span class="p">}</span> <span class="c1"># =&gt; "a private instance variable"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="deferred-evaluation">延迟执行(Deferred Evaluation)</h4>
+<h4 id="延迟执行deferred-evaluation">延迟执行(Deferred Evaluation)</h4>
 <p>在proc或lambda中存储一段代码及其上下文，用于以后执行。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
         <span class="vi">@my_code_capsule</span> <span class="o">=</span> <span class="n">block</span>
     <span class="k">end</span>
@@ -475,25 +447,23 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="vg">$X</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">execute</span>
 <span class="vg">$X</span> <span class="c1"># =&gt; 1</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="dynamic-dispatcher">动态派发(Dynamic Dispatcher)</h4>
+<h4 id="动态派发dynamic-dispatcher">动态派发(Dynamic Dispatcher)</h4>
 <p>在运行时决定调用哪个方法
 通过send发送消息，等价于方法调用。但通过send可以发送符号或字符串，灵活性大为增强。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">method_to_call</span> <span class="o">=</span> <span class="ss">:reverse</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">method_to_call</span> <span class="o">=</span> <span class="ss">:reverse</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="s2">"abc"</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">method_to_call</span><span class="p">)</span> <span class="c1"># =&gt; "cba"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="dynamic-method">动态方法(Dynamic Method)</h4>
+<h4 id="动态方法dynamic-method">动态方法(Dynamic Method)</h4>
 <p>在运行时才决定如何定义一个方法
 动态方法还有一个特性：不会开启一个新的作用域。
 我们知道def，module，class会开启新的作用域，扁平化作用域的办法就是用define_method，Module.new，Class.new等方法调用取代关键字。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
 <span class="k">end</span>
 
 <span class="no">C</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
@@ -503,14 +473,13 @@ Ruby 2.0 以后，可以使用关键字参数，Ruby 2.0可以使用Hash参数�
 <span class="k">end</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span> <span class="c1"># =&gt; "a dynamic method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="dynamic-proxy">动态代理(Dynamic Proxy)</h4>
+<h4 id="动态代理dynamic-proxy">动态代理(Dynamic Proxy)</h4>
 <p>把不能对应某个方法名的消息转发给另外一个对象。
 method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyDynamicProxy</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyDynamicProxy</span>
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="vi">@target</span> <span class="o">=</span> <span class="n">target</span>
     <span class="k">end</span>
@@ -520,13 +489,12 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="k">end</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">MyDynamicProxy</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"a string"</span><span class="p">)</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">reverse</span> <span class="c1"># =&gt; "result: gnirts a"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="flat-scope">扁平作用域(Flat Scope)</h4>
+<h4 id="扁平作用域flat-scope">扁平作用域(Flat Scope)</h4>
 <p>使用闭包在两个作用域之间共享变量(以下用例不典型)</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">an_attribute</span>
         <span class="vi">@attr</span>
     <span class="k">end</span>
@@ -540,26 +508,24 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="k">end</span>
 
 <span class="n">obj</span><span class="p">.</span><span class="nf">an_attribute</span> <span class="c1"># =&gt; 100</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="ghost-method">幽灵方法(Ghost Method)</h4>
+<h4 id="幽灵方法ghost-method">幽灵方法(Ghost Method)</h4>
 <p>响应一个没有关联方法的消息</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">reverse</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_ghost_method</span> <span class="c1"># =&gt; "dohtem_tsohg_ym"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="hook-method">钩子方法(Hook Method)</h4>
+<h4 id="钩子方法hook-method">钩子方法(Hook Method)</h4>
 <p>通过覆写某个特殊方法来截获对象模型事件。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vg">$INHERITORS</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="vg">$INHERITORS</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">inherited</span><span class="p">(</span><span class="n">subclass</span><span class="p">)</span>
         <span class="vg">$INHERITORS</span> <span class="o">&lt;&lt;</span> <span class="n">subclass</span>
@@ -575,77 +541,71 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="k">end</span>
 
 <span class="vg">$INHERITORS</span> <span class="c1"># =&gt; [D, E, F]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="kernal-method">内核方法(Kernal Method)</h4>
+<h4 id="内核方法kernal-method">内核方法(Kernal Method)</h4>
 <p>在 Kernel 模块中定义一个方法，使之对所有对象都可用。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Kernel</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Kernel</span>
     <span class="k">def</span> <span class="nf">a_method</span>
         <span class="s2">"a kernel method"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">a_method</span> <span class="c1"># =&gt; "a kernel method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="lazy-instance-variable">惰性实例变量(Lazy Instance Variable)</h4>
+<h4 id="惰性实例变量lazy-instance-variable">惰性实例变量(Lazy Instance Variable)</h4>
 <p>当第一次访问一个实例变量时才对之进行初始化。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">attribute</span>
         <span class="vi">@attribute</span> <span class="o">||=</span> <span class="s2">"some value"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">attribute</span> <span class="c1"># =&gt; "some value"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="mimic-method">拟态方法(Mimic Method)</h4>
+<h4 id="拟态方法mimic-method">拟态方法(Mimic Method)</h4>
 <p>把一个方法伪装成另外一种语言构件。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">BaseClass</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">BaseClass</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
     <span class="nb">name</span> <span class="o">==</span> <span class="s2">"string"</span> <span class="p">?</span> <span class="no">String</span> <span class="p">:</span> <span class="no">Object</span>
 <span class="k">end</span>
 <span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="no">BaseClass</span> <span class="s2">"string"</span> <span class="c1"># a method that looks like a class</span>
-    <span class="kp">attr_accessor</span> <span class="ss">:an_attribute</span> <span class="c1"># 伪装成关键字的方法</span>
+    <span class="nb">attr_accessor</span> <span class="ss">:an_attribute</span> <span class="c1"># 伪装成关键字的方法</span>
 <span class="k">end</span>
 
 <span class="n">obj</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">an_attribute</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 伪装成属性的方法</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="monkeypatch">猴子打补丁(Monkeypatch)</h4>
+<h4 id="猴子打补丁monkeypatch">猴子打补丁(Monkeypatch)</h4>
 <p>修改已有类的特性。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="s2">"abc"</span><span class="p">.</span><span class="nf">reverse</span> <span class="c1"># =&gt; "cba"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"abc"</span><span class="p">.</span><span class="nf">reverse</span> <span class="c1"># =&gt; "cba"</span>
 <span class="k">class</span> <span class="nc">String</span>
     <span class="k">def</span> <span class="nf">reverse</span>
         <span class="s2">"override"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="s2">"abc"</span><span class="p">.</span><span class="nf">reverse</span> <span class="c1"># =&gt; "override"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="named-arguments">有名参数(Named Arguments)</h4>
+<h4 id="有名参数named-arguments">有名参数(Named Arguments)</h4>
 <p>把方法参数收集到一个哈希表中，以便通过名字访问（Ruby2.0+直接支持）。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">args</span><span class="p">[</span><span class="ss">:arg2</span><span class="p">]</span>
 <span class="k">end</span>
 
 <span class="n">my_method</span><span class="p">(</span><span class="ss">:arg1</span> <span class="o">=&gt;</span> <span class="s2">"A"</span> <span class="p">,</span> <span class="ss">:arg2</span> <span class="o">=&gt;</span> <span class="s2">"B"</span> <span class="p">,</span> <span class="ss">:arg3</span> <span class="o">=&gt;</span> <span class="s2">"C"</span><span class="p">)</span> <span class="c1"># =&gt; "B"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="namespace">命名空间(Namespace)</h4>
+<h4 id="命名空间namespace">命名空间(Namespace)</h4>
 <p>在一个模块中定义常量，以防止命名冲突。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">MyNamespace</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">MyNamespace</span>
     <span class="k">class</span> <span class="nc">Array</span>
         <span class="k">def</span> <span class="nf">to_s</span>
             <span class="s2">"my class"</span>
@@ -654,21 +614,19 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="k">end</span>
 <span class="no">Array</span><span class="p">.</span><span class="nf">new</span> <span class="c1"># =&gt; []</span>
 <span class="no">MyNamespace</span><span class="o">::</span><span class="no">Array</span><span class="p">.</span><span class="nf">new</span> <span class="c1"># =&gt; my class</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="nil-guard">空指针保护(Nil Guard)</h4>
+<h4 id="空指针保护nil-guard">空指针保护(Nil Guard)</h4>
 <p>用“或”操作符覆写一个空应用。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="kp">nil</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">||</span> <span class="s2">"a value"</span> <span class="c1"># =&gt; "a value"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="object-extension">对象扩展(Object Extension)</h4>
+<h4 id="对象扩展object-extension">对象扩展(Object Extension)</h4>
 <p>通过给一个对象 eigenclass 混入模块来定义单件方法。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">obj</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">obj</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
 
 <span class="k">module</span> <span class="nn">M</span>
     <span class="k">def</span> <span class="nf">my_method</span>
@@ -680,25 +638,23 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
     <span class="kp">include</span> <span class="no">M</span>
 <span class="k">end</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span> <span class="c1"># =&gt; "a singleton method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="open-class">打开类(Open Class)</h4>
+<h4 id="打开类open-class">打开类(Open Class)</h4>
 <p>修改已有的类</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
     <span class="k">def</span> <span class="nf">my_string_method</span>
         <span class="s2">"my method"</span>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="s2">"abc"</span><span class="p">.</span><span class="nf">my_string_method</span> <span class="c1"># =&gt; "my method"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="pattern-dispatch">模式派发(Pattern Dispatch)</h4>
+<h4 id="模式派发pattern-dispatch">模式派发(Pattern Dispatch)</h4>
 <p>根据名字来选择需要调用的方法。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vg">$x</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="vg">$x</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">class</span> <span class="nc">C</span>
     <span class="k">def</span> <span class="nf">my_first_method</span>
         <span class="vg">$x</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -713,13 +669,12 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
     <span class="n">obj</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">=~</span> <span class="sr">/^my_/</span>
 <span class="k">end</span>
 <span class="vg">$x</span> <span class="c1"># =&gt; 3</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="sandbox">沙盒(Sandbox)</h4>
+<h4 id="沙盒sandbox">沙盒(Sandbox)</h4>
 <p>在一个安全的环境中执行为授信的代码</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sandbox</span><span class="p">(</span><span class="o">&amp;</span><span class="n">code</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sandbox</span><span class="p">(</span><span class="o">&amp;</span><span class="n">code</span><span class="p">)</span>
     <span class="nb">proc</span> <span class="p">{</span>
         <span class="vg">$SAFE</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="k">yield</span>
@@ -731,13 +686,12 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">ex</span>
     <span class="n">ex</span> <span class="c1"># =&gt; #&lt;SecurityError: Insecure operation `delete' at level 2&gt;</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="scope-gate">作用域门(Scope Gate)</h4>
+<h4 id="作用域门scope-gate">作用域门(Scope Gate)</h4>
 <p>用class，module或def关键字来隔离作用域</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">defined?</span> <span class="n">a</span> <span class="c1"># =&gt; "local-variable"</span>
 
 <span class="k">module</span> <span class="nn">MyModule</span>
@@ -748,14 +702,13 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 
 <span class="n">defined?</span> <span class="n">a</span> <span class="c1"># =&gt; "local-variable"</span>
 <span class="n">defined?</span> <span class="n">b</span> <span class="c1"># =&gt; nil</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="self-yield">Self Yield</h4>
 <p>把self传给当前块</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span>
-    <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:surname</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span>
+    <span class="nb">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:surname</span>
     <span class="k">def</span> <span class="nf">initialize</span>
         <span class="k">yield</span> <span class="nb">self</span>
     <span class="k">end</span>
@@ -765,13 +718,12 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
     <span class="nb">p</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Joe'</span>
     <span class="nb">p</span><span class="p">.</span><span class="nf">surname</span> <span class="o">=</span> <span class="s1">'Smith'</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="shared-scope">共享作用域(Shared Scope)</h4>
+<h4 id="共享作用域shared-scope">共享作用域(Shared Scope)</h4>
 <p>在同一个扁平作用域的多个上下文中共享变量。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">lambda</span> <span class="p">{</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">lambda</span> <span class="p">{</span>
     <span class="n">shared</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
         <span class="n">define_method</span> <span class="ss">:counter</span> <span class="k">do</span>
@@ -786,13 +738,12 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
 <span class="n">counter</span> <span class="c1"># =&gt; 10</span>
 <span class="mi">3</span><span class="p">.</span><span class="nf">times</span> <span class="p">{</span> <span class="n">down</span> <span class="p">}</span>
 <span class="n">counter</span> <span class="c1"># =&gt; 7</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="singleton-method">单件方法(Singleton Method)</h4>
+<h4 id="单件方法singleton-method">单件方法(Singleton Method)</h4>
 <p>在一个对象上定义一个方法，其实是在该对象eigenclass中定义了一个实例方法。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">obj</span> <span class="o">=</span> <span class="s2">"abc"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">obj</span> <span class="o">=</span> <span class="s2">"abc"</span>
 
 <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">obj</span>
     <span class="k">def</span> <span class="nf">my_singleton_method</span>
@@ -800,23 +751,20 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
     <span class="k">end</span>
 <span class="k">end</span>
 <span class="n">obj</span><span class="p">.</span><span class="nf">my_singleton_method</span> <span class="c1"># =&gt; "x"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="string-of-code">代码字符串(String of Code)</h4>
+<h4 id="代码字符串string-of-code">代码字符串(String of Code)</h4>
 <p>执行一段表示 Ruby 代码的字符串。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">my_string_of_code</span> <span class="o">=</span> <span class="s2">"1 + 1"</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_string_of_code</span> <span class="o">=</span> <span class="s2">"1 + 1"</span>
 <span class="nb">eval</span><span class="p">(</span><span class="n">my_string_of_code</span><span class="p">)</span> <span class="c1"># =&gt; 2</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h4 id="procsymbol-to-proc">符号到Proc(Symbol To Proc)</h4>
+<h4 id="符号到procsymbol-to-proc">符号到Proc(Symbol To Proc)</h4>
 <p>把一个符号转换为调用单个方法的代码块。</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:even?</span><span class="p">)</span> <span class="c1"># =&gt; [false, true, false, true]</span>
-</code></pre>
-</div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:even?</span><span class="p">)</span> <span class="c1"># =&gt; [false, true, false, true]</span>
+</code></pre></div></div>
 
         </article>
 
@@ -825,7 +773,7 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
                 <li><i class="glyphicon glyphicon-folder-open"></i></li>
                  
     
-    <li class="tag"><a href="/categories/ruby.html">Ruby<span>1</span></a></li>
+    <li class="tag"><a href="/categories/ruby.html">Ruby<span>3</span></a></li>
     
 
             </ul>
@@ -833,19 +781,19 @@ method_missing结合send技术，另外可以辅助respond_to?谓词。</p>
                 <li><i class="glyphicon glyphicon-tags"></i></li>
                  
     
-    <li class="tag"><a href="/tags/ruby.html">Ruby<span>5</span></a></li>
+    <li class="tag"><a href="/tags/ruby.html">Ruby<span>7</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>2</span></a></li>
+    <li class="tag"><a href="/tags/metaprogramming.html">元编程<span>4</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/dsl.html">DSL<span>2</span></a></li>
+    <li class="tag"><a href="/tags/dsl.html">DSL<span>4</span></a></li>
     
 
     
-    <li class="tag"><a href="/tags/pdl.html">程序设计语言<span>2</span></a></li>
+    <li class="tag"><a href="/tags/pdt.html">程序设计语言理论<span>12</span></a></li>
     
 
             </ul>

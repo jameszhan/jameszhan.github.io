@@ -35,15 +35,15 @@
         </header>
 
         <article class="post-content">
-            <h2 id="section">理论基础</h2>
+            <h2 id="理论基础">理论基础</h2>
 
-<h3 id="section-1">联合概率</h3>
+<h3 id="联合概率">联合概率</h3>
 
 <p>联合概率表示两个事件共同发生的概率。A与B的联合概率表示为$P(AB)$，$P(A,B)$或者$P(A \bigcap B)$。</p>
 
 <p>联合概率可以推广到任意又穷多个事件出现的情况，设（$A_1,A_2,\cdots,A_n$）为任意n个事件（$n\ge2$），事件$A_1,A_2,\cdots,A_n$共同发生的概率记为$P(A_1A_2 \dots A_n)$，$P(A_1,A_2,\dots,A_n)$或者$P(A_1 \bigcap A_2 \bigcap \dots \bigcap A_n)$</p>
 
-<h3 id="section-2">条件概率</h3>
+<h3 id="条件概率">条件概率</h3>
 
 <p><span>设A，B 是两个事件，且$P(A) &gt; 0$，则称$P(B|A) = \frac{P(AB)}{P(A)}$为在事件A发生的条件下，事件B发生的条件概率。一般地，$P(B|A) \not= P(B)$ ，且它满足以下三条件：（1）非负性；（2）规范性；（3）可列可加性。</span></p>
 
@@ -56,7 +56,7 @@
 
 <script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_n) = \prod_{t=1}^n(w_t|w_1 \cdots w_{t-1}) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1w_2) \cdots P(w_n|w_1w_2 \cdots w_{n-1})</script>
 
-<h4 id="ngram">Ngram模型</h4>
+<h4 id="ngram模型">Ngram模型</h4>
 
 <p>1.Ngram模型</p>
 
@@ -70,17 +70,17 @@
 
 <p><span><script type="math/tex">P(w_t|w_1w_2 \cdots w_{t-1}) \approx P(w_t|w_{t-1}w_{t-2})</script></span></p>
 
-<h4 id="section-3">独立性假设</h4>
+<h4 id="独立性假设">独立性假设</h4>
 
 <script type="math/tex; mode=display">P(S) = P(w_1,w_2,\cdots,w_n) \approx \prod_{t=1}^T P(w_t) = P(w_1)P(w_2) \cdots P(w_n)</script>
 
-<h4 id="section-4">其他</h4>
+<h4 id="其他">其他</h4>
 
 <script type="math/tex; mode=display">先验概率 = P(原因)；后验概率 = P(原因|结果)</script>
 
 <script type="math/tex; mode=display">P(a,b|c) = \frac{P(a,b,c)}{P(c)} = \frac{P(a,b,c)}{P(b,c)} \cdot \frac{P(b,c)}{P(c)} = P(a|b,c) \cdot P(b|c)</script>
 
-<h3 id="section-5">完备事件组/样本空间的划分</h3>
+<h3 id="完备事件组样本空间的划分">完备事件组/样本空间的划分</h3>
 
 <p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组事件，若</p>
 
@@ -91,11 +91,11 @@
 
 <p>则称（$A_1,\cdots,A_i,\cdots,A_n$）是样本空间Ω的一个划分，或称为样本空间Ω 的一个完备事件组。</p>
 
-<h3 id="section-6">全概率公式</h3>
+<h3 id="全概率公式">全概率公式</h3>
 
 <p><span>设（$A_1,\cdots,A_i,\cdots,A_n$）施一个完备事件组，则有$P(B) = \sum_{i=1}^n P(A_i) \cdot P(B|A_i) = \sum_{i=1}^n P(A_iB)$</span></p>
 
-<h3 id="section-7">贝叶斯公式</h3>
+<h3 id="贝叶斯公式">贝叶斯公式</h3>
 
 <p>设（$A_1,\cdots,A_i,\cdots,A_n$）是一组完备事件组，则有</p>
 
@@ -103,20 +103,19 @@
 
 <p>根据条件概率和全概率公式，很容易得出贝叶斯公式。</p>
 
-<h2 id="section-8">贝叶斯定理的应用</h2>
+<h2 id="贝叶斯定理的应用">贝叶斯定理的应用</h2>
 
-<h3 id="section-9">贝叶斯定理在艾滋病检测上的应用</h3>
+<h3 id="贝叶斯定理在艾滋病检测上的应用">贝叶斯定理在艾滋病检测上的应用</h3>
 
 <p>假设艾滋病在人群中的发病率为万分之一，艾滋病检测假阴性的概率千分之一（假阴性的意思是本来有病应该呈现阳性，但是呈现了阴性）；艾滋病检测假阳性的概率为万分之一（假阳性意思是本来没病应该呈现阴性，但是呈现了阳性）。假设某人在某次检测当中结果呈现阳性，那么他真正感染艾滋病的概率是多少？</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 艾滋病在人群中的发病概率P(T)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 艾滋病在人群中的发病概率P(T)</span>
 <span class="n">p</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0001</span>
 <span class="c"># 在有艾滋病的场景下，检测为阳性的概率P(检测为阳性|患病)，即1-P(假阴性)</span>
 <span class="n">p</span><span class="p">(</span><span class="n">fT</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.999</span>
 <span class="c"># 在没有艾滋病的场景下，检测为阳性的概率P(检测为阳性|不患病)，即假阳性</span>
 <span class="n">p</span><span class="p">(</span><span class="n">f_T</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0001</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <div>
 根据贝叶斯公式，检测为阳性，感染艾滋病的概率
@@ -126,22 +125,20 @@ $$P(患病|检测为阳性) = \frac{P(检测为阳性|患病) \cdot P(患病)}{P
 $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳性|不患病) \cdot P(不患病)$$
 </div>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pfT</span> <span class="o">*</span> <span class="n">pT</span> <span class="o">+</span> <span class="n">pf_T</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pT</span><span class="p">))</span>
 
 <span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><span>将数据代入公式，计算得出P(患病|检测为阳性)=49.977%，看起来还是不能确定该被试是否感染艾滋病（被试的感染艾滋病的几率从万分之一上升到近50%）。为了确定被试是否真正感染艾滋病，我们只需再进行一次检测，如果下一次检测还呈阳性，再一次应用贝叶斯定理，则该被试感染艾滋病的几率瞬间提升到99.99%，基本可以确定该被试感染艾滋病了。</span></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pT</span> <span class="o">=</span> <span class="mf">49.977</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pT</span> <span class="o">=</span> <span class="mf">49.977</span>
 <span class="k">print</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pT</span><span class="p">,</span> <span class="n">pfT</span><span class="p">,</span> <span class="n">pf_T</span><span class="p">)</span>
 <span class="c"># 0.999899817803</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="section-10">贝叶斯定理在垃圾邮件过滤上的应用</h3>
+<h3 id="贝叶斯定理在垃圾邮件过滤上的应用">贝叶斯定理在垃圾邮件过滤上的应用</h3>
 
 <p>给定训练集，垃圾邮件和正常邮件各5000封，假定词$w_1$，$w_2$出现的频率如下。</p>
 
@@ -177,7 +174,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
   </tbody>
 </table>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(垃圾邮件)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># P(垃圾邮件)</span>
 <span class="n">pS</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="c"># P(正常邮件)</span>
 <span class="n">pH</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pS</span> <span class="c"># 0.5</span>
@@ -185,18 +182,16 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 <span class="n">pw1S</span> <span class="o">=</span> <span class="mf">250.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.05</span>
 <span class="c"># P(w1|正常邮件)</span>
 <span class="n">pw1H</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.001</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><span>根据贝叶斯定理，我们很容易计算$P(垃圾邮件|w_1)$的概率。</span></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pwS</span><span class="p">,</span> <span class="n">pwH</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pwS</span><span class="p">,</span> <span class="n">pwH</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pwS</span> <span class="o">*</span> <span class="n">pS</span> <span class="o">+</span> <span class="n">pwH</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pS</span><span class="p">))</span>
 
 <span class="c"># P(垃圾邮件|w1)</span>
 <span class="n">pSw1</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">)</span> <span class="c"># 0.980392156863</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>其实根据样本分布，我们也很容易计算<b>$P(垃圾邮件|w_1)$</b>的概率。</p>
 
@@ -254,12 +249,11 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <script type="math/tex; mode=display">P(w_2|垃圾邮件,w_1) = P(w_2|垃圾邮件)</script>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(S,w1,w2) = P(S) * P(w1|S) * P(w2|S,w1)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># P(S,w1,w2) = P(S) * P(w1|S) * P(w2|S,w1)</span>
 <span class="c"># Independence hypothesis =&gt; P(S,w1,w2) = P(S) * P(w1|S) * P(w2|S)</span>
 <span class="k">def</span> <span class="nf">joint</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw2S</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">pS</span> <span class="o">*</span> <span class="n">pw1S</span> <span class="o">*</span> <span class="n">pw2S</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><span>$P(E_1) = P(垃圾邮件) * P(w_1|垃圾邮件) * P(w_2|垃圾邮件)$</span></p>
 
@@ -267,7 +261,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <p><span>目标概率：$P(垃圾邮件|w_1,w_2) = \frac{P(E_1)}{P(E_1) + P(E_2)}$</span></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># P(w2|垃圾邮件)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># P(w2|垃圾邮件)</span>
 <span class="n">ps2W</span> <span class="o">=</span> <span class="mf">495.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.001</span>
 <span class="c"># P(w2|正常邮件) </span>
 <span class="n">pw2H</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">5000</span> <span class="c"># 0.099</span>
@@ -278,10 +272,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <span class="c"># P(垃圾邮件|w_1,w_2)</span>
 <span class="k">print</span> <span class="n">pE1</span> <span class="o">/</span> <span class="p">(</span><span class="n">pE1</span> <span class="o">+</span> <span class="n">pE2</span><span class="p">)</span> <span class="c"># 0.999798020602</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h3 id="section-11">黑客与画家中的疑问</h3>
+<h3 id="黑客与画家中的疑问">黑客与画家中的疑问</h3>
 
 <p>Paul Graham在他的《黑客与画家》当中，有举过朴素贝叶斯的例子，他的做法是选出区分度最高的15个词，并计算其联合概率，并给出了最终公式。</p>
 
@@ -321,13 +314,12 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <script type="math/tex; mode=display">P_{spam|w_1,w_2} = \frac{P_{spam|w_1} \cdot P_{spam|w_2}}{P_{spam|w_1} \cdot P_{spam|w_2} + (1 - P_{spam|w_1}) \cdot (1 - P_{spam|w_2})}</script>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">pSw1</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pSw1</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw1S</span><span class="p">,</span> <span class="n">pw1H</span><span class="p">)</span>
 <span class="n">pSw2</span> <span class="o">=</span> <span class="n">bayes</span><span class="p">(</span><span class="n">pS</span><span class="p">,</span> <span class="n">pw2S</span><span class="p">,</span> <span class="n">pw2H</span><span class="p">)</span>
 <span class="n">e1</span> <span class="o">=</span> <span class="n">pS</span> <span class="o">*</span> <span class="n">pSw1</span> <span class="o">*</span> <span class="n">pSw2</span>
 <span class="n">e2</span> <span class="o">=</span> <span class="n">pH</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pSw1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pSw2</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">e1</span> <span class="o">/</span> <span class="p">(</span><span class="n">e1</span> <span class="o">+</span> <span class="n">e2</span><span class="p">)</span> <span class="c"># 0.999798020602</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>可见，在$P_{spam}=P_{\overline{spam}}=0.5$的情况下，结果和之前是一样的。</p>
 
@@ -335,9 +327,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <script type="math/tex; mode=display">P_{spam|w_1,w_2,\cdots,w_{15}} = \frac{\prod_{i=1}^{15} P_{spam|w_i}}{\prod_{i=1}^{15} P_{spam|w_i} + \prod_{i=1}^{15} (1 - P_{spam|w_i})}</script>
 
-<h3 id="section-12">实战垃圾邮件过滤</h3>
+<h3 id="实战垃圾邮件过滤">实战垃圾邮件过滤</h3>
 
-<h4 id="section-13">公式推导</h4>
+<h4 id="公式推导">公式推导</h4>
 
 <p>给定一个邮件M，它由文本序列$S=w_1,w_2,\ldots,w_n$组成，则给定邮件为垃圾为垃圾邮件的概率为：</p>
 
@@ -347,7 +339,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <script type="math/tex; mode=display">P(spam|M) \approx \frac{\prod_{i=1}^n P(w_i|spam) \cdot P(spam)}{\prod_{i=1}^n P(w_i|spam) \cdot P(spam) + \prod_{i=1}^n P(w_i|\overline{spam}) \cdot P(\overline{spam}) }</script>
 
-<h4 id="section-14">模型数据</h4>
+<h4 id="模型数据">模型数据</h4>
 
 <table>
   <thead>
@@ -415,7 +407,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
   </tbody>
 </table>
 
-<h4 id="section-15">概率计算</h4>
+<h4 id="概率计算">概率计算</h4>
 
 <ul>
   <li>垃圾邮件概率：$ P(spam) = \frac{count(spam)}{count(spam) + count(\overline{spam})}$</li>
@@ -424,9 +416,9 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
   <li>$w_i$在正常邮件中的概率：<span>$P(w_i|\overline{spam}) = \frac{count(w_i,\overline{spam})}{count(\overline{spam})}$，也就是 $\frac{w_i关联的正常邮件数量}{正常邮件的数量}$</span></li>
 </ul>
 
-<h4 id="section-16">代码演示</h4>
+<h4 id="代码演示">代码演示</h4>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="k">class</span> <span class="nc">AntiSpam</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wc</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># 记录每个词在垃圾邮件和正常邮件中出现的次数</span>
@@ -479,12 +471,11 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
         <span class="n">sprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'spam'</span><span class="p">)</span>
         <span class="n">hprob</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cprob</span><span class="p">(</span><span class="s">'health'</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sprob</span> <span class="o">/</span> <span class="p">(</span><span class="n">sprob</span> <span class="o">+</span> <span class="n">hprob</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>模拟样本训练</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">antiSpam</span> <span class="o">=</span> <span class="n">AntiSpam</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">antiSpam</span> <span class="o">=</span> <span class="n">AntiSpam</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4989</span><span class="p">):</span>
     <span class="n">antiSpam</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'world'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">],</span> <span class="s">'health'</span><span class="p">)</span>
 
@@ -504,12 +495,11 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 <span class="n">antiSpam</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="c"># mc: {'health': 5000, 'spam': 5000} </span>
 <span class="c"># wc: {'attention': {'health': 10, 'spam': 90}, 'spam': {'health': 10, 'spam': 90}, 'bill': {'spam': 4901}, 'discount': {'health': 1, 'spam': 9}, 'invoice': {'spam': 4901}, 'mail': {'health': 10, 'spam': 90}, 'world': {'health': 4989}, 'promotion': {'health': 1, 'spam': 9}, 'todo': {'health': 4989, 'spam': 4901}, 'hello': {'health': 4989}, 'cool': {'health': 1, 'spam': 9}}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>垃圾邮件过滤</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>         <span class="c"># 0.987588626017</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>         <span class="c"># 0.987588626017</span>
 <span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">safe_prob</span><span class="p">([</span><span class="s">'discount'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>    <span class="c"># 0.987588626017</span>
 
 <span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>            <span class="c"># 0.00176901392183</span>
@@ -517,8 +507,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
 
 <span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>            <span class="c"># 0.999999995374</span>
 <span class="k">print</span> <span class="n">antiSpam</span><span class="o">.</span><span class="n">safe_prob</span><span class="p">([</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">'mail'</span><span class="p">,</span> <span class="s">'todo'</span><span class="p">])</span>       <span class="c"># 0.999999995374</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
         </article>
 
@@ -556,7 +545,7 @@ $$P(检测为阳性)= P(检测为阳性|患病) \cdot P(患病) + P(检测为阳
         <div class="row-fluid">
             <ul class="pagination pull-right">
                 
-                <li class="prev"><a href="/2015/05/15/docker-in-osx.html" title="在OS X上运行Docker">&larr; 上一篇</a></li>
+                <li class="prev"><a href="/2017/08/18/docker-in-cgroups.html" title="Docker 基础之 Cgroups">&larr; 上一篇</a></li>
                 
                 <li><a href="http://localhost:4000">Archive</a></li>
                 
